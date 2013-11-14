@@ -15,6 +15,7 @@ tagline:
 <a class="btn btn-default" href="https://github.com/dbtek/dbyll">Grab your copy now!</a>
 
 ## Configuration
+
 In your config file change these settings
 <pre>
 <code>
