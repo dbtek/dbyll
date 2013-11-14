@@ -30,9 +30,9 @@ group: navigation
       {% if node.title != null %}
         {% if group == null or group == node.group %}
       	  {% if page.url == node.url %}
-      	  <li class="active"><a href="{{ BASE_PATH }}{{node.url}}" class="active">{{node.title}}</a></li>
+      	  <li class="active"><a href="{{ site.BASE_PATH }}{{node.url}}" class="active">{{node.title}}</a></li>
       	  {% else %}
-      	  <li><a href="{{ BASE_PATH }}{{node.url}}">{{node.title}}</a></li>
+      	  <li><a href="{{ site.BASE_PATH }}{{node.url}}">{{node.title}}</a></li>
       	  {% endif %}
         {% endif %}
       {% endif %}
