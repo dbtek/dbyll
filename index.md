@@ -15,20 +15,20 @@ tagline:
 <a class="btn btn-default" href="https://github.com/dbtek/dbyll">Grab your copy now!</a>
 
 ## Configuration
-In your config file add these
+Change these settings in your _config.yml
 <pre>
 <code>
-title: dbyll
+title: awesome site title
 author:
-  name: dbyll
-  email: dbyll@ismaildemirbilek.com
+  name: your_name
+  email: your_email
   github: asd123
   twitter: asd123
   pinterest: asd123
   linkedin: asd123
   resume: asd123
   bio: Your stylish, minimalist theme!
-  email_md5: 726351295ec82e145928582f595aa3aa
+  email_md5: your_email_md5_encoding
 </code>
 </pre>
 
