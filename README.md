@@ -9,3 +9,6 @@ Open source stylish, minimalistic theme for jekyll.
 ### Snapshots
 
 ![dbyll-screenshot](http://ismaildemirbilek.com/assets/media/2013/11/dbyll-ss.png)
+
+### License
+[MIT](http://opensource.org/licenses/MIT)
