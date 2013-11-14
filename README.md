@@ -8,4 +8,4 @@ Open source stylish, minimalistic theme for jekyll.
 
 ### Snapshots
 
-![dbyll-screenshot](http://dbtek.github.io/dbyll/assets/media/2013/11/dbyll-ss.png)
+![dbyll-screenshot](http://ismaildemirbilek.com/assets/media/2013/11/dbyll-ss.png)
