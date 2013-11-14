@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+{% include header.html %}
+
+	<body>
+
+		<div class="col-sm-3 sidebar">
+			{% include sidebar.html %}
+		</div>
+
+		<div class="col-sm-9 col-sm-offset-3">
+			{{ content }}
+
+			{% include footer.html %}
+
+		</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+	</body>
+
+</html>
+
