@@ -8,13 +8,13 @@ group: navigation
   {% assign categories_list = site.categories %}
   {% if categories_list.first[0] == null %}
     {% for category in categories_list %} 
-    	<li><a href="{{ BASE_PATH }}{{ site.categories_path }}#{{ category }}-ref">
+    	<li><a href="{{ site.BASE_PATH }}{{ site.categories_path }}#{{ category }}-ref">
     		{{ category | join: "/" }} <span>{{ site.categories[category].size }}</span>
     	</a></li>
     {% endfor %}
   {% else %}
     {% for category in categories_list %} 
-    	<li><a href="{{ BASE_PATH }}{{ site.categories_path }}#{{ category[0] }}-ref">
+    	<li><a href="{{ site.BASE_PATH }}{{ site.categories_path }}#{{ category[0] }}-ref">
     		{{ category[0] | join: "/" }} <span>{{ category[1].size }}</span>
     	</a></li>
     {% endfor %}
@@ -31,9 +31,9 @@ group: navigation
       {% if node.title != null %}
         {% if group == null or group == node.group %}
       	  {% if page.url == node.url %}
-      	  <li class="active"><a href="{{ BASE_PATH }}{{node.url}}" class="active">{{node.title}}</a></li>
+      	  <li class="active"><a href="{{ site.BASE_PATH }}{{node.url}}" class="active">{{node.title}}</a></li>
       	  {% else %}
-      	  <li><a href="{{ BASE_PATH }}{{node.url}}">{{node.title}}</a></li>
+      	  <li><a href="{{ site.BASE_PATH }}{{node.url}}">{{node.title}}</a></li>
       	  {% endif %}
         {% endif %}
       {% endif %}
