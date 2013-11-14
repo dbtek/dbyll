@@ -23,14 +23,14 @@
 		  {% assign categories_list = page.categories %}
 		  {% if categories_list.first[0] == null %}
 			{% for category in categories_list %} 
-				<li><a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category }}-ref">
+				<li><a href="{{ site.BASE_PATH }}{{ site.categories_path }}#{{ category }}-ref">
 					{{ category | join: "/" }} <span>({{ site.categories[category].size }})</span>
 					{% unless forloop.last %},{% endunless %}
 				</a></li>
 			{% endfor %}
 		  {% else %}
 			{% for category in categories_list %} 
-				<li><a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category[0] }}-ref">
+				<li><a href="{{ site.BASE_PATH }}{{ site.categories_path }}#{{ category[0] }}-ref">
 					{{ category[0] | join: "/" }} <span>/{{ category[1].size }})</span>
 				</a></li>
 			{% endfor %}
@@ -45,7 +45,7 @@
 		  {% if tags_list.first[0] == null %}
 			{% for tag in tags_list %} 
 				<li>
-					<a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag }}-ref">
+					<a href="{{ site.BASE_PATH }}{{ site.tags_path }}#{{ tag }}-ref">
 					{{ tag }} <span>({{ site.tags[tag].size }})</span>
 					{% unless forloop.last %},{% endunless %}
 					</a>
@@ -54,7 +54,7 @@
 		  {% else %}
 			{% for tag in tags_list %} 
 				<li>
-					<a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag[0] }}-ref">
+					<a href="{{ site.BASE_PATH }}{{ site.tags_path }}#{{ tag[0] }}-ref">
 						{{ tag[0] }} <span>({{ tag[1].size }})</span>
 						{% unless forloop.last %},{% endunless %}
 					</a>
@@ -70,12 +70,12 @@
 
 		<ul class="pager">
 		  {% if page.previous %}
-		  <li class="previous"><a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&larr; Previous</a></li>
+		  <li class="previous"><a href="{{ site.BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&larr; Previous</a></li>
 		  {% else %}
 		  <li class="previous disabled"><a>&larr; Previous</a></li>
 		  {% endif %}
 		  {% if page.next %}
-		  <li class="next"><a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">Next &rarr;</a></li>
+		  <li class="next"><a href="{{ site.BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">Next &rarr;</a></li>
 		  {% else %}
 			<li class="next disabled"><a>Next &rarr;</a>
 		  {% endif %}
