@@ -9,6 +9,7 @@ body{
 	top: 0px;
 	padding-top: 10%;
 }
+
 .sidebar-header {
 	text-align: center;
 	margin-bottom: 10px;
@@ -22,6 +23,16 @@ body{
 	text-decoration: none;
 	color: #2c3e50;
 }
+
+a.nav-link {
+	padding-bottom: 5px;
+	padding-top: 7px;
+	color: #aaa;
+}
+a.nav-link i{
+	font-size: 16px;
+}
+a.nav-link:hover { color: #777 }
 
 #bio {
 	font-family: "Courier New", Courier, monospace;
