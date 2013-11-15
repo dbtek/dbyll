@@ -2,44 +2,34 @@
 layout: page
 title: dbyll
 tagline:
+
 ---
+{% for post in site.posts %}
+<article class="home">
+<span class="post-date">
+{% assign d = post.date | date: "%d" | plus:'0' %}
+{{ post.date | date: "%B" }} 
+{% case d %}
+  {% when 1 or 21 or 31 %}{{ d }}st,
+  {% when 2 or 22 %}{{ d }}nd,
+  {% when 3 or 23 %}{{ d }}rd,
+  {% else %}{{ d }}th,
+{% endcase %}
+{{ post.date | date: "%Y" }}
+</span>
+<h2>
+	<a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
+</h2>
+<div>
 
-
-## Hello World!
-
-**dbyll** is minimalist, stylish theme for jekyll. Supports gravatar, account links (github, twitter, e-mail, pinterest, résume file) and a bio.  
-
-**dbyll** is brought to you by **[dbtek](http://ismaildemirbilek.com)**. Open sourced under [MIT](http://opensource.org/licenses/MIT) license.
-  
-### dbyll is on GitHub
-<a class="btn btn-default" href="https://github.com/dbtek/dbyll">Grab your copy now!</a>
-
-## Configuration
-
-In your config file change these settings
-<pre>
-<code>
-title: dbyll
-author:
-  name: yourname
-  email: youremail
-  github: asd123
-  twitter: asd123
-  pinterest: asd123
-  linkedin: asd123
-  resume: asd123
-  bio: Your stylish, minimalist theme!
-  email_md5: md5ofemail
-</code>
-</pre>
-
-
-## Posts
-
-<ul class="posts">
-  {% for post in site.posts %}
-    <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ site.BASE_PATH }}{{ post.url }}">{{ post.title }}</a></li>
-  {% endfor %}
-</ul>
-
-
+{% if post.fullview %}
+  {{ post.content }}
+{% else %}
+  <a href="{{post.url }}">
+  {% if post.shortinfo %}{{ post.shortinfo }}{% elsif post.description %}{{ post.description }}{% else %}..{% endif %}
+  </a>
+{% endif %}
+</div>
+</article>
+<hr/>
+{% endfor %}
