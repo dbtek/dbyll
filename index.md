@@ -18,14 +18,14 @@ tagline:
 {{ post.date | date: "%Y" }}
 </span>
 <h2>
-	<a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
+	<a href="{{ site.BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
 </h2>
 <div>
 
 {% if post.fullview %}
   {{ post.content }}
 {% else %}
-  <a href="{{post.url }}">
+  <a href="{{ site.BASE_PATH }}{{post.url }}">
   {% if post.shortinfo %}{{ post.shortinfo }}{% elsif post.description %}{{ post.description }}{% else %}..{% endif %}
   </a>
 {% endif %}
