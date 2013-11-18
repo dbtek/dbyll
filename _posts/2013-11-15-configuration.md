@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Configuration
-categories: [general,setup,demo]
-tags: [demo,dbyll,dbtek,setup]
+categories: [general, setup, demo]
+tags: [demo, dbyll, dbtek, setup]
 fullview: true
 ---
 
@@ -18,7 +18,7 @@ author:
   pinterest: asd123
   linkedin: asd123
   resume: asd123
-  bio: Your stylish, minimalist theme!
+  bio: Your stylish,  minimalist theme!
   email_md5: md5ofemail
 </code>
 </pre>
