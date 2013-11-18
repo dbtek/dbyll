@@ -1,8 +1,7 @@
 # visit https://github.com/mojombo/jekyll/wiki/Configuration for more settings
 
-auto: true # automatically update your jekyll
 server: true # runs a local server
-paginate: 10 # pagination basted on number of posts
+paginate: 10 # pagination based on number of posts
 exclude: ["README.md"] # files to exclude
 
 title: dbyll
@@ -17,7 +16,7 @@ author:
   bio: Your stylish, minimalist theme!
   email_md5: 726351295ec82e145928582f595aa3aa
   
-BASE_PATH: http://dbtek.github.io/dbyll/
+BASE_PATH: http://dbtek.github.io/dbyll
 
 categories_path: categories.html
 tags_path: tags.html
