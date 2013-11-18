@@ -4,8 +4,47 @@
 {% include header.html %}
 
    <body>
+   		<nav class="navbar navbar-default visible-xs" role="navigation">
+		  <!-- Brand and toggle get grouped for better mobile display -->
+		  <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			  <span class="sr-only">Toggle navigation</span>
+			  <span class="icon-bar"></span>
+			  <span class="icon-bar"></span>
+			  <span class="icon-bar"></span>
+			</button>
+			{% if site.author.github %}
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/{{ site.author.github }}">
+		      <i class="fa fa-github"></i>
+		    </a>
+		    {% endif %}
+		    {% if site.author.twitter %}
+		    <a type="button" class="navbar-toggle nav-link" href="http://twitter.com/{{ site.author.twitter }}">
+		      <i class="fa fa-twitter"></i>
+		    </a>
+		    {% endif %}
+		    {% if site.author.email %}
+		    <a type="button" class="navbar-toggle nav-link" href="mailto:{{ site.author.email }}">
+		      <i class="fa fa-envelope"></i>
+		    </a>
+		    {% endif %}
+			<a class="navbar-brand" href="{{ site.BASE_PATH }}">
+				<img src="http://www.gravatar.com/avatar/{{site.author.email_md5}}?s=35" class="img-circle" />
+				{{ site.title }}
+			</a>
+		  </div>
 
-		<div class="col-sm-3 sidebar">
+		  <!-- Collect the nav links, forms, and other content for toggling -->
+		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+			  <li class="active"><a href="{{ site.BASE_PATH }}">Home</a></li>
+			  <li><a href="{{ site.BASE_PATH}}{{ site.categories_path }}">Categories</a></li>
+  			  <li><a href="{{ site.BASE_PATH}}{{ site.tags_path }}">Tags</a></li>
+			</ul>
+		  </div><!-- /.navbar-collapse -->
+		</nav>
+
+		<div class="col-sm-3 sidebar hidden-xs">
 			{% include sidebar.html %}
 		</div>
 
