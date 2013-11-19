@@ -1,7 +1,8 @@
 dbyll
 =====
 
-Open source stylish, minimalistic theme for jekyll.
+Open source stylish, minimalistic theme for jekyll.  
+Demo: http://dbtek.github.io/dbyll/
 
 ### Features
 - Pagination. (New)
