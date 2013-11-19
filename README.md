@@ -19,7 +19,7 @@ Demo: http://dbtek.github.io/dbyll/
 
 ### Snapshots
 
-![dbyll-screenshot](http://ismaildemirbilek.com/assets/media/2013/11/dbyll-ss.png)
+![dbyll-screenshot](http://dbtek.gihtub.io/dbyll/assets/media/dbyll-ss.png)
 
 ### License
 - [MIT](http://opensource.org/licenses/MIT)
