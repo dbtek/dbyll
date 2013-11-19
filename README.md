@@ -3,6 +3,16 @@ dbyll
 
 Open source stylish, minimalistic theme for jekyll.
 
+### Features
+- Pagination. (New)
+- Syntax highlighting with pygments. (New)
+- Responsive layout.
+- Supports tags and categories.
+- Social profile and bio of author.
+- Bootstrap based.
+- Glyphicon and Font-Awesome Icons.
+
+
 ### Download
 * [Download dbyll](https://github.com/dbtek/dbyll/archive/master.zip)
 
@@ -11,7 +21,8 @@ Open source stylish, minimalistic theme for jekyll.
 ![dbyll-screenshot](http://ismaildemirbilek.com/assets/media/2013/11/dbyll-ss.png)
 
 ### License
-[MIT](http://opensource.org/licenses/MIT)
+- [MIT](http://opensource.org/licenses/MIT)
+
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dbtek/dbyll/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
