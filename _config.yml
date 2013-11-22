@@ -18,7 +18,7 @@ author:
   bio: Your stylish, minimalist theme!
   email_md5: 726351295ec82e145928582f595aa3aa
   
-BASE_PATH: http://dbtek.github.io/dbyll/
+BASE_PATH: http://dbtek.github.io/dbyll
 
 rss_path: feed.xml
 categories_path: categories.html
