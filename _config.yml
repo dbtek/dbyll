@@ -22,7 +22,7 @@ rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
 
-BASE_PATH:
+BASE_PATH: http://dbtek.github.io/dbyll
 
 # All links will be namespaced by BASE_PATH if defined.
 # Links in your website should always be prefixed with {{ site.BASE_PATH }}
@@ -37,5 +37,5 @@ BASE_PATH:
 #   (urls will be prefixed with "/" and work relatively)
 #
 # GitHub Project Pages (http://username.github.io/project-name)
-  #  A GitHub Project site exists in the `gh-pages` branch of one of your repositories.
-  #  REQUIRED! Set BASE_PATH to "http://username.github.io/project-name"
+#  A GitHub Project site exists in the `gh-pages` branch of one of your repositories.
+#  REQUIRED! Set BASE_PATH to "http://username.github.io/project-name"
