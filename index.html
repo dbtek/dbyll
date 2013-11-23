@@ -21,7 +21,7 @@ tagline:
                 </span>
 
                 <h2>
-                        <a href="{{ site.BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
+                        <a href="{{ site.BASE_PATH }}/{{ post.url }}">{{ post.title }}</a>
                 </h2>
 
                 <div>
@@ -42,7 +42,7 @@ tagline:
   {% if paginator.previous_page %}
     <li class="previous">
       {% if paginator.previous_page == 1 %}
-        <a href="{{ site.BASE_PATH }}">&larr; Newer</a>
+        <a href="{{ site.BASE_PATH }}/">&larr; Newer</a>
       {% else %}
         <a href="{{ site.BASE_PATH }}/page{{ paginator.previous_page }}">&larr; Newer</a>
       {% endif %}
@@ -59,7 +59,7 @@ tagline:
 
   {% if paginator.next_page %}
     <li class="next">
-            <a href="{{ site.BASE_PATH }}page{{ paginator.next_page }}">Older &rarr;</a>        
+            <a href="{{ site.BASE_PATH }}/page{{ paginator.next_page }}">Older &rarr;</a>
     </li>
   {% else %}
     <li class="next disabled">
