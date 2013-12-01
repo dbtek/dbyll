@@ -67,9 +67,32 @@ h1,h2,h3,h4,h5,h6{ font-family: 'Ubuntu', sans-serif; color: #f2756a; }
 h1 a,h2 a,h3 a,h4 a{ color: #f2756a; }
 h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover{ color: #e74c3c; }
 
-
-
 footer {
 	padding-top: 15px;
 	font-family: 'Ubuntu';
 }
+
+/* nav-vertical-tabs component */
+.nav-tabs-vertical {
+    border-right: 1px solid #ddd;
+}
+
+.nav-tabs-vertical li {
+    margin-right: -1px;
+}
+
+.nav-tabs-vertical>li.active>a, .nav-tabs-vertical>li.active>a:hover, .nav-tabs-vertical>li.active>a:focus {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-right-color: transparent;
+}
+
+.nav-tabs-vertical>li>a {
+    line-height: 1.428571429;
+    border: 1px solid transparent;
+    border-radius: 4px 0 0 4px;
+}
+
+.badge { background: #F2756A; }
