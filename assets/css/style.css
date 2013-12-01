@@ -96,3 +96,14 @@ footer {
 }
 
 .badge { background: #F2756A; }
+
+#nav-menu{
+    position: fixed;
+    top: 45px;
+    right: 45px;
+    z-index: 2000;
+}
+#nav-menu .dropdown-menu {
+    left: inherit;
+    right: 0px;
+}
