@@ -5,7 +5,7 @@ header: Posts By Category
 group: navigation
 ---
 
-<div class="col-sm-3">
+<div class="col-sm-3 col-xs-6">
     <ul class="nav nav-tabs-vertical">
       {% assign categories_list = site.categories %}
       {% if categories_list.first[0] == null %}
@@ -29,7 +29,7 @@ group: navigation
     </ul>
 </div>
 <!-- Tab panes -->
-<div class="tab-content col-sm-9">
+<div class="tab-content col-sm-9 col-xs-6">
   {% for category in site.categories %}
     <div class="tab-pane" id="{{ category[0] }}-ref">
       <h2 style="margin-top: 0px">Posts in {{ category[0] | capitalize }}</h2>
