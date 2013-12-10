@@ -5,7 +5,7 @@ header: Posts By Tag
 group: navigation
 ---
 
-<div class="col-sm-3">
+<div class="col-sm-3 col-xs-6">
     <ul class="nav nav-tabs-vertical">
       {% assign tags_list = site.tags %}
        {% if tags_list.first[0] == null %}
@@ -29,7 +29,7 @@ group: navigation
     </ul>
 </div>
 <!-- Tab panes -->
-<div class="tab-content col-sm-9">
+<div class="tab-content col-sm-9 col-xs-6">
   {% for tag in site.tags %}
     <div class="tab-pane" id="{{ tag[0] }}-ref">
       <h2 style="margin-top: 0px">Posts tagged  with {{ tag[0] }}</h2>
