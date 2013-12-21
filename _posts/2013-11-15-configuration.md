@@ -7,8 +7,7 @@ fullview: true
 ---
 
 In your config file change these settings
-<pre>
-<code>
+```
 title: dbyll
 author:
   name: yourname
@@ -20,5 +19,4 @@ author:
   resume: asd123
   bio: Your stylish,  minimalist theme!
   email_md5: md5ofemail
-</code>
-</pre>
+```
