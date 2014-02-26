@@ -11,7 +11,7 @@ group: navigation
        {% if tags_list.first[0] == null %}
         {% for tag in tags_list %}
             <li>
-                <a href="#{{ tag }}-ref" data-toggle="tab">
+                <a href="#{{ tag | replace:' ','-' }}-ref" data-toggle="tab">
                   {{ tag | capitalize }} <span class="badge pull-right">{{ site.tags[tag].size }}</span>
                </a>
             </li>
@@ -19,7 +19,7 @@ group: navigation
       {% else %}
         {% for tag in tags_list %}
             <li>
-                <a href="#{{ tag[0] }}-ref" data-toggle="tab">
+                <a href="#{{ tag[0] | replace:' ','-' }}-ref" data-toggle="tab">
                     {{ tag[0] | capitalize }} <span class="badge pull-right">{{ tag[1].size }}</span>
                 </a>
             </li>
@@ -31,7 +31,7 @@ group: navigation
 <!-- Tab panes -->
 <div class="tab-content col-sm-9 col-xs-6">
   {% for tag in site.tags %}
-    <div class="tab-pane" id="{{ tag[0] }}-ref">
+    <div class="tab-pane" id="{{ tag[0] | replace:' ','-' }}-ref">
       <h2 style="margin-top: 0px">Posts tagged  with {{ tag[0] }}</h2>
       <ul class="list-unstyled">
         {% assign pages_list = tag[1] %}
