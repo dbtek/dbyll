@@ -5,47 +5,35 @@ header: Posts By Tag
 group: navigation
 ---
 
+{% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+{% assign tag_words = site_tags | split:',' | sort %}
+
+
 <div class="col-sm-3 col-xs-6">
     <ul class="nav nav-tabs-vertical">
-      {% assign tags_list = site.tags %}
-       {% if tags_list.first[0] == null %}
-        {% for tag in tags_list %}
-            <li>
-                <a href="#{{ tag | replace:' ','-' }}-ref" data-toggle="tab">
-                  {{ tag | capitalize }} <span class="badge pull-right">{{ site.tags[tag].size }}</span>
-               </a>
-            </li>
-        {% endfor %}
-      {% else %}
-        {% for tag in tags_list %}
-            <li>
-                <a href="#{{ tag[0] | replace:' ','-' }}-ref" data-toggle="tab">
-                    {{ tag[0] | capitalize }} <span class="badge pull-right">{{ tag[1].size }}</span>
-                </a>
-            </li>
-        {% endfor %}
-      {% endif %}
-      {% assign tags_list = nil %}
-    </ul>
+    {% for item in (0..site.tags.size) %}{% unless forloop.last %}
+      {% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+      <li>
+          <a href="#{{ this_word | cgi_escape }}-ref" data-toggle="tab">
+            {{ this_word }}<span class="badge pull-right">{{ site.tags[this_word].size }}</span>
+         </a>
+      </li>
+   {% endunless %}{% endfor %}
+   </ul>
 </div>
 <!-- Tab panes -->
 <div class="tab-content col-sm-9 col-xs-6">
-  {% for tag in site.tags %}
-    <div class="tab-pane" id="{{ tag[0] | replace:' ','-' }}-ref">
-      <h2 style="margin-top: 0px">Posts tagged  with {{ tag[0] }}</h2>
+  {% for item in (0..site.tags.size) %}{% unless forloop.last %}
+    {% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+    <div class="tab-pane" id="{{ this_word | cgi_escape }}-ref">
+      <h2 style="margin-top: 0px">Posts tagged  with {{ this_word }}</h2>
       <ul class="list-unstyled">
-        {% assign pages_list = tag[1] %}
-        {% for node in pages_list %}
-          {% if node.title != null %}
-            {% if group == null or group == node.group %}
-              <li style="line-height: 35px;"><a href="{{ site.BASE_PATH }}{{node.url}}">{{node.title}}</a> <span class="text-muted">- {{ node.date | date: "%B %d, %Y" }}</span></li>
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-        {% assign pages_list = nil %}
+        {% for post in site.tags[this_word] %}{% if post.title != null %}
+          <li style="line-height: 35px;"><a href="{{ site.BASE_PATH }}{{post.url}}">{{post.title}}</a> <span class="text-muted">- {{ post.date | date: "%B %d, %Y" }}</span></li>
+        {% endif %}{% endfor %}
       </ul>
     </div>
-  {% endfor %}
+  {% endunless %}{% endfor %}
 </div>
 
 <div class="clearfix"></div>
