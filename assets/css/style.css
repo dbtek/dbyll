@@ -8,6 +8,8 @@ body{
 	position: fixed;
 	top: 0px;
 	padding-top: 10%;
+	background-color: #2c3e50;
+	color: #fff;
 }
 
 .sidebar-header {
@@ -21,7 +23,7 @@ body{
 
 .sidebar-header .title a{
 	text-decoration: none;
-	color: #2c3e50;
+	color: #fff;
 }
 
 a.nav-link {
@@ -41,8 +43,47 @@ a.nav-link:hover { color: #777 }
 	margin-bottom: 10px;
 }
 
+#contact-list li .fa,
+article .share .btn {
+	-o-transition:color .2s ease-out, background 1s ease-in;
+  -ms-transition:color .2s ease-out, background 1s ease-in;
+  -moz-transition:color .2s ease-out, background 1s ease-in;
+  -webkit-transition:color .2s ease-out, background 1s ease-in;
+  transition:color .2s ease-out, background 1s ease-in;
+}
+#contact-list li:hover .fa-twitter,
+article .share .twitter:hover {
+	color: #00ACEE;
+	border-color: #00ACEE;
+}
+#contact-list li:hover .fa-linkedin {
+	color: #1D87BD;
+}
+#contact-list li:hover .fa-envelope {
+	color: #E93E30;
+}
+#contact-list li:hover .fa-pinterest {
+	color: #CC2127;
+}
+#contact-list li:hover .fa-rss {
+	color: #e74c3c;
+}
+article .share .facebook:hover {
+	color: #43609C;
+	border-color: #43609C;
+}
+article .share .gplus:hover {
+	color: #C13929;
+	border-color: #C13929;
+}
+
 #contact-list-secondary {
 	padding-bottom: 10px;
+}
+
+.page-header {
+	color: #e74c3c;
+	text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
 }
 
 article{
@@ -60,13 +101,42 @@ article{
 	letter-spacing: 3px;
 }
 
+article {
+	padding: 0 5% 0;
+}
+
 article.home div a, article.home pre a { color: #2c3e50; }
 article.home div a:hover, article.home pre a:hover { color: #2c3e50; text-decoration: none; }
 article img { max-width: 100%; }
 
-h1,h2,h3,h4,h5,h6{ font-family: 'Ubuntu', sans-serif; color: #f2756a; }
-h1 a,h2 a,h3 a,h4 a{ color: #f2756a; }
-h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover{ color: #e74c3c; }
+h1,h2,h3,h4,h5,h6 { font-family: 'Ubuntu', sans-serif; }
+article.home h1,
+article.home h2,
+article.home h3,
+article.home h4,
+article.home h5,
+article.home h6 {
+	font-family: 'Ubuntu', sans-serif;
+	color: #f2756a;
+}
+
+article.home h1 a,
+article.home h2 a,
+article.home h3 a,
+article.home h4 a {
+	color: #f2756a;
+}
+article.home h1 a:hover,
+article.home h2 a:hover,
+article.home h3 a:hover,
+article.home h4 a:hover {
+	color: #e74c3c;
+}
+
+.author .author-image {
+  float: left;
+  margin-right: 20px;
+}
 
 footer {
 	padding-top: 15px;
