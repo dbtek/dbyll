@@ -44,19 +44,19 @@
 		  </div><!-- /.navbar-collapse -->
 		</nav>
 
-       <!-- nav-menu-dropdown -->
-       <div class="btn-group hidden-xs" id="nav-menu">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-bars"></i>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ site.BASE_PATH}}/"><i class="fa fa-home"></i> Home</a></li>
-            <li><a href="{{ site.BASE_PATH}}/{{ site.categories_path }}"><i class="fa fa-folder"></i> Categories</a></li>
-            <li><a href="{{ site.BASE_PATH}}/{{ site.tags_path }}"><i class="fa fa-tags"></i> Tags</a></li>
-              <li class="divider"></li>
-            <li><a href="#"><i class="fa fa-arrow-up"></i> Top of Page</a></li>
-          </ul>
-       </div>
+		<!-- nav-menu-dropdown -->
+		<div class="btn-group hidden-xs" id="nav-menu">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				<i class="fa fa-bars"></i>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="{{ site.BASE_PATH}}/"><i class="fa fa-home"></i> Home</a></li>
+				<li><a href="{{ site.BASE_PATH}}/{{ site.categories_path }}"><i class="fa fa-folder"></i> Categories</a></li>
+				<li><a href="{{ site.BASE_PATH}}/{{ site.tags_path }}"><i class="fa fa-tags"></i> Tags</a></li>
+				<li class="divider"></li>
+				<li><a href="#"><i class="fa fa-arrow-up"></i> Top of Page</a></li>
+			</ul>
+		</div>
 
 		<div class="col-sm-3 sidebar hidden-xs">
 			{% include sidebar.html %}
@@ -66,24 +66,21 @@
 			{{ content }}
 
 			{% include footer.html %}
-
 		</div>
 
-    
-	<script type="text/javascript" src="{{ site.BASE_PATH }}/assets/resources/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="{{ site.BASE_PATH }}/assets/resources/bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="{{ site.BASE_PATH }}/assets/js/app.js"></script>
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	
-	  ga('create', 'UA-46512232-2', 'dbtek.github.io');
-	  ga('send', 'pageview');
-	
-	</script>
-   </body>
-
+		<script type="text/javascript" src="{{ site.BASE_PATH }}/assets/resources/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="{{ site.BASE_PATH }}/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="{{ site.BASE_PATH }}/assets/js/app.js"></script>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		  ga('create', 'UA-46512232-2', 'dbtek.github.io');
+		  ga('send', 'pageview');
+		
+		</script>
+	</body>
 </html>
 
