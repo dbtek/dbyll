@@ -20,9 +20,9 @@ Dbyll for Ghost is now available. Get it [here](https://github.com/dbtek/dbyll-g
 ### Download
 * [Download dbyll](https://github.com/dbtek/dbyll/archive/master.zip)
 
-### Snapshots
+### Screenshots
 
-![dbyll-screenshot](http://dbtek.github.io/dbyll/assets/media/dbyll-ss.png)
+![dbyll-screenshot](	assets/media/dbyll-ss.png)
 
 ### License
 - [MIT](http://opensource.org/licenses/MIT)
