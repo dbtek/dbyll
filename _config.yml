@@ -8,6 +8,7 @@ markdown: kramdown
 
 title: dbyll
 description: Stylish Jekyll Theme
+disqus:  # add disqus short name here
 author:
   name: dbyll
   email: dbyll@ismaildemirbilek.com
