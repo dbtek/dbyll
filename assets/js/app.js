@@ -9,8 +9,8 @@ $( document ).ready(function() {
 	
 	scontacts.hide();
 	
-	contact_list.mouseenter(function(){ scontacts.slideDown(); });
+	contact_list.mouseenter(function(){ scontacts.fadeIn(); });
 	
-	contact_list.mouseleave(function(){ scontacts.slideUp(); });
+	contact_list.mouseleave(function(){ scontacts.fadeOut(); });
 
 });
