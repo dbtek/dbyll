@@ -4,6 +4,7 @@ paginate: 10 # pagination based on number of posts
 paginate_path: "page:num"
 exclude: ["README.md"] # files to exclude
 pygments: true
+markdown: kramdown
 
 title: dbyll
 description: Stylish Jekyll Theme
@@ -21,4 +22,4 @@ rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
 
-BASE_PATH: http://dbtek.github.io/dbyll
+BASE_PATH:
