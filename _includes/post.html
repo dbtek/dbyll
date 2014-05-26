@@ -1,7 +1,8 @@
+<div class="page-header">
+  <h1>{{ page.title }} {% if page.tagline %}<small>{{page.tagline}}</small>{% endif %}</h1>
+</div>
+	
 <article>
-	<div class="page-header">
-	  <h1>{{ page.title }} {% if page.tagline %}<small>{{page.tagline}}</small>{% endif %}</h1>
-	</div>
 
 	<div class="col-sm-10">
 	 <span class="post-date">
@@ -96,6 +97,8 @@
         <p class="author-bio">{{site.author.bio}}</p>
       </section>
     </div>
+
+    <div class="clearfix"></div>
 
 		<ul class="pager">
 		  {% if page.previous %}
