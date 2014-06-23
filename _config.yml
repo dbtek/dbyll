@@ -6,7 +6,14 @@ exclude: ["README.md"] # files to exclude
 pygments: true
 markdown: kramdown
 
-title: dbyll
+
+defaults:
+  -
+    scope:
+      path: "" # empty string for all files
+    values:
+      title: dbyll
+
 description: Stylish Jekyll Theme
 author:
   name: dbyll
