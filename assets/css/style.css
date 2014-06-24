@@ -178,3 +178,8 @@ footer {
     left: inherit;
     right: 0px;
 }
+
+ul.dropdown-menu>li>a>i.fa {
+    width: 1.3em;
+}
+
