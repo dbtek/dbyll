@@ -30,6 +30,13 @@
 			</a>
 		</li>
 		{% endif %}
+		{% if site.author.skype %}
+		<li>
+			<a class="btn btn-default btn-sm" href="skype:{{ site.author.skype }}?add">
+				<i class="fa fa-skype fa-lg"></i>
+			</a>
+		</li>
+		{% endif %}
 		{% if site.author.email %}
 		<li>
 			<a class="btn btn-default btn-sm" href="mailto:{{ site.author.email }}">

@@ -15,6 +15,7 @@ author:
   email: youremail  
   github: asd123  
   twitter: asd123  
+  skype: asd123
   pinterest: asd123  
   linkedin: asd123  
   resume: asd123  

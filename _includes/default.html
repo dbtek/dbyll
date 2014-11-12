@@ -53,6 +53,11 @@
 				<i class="fa fa-twitter"></i>
 			</a>
 			{% endif %}
+			{% if site.author.skype %}
+			<a type="button" class="navbar-toggle nav-link" href="skype:{{ site.author.skype }}?add">
+				<i class="fa fa-skype"></i>
+			</a>
+			{% endif %}
 			{% if site.author.email %}
 			<a type="button" class="navbar-toggle nav-link" href="mailto:{{ site.author.email }}">
 				<i class="fa fa-envelope"></i>
