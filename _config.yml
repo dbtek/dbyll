@@ -3,7 +3,7 @@
 paginate: 10 # pagination based on number of posts
 paginate_path: "page:num"
 exclude: ["README.md"] # files to exclude
-pygments: true
+highlighter: pygments
 
 title: dbyll
 description: Stylish Jekyll Theme
@@ -12,6 +12,7 @@ author:
   email: dbyll@ismaildemirbilek.com
   github: dbtek
   twitter: asd123
+  skype: dbtek
   pinterest: asd123
   linkedin: asd123
   bio: Your stylish, minimalist theme!
