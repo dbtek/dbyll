@@ -4,74 +4,80 @@
 
 <article>
 
-	<div class="col-sm-10">
-	 <span class="post-date">
-	   {% assign d = page.date | date: "%d" | plus:'0' %}
-	   {{ page.date | date: "%B" }} 
-	   {% case d %}
-	     {% when 1 or 21 or 31 %}{{ d }}st,
-	     {% when 2 or 22 %}{{ d }}nd,
-	     {% when 3 or 23 %}{{ d }}rd,
-	     {% else %}{{ d }}th,
-	   {% endcase %}
-	   {{ page.date | date: "%Y" }}
-	 </span>
-	  <div class="article_body">
-	  {{ content }}
-	  </div>
+  <div class="col-sm-10">
+   <span class="post-date">
+     {% assign d = page.date | date: "%d" | plus:'0' %}
+     {{ page.date | date: "%B" }} 
+     {% case d %}
+       {% when 1 or 21 or 31 %}{{ d }}st,
+       {% when 2 or 22 %}{{ d }}nd,
+       {% when 3 or 23 %}{{ d }}rd,
+       {% else %}{{ d }}th,
+     {% endcase %}
+     {{ page.date | date: "%Y" }}
+   </span>
+    <div class="article_body">
+      <!-- project-block -->
+      <ins class="adsbygoogle pull-right"
+           style="display:inline-block;width:300px;height:250px"
+           data-ad-client="ca-pub-7616772085785107"
+           data-ad-slot="7971084020"></ins>
+      {{ content }}
+      <div class="clearfix"></div>
+    </div>
 
-		{% unless page.categories == empty %}
-		<ul class="tag_box list-unstyled list-inline">
-		  <li><i class="fa fa-folder-open"></i></li>
-		  {% assign categories_list = page.categories %}
-		  {% if categories_list.first[0] == null %}
-			{% for category in categories_list %} 
-				<li><a href="{{ site.BASE_PATH }}/{{ site.categories_path }}#{{ category }}-ref">
-					{{ category | join: "/" }} <span>({{ site.categories[category].size }})</span>
-					{% unless forloop.last %},{% endunless %}
-				</a></li>
-			{% endfor %}
-		  {% else %}
-			{% for category in categories_list %} 
-				<li><a href="{{ site.BASE_PATH }}/{{ site.categories_path }}#{{ category[0] }}-ref">
-					{{ category[0] | join: "/" }} <span>/{{ category[1].size }})</span>
-				</a></li>
-			{% endfor %}
-		  {% endif %}
-		</ul>
-		{% endunless %}  
+    {% unless page.categories == empty %}
+    <ul class="tag_box list-unstyled list-inline">
+      <li><i class="fa fa-folder-open"></i></li>
+      {% assign categories_list = page.categories %}
+      {% if categories_list.first[0] == null %}
+      {% for category in categories_list %} 
+        <li><a href="{{ site.BASE_PATH }}/{{ site.categories_path }}#{{ category }}-ref">
+          {{ category | join: "/" }} <span>({{ site.categories[category].size }})</span>
+          {% unless forloop.last %},{% endunless %}
+        </a></li>
+      {% endfor %}
+      {% else %}
+      {% for category in categories_list %} 
+        <li><a href="{{ site.BASE_PATH }}/{{ site.categories_path }}#{{ category[0] }}-ref">
+          {{ category[0] | join: "/" }} <span>/{{ category[1].size }})</span>
+        </a></li>
+      {% endfor %}
+      {% endif %}
+    </ul>
+    {% endunless %}  
 
-		{% unless page.tags == empty %}
-		<ul class="list-inline">
-		  <li><i class="fa fa-tags"></i></li>
-		  {% assign tags_list = page.tags %}
-		  {% if tags_list.first[0] == null %}
-			{% for tag in tags_list %} 
-				<li>
-					<a href="{{ site.BASE_PATH }}/{{ site.tags_path }}#{{ tag }}-ref">
-					{{ tag }} <span>({{ site.tags[tag].size }})</span>
-					{% unless forloop.last %},{% endunless %}
-					</a>
-				</li>
-			{% endfor %}
-		  {% else %}
-			{% for tag in tags_list %} 
-				<li>
-					<a href="{{ site.BASE_PATH }}/{{ site.tags_path }}#{{ tag[0] }}-ref">
-						{{ tag[0] }} <span>({{ tag[1].size }})</span>
-						{% unless forloop.last %},{% endunless %}
-					</a>
-				</li>
+    {% unless page.tags == empty %}
+    <ul class="list-inline">
+      <li><i class="fa fa-tags"></i></li>
+      {% assign tags_list = page.tags %}
+      {% if tags_list.first[0] == null %}
+      {% for tag in tags_list %} 
+        <li>
+          <a href="{{ site.BASE_PATH }}/{{ site.tags_path }}#{{ tag }}-ref">
+          {{ tag }} <span>({{ site.tags[tag].size }})</span>
+          {% unless forloop.last %},{% endunless %}
+          </a>
+        </li>
+      {% endfor %}
+      {% else %}
+      {% for tag in tags_list %} 
+        <li>
+          <a href="{{ site.BASE_PATH }}/{{ site.tags_path }}#{{ tag[0] }}-ref">
+            {{ tag[0] }} <span>({{ tag[1].size }})</span>
+            {% unless forloop.last %},{% endunless %}
+          </a>
+        </li>
 
-			{% endfor %}
-		  {% endif %}
-		  {% assign tags_list = nil %}
-		</ul>
-		{% endunless %}  
+      {% endfor %}
+      {% endif %}
+      {% assign tags_list = nil %}
+    </ul>
+    {% endunless %}  
 
-		<hr>
+    <hr>
 
-		<div>
+    <div>
       <section class="share col-sm-6">
         <h4 class="section-title">Share Post</h4>
         <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text={{page.title | encode}}{% if site.author.twitter%}&via={{site.author.twitter}}{% endif %}"
@@ -100,42 +106,42 @@
 
     <div class="clearfix"></div>
 
-		<ul class="pager">
-		  {% if page.previous %}
-		  <li class="previous"><a href="{{ site.BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&larr; Previous</a></li>
-		  {% else %}
-		  <li class="previous disabled"><a>&larr; Previous</a></li>
-		  {% endif %}
-		  {% if page.next %}
-		  <li class="next"><a href="{{ site.BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">Next &rarr;</a></li>
-		  {% else %}
-			<li class="next disabled"><a>Next &rarr;</a>
-		  {% endif %}
-		</ul>
+    <ul class="pager">
+      {% if page.previous %}
+      <li class="previous"><a href="{{ site.BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&larr; Previous</a></li>
+      {% else %}
+      <li class="previous disabled"><a>&larr; Previous</a></li>
+      {% endif %}
+      {% if page.next %}
+      <li class="next"><a href="{{ site.BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">Next &rarr;</a></li>
+      {% else %}
+      <li class="next disabled"><a>Next &rarr;</a>
+      {% endif %}
+    </ul>
 
-		<hr>
-		{% if site.disqus %}
-		<section class="comments" style="margin-top:15px;">
-		  <div id="disqus_thread"></div>
-		  <script type="text/javascript">
-		    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-		    var disqus_shortname = '{{ site.disqus }}'; // required: replace example with your forum shortname
-		    if(disqus_shortname){
-		      /* * * DON'T EDIT BELOW THIS LINE * * */
-		      (function() {
-		        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-		        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-		        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-		      })();
-		    }
-		  </script>
-		  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-		</section>
-		{% endif %}
-	</div>
+    <hr>
+    {% if site.disqus %}
+    <section class="comments" style="margin-top:15px;">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = '{{ site.disqus }}'; // required: replace example with your forum shortname
+        if(disqus_shortname){
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+        }
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+    {% endif %}
+  </div>
 
-	<div class="col-sm-2 sidebar-2">
-	</div>
-	<div class="clearfix"></div>
+  <div class="col-sm-2 sidebar-2">
+  </div>
+  <div class="clearfix"></div>
 </article>
 <div class="clearfix"></div>
