@@ -10,6 +10,7 @@ In your config file change these settings
 
 {% highlight yaml %}
 title: dbyll
+disqus: dbyll-ghost # disqus short name
 author:  
   name: yourname  
   email: youremail  
