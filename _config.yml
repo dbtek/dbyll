@@ -12,19 +12,18 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: dbyll
+      title: Developer's Note
 
 description: Stylish Jekyll Theme
 author:
-  name: dbyll
-  email: dbyll@ismaildemirbilek.com
-  github: dbtek
-  twitter: dbtek
-  pinterest: asd123
-  linkedin: asd123
-  bio: Your stylish, minimalist theme!
-  email_md5: 726351295ec82e145928582f595aa3aa
-
+  name: muzir
+  email: baycelik_erhun@hotmail.com
+  github: muzir
+  twitter: erhunbaycelik
+  stackoverflow: 1577363
+  linkedin: erhunbaycelik/
+  bio: Waiting is painful. Forgetting is painful. But not knowing which to do is the worse kind of suffering. Paulo Coelho	
+  email_md5: ae62fee595816cf8bf939fb4ddba6a98
 rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
