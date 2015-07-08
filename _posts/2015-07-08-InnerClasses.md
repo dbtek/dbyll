@@ -4,6 +4,7 @@ title: Inner Classes!
 categories: [ThinkingInJava, java, javaSE]
 tags: [java, tutorial, javaSE]
 fullview: true
+description: Sample placeholder post.
 ---
 
 

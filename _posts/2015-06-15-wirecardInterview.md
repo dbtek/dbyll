@@ -37,7 +37,7 @@ ve ardinda bu alan icin bir format belirlenmis, +4987343324 bundan sonrasi icin 
 ozel karakterler cikarildiginda esit olan numaralar tekrar kaydedilmek istenmiyor. Yani yeni formata gore gelen +4987343324 numarasi aslinda oncesinde su sekilde kaydedilmis +0--04987343324.
 Istenen bu durumda bu tekilli nasil saglayacagin. Ben bu soruya cevap veremedim. Aslinda soyle bir kontrol yazdim
 
-{% highlight yaml %}
+{% highlight sql %}
 
 select count(*) from person p where escapeCharacter(p.phone)=:phone
 
