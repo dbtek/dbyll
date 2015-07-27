@@ -75,5 +75,4 @@ Bu uzun mesajdan da anlasilacagi uzere uygulama veritabanina baglanamiyor aslind
 		<property name="maxActive" value="10" />
 		<property name="testWhileIdle" value="true" />
 		<property name="validationQuery" value="SELECT 1" />
-
-	</bean>
+</bean>
