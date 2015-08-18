@@ -6,7 +6,7 @@ tags: [tech]
 fullview: true
 ---
 
-azorka web uygulamami Digital Ocean'a sunucuma yukledikten bir sure sonra uygulama veri tabani hatasi aliyordu. Logu kontrol ettigimde asagadaki hata mesaji ile karsilastim:
+[azorka web](https://github.com/muzir/azorka.web) uygulamami Digital Ocean'da bulunan sunucuma yukledikten bir sure sonra(ne kadar oldugunu bilmiyorum hic baglanti yapilmadan birkac saat icinde) uygulama veri tabani hatasi aliyordu. Logu kontrol ettigimde asagadaki hata mesaji ile karsilastim:
 
 {% highlight yaml %}
 
@@ -67,7 +67,7 @@ at java.lang.Thread.run(Thread.java:745)
 
 {% endhighlight %}
 
-Bu uzun mesajdan da anlasilacagi uzere uygulama veritabanina baglanamiyor aslinda baglanti belli bir sure sonra kapaniyor. Google da sorunu arastirdigimda stackoverflow da bu faydali soru cevabi buldum. http://stackoverflow.com/questions/11125962/correct-way-to-keep-pooled-connections-alive-or-time-them-out-and-get-fresh-one  kabul gore cevap hem Apache DBCP Pool linkini veriyor http://commons.apache.org/proper/commons-dbcp/configuration.html hemde en basit cozum yolunun baglantiyi acik tutmak adina baglantilar oncesinde bir kontrol scripti calistirmak oldugunu soyluyor. validationQuery="select 1" scripti ile MYSQL her zaman bu sorguya 1 donecektir ve baglanti oncesinde baglantinin ayakta oldugu bu yolla test edilecektir. Benim ornek pool konfigurasyonum asagadadir. 
+Bu uzun mesajdan da anlasilacagi uzere uygulama veritabanina baglanamiyor. Aslinda baglanti belli bir sure acik kaliyor ardindan baglanti istegi gelmedigi icin baglanti havuzunda(connection pool) hazir bir baglanti olmuyor ve bu hata aliniyor.Google da sorunu arastirdigimda stackoverflow da bu faydali soru cevabi buldum. [SO sorusuna](http://stackoverflow.com/questions/11125962/correct-way-to-keep-pooled-connections-alive-or-time-them-out-and-get-fresh-one) ve kabul goren cevap hem Apache [DBCP Pool](http://commons.apache.org/proper/commons-dbcp/configuration.html) linkini veriyor  hemde en basit cozum yolunun baglantiyi acik tutmak adina baglanti oncesinde bir kontrol scripti calistirmak oldugunu soyluyor. validationQuery="select 1" scripti ile MYSQL her zaman bu sorguya 1 donecektir ve baglanti oncesinde baglantinin ayakta oldugu bu yolla test edilecektir. Benim ornek pool konfigurasyonum asagadadir. 
 
 {% highlight xml %}
 
