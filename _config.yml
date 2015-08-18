@@ -13,7 +13,7 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: Developer's Note
+      title: muzir Web Notları
 
 description: Stylish Jekyll Theme
 author:
