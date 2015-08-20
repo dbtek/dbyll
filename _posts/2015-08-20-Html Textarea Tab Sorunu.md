@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Html Textarea Tab Sorunu.md!
+title: Html Textarea Tab Sorunu
 categories: [UI]
 tags: [html,bootstrap]
 fullview: true
