@@ -1,8 +1,7 @@
 ---
 layout: post
-title: Wirecard Interview!
-categories: [payment, interview, wirecard]
-tags: [payment, interview, wirecard]
+title: Wirecard Interview
+categories: [interview]
 fullview: true
 ---
 

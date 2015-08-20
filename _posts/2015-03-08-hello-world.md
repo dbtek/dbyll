@@ -2,7 +2,6 @@
 layout: post
 title: Hello World!
 categories: [general]
-tags: [general,blog,muzir]
 fullview: true
 ---
 

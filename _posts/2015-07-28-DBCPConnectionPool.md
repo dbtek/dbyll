@@ -1,8 +1,7 @@
 ---
 layout: post
 title: DBCP Conection Pooling
-categories: [tomcat,java,apache]
-tags: [tech]
+categories: [Apache,DBCP]
 fullview: true
 ---
 

@@ -1,8 +1,7 @@
 ---
 layout: post
 title: Inner Classes!
-categories: [ThinkingInJava, java, javaSE]
-tags: [java, tutorial, javaSE]
+categories: [ThinkingInJava]
 fullview: true
 description: Sample placeholder post.
 ---
