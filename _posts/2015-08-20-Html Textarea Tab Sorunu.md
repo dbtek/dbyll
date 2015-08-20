@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Hello World!
-categories: [general]
-tags: [general,blog,muzir]
+title: Html Textarea Tab Sorunu.md!
+categories: [UI]
+tags: [html,bootstrap]
 fullview: true
 ---
 
