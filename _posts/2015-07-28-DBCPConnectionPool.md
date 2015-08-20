@@ -1,6 +1,6 @@
 ---
 layout: post
-title: DBCP Conection Pooling
+title: DBCP Connection Pooling
 categories: [Apache,DBCP]
 fullview: true
 ---
