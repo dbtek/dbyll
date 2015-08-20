@@ -11,7 +11,7 @@ Azorka projesinde veritabani olarak Myseql'i tercih ettim. Turkce destegi saglam
 
 Ancak buna ragmen ekledigim kayitlarda Turkce karakterlerin `?` karakteri ile gosterildigini gordum.
 
-`Temmuz 1883'te Prag’da ufak moda e?yalar satan bir dükkan i?leten Hermann ve Julie Kafka'n?n 6 çocu?unun ilki olarak dünyaya gelmi?tir.`
+`Temmuz 1883'te Prag da ufak moda e?yalar satan bir dükkan i?leten Hermann ve Julie Kafka n?n 6 çocu?unun ilki olarak dünyaya gelmi?tir.`
 
  Bir sure arastirdiktan(ve aslinda daha sonra referans olarak arkadasimin gosteridigi linki bulup okumadiktan) sonra arkadasimin onerisi ile Atlassian'in Confluence konfigurasyonu icin sundugu su [faydali linki](https://confluence.atlassian.com/doc/confluence-administrator-s-guide/managing-confluence-data/database-configuration/configuring-database-character-encoding) okudum. Buna gore baglanti bilgilerimde gerekli duzenlemeyi asagadaki gibi gerceklestirdim.
  
