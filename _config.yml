@@ -5,25 +5,25 @@ paginate_path: "page:num"
 exclude: ["README.md"] # files to exclude
 highlighter: pygments
 markdown: kramdown
-disqus: dbyll
-google_analytics: dbyll
+disqus: jjongun
+google_analytics: jjongun
 
 defaults:
   -
     scope:
       path: "" # empty string for all files
     values:
-      title: dbyll
+      title: jjongun
 
 description: Stylish Jekyll Theme
 author:
-  name: dbyll
-  email: dbyll@ismaildemirbilek.com
+  name: jjongun
+  email: jjongun@naver.com
   github: dbtek
-  twitter: dbtek
-  pinterest: asd123
-  linkedin: asd123
-  bio: Your stylish, minimalist theme!
+  twitter: 
+  pinterest: 
+  linkedin: 
+  bio: Programing note
   email_md5: 726351295ec82e145928582f595aa3aa
 
 rss_path: feed.xml
