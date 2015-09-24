@@ -16,7 +16,7 @@ defaults:
       title: jjongun
 
 description: Stylish Jekyll Theme
-author: jjongun@naver.com
+author: 
   name: jjongun
   email: jjongun@naver.com
   github: 
@@ -24,7 +24,7 @@ author: jjongun@naver.com
   pinterest: 
   linkedin: 
   bio: Programing note
-  email_md5: 726351295ec82e145928582f595aa3aa
+  email_md5: 184bd1c6a0ce749099568099e52b0f5f
 
 rss_path: feed.xml
 categories_path: categories.html
