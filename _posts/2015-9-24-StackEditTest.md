@@ -1,3 +1,11 @@
+---
+layout: post
+title: StackEdite title
+categories: [test]
+tags: [test]
+---
+
+
 Welcome to StackEdit!
 ===================
 
