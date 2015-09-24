@@ -1,6 +1,3 @@
----
-published: false
----
 
 ---
 published: true
