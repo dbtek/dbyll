@@ -29,8 +29,6 @@ rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
 
-# Use emoji
-gems:
-  - jemoji
+
 
 BASE_PATH:
