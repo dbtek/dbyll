@@ -7,6 +7,7 @@ description: Sample placeholder post.
 ---
 
 Java'da bir sinifi bir diger icerisinde tanimlamak mumkun.Bu yaklasim gerceklestirimi gizleme (code-hiding) olanagi saglamasinin yazninda bir dizi farkli avantajda getiriyor. Ancak bu yaklasimi kod yazarken verimli bir sekilde kullanmak zaman alan bir surec, ben Collections.sort kullanmak icin Comparator gerceklestirimleri disinda kullanmadim. Asagadaki ornek **[Inner Classes ](https://docs.oracle.com/javase/tutorial/java/javaOO/innerclasses.html)** tiplerinden biri olan **[Anonymous Classes](https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html)** tipine aittir. 
+ 
 
 {% highlight java %}
 
@@ -27,11 +28,6 @@ Bu ifade anonymous sinifinin su ozelliklerini tasir.
 
  - Uygulanan(implement) ya da kalitlanan(extend) sinif(ya da arayuzun) tanimlanmasi, bu ornekte {% highlight java %}Comparator{% endhighlight %} arayuzu kullanilmistir. 
 
-
-
-
-
-A body, which is a class declaration body. More specifically, in the body, method declarations are allowed but statements are not.
   
 ### ThinkingInJava Ilgili Alistirma Kodlari
 
