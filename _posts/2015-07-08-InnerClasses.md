@@ -26,7 +26,7 @@ Bu ifade anonymous sinifinin su ozelliklerini tasir.
 
  - new() operatoru.
 
- - Uygulanan(implement) ya da kalitlanan(extend) sinif(ya da arayuzun) tanimlanmasi, bu ornekte {% highlight java %}Comparator{% endhighlight %} arayuzu kullanilmistir. 
+ - Uygulanan(implement) ya da kalitlanan(extend) sinif(ya da arayuzun) tanimlanmasi, bu ornekte Comparator arayuzu kullanilmistir. 
 
   
 ### ThinkingInJava Ilgili Alistirma Kodlari
