@@ -6,6 +6,10 @@ body{
 	background: #333333; !important
 }
 
+.btn {
+	color: #2B4F3E; !important
+}
+
 .sidebar {
 	position: fixed;
 	top: 0px;
@@ -163,9 +167,11 @@ footer {
 }
 
 .nav-tabs-vertical>li.active>a, .nav-tabs-vertical>li.active>a:hover, .nav-tabs-vertical>li.active>a:focus {
-    color: #555;
+    /* color: #555; */
+	color: #2B4F3E;
     cursor: default;
-    background-color: #fff;
+    /* background-color: #fff; */
+	background-color: #DBF1AE;
     border: 1px solid #ddd;
     border-right-color: transparent;
 }

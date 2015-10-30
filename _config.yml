@@ -13,7 +13,7 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: dafuloth.me
+      title: 'dafuloth.me'
 
 description: Stylish Jekyll Theme
 author:
