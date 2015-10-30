@@ -11,7 +11,7 @@ google_analytics: #dbyll
 defaults:
   -
     scope:
-      path: "/dbyll" # empty string for all files
+      path: "" # empty string for all files
     values:
       title: dafuloth.me
 
