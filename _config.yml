@@ -15,7 +15,7 @@ defaults:
     values:
       title: dafuloth.me
 
-description: Stylish Jekyll Theme
+description: dafuloth.me is my personal blog, built on the dbyll by dbtek. 
 author:
   name: David Thai
   email: davidthai@dafuloth.me

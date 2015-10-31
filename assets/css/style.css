@@ -8,6 +8,16 @@ body{
 	padding-top: 40px;
 }
 
+p .author-bio {
+	
+}
+
+#sitename {
+	font-family: "Share Tech Mono";    
+}
+
+}
+
 ul li span.page_number {
 	color: #046A81;
 }
@@ -71,9 +81,10 @@ a.nav-link:hover { color: #777 }
 
 #bio {
 	font-family: "Courier New", Courier, monospace;
-	font-size: 11px;
+	font-size: 12px;
 	margin: 0 auto;
 	margin-bottom: 10px;
+	
 }
 
 #contact-list li .fa,
