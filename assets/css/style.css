@@ -2,6 +2,10 @@
 @import url(https://fonts.googleapis.com/css?family=Share+Tech+Mono|Ubuntu:500&subset=latin-ext,latin);
 /* !important is being used here as a quick and dirty way to override bootstrap. For now. Going forward will find a better way and look to reduce/remove them  */
 
+div.page-header h1 {
+	font-family: 'Share Tech Mono' !important;
+}
+
 span.page_number {
 	color: #046A81 !important;
 }
@@ -21,10 +25,6 @@ p .author-bio {
 	font-family: "Share Tech Mono";    
 }
 
-}
-
-div.page-header h1 {
-	font-family: 'Share Tech Mono' !important;
 }
 
 /* Trying to override bootstrap for navbar*/
