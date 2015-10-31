@@ -97,6 +97,12 @@ article .share .gplus:hover {
 	padding-bottom: 10px;
 }
 
+/* Trying to override bootstrap for navbar*/
+a .navbar-brand {
+	font-family: 'Share Tech Mono';
+	color: #89CD4E;
+}
+
 .page-header {
 	/* color: #e74c3c; */
 	color: #89CD4E;
