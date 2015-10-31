@@ -6,7 +6,7 @@ body{
 	background: #333333 !important;
 }
 
-#page_number {
+ul li span .page_number {
 	color: #046A81 !important;
 }
 
