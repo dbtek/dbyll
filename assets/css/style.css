@@ -1,14 +1,18 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext);
-
+/* !important is being used here as a quick and dirty way to override bootstrap. For now. Going forward will find a better way and look to reduce/remove them  */
 body{
 	/* color: #2c3e50; */
 	color: #DBF1AE;
 	background: #333333 !important;
 }
 
+#page_number {
+	color: #046A81;
+}
+
 .btn {
 	/* color: #2B4F3E; #89CD4E; 046A81;*/
-	color: #89CD4E !important;
+	color: #046A81 !important;
 	font-weight: bold !important;
 }
 
