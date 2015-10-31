@@ -18,7 +18,7 @@ p .author-bio {
 
 }
 
-ul li span.page_number #pgnum {
+#pgnum ul li span.page_number {
 	color: #046A81;
 }
 
