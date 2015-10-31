@@ -3,10 +3,10 @@
 body{
 	/* color: #2c3e50; */
 	color: #DBF1AE;
-	background: #333333; !important
+	background: #333333 !important;
 }
 
-btn {
+.btn {
 	/* color: #2B4F3E; */
 	color: #333333 !important;
 	font-weight: bold !important;
