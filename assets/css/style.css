@@ -1,4 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext);
+/* @import url(http://fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext); */
+@import url(https://fonts.googleapis.com/css?family=Share+Tech+Mono|Ubuntu:500&subset=latin-ext,latin);
 /* !important is being used here as a quick and dirty way to override bootstrap. For now. Going forward will find a better way and look to reduce/remove them  */
 body{
 	/* color: #2c3e50; */
@@ -99,6 +100,7 @@ article .share .gplus:hover {
 .page-header {
 	/* color: #e74c3c; */
 	color: #89CD4E;
+	font-family: 'Share Tech Mono';
 	text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
 }
 
