@@ -58,7 +58,7 @@ tagline:
   {% endif %}
   
   <li>
-    <span class="page_number">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+    <span id="pgnum" class="page_number">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
   </li>
 
   {% if paginator.next_page %}
