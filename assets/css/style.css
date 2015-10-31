@@ -7,12 +7,12 @@ body{
 }
 
 #page_number {
-	color: #046A81;
+	color: #046A81 !important;
 }
 
 .btn {
 	/* color: #2B4F3E; #89CD4E; 046A81;*/
-	color: #046A81 !important;
+	color: #428BCA !important;
 	font-weight: bold !important;
 }
 
