@@ -5,7 +5,7 @@ body{
 	/* color: #2c3e50; */
 	color: #DBF1AE;
 	background: #333333;
-	padding-top: 50px;
+	padding-top: 40px;
 }
 
 ul li span.page_number {
@@ -156,7 +156,8 @@ article.home h2 a,
 article.home h3 a,
 article.home h4 a {
 	/* color: #f2756a; */
-	color: #ffffff;
+	/* color: #ffffff; */
+	color: #D8F0F4;
 }
 article.home h1 a:hover,
 article.home h2 a:hover,
