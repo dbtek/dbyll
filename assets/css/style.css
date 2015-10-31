@@ -5,11 +5,15 @@ body{
 	/* color: #2c3e50; */
 	color: #DBF1AE;
 	background: #333333;
-	padding-top: 70px;
+	padding-top: 50px;
 }
 
 ul li span.page_number {
 	color: #046A81;
+}
+
+div.page-header h1 {
+	font-family: 'Share Tech Mono';
 }
 
 .btn {
