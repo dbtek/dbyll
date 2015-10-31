@@ -17,6 +17,16 @@ body{
 	padding-top: 40px;
 }
 
+p .author-bio {
+	
+}
+
+#sitename {
+	font-family: "Share Tech Mono";    
+}
+
+}
+
 /* Trying to override bootstrap for navbar*/
 a .navbar-brand {
 	font-family: 'Share Tech Mono';
@@ -34,12 +44,6 @@ a .navbar-brand {
 	/* color: #2B4F3E; #89CD4E; 046A81;*/
 	color: #428BCA !important;
 	font-weight: bold !important;
-}
-
-#sitename {
-	font-family: "Share Tech Mono";    
-}
-
 }
 
 .sidebar {
@@ -226,3 +230,4 @@ footer {
 ul.dropdown-menu>li>a>i.fa {
     width: 1.3em;
 }
+
