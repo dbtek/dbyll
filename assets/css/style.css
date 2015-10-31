@@ -18,8 +18,8 @@ p .author-bio {
 
 }
 
-#pgnum ul li span.page_number {
-	color: #046A81;
+ul li span.page_number {
+	color: #046A81 !important;
 }
 
 div.page-header h1 {
