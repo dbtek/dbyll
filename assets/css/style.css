@@ -1,6 +1,11 @@
 /* @import url(http://fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext); */
 @import url(https://fonts.googleapis.com/css?family=Share+Tech+Mono|Ubuntu:500&subset=latin-ext,latin);
 /* !important is being used here as a quick and dirty way to override bootstrap. For now. Going forward will find a better way and look to reduce/remove them  */
+
+span.page_number {
+	color: #046A81 !important;
+}
+
 body{
 	/* color: #2c3e50; */
 	color: #DBF1AE;
@@ -16,10 +21,6 @@ p .author-bio {
 	font-family: "Share Tech Mono";    
 }
 
-}
-
-.page_number {
-	color: #046A81 !important;
 }
 
 div.page-header h1 {
