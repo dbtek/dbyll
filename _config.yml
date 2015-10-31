@@ -23,11 +23,11 @@ author:
   twitter: dafuloth
   pinterest: #asd123
   linkedin: #asd123
-  bio: dafuloth.me is just a simple site where I can focus on what matters
+  bio: just a simple site where I can focus on what matters
   email_md5: 52d0ce3f83fa2f7f17b9fc792f1383b9
 
 rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
 
-BASE_PATH:
+BASE_PATH: http://dafuloth.me
