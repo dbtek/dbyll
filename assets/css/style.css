@@ -6,7 +6,7 @@ body{
 	background: #333333; !important
 }
 
-btn {
+#bootstrap-overrides btn {
 	/* color: #2B4F3E; */
 	color: #333333;
 	font-weight: bold;
