@@ -5,6 +5,7 @@ body{
 	/* color: #2c3e50; */
 	color: #DBF1AE;
 	background: #333333;
+	padding-top: 70px;
 }
 
 ul li span.page_number {
@@ -103,10 +104,10 @@ a .navbar-brand {
 	color: #89CD4E;
 }
 
-.page-header {
+.navbar-header {
 	/* color: #e74c3c; */
-	color: #89CD4E;
-	font-family: 'Share Tech Mono';
+	color: #89CD4E !important;
+	font-family: 'Share Tech Mono' !important;
 	text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
 }
 
