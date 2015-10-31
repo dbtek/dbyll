@@ -220,13 +220,13 @@ a .navbar-brand {
 
 .navbar-header {
 	/* color: #e74c3c; */
-	color: #89CD4E !important;
-	font-family: 'Share Tech Mono' !important;
+	color: #89CD4E;
+	font-family: 'Share Tech Mono';
 	text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
 }
 
 .btn {
 	/* color: #2B4F3E; #89CD4E; 046A81;*/
-	color: #428BCA !important;
-	font-weight: bold !important;
+	color: #428BCA;
+	font-weight: bold;
 }
