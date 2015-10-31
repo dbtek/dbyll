@@ -6,9 +6,9 @@ body{
 	background: #333333; !important
 }
 
-.btn {
-	color: #2B4F3E; !important
-	font-weight: bold; !important
+btn {
+	color: #2B4F3E;
+	font-weight: bold;
 }
 
 .sidebar {
