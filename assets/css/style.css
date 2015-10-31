@@ -7,7 +7,8 @@ body{
 }
 
 btn {
-	color: #2B4F3E;
+	/* color: #2B4F3E; */
+	color: #333333;
 	font-weight: bold;
 }
 
