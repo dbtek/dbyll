@@ -2,7 +2,14 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<!-- <title>dafuloth.me&nbsp;::&nbsp;{{page.title }}</title> -->
+	
+	{% if site.BASE_PATH %}
+	<title>dafuloth.me</title>
+	{% else %}
 	<title>dafuloth.me&nbsp;::&nbsp;{{page.title }}</title>
+	{% endif %}
+	
 	{% if page.description %}
 	<meta name="description" content="{{ page.description }}">
 	{% endif %}
