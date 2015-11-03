@@ -13,7 +13,7 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: 
+      title: dafuloth.me #website title at the top of page relies on this
       comments: true #always enable comments!
 
 description: dafuloth.me is my personal blog, built on the dbyll by dbtek. 
