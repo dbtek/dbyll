@@ -5,7 +5,7 @@ categories: [interview]
 fullview: true
 ---
 
-**[Wirecard](https://www.wirecard.com/)** Almanya merkezli odeme sistemleri uzerine calisan bir sirket. Bir sure once Ingiliz head hunter sirketi aracigiligi ile bu sirketle bir gorusme yaptim. 
+[Wirecard](https://www.wirecard.com/) Almanya merkezli odeme sistemleri uzerine calisan bir sirket. Bir sure once Ingiliz head hunter sirketi aracigiligi ile bu sirketle bir gorusme yaptim. 
 Oncesinde benzer bir sureci Pay on sirketi ile yasamistim ancak o gorusmede oncelikler codility sinavini gecemedim. Pay on surecini farkli bir yazida paylasirim. 
 Wirecard su an calistigim urune benzer urunler gelsitiren bir firma. Surec head hunter sirketinin CV'mi wirecard'a iletmesi ile basladi. CV'mi bu head hunter sitesine 
 bir arkadasim vasitasi ile verdim. Oncesinde head hunter sirketi ile bir gorusme yaptim. Genel olarak Cv'niz yazanlar ile sizi tanimaya calisiyorlar. Ardindan Wirecard'dan
