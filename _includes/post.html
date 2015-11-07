@@ -108,9 +108,11 @@
 		  <li class="previous disabled"><a>&larr; Previous</a></li>
 		  {% endif %}
 		  
-		<li>
+		<!-- reverting home button because breaks responsive layout
+<li>
 			<span class="page_number"><a class="btn btn-link" href="/"><i class="fa fa-home"></i>&nbsp;Home</a></span>
-		</li>
+		</li> -->
+
 		  
 		  {% if page.next %}
 		  <li class="next"><a href="{{ site.BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">Next &rarr;</a></li>
