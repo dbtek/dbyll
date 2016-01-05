@@ -22,7 +22,7 @@ Well, here's a list of people who come to mind at this point in time. So here go
 
 * **Zoë Quinn**: Indie game developer who I feel has been unfairly criticised on more than one occasion. I came across her via her game [Depression Quest][DepressionQuest], which I thought was very good and had a lot of truth in it considering it was a short IF (interactive fiction) type of game. Some people criticised it for not really being a game but I felt they were going by a narrow definition of what a game is. I'm reminded it's not high-tech that makes a game. Her [site][ZoeQuinnSite] is one of my first ports of call whenever I'm thinking about making a game - not making anything at the moment but I like to plan ahead.
 
-* **Lepht Anonym**: I agree with the idea that technology should benefit as many people possible and not just the wealthy or some small group of people who happen to have special access. I believe transhumanism is a worthwhile endeavour but Lepht Anonym has gone further. They are a biohacker who has self-experimented with DIY implants, such as RFID chips and magnets. Cool fact: Zoë Quinn has done the magnets and RFID too. The concept of a technologically enabled sixth-sense is very interesting.
+* **Lepht Anonym**: I agree with the idea that technology should benefit as many people possible and not just the wealthy or some small group of people who happen to have special access. I believe transhumanism is a worthwhile endeavour but [Lepht Anonym][LephtSite] has gone further. They are a biohacker who has self-experimented with DIY implants, such as RFID chips and magnets. Cool fact: Zoë Quinn has done the magnets and RFID too. The concept of a technologically enabled sixth-sense is very interesting.
   
   If you the reader wish to try this sort of thing, I will wish you luck but know I'm not responsible for anything that happens and that you do so entirely at your own risk! Here's some sources:
 
@@ -37,5 +37,6 @@ As alluded to above, my inspiration comes from a wide range of people/things so 
 [GeorgeTorwell]:<https://youtu.be/c4EEa0HAqzQ>
 [DepressionQuest]:<http://www.depressionquest.com/>
 [ZoeQuinnSite]:<http://www.unburntwitch.com/>
+[LephtSite]:<http://sapiensanonym.blogspot.co.uk/>
 [YouTubeLepht]:<https://youtu.be/p_JpPMIriAI>
 [LephtNottinghamSlides]:<https://drive.google.com/open?id=0BxZXy_80YNwBT25qVTJ2Qm0xdnc>
