@@ -8,8 +8,6 @@ categories: [personal]
 tags: [blogging,thoughts]
 comments: true
 ---
-# Role Models
-
 >Who is your role model?
 
 That's a difficult question and it's one I'm not sure I really have an answer to. Maybe the problem is the question. I think I dislike the term "role model" because it sounds too much like I would be taking a single individual as a template to completely emulate.
