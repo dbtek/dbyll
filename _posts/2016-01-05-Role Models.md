@@ -23,7 +23,7 @@ Well, here's a list of people who come to mind at this point in time. So here go
 
 * **Lepht Anonym**: I agree that technology should benefit as many people possible and not just the wealthy or some small group of people who happen to have special access. I believe transhumanism is a worthwhile endeavour but [Lepht Anonym][LephtSite] has gone further. They are a biohacker who has self-experimented with DIY implants, such as RFID chips and magnets. *Cool fact: Zoë Quinn has done the magnets and RFID too.* The concept of a technologically enabled sixth-sense is very interesting.
   
-  If you the reader wish to try this sort of thing, I will wish you luck but know that I'm not responsible for anything that happens and that you do so entirely at your own risk! Here's some sources:
+  If you the reader wish to try this sort of thing, I will wish you luck but know that I'm not responsible for anything that happens and that you do so entirely at your own risk!
 
   >**YouTube:** [Lepht Anonym - Cybernetics for the Masses (2010)][YouTubeLepht]
   
