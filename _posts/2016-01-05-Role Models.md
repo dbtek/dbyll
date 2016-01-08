@@ -31,7 +31,7 @@ Well, here's a list of people who come to mind at this point in time. So here go
 
   I'm not squeamish. Really, the sight of blood doesn't bother me. When I have blood drawn, I just calmly observe with a sort of passive fascination. I can watch surgical operations without any problem. I guess what's stopping me from from following the trail that individuals like Lepht and Zoë Quinn have blazed is a possibly unhelpful aversion to self-harm. OK, I'm a wuss when it comes to cutting into myself without any medical training. I really look forward to when these kinds of little upgrades become accepted and mainstream so I could just walk into a clinic and have it done.
 
-As alluded to above, my inspiration comes from a wide range of people/things so that list is far from exhaustive. Having written up this list, I think understand why asking about role models (or heroes, or inspirations) is such a popular question. I suppose it says something about me and what I believe in.
+As alluded to above, my inspiration comes from a wide range of sources so that list is far from exhaustive. Having written up this list, I think understand why asking about role models (or heroes, or inspirations) is such a popular question. I suppose it says something about me and what I believe in.
 
 [GeorgeTorwell]:<https://youtu.be/c4EEa0HAqzQ>
 [DepressionQuest]:<http://www.depressionquest.com/>
