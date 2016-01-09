@@ -93,7 +93,8 @@
 
       <section class="col-sm-6 author">
         <img src="http://www.gravatar.com/avatar/{{site.author.email_md5}}" class="img-rounded author-image" />
-        <h4 class="section-title author-name">{{site.author.name}}</h4>
+	  <!-- <h4 class="section-title author-name">{{site.author.name}}</h4> -->
+		<p id="sitename">dafuloth.me</p>
         <p class="author-bio">{{site.author.bio}}</p>
       </section>
     </div>
@@ -106,6 +107,13 @@
 		  {% else %}
 		  <li class="previous disabled"><a>&larr; Previous</a></li>
 		  {% endif %}
+		  
+		<!-- reverting home button because breaks responsive layout
+<li>
+			<span class="page_number"><a class="btn btn-link" href="/"><i class="fa fa-home"></i>&nbsp;Home</a></span>
+		</li> -->
+
+		  
 		  {% if page.next %}
 		  <li class="next"><a href="{{ site.BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">Next &rarr;</a></li>
 		  {% else %}

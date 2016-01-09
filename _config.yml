@@ -5,29 +5,30 @@ paginate_path: "page:num"
 exclude: ["README.md"] # files to exclude
 highlighter: pygments
 markdown: kramdown
-disqus: dbyll
-google_analytics: dbyll
+disqus: dafuloth
+google_analytics: UA-50002010-2
 
 defaults:
   -
     scope:
       path: "" # empty string for all files
     values:
-      title: dbyll
+      title: dafuloth.me #website title at the top of page relies on this
+      comments: true #always enable comments!
 
-description: Stylish Jekyll Theme
+description: dafuloth.me is my personal blog, built on the dbyll by dbtek. 
 author:
-  name: dbyll
-  email: dbyll@ismaildemirbilek.com
-  github: dbtek
-  twitter: dbtek
-  pinterest: asd123
-  linkedin: asd123
-  bio: Your stylish, minimalist theme!
-  email_md5: 726351295ec82e145928582f595aa3aa
+  name: David Thai
+  email: davidthai@dafuloth.me
+  #github: dafuloth
+  twitter: dafuloth
+  pinterest: #asd123
+  linkedin: #asd123
+  bio: A simple site where I can focus on what matters
+  email_md5: 52d0ce3f83fa2f7f17b9fc792f1383b9
 
 rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
 
-BASE_PATH:
+BASE_PATH: http://dafuloth.me

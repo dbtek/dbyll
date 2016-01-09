@@ -2,7 +2,14 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>{{ page.title }}</title>
+	<!-- <title>dafuloth.me&nbsp;::&nbsp;{{page.title }}</title> -->
+	
+	{% if page.title == 'dafuloth.me' %}
+	<title>dafuloth.me&nbsp;::&nbsp;HOME</title>
+	{% else %}
+	<title>dafuloth.me&nbsp;::&nbsp;{{page.title }}</title>
+	{% endif %}
+	
 	{% if page.description %}
 	<meta name="description" content="{{ page.description }}">
 	{% endif %}
@@ -29,12 +36,44 @@
 	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
 	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
 	-->
+	
+	 <!-- Icons -->
+  
+	<link rel="apple-touch-icon" sizes="57x57" href="{{ site.BASE_PATH }}/assets/icons/apple-touch-icon-57x57.png"/>
+	<link rel="apple-touch-icon" sizes="60x60" href="{{ site.BASE_PATH }}/assets/icons/apple-touch-icon-60x60.png"/>
+	<link rel="apple-touch-icon" sizes="72x72" href="{{ site.BASE_PATH }}/assets/icons/apple-touch-icon-72x72.png"/>
+	<link rel="apple-touch-icon" sizes="76x76" href="{{ site.BASE_PATH }}/assets/icons/apple-touch-icon-76x76.png"/>
+	<link rel="apple-touch-icon" sizes="114x114" href="{{ site.BASE_PATH }}/assets/icons/apple-touch-icon-114x114.png"/>
+	<link rel="apple-touch-icon" sizes="120x120" href="{{ site.BASE_PATH }}/assets/icons/apple-touch-icon-120x120.png"/>
+	<link rel="apple-touch-icon" sizes="144x144" href="{{ site.BASE_PATH }}/assets/icons/apple-touch-icon-144x144.png"/>
+	<link rel="apple-touch-icon" sizes="152x152" href="{{ site.BASE_PATH }}/assets/icons/apple-touch-icon-152x152.png"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ site.BASE_PATH }}/assets/icons/apple-touch-icon-180x180.png"/>
+	<link rel="icon" type="image/png" href="{{ site.BASE_PATH }}/assets/icons/favicon-32x32.png" sizes="32x32"/>
+	<link rel="icon" type="image/png" href="{{ site.BASE_PATH }}/assets/icons/favicon-194x194.png" sizes="194x194"/>
+	<link rel="icon" type="image/png" href="{{ site.BASE_PATH }}/assets/icons/favicon-96x96.png" sizes="96x96"/>
+	<link rel="icon" type="image/png" href="{{ site.BASE_PATH }}/assets/icons/android-chrome-192x192.png" sizes="192x192"/>
+	<link rel="icon" type="image/png" href="{{ site.BASE_PATH }}/assets/icons/favicon-16x16.png" sizes="16x16"/>
+	<link rel="manifest" href="{{ site.BASE_PATH }}/assets/icons/manifest.json"/>
+	<link rel="mask-icon" href="{{ site.BASE_PATH }}/assets/icons/safari-pinned-tab.svg" color="#5bbad5"/>
+	<link rel="shortcut icon" href="{{ site.BASE_PATH }}/assets/icons/favicon.ico"/>
+	<meta name="apple-mobile-web-app-title" content="dafuloth.me"/>
+	<meta name="application-name" content="dafuloth.me"/>
+	<meta name="msapplication-TileColor" content="#da532c"/>
+	<meta name="msapplication-TileImage" content="{{ site.BASE_PATH }}/assets/icons/mstile-144x144.png"/>
+	<meta name="msapplication-config" content="{{ site.BASE_PATH }}/assets/icons/browserconfig.xml"/>
+	<meta name="theme-color" content="#ffffff"/>
+  
+  	<!-- Facebook post icon -->
+  	<meta property="og:image" content="http://dafuloth.me/assets/icons/favicon-194x194.png" />
 
 	<link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.BASE_PATH }}/feed.xml">
 </head>
-
 <body>
-	<nav class="navbar navbar-default visible-xs" role="navigation">
+<!-- <body id = "bootstrap-overrides"> -->
+	<!-- Can try assigning arbitrary ID to make it easier to override bootstrap with custom styles in style.css -->
+	<!-- <nav class="navbar navbar-default visible-xs" role="navigation"> -->
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top visible-xs" role="navigation">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -54,13 +93,15 @@
 			</a>
 			{% endif %}
 			{% if site.author.email %}
+			<!-- 
 			<a type="button" class="navbar-toggle nav-link" href="mailto:{{ site.author.email }}">
 				<i class="fa fa-envelope"></i>
 			</a>
+			-->
 			{% endif %}
 			<a class="navbar-brand" href="{{ site.BASE_PATH }}/">
-				<img src="http://www.gravatar.com/avatar/{{site.author.email_md5}}?s=35" class="img-circle" />
-				{{ site.title }}
+				<img src="/assets/icons/android-chrome-36x36.png" class="img-circle" />&nbsp;dafuloth.me
+				<!-- originally  site.title -->
 			</a>
 		</div>
 
