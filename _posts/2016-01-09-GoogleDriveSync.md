@@ -4,7 +4,7 @@ layout: post
 title: Google Drive misbehaves when sync folder is on a NAS
 author: "David Thai"
 categories: [tech]
-tags: [cloud,problem-&-solution,google,google drive,onedrive]
+tags: [cloud,problem/solution,google,google drive,onedrive]
 comments: true
 ---
 ##### Problem:
