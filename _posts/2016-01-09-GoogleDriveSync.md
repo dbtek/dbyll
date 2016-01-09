@@ -36,7 +36,7 @@ If the Google Drive sync folder is on a NAS, Google Drive sync will complain tha
     
         We want this task to trigger **"On an event"** and the trigger should be as follows:
 
-        ```sh 
+        ``` 
         Log:        System
         Source:     Kernel-Power
         Event ID:   42
@@ -48,7 +48,7 @@ If the Google Drive sync folder is on a NAS, Google Drive sync will complain tha
     3. Use Task Scheduler to have `googledrivesync.exe` start after a delay, when you log in to Windows.
     
         This task should also trigger **"On an event"** and the trigger should be as follows:
-        ```sh 
+        ```
         Log:        Security
         Source:     Microsoft Windows security auditing.
         Event ID:   4624
