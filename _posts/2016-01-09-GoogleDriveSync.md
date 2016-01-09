@@ -36,9 +36,11 @@ If the Google Drive sync folder is on a NAS, Google Drive sync will complain tha
     
         We want this task to trigger **"On an event"** and the trigger should be as follows:
 
-        `Log:        System`
-        `Source:     Kernel-Power`
-        `Event ID:   42`
+        >**Log:** `System`
+        
+        >**Source:** `Kernel-Power`
+        
+        >**Event ID:**   `42`
         
         That Event ID 42 indicates that *"The system is entering sleep."*
         
