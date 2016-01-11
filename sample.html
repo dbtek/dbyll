@@ -1,0 +1,36 @@
+﻿<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+    <title>KakaoLink Demo(Web Button) - Kakao JavaScript SDK</title>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+  </head>
+  <body>
+    <h3>카카오톡 테스트 입니다.</h3>
+    <a id="kakao-link-btn" href="javascript:;">
+      <img src="http://jjongun.github.io/assets/img/message_test.png" />
+    </a>
+
+    <script>
+    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('91c49fdad141a1ae10161d223bf4f118');
+
+    // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+    Kakao.Link.createTalkLinkButton({
+      container: '#kakao-link-btn',
+      label: '친구야! 이거 봤냐? 진짜 대박 큰 세일에 폼나더라. 혹시 나한테 투자 안 할래? 내가 성공해서 두 배로 갚을게 \아! 근데 지금 대박세일 기간이래 \n#말하면 대박세일 이벤트',
+      image: {
+        src: 'http://jjongun.github.io/assets/img/sale_banner.png',
+        width: '300',
+        height: '200'
+      },
+      webButton: {
+        text: '플라스틱공장',
+        url: 'http://scripter.co.kr/' // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다. // https://dev.kakao.com/docs/js
+      }
+    });
+    </script>
+  </body>
+</html> 
