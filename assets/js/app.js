@@ -19,8 +19,6 @@
       if(['/tags.html', '/categories.html'].indexOf(window.location.pathname) > -1) {
         var hash = window.location.hash;
         if(hash)
-          console.log(hash + ' aasdasd');
-        if(hash)
           $('.tab-pane').length && $('a[href="' + hash + '"]').tab('show');
         else
           $('.tab-pane').length && $($('.cat-tag-menu li a')[0]).tab('show');
