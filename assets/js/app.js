@@ -2,7 +2,10 @@
 
  function init() {
     /* Sidebar height set */
-    $('.sidebar').css('min-height',$(document).height());
+    $sidebarStyles = $('.sidebar').attr('style')
+    $sidebarStyles += ' min-height: ' + $(document).height() + 'px;';
+    console.log($sidebarStyles);
+    $('.sidebar').attr('style', $sidebarStyles);
 
     /* Secondary contact links */
     var $scontacts = $('#contact-list-secondary');

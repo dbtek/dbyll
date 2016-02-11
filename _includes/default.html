@@ -88,7 +88,7 @@
 		</ul>
 	</div>
 
-	<div class="col-sm-3 sidebar hidden-xs">
+	<div class="col-sm-3 sidebar hidden-xs" style="{% if site.sidebar_background_image %}background: url({{site.sidebar_background_image}}) no-repeat center center !important;{% endif %}">
 		{% include sidebar.html %}
 	</div>
 
