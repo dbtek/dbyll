@@ -4,7 +4,6 @@
     /* Sidebar height set */
     $sidebarStyles = $('.sidebar').attr('style')
     $sidebarStyles += ' min-height: ' + $(document).height() + 'px;';
-    console.log($sidebarStyles);
     $('.sidebar').attr('style', $sidebarStyles);
 
     /* Secondary contact links */
