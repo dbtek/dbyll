@@ -1,10 +1,12 @@
+---
+layout: post
+title: Spring Transaction Management
+categories: [Spring]
+fullview: true
+---
 
-Spring Transaction Management 
-===================
+{:toc}
 
-
-
-[TOC]
 
 **[Spring Transaction Management](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/transaction.html)** incelemek icin Spring Framework'un kendi dokumantasyonu baz alarak ornekler yaptim. Bu orneklere gecmeden once basitce hangi basliklar altinda inceleyecegimi belirtmek isterim.
 
