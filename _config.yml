@@ -15,7 +15,7 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: muzir Web Notları
+      title: Simplicity is prerequisite for reliability ― Edsger W. Dijkstra
 
 description: Stylish Jekyll Theme
 author:
