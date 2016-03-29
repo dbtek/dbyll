@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 layout: post
 title: Spring Transaction Management
@@ -53,6 +54,12 @@ Declarative Transaction Management
 
 #### <i class="icon-file"></i> tx-advice usage with AspectJ
 
+-------
 
+> **Not:** Nested Propagation tag'i sadece **[DataSourceTransactionManager](http://docs.spring.io/spring-framework/docs/2.5.x/api/org/springframework/jdbc/datasource/DataSourceTransactionManager.html) transaction manager ile calismaktadir. Cunku her bir transaction'in acilan baglanti ozelinde kontrol edilmesi gerekir.
+
+
+-------
 
 #### <i class="icon-file"></i> Example Of Declerative Transaction Implementation(@Transactional Usage)
+
