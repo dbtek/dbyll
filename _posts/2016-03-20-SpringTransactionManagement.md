@@ -55,7 +55,7 @@ Declarative Transaction Management
 
 -------
 
-> **Not:** Nested Propagation tag'i sadece **[DataSourceTransactionManager](http://docs.spring.io/spring-framework/docs/2.5.x/api/org/springframework/jdbc/datasource/DataSourceTransactionManager.html) transaction manager ile calismaktadir. Cunku her bir transaction'in acilan baglanti ozelinde kontrol edilmesi gerekir.
+> **Not:** Nested Propagation tag'i sadece **[DataSourceTransactionManager](http://docs.spring.io/spring-framework/docs/2.5.x/api/org/springframework/jdbc/datasource/DataSourceTransactionManager.html)** transaction manager ile calismaktadir. Cunku her bir transaction'in acilan baglanti ozelinde kontrol edilmesi gerekir.
 
 
 -------
