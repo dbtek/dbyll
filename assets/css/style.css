@@ -34,7 +34,7 @@ a.nav-link {
 a.nav-link i{
 	font-size: 16px;
 }
-a.nav-link:hover { color: #777 }
+a.nav-link:hover { color: #777; }
 
 #bio {
 	font-family: "Courier New", Courier, monospace;
