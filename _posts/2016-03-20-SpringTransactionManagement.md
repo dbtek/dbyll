@@ -11,11 +11,11 @@ fullview: true
 
 Giris
 ------------
-Spring Transaction Management uygulama icin basit ve yonetilebilir bir uygulama catisi sunar. Java Transaction yonetimi **[JTA(Java Transaction API)](https://en.wikipedia.org/wiki/Java_Transaction_API)**,**[JDBC(Java Database Connectivity)](https://en.wikipedia.org/wiki/Java_Database_Connectivity)**,**[JPA(Java Persistence API)](https://en.wikipedia.org/wiki/Java_Persistence_API)**, **[JDO(Java Data Objects)](https://en.wikipedia.org/wiki/Java_Data_Objects)** gibi standartlar altinda toplanmistir.
+Spring Transaction Management uygulama icin basit ve yonetilebilir bir uygulama catisi sunar. Java Transaction yonetimi [JTA(Java Transaction API)](https://en.wikipedia.org/wiki/Java_Transaction_API),[JDBC(Java Database Connectivity)](https://en.wikipedia.org/wiki/Java_Database_Connectivity),[JPA(Java Persistence API)](https://en.wikipedia.org/wiki/Java_Persistence_API), [JDO(Java Data Objects)](https://en.wikipedia.org/wiki/Java_Data_Objects) gibi standartlar altinda toplanmistir.
 
 -------
 
->**Not:** Spring Transaction API bu yapilarin herbiri ile entegre olabilir ve calisabilir. Bu entegrasyon Spring'in farkli transaction manager objeleri ile saglanir. Hibernate, JDBC ve JTA icin gerekli olan siniflar asagadaki diagramda paylasilmistir.  
+>    Spring Transaction API bu yapilarin herbiri ile entegre olabilir ve calisabilir. Bu entegrasyon Spring'in farkli transaction manager objeleri ile saglanir. Hibernate, JDBC ve JTA icin gerekli olan siniflar asagadaki diagramda paylasilmistir.  
 
 -------
 
