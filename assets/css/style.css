@@ -192,3 +192,15 @@ ul.dropdown-menu>li>a>i.fa {
     width: 1.3em;
 }
 
+.search-bar {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#search-results>li {
+    list-style-type: none;
+}
+
+#search-results>li>h3>a:hover {
+    color: #f2756a;
+}
