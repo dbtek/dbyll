@@ -2,7 +2,7 @@
 
  function init() {
     /* Sidebar height set */
-    $sidebarStyles = $('.sidebar').attr('style')
+    $sidebarStyles = $('.sidebar').attr('style') || "";
     $sidebarStyles += ' min-height: ' + $(document).height() + 'px;';
     $('.sidebar').attr('style', $sidebarStyles);
 
