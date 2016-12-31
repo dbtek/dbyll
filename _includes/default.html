@@ -59,7 +59,7 @@
 			</a>
 			{% endif %}
 			<a class="navbar-brand" href="{{ site.BASE_PATH }}/">
-				<img src="http://www.gravatar.com/avatar/{{site.author.email_md5}}?s=35" class="img-circle" />
+				<img src="https://www.gravatar.com/avatar/{{site.author.email_md5}}?s=35" class="img-circle" />
 				{{ site.title }}
 			</a>
 		</div>
@@ -79,6 +79,7 @@
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 			<i class="fa fa-bars"></i>
 		</button>
+    <br>
 		<ul class="dropdown-menu" role="menu">
 			<li><a href="{{ site.BASE_PATH}}/"><i class="fa fa-home"></i>Home</a></li>
 			<li><a href="{{ site.BASE_PATH}}/{{ site.categories_path }}"><i class="fa fa-folder"></i>Categories</a></li>
@@ -86,6 +87,9 @@
 			<li class="divider"></li>
 			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
 		</ul>
+    <br>
+    <br>
+    <div id="toc" style="display: block; width: 150px"></div>
 	</div>
 
 	<div class="col-sm-3 sidebar hidden-xs" style="{% if site.sidebar_background_image %}background: url({{site.sidebar_background_image}}) no-repeat !important;{% endif %}">
@@ -106,5 +110,11 @@
 	<script type="text/javascript" src="{{ site.BASE_PATH }}/assets/resources/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="{{ site.BASE_PATH }}/assets/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{{ site.BASE_PATH }}/assets/js/app.js"></script>
+  <script type="text/javascript" src="{{ site.BASE_PATH }}/assets/js/toc.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+      $('#toc').toc();
+  });
+  </script>
 </body>
 </html>
