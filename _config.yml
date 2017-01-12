@@ -14,7 +14,7 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: javapark
+      title: JAVAPARK ver 0.1
 
 description: 나는 개발자
 author:
