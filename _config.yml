@@ -14,9 +14,9 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: dbyll
+      title: javapark
 
-description: Stylish Jekyll Theme
+description: I want to become a software expert
 author:
   name: javapark
   email: javaparknet@gmail.com
