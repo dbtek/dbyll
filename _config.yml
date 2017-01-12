@@ -16,7 +16,7 @@ defaults:
     values:
       title: javapark
 
-description: I want to become a software expert
+description: 나는 개발자
 author:
   name: javapark
   email: javaparknet@gmail.com
@@ -24,7 +24,7 @@ author:
   twitter: javapark
   pinterest:
   linkedin:
-  bio: Your stylish, minimalist theme!
+  bio: java, javascript, iOS, android
   email_md5: 23e1e193516cbeea6e339fd47d3c6970
 
 rss_path: feed.xml
