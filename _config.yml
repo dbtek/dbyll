@@ -14,18 +14,18 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: 나는 개발자
+      title: dbyll
 
-description: java , javascript, front-end, blog, iOS, android
+description: Stylish Jekyll Theme
 author:
-  name: java
+  name: javapark
   email: javaparknet@gmail.com
   github: javapark
   twitter: javapark
   pinterest:
   linkedin:
-  bio: java , javascript, front-end, blog, iOS, android
-  email_md5:
+  bio: Your stylish, minimalist theme!
+  email_md5: 23e1e193516cbeea6e339fd47d3c6970
 
 rss_path: feed.xml
 categories_path: categories.html
