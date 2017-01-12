@@ -5,27 +5,27 @@ paginate_path: "page:num"
 exclude: ["README.md"] # files to exclude
 highlighter: pygments
 markdown: kramdown
-disqus: dbyll
-google_analytics: dbyll
-title: dbyll
+disqus: javapark-github-io
+google_analytics: UA-38514061-3
+title: javapark
 
 defaults:
   -
     scope:
       path: "" # empty string for all files
     values:
-      title: dbyll
+      title: 나는 개발자
 
-description: Stylish Jekyll Theme
+description: java , javascript, front-end, blog, iOS, android
 author:
-  name: dbyll
-  email: dbyll@ismaildemirbilek.com
-  github: dbtek
-  twitter: dbtek
-  pinterest: asd123
-  linkedin: asd123
-  bio: Your stylish, minimalist theme!
-  email_md5: 726351295ec82e145928582f595aa3aa
+  name: java
+  email: javaparknet@gmail.com
+  github: javapark
+  twitter: javapark
+  pinterest:
+  linkedin:
+  bio: java , javascript, front-end, blog, iOS, android
+  email_md5:
 
 rss_path: feed.xml
 categories_path: categories.html
