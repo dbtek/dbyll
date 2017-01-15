@@ -7,22 +7,10 @@ description: jqGrid 공통설정
 ---
 
 GitHub 로 포스팅을 할 겸 연습삼아 jqGrid 의 공통 설정을 공유한다.
-json 기반의 jqGrid 설정으로 상세 설정은 좀 더 익숙해 지면 추가하겠다. 
+json 기반의 jqGrid 설정으로 상세 설정은 좀 더 익숙해 지면 추가하겠다.
 
 {% highlight javascript %}
-/**
- * jqGrid 공통 설정 및 함수 확장
- *
- * @external jqGrid
- * @exports jqgrid
- * @see {@link http://www.trirand.com/jqgridwiki/doku.php jqGrid wiki}
- * @see {@link http://trirand.com/blog/jqgrid/jqgrid.html jqGrid demo}
- */
-
 (function($) {
-	/**
-	 * project default common setting ContextRoot 값을 리턴
-	 */
 	jQuery.extend(jQuery.jgrid.defaults, {
 		autoencode : true,
 		rowNum : 10,
