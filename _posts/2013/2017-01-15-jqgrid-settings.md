@@ -1,8 +1,6 @@
 ---
 layout: post
 title: jqGrid 공통설정
-categories: [jqGrid, javascript]
-tags: [jqgrid, javascript]
 description: jqGrid 공통설정
 ---
 
