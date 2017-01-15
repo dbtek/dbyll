@@ -2,6 +2,9 @@
 layout: post
 title: jqGrid 공통설정
 description: jqGrid 공통설정
+tags: [javascript]
+fullview: true
+comments: true
 ---
 
 GitHub 로 포스팅을 할 겸 연습삼아 jqGrid 의 공통 설정을 공유한다.
