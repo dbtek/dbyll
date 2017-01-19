@@ -10,11 +10,11 @@ group: navigation
 
 
 <div class="col-sm-3 col-xs-6">
-    <ul class="nav nav-tabs-vertical">
+    <ul class="nav nav-tabs-vertical cat-tag-menu">
     {% for item in (0..site.tags.size) %}{% unless forloop.last %}
       {% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
       <li>
-          <a href="#{{ this_word | cgi_escape }}-ref" data-toggle="tab">
+          <a href="#{{ this_word | replace:' ','-' }}-ref">
             {{ this_word }}<span class="badge pull-right">{{ site.tags[this_word].size }}</span>
          </a>
       </li>
@@ -25,7 +25,7 @@ group: navigation
 <div class="tab-content col-sm-9 col-xs-6">
   {% for item in (0..site.tags.size) %}{% unless forloop.last %}
     {% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
-    <div class="tab-pane" id="{{ this_word | cgi_escape }}-ref">
+    <div class="tab-pane" id="{{ this_word | replace:' ','-' }}-ref">
       <h2 style="margin-top: 0px">Posts tagged  with {{ this_word }}</h2>
       <ul class="list-unstyled">
         {% for post in site.tags[this_word] %}{% if post.title != null %}
