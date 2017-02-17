@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: http://javapark.github.io/sitemap.xml
