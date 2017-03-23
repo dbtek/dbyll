@@ -38,7 +38,7 @@ Son adımda kaydedilen dönüş logunu ApiLogService içerisinde 4 farklı propa
 
 ![Figure 1-0](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/images/tx_prop_required.png.pagespeed.ce.uQXwKjy4bd.png "Figure 1-0")
 
-Yukarıdaki şekilde görüldüğü üzere REQUIRED olarak tanımlanan bir metod sistemde kendisinden önce metod hiyerarşisi içinde oluşturulan bir transaction var ise ona dahil olur. Şekilde method 2 Propagation değeri REQUİRED olarak tanımlanırsa yeni bir transaction oluşturmayacak ve method 1 transaction'ı içine dahil olacaktır.
+Yukarıdaki şekilde görüldüğü üzere REQUIRED olarak tanımlanan bir metod sistemde kendisinden önce metod hiyerarşisi içinde oluşturulan bir transaction var ise ona dahil olur. Şekilde method 2 Propagation değeri REQUIRED olarak tanımlanırsa yeni bir transaction oluşturmayacak ve method 1 transaction'ı içine dahil olacaktır.
 
 <script src="https://gist.github.com/muzir/9b0831c537013f2d6946d4d42e238e7f.js"></script>
 
