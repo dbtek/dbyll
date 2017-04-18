@@ -2,7 +2,7 @@
 layout: post
 title: Inner Classes!
 categories: [ThinkingInJava]
-fullview: true
+fullview: false
 description: Sample placeholder post.
 ---
 

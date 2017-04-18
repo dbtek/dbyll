@@ -2,7 +2,7 @@
 layout: post
 title: DBCP Connection Pooling
 categories: [Apache,DBCP]
-fullview: true
+fullview: false
 ---
 
 [azorka web](https://github.com/muzir/azorka.web) uygulamami Digital Ocean'da bulunan sunucuma yukledikten bir sure sonra(ne kadar oldugunu bilmiyorum hic baglanti yapilmadan birkac saat icinde) uygulama veri tabani hatasi aliyordu. Logu kontrol ettigimde asagadaki hata mesaji ile karsilastim:

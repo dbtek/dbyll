@@ -2,7 +2,7 @@
 layout: post
 title: Mysql UTF-8 Encoding
 categories: [mysql,encoding]
-fullview: true
+fullview: false
 ---
 
 Azorka projesinde veritabani olarak Myseql'i tercih ettim. Turkce destegi saglamak icin Mysql'de veritabani ve tablo olustururken UTF-8 formattinda veri tutmasi icin asagadaki scriptleri kullandim.

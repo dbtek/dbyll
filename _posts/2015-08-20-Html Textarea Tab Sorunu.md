@@ -2,7 +2,7 @@
 layout: post
 title: Html Textarea Tab Sorunu
 categories: [UI]
-fullview: true
+fullview: false
 ---
 
 Azorka projesinde bir suredir arayuz tarafinda karsilastigim bir sorun vardi. Sorun textarea araclarinin icinde default olarak gelen karakterler. Sorunu bir suredir erteledim. Arayuzde tarafinda Twitter Bootstrap ve [Bootswatch](https://bootswatch.com) kullandigim icin bir uyumsuzluktan kaynaklandigini dusunuyordum. Asagida sorun yasadigim kod blogu mevcut.

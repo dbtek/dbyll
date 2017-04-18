@@ -2,7 +2,7 @@
 layout: post
 title: Spring Propagation Tutorial
 categories: [Spring]
-fullview: true
+fullview: false
 ---
 
    Spring Transaction Management uygulama için basit ve yönetilebilir bir uygulama çatısı sunar. Java Transaction yönetimi [JTA(Java Transaction API)](https://en.wikipedia.org/wiki/Java_Transaction_API),[JDBC(Java Database Connectivity)](https://en.wikipedia.org/wiki/Java_Database_Connectivity),[JPA(Java Persistence APİ)](https://en.wikipedia.org/wiki/Java_Persistence_APİ), [JDO(Java Data Objects)](https://en.wikipedia.org/wiki/Java_Data_Objects) gibi standartlar altında toplanmıştır.
