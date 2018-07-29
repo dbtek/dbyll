@@ -14,7 +14,7 @@ Blog: http://muzir.github.io/
 
 ### Screenshots
 
-![dbyll-screenshot](	assets/media/dbyll-ss.png)
+![dbyll-screenshot](	assets/media/muzirTechBlog.png)
 
 ### License
 - [MIT](http://opensource.org/licenses/MIT)
