@@ -73,9 +73,55 @@ project on spring boot.
 
 How to write a mockMvc test
 
-Now 
+Now our project is configured with necessary libraries. Need a controller and a piece of business logic to test. So created a controller, service and domain objects to test the end points
+with @MockMvcTest. So let's check below code.
+
+```java
+@RunWith(SpringRunner.class)
+@WebMvcTest(ProductController.class)
+public class WebMockTest {
+
+  @Autowired private MockMvc mockMvc;
+  @Autowired private ObjectMapper mapper;
+
+  @MockBean private ProductService productService;
+  @MockBean private ProductMapper productMapper;
+
+  @Test
+  public void returnHttpStatusCode200_ifProductIsValid() throws Exception {
+    IProductPort.ProductRequest productRequest =
+        new IProductPort.ProductRequest().setId(1L).setName("Product-1");
+    String json = mapper.writeValueAsString(productRequest);
+
+    when(service.createProduct(any(), any())).thenReturn(new Product());
+
+    this.mockMvc
+        .perform(
+            post("/v1/product")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(content().string(containsString("Success")));
+  }
+}
+```  
+
+As you see ```@WebMvcTest(ProductController.class)``` we don't need all application context. We just need our controller and its dependencies.
+There are few important points to determine which classes should be mocked. We need to mock ```productService``` 
+and productMapper. Because these beans are using as a subfields at ProductController. 
+
+Another important point to keep in my that, the beans which are defined as @MockBean should be interface, otherwise ProductController bean
+can't be initialized. If your depencies are not interface or not implementing an interface then you most likely will get java.lang.IllegalStateException: Failed to load ApplicationContext
+exception in detailed you will see error message as 
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'productController'.
+
+We are also using 2 autowired beans mockMvc 
 
 Test @PostMapping
+
+
 
 Test @GetMapping
 
