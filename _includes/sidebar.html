@@ -23,6 +23,13 @@
 			</a>
 		</li>
 		{% endif %}
+		{% if site.author.gitlab %}
+		<li>
+			<a class="btn btn-default btn-sm" href="https://gitlab.com/{{ site.author.gitlab }}" target="_blank">
+				<i class="fa fa-gitlab fa-lg"></i>
+			</a>
+		</li>
+		{% endif %}
 		{% if site.author.twitter %}
 		<li>
 			<a class="btn btn-default btn-sm" href="https://twitter.com/{{ site.author.twitter }}">
@@ -30,6 +37,7 @@
 			</a>
 		</li>
 		{% endif %}
+		{% if site.author.email %}
 		{% if site.author.email %}
 		<li>
 			<a class="btn btn-default btn-sm" href="mailto:{{ site.author.email }}">
