@@ -20,7 +20,7 @@ http status codes(validations) so a bit similar to integration tests in that per
 
 ### Configuration
 
-Before start to write your tests for your controllers, need some configurations for  @MockMvcTest. Let's have a look the below basic gradle.build
+Before start to write your tests for your controllers, need some configurations for  ```@MockMvcTest```. Let's have a look the below basic gradle.build
 file;
 
 ```gradle 
@@ -68,13 +68,13 @@ task wrapper(type: Wrapper) {
     gradleVersion = '4.6'
 }
 ```
-For @MockMvcTest we just need to add ```testCompile("org.springframework.boot:spring-boot-starter-test")``` to our gradle file. Other configurations are to create a basic web
+For ```@MockMvcTest``` we just need to add ```testCompile("org.springframework.boot:spring-boot-starter-test")``` to our gradle file. Other configurations are to create a basic web
 project on spring boot. 
 
 ### How to write a mockMvc test
 
 Now our project is configured with necessary libraries. Need a controller and a piece of business logic to test. So created a controller, service and domain objects to test the end points
-with @MockMvcTest. So let's check below code.
+with ```@MockMvcTest```. So let's check below code.
 
 ```java
 @RunWith(SpringRunner.class)
