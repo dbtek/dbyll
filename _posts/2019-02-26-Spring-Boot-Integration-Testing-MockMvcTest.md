@@ -5,7 +5,7 @@ categories: [Spring, Testing]
 fullview: false
 ---
 
-Introduction to @MockMvcTest
+### Introduction to @MockMvcTest
 
 Spring offers few different options to test our web layer. These can be combined under two testing strategy. Integration testing 
 and unit testing. Both have their own advantages and profits. Integration tests are useful to test your applications business logic
@@ -18,7 +18,7 @@ Today I will give an example to web layer testing which is a bit middle point fo
 context and needs some mocks so similar to unit tests(and actually it is under unit testing) but also test web layer serialization(Jackson mappers),
 http status codes(validations) so a bit similar to integration tests in that perspective.    
 
-Configuration
+### Configuration
 
 Before start to write your tests for your controllers, need some configurations for  @MockMvcTest. Let's have a look the below basic gradle.build
 file;
@@ -71,7 +71,7 @@ task wrapper(type: Wrapper) {
 For @MockMvcTest we just need to add ```testCompile("org.springframework.boot:spring-boot-starter-test")``` to our gradle file. Other configurations are to create a basic web
 project on spring boot. 
 
-How to write a mockMvc test
+### How to write a mockMvc test
 
 Now our project is configured with necessary libraries. Need a controller and a piece of business logic to test. So created a controller, service and domain objects to test the end points
 with @MockMvcTest. So let's check below code.
@@ -121,7 +121,7 @@ exception in detailed you will see error message as
 We are also using 2 autowired beans ```mockMvc``` and ```objectMapper```; ```mockMvc``` helps us to call our endpoint and objectMapper
 helps us to convert java object to json which will be converted by ```RequestBody``` in our controller.
 
-Test @PostMapping
+#### Test @PostMapping
 
 In below test we are creating a ```productRequest``` object and send the request to endpoint ```/v1/product``` with POST http method.
 Also we have a one mock as  
@@ -158,21 +158,28 @@ So we setUp our scenario as a success response, so createProduct
 Because we sent a valid product, we are expecting status code as HTTP 200 and checking other fields at response which should be in 
 sucess response. 
 
-Test @GetMapping
+#### Test @GetMapping
 
 For GET request nothings change a lot. We are just sending the productId as a request parameter(as a pathVariable) and expect
 success response if our mock return as success for that productId. 
 
-Notes
+### Notes
 
 @MockMvcTest is a great way to test your Controller without initialize all application context. You will just initialize the bean you need 
 and mock other dependencies. It is a good way to test your mappings, validations or even application accepted media type problems.  
 
-Result
+### Result
 
 Spring Boot is only instantiating the web layer, not the whole context. In an application with multiple controllers you can even ask for just one to be instantiated, 
 using, for example ```@WebMvcTest(ProductController.class)```.
 
 So Spring is not start the server at all, just test the web layer. In our example just one controller and its dependencies.
+
+You can find completed example project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-integration-test)
+
+
+### References
+
+https://spring.io/guides/gs/testing-web/
 
 Happy coding :) 
