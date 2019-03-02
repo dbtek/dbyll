@@ -110,21 +110,69 @@ public class WebMockTest {
 
 As you see ```@WebMvcTest(ProductController.class)``` we don't need all application context. We just need our controller and its dependencies.
 There are few important points to determine which classes should be mocked. We need to mock ```productService``` 
-and productMapper. Because these beans are using as a subfields at ProductController. 
+and ```productMapper```. Because these beans are using as a subfields at ProductController. 
 
-Another important point to keep in my that, the beans which are defined as @MockBean should be interface, otherwise ProductController bean
-can't be initialized. If your depencies are not interface or not implementing an interface then you most likely will get java.lang.IllegalStateException: Failed to load ApplicationContext
+Another important point to keep in my that, the beans which are defined as @MockBean should be interface, otherwise ```ProductController``` bean
+can't be initialized. If your dependencies are not interface or not implementing an interface then you most likely will get ```java.lang.IllegalStateException: Failed to load ApplicationContext```
 exception in detailed you will see error message as 
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'productController'.
 
-We are also using 2 autowired beans mockMvc 
+```Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'productController'.```
+
+We are also using 2 autowired beans ```mockMvc``` and ```objectMapper```; ```mockMvc``` helps us to call our endpoint and objectMapper
+helps us to convert java object to json which will be converted by ```RequestBody``` in our controller.
 
 Test @PostMapping
 
+In below test we are creating a ```productRequest``` object and send the request to endpoint ```/v1/product``` with POST http method.
+Also we have a one mock as  
 
+```java
+when(productService.createProduct(any(), any())).thenReturn(new Product());
+```
+
+So we setUp our scenario as a success response, so createProduct
+
+```java
+
+@Test
+  public void returnHttpStatusCode200_ifProductIsValid() {
+    IProductPort.ProductRequest productRequest =
+        new IProductPort.ProductRequest().setId(1L).setName("Product-1");
+    String json = objectMapper.writeValueAsString(productRequest);
+
+    when(productService.createProduct(any(), any())).thenReturn(new Product());
+
+    this.mockMvc
+        .perform(
+            post("/v1/product")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(content().string(containsString("Success")));
+  }
+
+```
+
+Because we sent a valid product, we are expecting status code as HTTP 200 and checking other fields at response which should be in 
+sucess response. 
 
 Test @GetMapping
 
+For GET request nothings change a lot. We are just sending the productId as a request parameter(as a pathVariable) and expect
+success response if our mock return as success for that productId. 
+
 Notes
 
+@MockMvcTest is a great way to test your Controller without initialize all application context. You will just initialize the bean you need 
+and mock other dependencies. It is a good way to test your mappings, validations or even application accepted media type problems.  
+
 Result
+
+Spring Boot is only instantiating the web layer, not the whole context. In an application with multiple controllers you can even ask for just one to be instantiated, 
+using, for example ```@WebMvcTest(ProductController.class)```.
+
+So Spring is not start the server at all, just test the web layer. In our example just one controller and its dependencies.
+
+Happy coding :) 
