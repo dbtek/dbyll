@@ -79,33 +79,27 @@ with @MockMvcTest. So let's check below code.
 ```java
 @RunWith(SpringRunner.class)
 @WebMvcTest(ProductController.class)
-public class WebMockTest {
+public class ProductControllerWebMvcTest {
 
-  @Autowired private MockMvc mockMvc;
-  @Autowired private ObjectMapper mapper;
+	private static final Long productId = 1L;
 
-  @MockBean private ProductService productService;
-  @MockBean private ProductMapper productMapper;
+	@Autowired private MockMvc mockMvc;
+	@Autowired private ObjectMapper objectMapper;
+	@MockBean private ProductService productService;
+	@MockBean private ProductMapper productMapper;
 
-  @Test
-  public void returnHttpStatusCode200_ifProductIsValid() throws Exception {
-    IProductPort.ProductRequest productRequest =
-        new IProductPort.ProductRequest().setId(1L).setName("Product-1");
-    String json = mapper.writeValueAsString(productRequest);
+	@Test
+	public void createProductReturnHttpStatusCode200_ifProductIsValid() throws Exception {
+		//To be provided
+	}
 
-    when(service.createProduct(any(), any())).thenReturn(new Product());
+	@Test
+	public void returnProductWithHttpStatusCode200_ifProductIsExist() throws Exception {
+		//To be provided
+	}
 
-    this.mockMvc
-        .perform(
-            post("/v1/product")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-        .andDo(print())
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(content().string(containsString("Success")));
-  }
 }
+
 ```  
 
 As you see ```@WebMvcTest(ProductController.class)``` we don't need all application context. We just need our controller and its dependencies.
@@ -121,7 +115,7 @@ exception in detailed you will see error message as
 We are also using 2 autowired beans ```mockMvc``` and ```objectMapper```; ```mockMvc``` helps us to call our endpoint and objectMapper
 helps us to convert java object to json which will be converted by ```RequestBody``` in our controller.
 
-#### Test @PostMapping
+#### Test for @PostMapping
 
 In below test we are creating a ```productRequest``` object and send the request to endpoint ```/v1/product``` with POST http method.
 Also we have a one mock as  
@@ -135,37 +129,69 @@ So we setUp our scenario as a success response, so createProduct
 ```java
 
 @Test
-  public void returnHttpStatusCode200_ifProductIsValid() {
-    IProductPort.ProductRequest productRequest =
-        new IProductPort.ProductRequest().setId(1L).setName("Product-1");
-    String json = objectMapper.writeValueAsString(productRequest);
+	public void createProductReturnHttpStatusCode200_ifProductIsValid() throws Exception {
+		String productName = "Product-1";
+		IProductPort.ProductRequest productRequest =
+				new IProductPort.ProductRequest().setId(productId).setName(productName);
+		String json = objectMapper.writeValueAsString(productRequest);
 
-    when(productService.createProduct(any(), any())).thenReturn(new Product());
+		Product product = new Product(productId, productName);
+		ProductDto productDto = new ProductDto(productName);
 
-    this.mockMvc
-        .perform(
-            post("/v1/product")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-        .andDo(print())
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(content().string(containsString("Success")));
-  }
+		when(productService.createProduct(any(), any())).thenReturn(product);
+		when(productMapper.mapToProductDto(product)).thenReturn(productDto);
+
+		this.mockMvc
+				.perform(
+						post("/v1/product")
+								.contentType(MediaType.APPLICATION_JSON)
+								.content(json)
+								.accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(content().string(containsString("Success")))
+				.andExpect(content().string(containsString(productId.toString())))
+				.andExpect(content().string(containsString(productName)));
+	}
 
 ```
 
 Because we sent a valid product, we are expecting status code as HTTP 200 and checking other fields at response which should be in 
 sucess response. 
 
-#### Test @GetMapping
+#### Test for @GetMapping
 
 For GET request nothings change a lot. We are just sending the productId as a request parameter(as a pathVariable) and expect
 success response if our mock return as success for that productId. 
 
+```java
+
+@Test
+	public void returnProductWithHttpStatusCode200_ifProductIsExist() throws Exception {
+		String productName = "Product-" + productId;
+		Product product = new Product(productId, productName);
+		ProductDto productDto = new ProductDto(productName);
+
+		when(productService.getProduct(any())).thenReturn(product);
+		when(productMapper.mapToProductDto(product)).thenReturn(productDto);
+
+		this.mockMvc
+				.perform(
+						get("/v1/product/" + productId)
+								.contentType(MediaType.APPLICATION_JSON)
+								.accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(content().string(containsString("Success")))
+				.andExpect(content().string(containsString(productId.toString())))
+				.andExpect(content().string(containsString(productName)));
+	}
+
+```
+
 ### Notes
 
-@MockMvcTest is a great way to test your Controller without initialize all application context. You will just initialize the bean you need 
+```@MockMvcTest``` is a great way to test your Controller without initialize all application context. You will just initialize the bean you need 
 and mock other dependencies. It is a good way to test your mappings, validations or even application accepted media type problems.  
 
 ### Result
