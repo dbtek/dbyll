@@ -8,14 +8,14 @@ fullview: false
 ### Introduction to @MockMvcTest
 
 Spring offers few different options to test our web layer. These can be combined under two testing strategy. Integration testing 
-and unit testing. Both have their own advantages and profits. Integration tests are useful to test your applications business logic
-as much as similar to production environment. But because they need application context up, they are heavyweight and not so practical.
+and unit testing. Both have their own advantages and profits. Integration tests are useful to test your application's business logic
+as much as similar to production environment. But they need all application context up, they are heavyweight(time consuming) and not so practical.
 Unit testing easy to create, practical and lightweight. No need to application context but hard to maintain because you need mock and
 stubs classes. Also real profit of unit testing is not just test your units. It is a good indicator of how's your design. If it is hard
 to write a test for a class/method, then it means you have wrong dependencies, complex methods or objects.
 
-Today I will give an example to web layer testing which is a bit middle point for integration and unit testing. It is not required appliaction 
-context and needs some mocks so similar to unit tests(and actually it is under unit testing) but also test web layer serialization(Jackson mappers),
+Today I will give an example to web layer testing which is a bit middle point for integration and unit testing. It is not required all application 
+context. However it needs web layer beans and their dependencies in application context. So it needs some mocks which similar to unit tests but also test web layer serialization(Jackson mappers),
 http status codes(validations) so a bit similar to integration tests in that perspective.    
 
 ### Configuration
@@ -58,7 +58,6 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile('org.apache.commons:commons-lang3:3.8.1')
     compileOnly('org.projectlombok:lombok')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
@@ -102,29 +101,30 @@ public class ProductControllerWebMvcTest {
 
 ```  
 
-As you see ```@WebMvcTest(ProductController.class)``` we don't need all application context. We just need our controller and its dependencies.
+As you see ```@WebMvcTest(ProductController.class)``` we don't even need all web layer application context. We just need our controller and its dependencies.
 There are few important points to determine which classes should be mocked. We need to mock ```productService``` 
-and ```productMapper```. Because these beans are using as a subfields at ProductController. 
+and ```productMapper```. Because these beans are using as a subfields or in other words depended by ```ProductController``` class. 
 
-Another important point to keep in my that, the beans which are defined as @MockBean should be interface, otherwise ```ProductController``` bean
+Another important point to keep in my that, the beans which are defined as ```@MockBean``` should be interface, otherwise ```ProductController``` bean
 can't be initialized. If your dependencies are not interface or not implementing an interface then you most likely will get ```java.lang.IllegalStateException: Failed to load ApplicationContext```
 exception in detailed you will see error message as 
 
 ```Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'productController'.```
 
-We are also using 2 autowired beans ```mockMvc``` and ```objectMapper```; ```mockMvc``` helps us to call our endpoint and objectMapper
+We are also using 2 autowired beans ```mockMvc``` and ```objectMapper``` so ```mockMvc``` helps us to call our endpoint and ```objectMapper```
 helps us to convert java object to json which will be converted by ```RequestBody``` in our controller.
 
 #### Test for @PostMapping
 
 In below test we are creating a ```productRequest``` object and send the request to endpoint ```/v1/product``` with POST http method.
-Also we have a one mock as  
+Also we have mocks as  
 
 ```java
-when(productService.createProduct(any(), any())).thenReturn(new Product());
+when(productService.createProduct(any(), any())).thenReturn(product);
+when(productMapper.mapToProductDto(product)).thenReturn(productDto);
 ```
 
-So we setUp our scenario as a success response, so createProduct
+So we setUp our scenario as a success response.
 
 ```java
 
@@ -157,7 +157,7 @@ So we setUp our scenario as a success response, so createProduct
 ```
 
 Because we sent a valid product, we are expecting status code as HTTP 200 and checking other fields at response which should be in 
-sucess response. 
+success response. 
 
 #### Test for @GetMapping
 
@@ -197,11 +197,11 @@ and mock other dependencies. It is a good way to test your mappings, validations
 ### Result
 
 Spring Boot is only instantiating the web layer, not the whole context. In an application with multiple controllers you can even ask for just one to be instantiated, 
-using, for example ```@WebMvcTest(ProductController.class)```.
+for example ```@WebMvcTest(ProductController.class)```.
 
 So Spring is not start the server at all, just test the web layer. In our example just one controller and its dependencies.
 
-You can find completed example project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-integration-test)
+You can find the all project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-integration-test)
 
 
 ### References
