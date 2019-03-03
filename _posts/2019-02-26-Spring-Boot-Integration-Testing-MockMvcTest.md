@@ -1,9 +1,12 @@
 ---
 layout: post
-title: Spring Test - MockMvcTest  
+title: Spring Test - Web Layer Testing with MockMvcTest  
 categories: [Spring, Testing]
 fullview: false
 ---
+
+How are you testing your Controllers? Are you ignore unit tests for it? Or you just write some time consuming, heavyweight integration tests.
+Let's take a look to ```MockMvcTest```. 
 
 ### Introduction to @MockMvcTest
 
