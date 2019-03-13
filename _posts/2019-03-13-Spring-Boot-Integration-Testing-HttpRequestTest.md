@@ -5,24 +5,24 @@ categories: [Spring, Testing]
 fullview: false
 ---
 
-We have few options to test our controllers. So in this post we will take a look to ```TestRestTemplate```.
-These tests are run as an integration tests.In that kind of tests are no difference what are our application 
-doing on production(ignoring other system components proxy servers, load-balancing etc.).These kind of tests 
-are suitable to test any TCP related problems. You also have more argument when some of your client come to 
-your table as your endpoints are not working. 
+Spring Test provides have few options to test our controllers. So in this post let's take a look to how to test controllers with 
+```TestRestTemplate```. These tests are run as an integration tests. In that kind of tests are no difference what are 
+our application doing on production(ignoring other system components proxy servers, load-balancing etc.).
+These kind of tests are suitable to test any ```HTTP``` related problems. You also have more argument when some of your 
+client/friend come to your table and blame you that your endpoints are not working. 
 
 ### Introduction to TestRestTemplate
 
 
-```TestRestTemplate``` helps us to send http request in our integration tests. To do that we need all application context
-should be running. Also Spring run a local server in a random port ```@LocalServerPort```. So we just need to create our request in our integration tests and 
+```TestRestTemplate``` helps us to send http request in our integration tests. To do that need all application context
+should be running. Also Spring run a local server in a random port ```@LocalServerPort```. So just need to create the request in integration tests and 
 send it like a clients of your servers. ```TestRestTemplate``` have all necessary methods to send the request to server 
 with a convenient way similar to [RestTemplate](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html){:target="_blank"}.
 
 ### Configuration
 
-We just need to add ```testCompile("org.springframework.boot:spring-boot-starter-test")``` to our gradle file. Then because this is an integration tests
-we want to run all application context. So we need to add ```@SpringBootTest``` annotation at the beginning of our test class.  
+Just need to add ```testCompile("org.springframework.boot:spring-boot-starter-test")``` to our gradle file. Because this is an integration test
+so Spring will run all application context. Because of that ```@SpringBootTest``` annotation should be added at the beginning of test class.  
  
 
 ```java
@@ -47,8 +47,7 @@ public class HttpRequestTest {
 
 ### How to write a test with ```TestRestTemplate```
 
-Now we are ready to write our tests ```TestRestTemplate```. Our current application have two endpoints. GET ```/v1/product/{productId}``` 
-to get the product data with productId and POST ```/v1/product``` create the product. 
+Sample current application have two endpoints. GET ```/v1/product/{productId}``` to get the product data with productId and POST ```/v1/product``` create the product. 
 
 ```java
 
@@ -67,7 +66,7 @@ to get the product data with productId and POST ```/v1/product``` create the pro
 
 ```
 
-So first we sent a POST request to create a product. Then we sent a GET request to get the product data and check that actual 
+So first sent a POST request to create a product. Then sent a GET request to get the product data and check that actual 
 and expected responses are same or not.
 
 ### Notes
