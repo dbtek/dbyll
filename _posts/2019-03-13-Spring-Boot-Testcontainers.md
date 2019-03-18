@@ -34,7 +34,7 @@ Testcontainers have the same idea that what docker containers have today.
 
 
 
-### How to write a test with ```TestRestTemplate```
+### How to write a test with ```Testcontainers```
  
 
 ```java
