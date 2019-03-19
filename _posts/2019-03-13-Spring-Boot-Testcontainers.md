@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Spring Test - Integration Testing with TestRestTemplate  
-categories: [Spring, Testing]
+title:  Introduction to Testcontainers
+categories: [Spring, Testing, Docker, Testcontainers]
 fullview: false
 ---
 
