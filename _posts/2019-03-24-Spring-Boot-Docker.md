@@ -6,7 +6,7 @@ fullview: false
 ---
 
 Containers have been making revolutionary changes in software world. Previous systems were mostly powered by virtual
-machines. Today so many software pioneers like Google, Amazon, Redhat and Docker convert the industry in that way. 
+machines. Today many software pioneers like Google, Amazon, Redhat and Docker Inc. convert the industry in that way. 
 Docker was released in 2013 by Solomon Hykes. Now it is developing by Docker Inc. It is relying on LXC(Linux Containers) which was invented
 in 2008 by IBM.  
 
@@ -49,7 +49,7 @@ FROM postgres:latest
 COPY init-user-db.sh /docker-entrypoint-initdb.d/init-user-db.sh
 ```
 
-When postgres container start to run it will use that file as a database initialization. Currently below shell is just
+When postgres container start to run, it will use that file as a database initialization. Currently below shell is just
 connect the postgres server inside the postgres container and run ```GRANT``` comment for ```POSTGRES_USER```. 
 
 
@@ -75,7 +75,7 @@ For more information about initialization script check [postgres docker official
 
 
 ```POSTGRES_USER``` and ```POSTGRES_DB``` are defined at ```docker-compose.yaml``` under project root > docker folder.
-Let's take a look to ```docker-compose.yaml```. There are two services defined. postgres service will use the Dockerfile
+Let's take a look to ```docker-compose.yaml```. There are two services defined. ```postgres``` service will use the Dockerfile
 inside the postgres folder so build attribute have postgres folder name. ```environment``` is using to give different
 naming to default database, user and password which created in initialization time. Please check above  ```init-user-db.sh``` file
 again to see how these parameters are used. That's reason why didn't create any database name as store in ```init-user-db.sh``` file,
@@ -107,7 +107,7 @@ services:
       JAVA_HEAP_SIZE_MB: 1024
 
 ```
-Second service definition named as ```spring-boot-containers```. It has its Dockerfile definition in parent folder so
+Second service definition named as ```spring-boot-containers```. It has Dockerfile definition in parent folder so
 build attribute set it as ```../```. It linked postgres service which means it needs that service. Also environment variable
 ```SPRING_PROFILES_ACTIVE``` is set to dev, which will initialize spring boot dev profile when service is started. Service will expose its
  port on 12345.
