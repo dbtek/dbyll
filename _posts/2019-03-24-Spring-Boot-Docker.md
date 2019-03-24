@@ -126,7 +126,14 @@ docker-compose up --build
 cd .. || exit
 ```
 
+Now application is started to run on ```http://localhost:12345```. Send POST request with below body to 
+```http://localhost:12345/v1/product``` to create a product.
 
+```json
+    {"name":"product001"}
+```
+
+Then query product to send GET request to ```http://localhost:12345/v1/product/product001```. 
 
 ### Notes
 
@@ -142,7 +149,7 @@ You can find the all project [on Github](https://github.com/muzir/softwareLabs/t
 
 ### References
 
-
+https://spring.io/guides/gs/spring-boot-docker/
 
 Happy coding :) 
 
