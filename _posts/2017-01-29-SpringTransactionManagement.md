@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spring Propagation Tutorial
-categories: [Spring]
+categories: [spring]
 fullview: false
 ---
 

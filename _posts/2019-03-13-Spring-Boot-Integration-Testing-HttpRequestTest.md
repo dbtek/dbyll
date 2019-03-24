@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spring Test - Integration Testing with TestRestTemplate  
-categories: [Spring, Testing]
+categories: [spring, testing]
 fullview: false
 ---
 

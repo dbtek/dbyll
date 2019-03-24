@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spring Test - Web Layer Testing with MockMvcTest  
-categories: [Spring, Testing]
+categories: [spring, testing]
 fullview: false
 ---
 
