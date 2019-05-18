@@ -39,7 +39,7 @@ ENTRYPOINT exec java $JAVA_OPTS -jar /service.jar
 
 ```
 
-#### Configure postgres
+#### <a name="configurePostgres"></a> Configure postgres
 
 Second Dockerfile is under project root > docker > postgres folder. It gets the latest postgres image. Then copy
 ```init-user-db.sh``` file to ```/docker-entrypoint-initdb.d/init-user-db.sh```. That path is in postgres container.
