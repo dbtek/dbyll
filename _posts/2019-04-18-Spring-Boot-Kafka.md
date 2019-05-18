@@ -12,7 +12,7 @@ systems/microservices, storage or powering logging/monitoring for the high traff
 
 This blogpost assume that you are familiar basic Apache Kafka terminology. Also basically you should know what are topics, partitions, offsets, consumers, producers in Apache Kafka.
 
-### Introduction
+## Introduction
 
 Apache Kafka will be using as data hub between data producer and data consumer. This will provide systems high coherence and
 low dependency to other systems. One part of the system is just create a message and publish it to Kafka under a specific topic name, if any other system require that message then just need to subscribe that topic
@@ -21,7 +21,7 @@ and read the messages from Kafka. This also helps to build an event driven async
 In this blogpost to simulate a basic product data pipeline, one part of the system publish message under ```Product.change``` topic. One of the other part of the system subscribe that topics
 and consume that messages. If product is not exist in product table then save it as a new product, if it is exist just update the price change.    
 
-### Configuration  
+## Configuration  
 
 Apache Kafka working as a Publish/Subscribe messaging platform. One of the difference from other messaging platforms that Kafka is not directly send messages to specific receivers. 
 So Kafka provides messages and subscribers consume it independently from publishers. These publish/subscribe pattern is implemented by consumers and producers in Kafka. 
@@ -81,7 +81,7 @@ So Kafka provides messages and subscribers consume it independently from publish
 ```
 
 In above configuration class definition at ```KafkaConfiguration.java``` defined producer properties, consumer properties, kafkaConsumerFactory, kafkaProducerFactory. So factory 
-beans are defined at ```KafkaConfiguration.java```, with the help of these factory beans we can create independent consumers and producers with help of these factory classes.
+beans are defined at ```KafkaConfiguration.java```, we can create independent consumers and producers with help of these factory classes.
 
 For consumers and producers properties; these are mostly mandatory fields to set.  
 
@@ -114,10 +114,39 @@ This parameter controls the total memory the producer will use.
 
 ####Consumer Properties
 
+##### ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG
+It is the address of the broker. In a kafka cluster this field has more than one value which are seperated via comma.
 
-#### Configure spring boot service 
+##### ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG
+Kafka hold the data as byte array so when reading the message key from Kafka we need to deserialize it to an object. This property
+set which class should be used for that conversion, it is also dependent how is it serialized in producer KEY_SERIALIZER_CLASS_CONFIG.
 
-#### Configure Kafka
+##### ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG
+Kafka hold the data as byte array so when reading the message value from Kafka we need to deserialize it to an object. This property
+set which class should be used for that conversion, it is also dependent how is it serialized in producer VALUE_SERIALIZER_CLASS_CONFIG.
+
+##### ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG
+This property determine consumer commit strategy. If it is true, consumer will commit periodically after fetch the records from brokers.
+By default it is 5 seconds. If it is false, commit should be done by developer after processing the records. It can be commit after from each 
+record processing or after finish a bunch of records in a synchronous/asynchronous way. 
+
+##### ConsumerConfig.AUTO_OFFSET_RESET_CONFIG
+When we add a new consumer or remove a consumer from consumer group which listen a topic, we need to rebalance the topic's partitions in that consumer group.
+If we are adding a new consumer after rebalancing is done, new conusmer starts to consume messages from partitions. This property
+determine that it should start from latest offsets if it is set as "latest" which committed by other consumers. If it is set as
+"earliest" then it needs to process all the messages in that partition.
+
+##### ConsumerConfig.MAX_POLL_RECORDS_CONFIG
+When consumer fetch records from broker it reads the records in a batch. This property determine how many records can be read maximum in one fetch request.
+
+### Docker Configuration
+
+For postgres configuration read [configure postgres section in spring boot docker post.](http://muzir.github.io/spring/docker/docker-compose/postgres/2019/03/24/Spring-Boot-Docker.html#configurePostgres), same 
+configuration is using in this project too.
+
+
+### Configure spring boot service 
+
 
 ### How to run the project
 
