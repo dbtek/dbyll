@@ -141,8 +141,56 @@ When consumer fetch records from broker it reads the records in a batch. This pr
 
 ### Docker Configuration
 
-For postgres configuration read [configure postgres section in spring boot docker post.](http://muzir.github.io/spring/docker/docker-compose/postgres/2019/03/24/Spring-Boot-Docker.html#configurePostgres), same 
+#### Postgres configuration
+
+For postgres configuration read [configure postgres section in spring boot docker post.](https://muzir.github.io/spring/docker/docker-compose/postgres/2019/03/24/Spring-Boot-Docker.html#configurePostgres), same 
 configuration is using in this project too.
+
+#### Kafka configuration
+
+In below configuration defined 4 different services as zookeeper, kafka, postgres and spring-boot-kafka. ```zookeeper``` is using for kafka dependency.
+```kafka``` service define host name and port. One of the important configuration is ```spring-boot-kafka``` service ```kafka.bootstrap.servers``` environment.
+ProducerConfig.BOOTSTRAP_SERVERS_CONFIG and ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG set via that environment variable.
+
+```yaml
+version: "3.7"
+services:
+  zookeeper:
+    image: "zookeeper:3.4.13"
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: "confluent/kafka:latest"
+    ports:
+      - "9092:9092"
+    hostname: kafka
+    links:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  postgres:
+    build: postgres
+    environment:
+      POSTGRES_USER: dbuser
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: store
+    ports:
+    - 5432:5432
+  spring-boot-kafka:
+    build: ../
+    ports:
+      - "12345:12345"
+    links:
+      - postgres
+      - kafka
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      JAVA_HEAP_SIZE_MB: 1024
+      kafka.bootstrap.servers: kafka:9092
+```
 
 
 ### Configure spring boot service 
