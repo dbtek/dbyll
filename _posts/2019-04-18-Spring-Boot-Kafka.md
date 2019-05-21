@@ -7,10 +7,10 @@ fullview: false
 
 Apache Kafka is distributed messaging system which is initially developed by Jay Kreps when he was working in Linkedin.
 Apache Kafka designed as a distributed system which helps to scale horizontal easily. It provides high throughput and low
-latency writing performance. It is using in few different use cases as data pipeline between different
+latency. It is using in few different use cases as data pipeline between different
 systems/microservices, storage or powering logging/monitoring for the high traffic application. In this blogpost, create a project which simulate a basic product data pipeline of a e-commerce site.
 
-This blogpost assume that you are familiar basic Apache Kafka terminology. Also basically you should know what are topics, partitions, offsets, consumers, producers in Apache Kafka.
+This blogpost assume that you are familiar of the basic Apache Kafka terminology. Basically you should know what are topics, partitions, offsets, consumers, producers in Apache Kafka.
 
 ## Introduction
 
@@ -194,6 +194,164 @@ services:
 
 
 ### Configure spring boot service 
+
+Now Kafka, zookeeper, postgres services are ready to run. Let's take a closer to how to configure consumer and producer in our application spring-boot-kafka.
+
+#### Consumers Configurations
+
+All consumers should implements ```EventConsumer``` interface. So this is creating a contract for all consumers like below.  
+
+```java
+
+package com.softwarelabs.kafka;
+
+public interface EventConsumer<T> {
+
+	void start(KafkaConsumerFactory kafkaConsumerFactory);
+
+	void stop();
+
+	void consume(T value);
+
+	Class eventType();
+
+	String topicName();
+
+	String consumerGroupId();
+}
+
+
+```
+
+In that way start and stop all consumers easily in below configuration class.
+
+```java
+
+package com.softwarelabs.product;
+
+@Configuration
+public class ConsumerConfiguration {
+
+	private final Set<EventConsumer> consumers;
+	private final KafkaConsumerFactory<String, String> kafkaConsumerFactory;
+
+	@Autowired
+	public ConsumerConfiguration(Set<EventConsumer> consumers, KafkaConsumerFactory kafkaConsumerFactory) {
+		this.consumers = consumers;
+		this.kafkaConsumerFactory = kafkaConsumerFactory;
+	}
+
+	@PostConstruct
+	public void start() {
+		consumers.forEach(consumer -> consumer.start(kafkaConsumerFactory));
+	}
+
+	@PreDestroy
+	public void stop() {
+		consumers.forEach(consumer -> consumer.stop());
+	}
+
+}
+
+```
+
+ ```ConsumerConfiguration``` bean created all consumers after bean is created. Also this bean is responsible to stop all consumers when this bean
+ is starting to destroy. In start function we are calling consumer start which will create a new ```KafkaConsumer``` with ```consumerProps```. After 
+ creating the ```kafkaConsumer```, passing it to a ```KafkaConsumerThread``` and start to thread.
+ 
+ ```java
+@Service
+@Slf4j
+public class ProductConsumer implements EventConsumer<ProductChange> {
+
+@Override
+ 	public void start(KafkaConsumerFactory kafkaConsumerFactory) {
+ 		productConsumerThread =
+ 				new KafkaConsumerThread(this, kafkaConsumerFactory.createConsumer(consumerGroupId()), new ObjectMapper());
+ 		productConsumerThread.start();
+ 	}
+}
+```
+
+KafKafkaConsumerThread has the all KafkaConsumer related functionality inside it. Consumers poll inside ```KafkaConsumerThread```. After process the 
+messages consumer commit asynchronously at the end. If something goes wrong when committing the offsets to broker then log the exception in ```onComplete```
+event at ```ErrorLoggingCommitCallback``` class.
+
+
+```java
+
+package com.softwarelabs.kafka;
+
+@Slf4j
+public class KafkaConsumerThread<T, K, V> {
+
+	private Consumer<K, V> consumer;
+	private ObjectMapper mapper;
+	private EventConsumer<T> eventConsumer;
+	private OffsetCommitCallback errorLoggingCommitCallback() {
+		return new ErrorLoggingCommitCallback();
+	}
+
+	public KafkaConsumerThread(EventConsumer<T> eventConsumer, Consumer<K, V> consumer, ObjectMapper mapper) {
+		log.info("Starting Kafka consumer");
+		this.consumer = consumer;
+		this.eventConsumer = eventConsumer;
+		this.consumer.subscribe(Collections.singletonList(eventConsumer.topicName()));
+		this.mapper = mapper;
+	}
+
+	public void start(){
+		Thread consumer = new Thread(() -> {
+			run();
+		});
+		/*
+		 * Starting the thread.
+		 */
+		consumer.start();
+	}
+
+	public void stop(){
+		consumer.wakeup();
+	}
+
+	private void run() {
+		while (true) {
+			ConsumerRecords<K, V> consumerRecords = consumer.poll(Duration.ofMillis(POLLING_TIME));
+			//print each record.
+			consumerRecords.forEach(record -> {
+				log.info("Record Key " + record.key());
+				log.info("Record value " + record.value());
+				log.info("Record partition " + record.partition());
+				log.info("Record offset " + record.offset());
+				// commits the offset of record to broker.
+				T value = null;
+				try {
+					value = (T) mapper.readValue((String) record.value(), eventConsumer.eventType());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				eventConsumer.consume(value);
+			});
+			consumer.commitAsync(errorLoggingCommitCallback());
+		}
+	}
+
+	private class ErrorLoggingCommitCallback implements OffsetCommitCallback {
+
+		@Override
+		public void onComplete(Map<TopicPartition, OffsetAndMetadata> offsets, Exception exception) {
+			if (exception != null) {
+				log.error("Exception while commiting offsets to Kafka", exception);
+			}
+		}
+	}
+}
+
+```
+
+
+##### Producers Configuration
+
 
 
 ### How to run the project
