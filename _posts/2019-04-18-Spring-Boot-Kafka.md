@@ -199,7 +199,7 @@ Now Kafka, zookeeper, postgres services are ready to run. Let's take a closer to
 
 #### Consumers Configurations
 
-All consumers should implements ```EventConsumer``` interface. So this is creating a contract for all consumers like below.  
+All consumers should implements ```EventConsumer``` interface. So this is creating a contract for all consumers.  
 
 ```java
 
@@ -352,11 +352,82 @@ public class KafkaConsumerThread<T, K, V> {
 
 ##### Producers Configuration
 
+All producers should implements ```EventProducer``` interface. So this is creating a contract for all producers.
+
+```java
+
+package com.softwarelabs.kafka;
+
+public interface EventProducer<T> {
+	void publish(T value);
+
+	String topicName();
+
+	String producerClientId();
+}
+
+
+```
+
+In ```ProductProducer``` converting java object to string json and send it to ```publish``` method which will asynchronously send a record to a topic in kafka broker.
+
+```java
+@Slf4j
+@Service
+public class ProductProducer implements EventProducer<String> {
+    public void publishProductChange(Product product) throws JsonProcessingException {
+            ProductChange productChange = new ProductChange(product.name(), product.price());
+            String productChangeMessage = mapper.writeValueAsString(productChange);
+            publish(productChangeMessage);
+        }
+    
+        @Override
+        public void publish(String message) {
+            ProducerRecord<String, String> record = new ProducerRecord<>(topicName(), "1", message);
+            log.info("Publish topic : {} message : {}", topicName(), message);
+            kafkaProducer.send(record, produceCallback);
+        }
+}
+```
+
+Besides all these configuration, ```ProductProducerSchedular``` has a schedular which trigger message publish with the help of java faker library.
+Creating a ```ProductChange``` object and publish it to ```productProducer.publishProductChange```, so ```productConsumers``` are listening "Product.change"
+topic and save the product if it is not exist at Product table, if it is exist update the changed price.
+
+```java
+@Service
+@Slf4j
+public class ProductConsumer implements EventConsumer<ProductChange> {
+public void consume(ProductChange productChange) {
+		log.info("Consume productChange name: {}  price: {}", productChange.name(), productChange.price());
+		Product product = new PersistantProduct(productChange);
+		productService.getProduct(product)
+				.map(p -> {
+							log.info("Product {} is exist", product.name());
+							return productService.saveProduct(new PersistantProduct(p.id(), productChange.name(), productChange.price()));
+
+						}
+				)
+				.orElseGet(() -> {
+							log.info("Product {} is not exist", product.name());
+							return productService.saveProduct(productChange);
+						}
+
+				);
+	}
+}
+``` 
+
 
 
 ### How to run the project
 
+It is easy to run the project just with ```./cleanRun.sh```
+
 ### Notes
+
+This project should be used in development environment. But it may be used as a base of some project and can be prepare for
+production usage as well.
 
 ### Result
 
