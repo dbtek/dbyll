@@ -44,8 +44,10 @@ So Kafka provides messages and subscribers consume it independently from publish
         	) {
         		final Map<String, Object> props = new ConcurrentHashMap<>();
         		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
-        		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
+        		"org.apache.kafka.common.serialization.StringSerializer");
+        		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, 
+        		"org.apache.kafka.common.serialization.StringSerializer");
         		props.put(ProducerConfig.ACKS_CONFIG, "all");
         		props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
         		props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
@@ -57,8 +59,10 @@ So Kafka provides messages and subscribers consume it independently from publish
         
         		final Map<String, Object> props = new ConcurrentHashMap<>();
         		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-        		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
+        		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, 
+        		"org.apache.kafka.common.serialization.StringDeserializer");
+        		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, 
+        		"org.apache.kafka.common.serialization.StringDeserializer");
         		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
         		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         		props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 50);
@@ -232,7 +236,8 @@ public class ConsumerConfiguration {
 	private final KafkaConsumerFactory<String, String> kafkaConsumerFactory;
 
 	@Autowired
-	public ConsumerConfiguration(Set<EventConsumer> consumers, KafkaConsumerFactory kafkaConsumerFactory) {
+	public ConsumerConfiguration(Set<EventConsumer> consumers, 
+	                             KafkaConsumerFactory kafkaConsumerFactory) {
 		this.consumers = consumers;
 		this.kafkaConsumerFactory = kafkaConsumerFactory;
 	}
@@ -263,7 +268,9 @@ public class ProductConsumer implements EventConsumer<ProductChange> {
 @Override
  	public void start(KafkaConsumerFactory kafkaConsumerFactory) {
  		productConsumerThread =
- 				new KafkaConsumerThread(this, kafkaConsumerFactory.createConsumer(consumerGroupId()), new ObjectMapper());
+ 				new KafkaConsumerThread(this, 
+ 				                        kafkaConsumerFactory.createConsumer(consumerGroupId()), 
+ 				                        new ObjectMapper());
  		productConsumerThread.start();
  	}
 }
@@ -288,7 +295,9 @@ public class KafkaConsumerThread<T, K, V> {
 		return new ErrorLoggingCommitCallback();
 	}
 
-	public KafkaConsumerThread(EventConsumer<T> eventConsumer, Consumer<K, V> consumer, ObjectMapper mapper) {
+	public KafkaConsumerThread(EventConsumer<T> eventConsumer, 
+	                           Consumer<K, V> consumer, 
+	                           ObjectMapper mapper) {
 		log.info("Starting Kafka consumer");
 		this.consumer = consumer;
 		this.eventConsumer = eventConsumer;
@@ -322,7 +331,8 @@ public class KafkaConsumerThread<T, K, V> {
 				// commits the offset of record to broker.
 				T value = null;
 				try {
-					value = (T) mapper.readValue((String) record.value(), eventConsumer.eventType());
+					value = (T) mapper.readValue((String) record.value(), 
+					                             eventConsumer.eventType());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -335,7 +345,9 @@ public class KafkaConsumerThread<T, K, V> {
 	private class ErrorLoggingCommitCallback implements OffsetCommitCallback {
 
 		@Override
-		public void onComplete(Map<TopicPartition, OffsetAndMetadata> offsets, Exception exception) {
+		public void onComplete(Map<TopicPartition, 
+		                       OffsetAndMetadata> offsets, 
+		                       Exception exception) {
 			if (exception != null) {
 				log.error("Exception while commiting offsets to Kafka", exception);
 			}
@@ -395,12 +407,16 @@ topic and save the product if it is not exist at Product table, if it is exist u
 @Slf4j
 public class ProductConsumer implements EventConsumer<ProductChange> {
 public void consume(ProductChange productChange) {
-		log.info("Consume productChange name: {}  price: {}", productChange.name(), productChange.price());
+		log.info("Consume productChange name: {}  price: {}", 
+		          productChange.name(), 
+		          productChange.price());
 		Product product = new PersistantProduct(productChange);
 		productService.getProduct(product)
 				.map(p -> {
-							log.info("Product {} is exist", product.name());
-							return productService.saveProduct(new PersistantProduct(p.id(), productChange.name(), productChange.price()));
+					log.info("Product {} is exist", product.name());
+					return productService.saveProduct(new PersistantProduct(p.id(), 
+					                                  productChange.name(), 
+					                                  productChange.price()));
 
 						}
 				)
