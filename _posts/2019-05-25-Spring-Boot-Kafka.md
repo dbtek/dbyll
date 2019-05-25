@@ -83,7 +83,7 @@ beans are defined at ```KafkaConfiguration.java```, independent consumers and pr
 
 For consumers and producers properties; these are mostly mandatory fields to set.  
 
-##Producer Properties
+### Producer Properties
 
 #### ProducerConfig.BOOTSTRAP_SERVERS_CONFIG
 It is the address of the broker. In a kafka cluster this field has more than one value which are separated via comma. In our example we are running one Kafka broker, which is not a good example in real world kafka application,
@@ -110,7 +110,7 @@ but at the same time it will increase the throughput because we are sending more
 #### ProducerConfig.BUFFER_MEMORY_CONFIG
 This parameter controls the total memory of the producer use.
 
-###Consumer Properties
+### Consumer Properties
 
 #### ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG
 It is the address of the broker. In a kafka cluster this field has more than one value which are separated via comma.
