@@ -6,7 +6,7 @@ Blog: http://muzir.github.io/
 
 
 ### Subjects
-- RDBMS ACID principles
+- Enterprise software development
 - Algorithms
 - Clean Code
 
