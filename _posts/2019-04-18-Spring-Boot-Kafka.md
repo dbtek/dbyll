@@ -5,21 +5,21 @@ categories: [spring, docker, docker-compose, kafka]
 fullview: false
 ---
 
-Apache Kafka is distributed messaging system which is initially developed by Jay Kreps when he was working in Linkedin.
-Apache Kafka designed as a distributed system which helps to scale horizontal easily. It provides high throughput and low
-latency. It is using in few different use cases as data pipeline between different
-systems/microservices, storage or powering logging/monitoring for the high traffic application. In this blogpost, create a project which simulate a basic product data pipeline of a e-commerce site.
+Apache Kafka is a distributed messaging system which is initially developed by Jay Kreps when he was working in Linkedin.
+Apache Kafka designed as a distributed system which helps to scale horizontally. It is using in few different use cases as data pipeline between different
+systems/microservices, storage or powering logging/monitoring for the high traffic application. In this blogpost, create a project which simulate a basic product data pipeline of e-commerce site.
 
 This blogpost assume that you are familiar of the basic Apache Kafka terminology. Basically you should know what are topics, partitions, offsets, consumers, producers in Apache Kafka.
 
 ## Introduction
 
-Apache Kafka will be using as data hub between data producer and data consumer. This will provide systems high coherence and
-low dependency to other systems. One part of the system is just create a message and publish it to Kafka under a specific topic name, if any other system require that message then just need to subscribe that topic
-and read the messages from Kafka. This also helps to build an event driven asynchronous architecture.
+Apache Kafka will be using as data hub between data producer and data consumer. This will help systems can be developed with high coherence and
+low coupling. One part of the system is just create a message and publish it to Kafka under a specific topic name, if any other system require that message then just need to subscribe that topic
+and read the messages from Kafka. So in that way services doesn't have to wait to each other, they can work in asynchronous way.
+It means Kafka helps to build an event driven asynchronous architecture.
 
 In this blogpost to simulate a basic product data pipeline, one part of the system publish message under ```Product.change``` topic. One of the other part of the system subscribe that topics
-and consume that messages. If product is not exist in product table then save it as a new product, if it is exist just update the price change.    
+and consume that messages. If product doesn't exist in product table then save it as a new product. If it is exist just update the price change.    
 
 ## Configuration  
 
@@ -80,7 +80,7 @@ So Kafka provides messages and subscribers consume it independently from publish
 
 ```
 
-In above configuration class definition at ```KafkaConfiguration.java``` defined producer properties, consumer properties, kafkaConsumerFactory, kafkaProducerFactory. So factory 
+In above configuration class, ```KafkaConfiguration.java``` defined producer properties, consumer properties, kafkaConsumerFactory, kafkaProducerFactory. So factory 
 beans are defined at ```KafkaConfiguration.java```, we can create independent consumers and producers with help of these factory classes.
 
 For consumers and producers properties; these are mostly mandatory fields to set.  
