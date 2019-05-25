@@ -7,9 +7,7 @@ fullview: false
 
 Apache Kafka is a distributed messaging system which is initially developed by Jay Kreps when he was working in Linkedin.
 Apache Kafka designed as a distributed system which helps to scale horizontally. It is using in few different use cases as data pipeline between different
-systems/microservices, storage or powering logging/monitoring for the high traffic application. In this blogpost, create a project which simulate a basic product data pipeline of e-commerce site.
-
-This blogpost assume that you are familiar of the basic Apache Kafka terminology. Basically you should know what are topics, partitions, offsets, consumers, producers in Apache Kafka.
+systems/microservices, storage or powering logging/monitoring for the high traffic application. In this blogpost, project simulates a basic product data pipeline of e-commerce site.
 
 ## Introduction
 
@@ -18,8 +16,8 @@ low coupling. One part of the system is just create a message and publish it to 
 and read the messages from Kafka. So in that way services doesn't have to wait to each other, they can work in asynchronous way.
 It means Kafka helps to build an event driven asynchronous architecture.
 
-In this blogpost to simulate a basic product data pipeline, one part of the system publish message under ```Product.change``` topic. One of the other part of the system subscribe that topics
-and consume that messages. If product doesn't exist in product table then save it as a new product. If it is exist just update the price change.    
+In this blogpost one part of the system publish message under ```Product.change``` topic. One of the other part of the system subscribe that topics
+and consume these messages. If product doesn't exist in product table then save it as a new product. If it is exist just update the price change.    
 
 ## Configuration  
 
@@ -81,21 +79,21 @@ So Kafka provides messages and subscribers consume it independently from publish
 ```
 
 In above configuration class, ```KafkaConfiguration.java``` defined producer properties, consumer properties, kafkaConsumerFactory, kafkaProducerFactory. So factory 
-beans are defined at ```KafkaConfiguration.java```, we can create independent consumers and producers with help of these factory classes.
+beans are defined at ```KafkaConfiguration.java```, independent consumers and producers can be created with help of these factory classes.
 
 For consumers and producers properties; these are mostly mandatory fields to set.  
 
 ####Producer Properties
 
 ###### ProducerConfig.BOOTSTRAP_SERVERS_CONFIG
-It is the address of the broker. In a kafka cluster this field has more than one value which are seperated via comma. In our example we are running one Kafka broker, which is not a good example in real world kafka application,
+It is the address of the broker. In a kafka cluster this field has more than one value which are separated via comma. In our example we are running one Kafka broker, which is not a good example in real world kafka application,
 where address is coming from ```kafka.bootstrap.servers``` environment variable which is set in ```docker-compose.yml``` as an environment variable.
 
 ###### ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG
 Every record(message) sent to Kafka has a key and value, and before send the record to Kafka we need to serialize that key information, Kafka is hold the data as
 byte arrays. So this configuration define the serializer class for key. 
 
-###### VALUE_SERIALIZER_CLASS_CONFIG
+###### ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG
 So this configuration define the serializer class for value.
 
 ###### ProducerConfig.ACKS_CONFIG
@@ -104,21 +102,21 @@ brokers. So this parameter define when an acknowledge should be send to producer
 doesn't get any acknowledge about message arriving to brokers. If it is set to 1 then producer will get an acknowledge when message arrive to leader broker.
 If it is set it as "all", then producer will get an acknowledge when all brokers got the same message. 
 
-###### LINGER_MS_CONFIG
+###### ProducerConfig.LINGER_MS_CONFIG
 This parameter controls the amount of time wait for additional messages before sending the current batch. Producer sends a batch of messages either
 when the current batch is full or when the linger.ms limit is reached. So if this parameter set it as higher value it will increase the latency
 but at the same time it will increase the throughput because we are sending more messages in a batch.
 
 ###### ProducerConfig.BUFFER_MEMORY_CONFIG
-This parameter controls the total memory the producer will use.
+This parameter controls the total memory of the producer use.
 
 ####Consumer Properties
 
 ##### ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG
-It is the address of the broker. In a kafka cluster this field has more than one value which are seperated via comma.
+It is the address of the broker. In a kafka cluster this field has more than one value which are separated via comma.
 
 ##### ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG
-Kafka hold the data as byte array so when reading the message key from Kafka we need to deserialize it to an object. This property
+Kafka hold the data as byte array so when reading the message key from Kafka, it is needed to deserialize to an object. This property
 set which class should be used for that conversion, it is also dependent how is it serialized in producer KEY_SERIALIZER_CLASS_CONFIG.
 
 ##### ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG
@@ -131,9 +129,9 @@ By default it is 5 seconds. If it is false, commit should be done by developer a
 record processing or after finish a bunch of records in a synchronous/asynchronous way. 
 
 ##### ConsumerConfig.AUTO_OFFSET_RESET_CONFIG
-When we add a new consumer or remove a consumer from consumer group which listen a topic, we need to rebalance the topic's partitions in that consumer group.
-If we are adding a new consumer after rebalancing is done, new conusmer starts to consume messages from partitions. This property
-determine that it should start from latest offsets if it is set as "latest" which committed by other consumers. If it is set as
+When we add a new consumer or remove a consumer from consumer group which listen a topic, Kafka need to rebalance the topic's partitions in that consumer group.
+If we are adding a new consumer after rebalancing is done, new consumer starts to consume messages from partitions. This property
+determine that it should start from latest offset if it is set as "latest" which committed by other consumers. If it is set as
 "earliest" then it needs to process all the messages in that partition.
 
 ##### ConsumerConfig.MAX_POLL_RECORDS_CONFIG
@@ -149,8 +147,8 @@ configuration is using in this project too.
 #### Kafka configuration
 
 In below configuration defined 4 different services as zookeeper, kafka, postgres and spring-boot-kafka. ```zookeeper``` is using for kafka dependency.
-```kafka``` service define host name and port. One of the important configuration is ```spring-boot-kafka``` service ```kafka.bootstrap.servers``` environment.
-ProducerConfig.BOOTSTRAP_SERVERS_CONFIG and ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG set via that environment variable.
+```kafka``` service define host name and port. One of the important configuration is ```spring-boot-kafka``` service ```kafka.bootstrap.servers``` environment variable.
+```ProducerConfig.BOOTSTRAP_SERVERS_CONFIG``` and ```ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG``` set via that environment variable.
 
 ```yaml
 version: "3.7"
@@ -223,7 +221,7 @@ public interface EventConsumer<T> {
 
 ```
 
-In that way start and stop all consumers easily in below configuration class.
+In that way easily manage to start and stop consumers with below configuration class.
 
 ```java
 
@@ -273,7 +271,7 @@ public class ProductConsumer implements EventConsumer<ProductChange> {
 }
 ```
 
-KafKafkaConsumerThread has the all KafkaConsumer related functionality inside it. Consumers poll inside ```KafkaConsumerThread```. After process the 
+KafkaConsumerThread has the all KafkaConsumer related functionality inside it. Consumers poll inside ```KafkaConsumerThread```. After process the 
 messages consumer commit asynchronously at the end. If something goes wrong when committing the offsets to broker then log the exception in ```onComplete```
 event at ```ErrorLoggingCommitCallback``` class.
 
@@ -390,7 +388,7 @@ public class ProductProducer implements EventProducer<String> {
 }
 ```
 
-Besides all these configuration, ```ProductProducerSchedular``` has a schedular which trigger message publish with the help of java faker library.
+Besides all these configuration, ```ProductProducerSchedular``` has a scheduler which trigger message publish with the help of java faker library.
 Creating a ```ProductChange``` object and publish it to ```productProducer.publishProductChange```, so ```productConsumers``` are listening "Product.change"
 topic and save the product if it is not exist at Product table, if it is exist update the changed price.
 
