@@ -8,7 +8,8 @@ paginate_path: "page:num"
 highlighter: rouge
 markdown: kramdown
 comments: true
-
+plugins:
+  - jekyll-sitemap
 
 defaults:
   -
