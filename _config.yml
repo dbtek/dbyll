@@ -2,7 +2,6 @@
 
 
 exclude: ["README.md"] # files to exclude
-gems: [jekyll-paginate]
 paginate: 5 # pagination based on number of posts
 paginate_path: "page:num"
 highlighter: rouge
