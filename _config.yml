@@ -9,6 +9,7 @@ markdown: kramdown
 comments: true
 plugins:
   - jekyll-sitemap
+  - jekyll-seo-tag
 
 defaults:
   -
@@ -29,6 +30,5 @@ author:
   email_md5: 5e37bdad6bcec0a281810a24de56aede
 rss_path: feed.xml
 categories_path: categories.html
-tags_path: tags.html
 
 BASE_PATH:
