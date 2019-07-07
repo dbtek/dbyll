@@ -19,7 +19,7 @@ It means Kafka helps to build an event driven asynchronous architecture.
 In this blogpost one part of the system publish message under ```Product.change``` topic. One of the other part of the system subscribe that topics
 and consume these messages. If product doesn't exist in product table then save it as a new product. If it is exist just update the price change.    
 
-# Configuration  
+# <a name="configuration"></a> Configuration  
 
 Apache Kafka working as a Publish/Subscribe messaging platform. One of the difference from other messaging platforms that Kafka is not directly send messages to specific receivers. 
 So Kafka provides messages and subscribers consume it independently from publishers. These publish/subscribe pattern is implemented by consumers and producers in Kafka. 
