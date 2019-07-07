@@ -15,7 +15,7 @@ Testcontainers help us to solve above issues. It provides to run kafka inside th
     
 # Configuration  
 
-We will use the same project which explained in detail at [Spring Boot Kafka post](https://muzir.github.io/spring/docker/docker-compose/postgres/2019/05/25/Spring-Boot-Kafka.html#springBootKafkaConfiguration). Please refer previous link for all configuration details.
+We will use the same project which explained in detail at [Spring Boot Kafka post](https://muzir.github.io/spring/docker/docker-compose/kafka/2019/05/25/Spring-Boot-Kafka.html#springBootKafkaConfiguration). Please refer previous link for all configuration details.
 
 ## Kafka configuration
 Because we need to run kafka in test mode we need to start ```KafkaContainer``` in ```IntegrationTestConfiguration.java```. Then we will use this kafka container to create our producerProps and consumerProps 
