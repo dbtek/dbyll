@@ -83,7 +83,17 @@ via ```docker ps```.
 
 ![docker ps zookeeper](	../assets/media/docker_ps_zookeeper.png)
 
+Because docker-compose file is in kafka folder, default network name is kafka and it added all images name as a default suffix. So
+our image names are kafka_zookeeper_1_1, kafka_zookeeper_2_1, kafka_zookeeper_3_1. Let's connect to kafka_zookeeper_1_1.
+```docker exec -it docker_zookeeper-1_1 bash```. Now we should be connect to the docker container which is running zookeeper. 
+``` zookeeper-shell 127.0.0.1:12181 ``` with  this command we can connect zookeeper server and run below commands to list root, brokers, topics, consumers.
 
+```
+ls /
+ls /brokers
+ls /brokers/topics
+ls /consumers
+``` 
 
 ## Kafka configuration
 
