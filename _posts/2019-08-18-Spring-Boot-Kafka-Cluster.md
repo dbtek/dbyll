@@ -218,5 +218,6 @@ https://www.youtube.com/watch?v=CUic2NZKmzo
 https://github.com/confluentinc/cp-docker-images
 https://docs.confluent.io/current/installation/docker/config-reference.html
 https://medium.com/rahasak/kafka-and-zookeeper-with-docker-65cff2c2c34f
+https://github.com/wurstmeister/kafka-docker/wiki/Connectivity
 
 Happy coding :) 
