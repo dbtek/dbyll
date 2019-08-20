@@ -81,14 +81,14 @@ Now you may want to test just zookeeper servers. First define the hostname in yo
 Now if you run below docker-compose.yml with ```docker-compose up``` command. After containers are up and running you can check containers name
 via ```docker ps```.
 
-![docker ps zookeeper](	../assets/media/docker_ps_zookeeper.png)
+![docker ps zookeeper](	/assets/media/docker_ps_zookeeper.png)
 
 Because docker-compose file is in kafka folder, default network name is kafka and it added all images name as a default suffix. So
 our image names are kafka_zookeeper_1_1, kafka_zookeeper_2_1, kafka_zookeeper_3_1. Let's connect to kafka_zookeeper_1_1.
 ```docker exec -it docker_zookeeper-1_1 bash```. Now we should be connect to the docker container which is running zookeeper. 
 ``` zookeeper-shell 127.0.0.1:12181 ``` with  this command we can connect zookeeper server and run below commands to list root, brokers, topics, consumers.
 
-![zookeeper_command_line](	../assets/media/zookeeper_command_line.png)
+![zookeeper_command_line](	/assets/media/zookeeper_command_line.png)
 
 ```
 ls /
