@@ -28,7 +28,7 @@ Testcontainers are solve all these problems.
 ### Configuration  
 
 In demo project, integration tests are using Spring tests and testcontainers. To see all dependency, you may take a look to
-[build.gradle](https://github.com/muzir/softwareLabs/blob/master/spring-boot-testcontainers/build.gradle) file.
+[build.gradle](https://github.com/muzir/softwareLabs/blob/master/spring-boot-testcontainers/build.gradle){:target="_blank"} file.
 
 ```gradle
 
@@ -161,12 +161,12 @@ Also before run your tests check the docker first. Docker should be running at y
 ### Result
 
 
-You can find the all project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-containers)
+You can find the all project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-containers){:target="_blank"}
 
 
 ### References
 
-https://www.testcontainers.org/
+[https://www.testcontainers.org/](https://www.testcontainers.org/){:target="_blank"}
 
 
 Happy coding :) 

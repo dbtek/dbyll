@@ -69,7 +69,7 @@ EOSQL
 
 ```
    
-For more information about initialization script check [postgres docker official documentation](https://docs.docker.com/samples/library/postgres/#initialization-scripts).
+For more information about initialization script check [postgres docker official documentation](https://docs.docker.com/samples/library/postgres/#initialization-scripts){:target="_blank"}.
 
 #### Configure docker-compose
 
@@ -81,7 +81,7 @@ naming to default database, user and password which created in initialization ti
 again to see how these parameters are used. That's reason why didn't create any database name as store in ```init-user-db.sh``` file,
 because in below file with ```POSTGRES_DB``` environment variable rename the default database name to store.
 
-For more information check [postgres environment variable documentation](https://hub.docker.com/_/postgres). 
+For more information check [postgres environment variable documentation](https://hub.docker.com/_/postgres){:target="_blank"}. 
  
 
 ```yaml
@@ -144,12 +144,12 @@ production usage as well.
 ### Result
 
 
-You can find the all project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-containers)
+You can find the all project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-containers){:target="_blank"}
 
 
 ### References
 
-https://spring.io/guides/gs/spring-boot-docker/
+[https://spring.io/guides/gs/spring-boot-docker/](https://spring.io/guides/gs/spring-boot-docker/){:target="_blank"}
 
 Happy coding :) 
 

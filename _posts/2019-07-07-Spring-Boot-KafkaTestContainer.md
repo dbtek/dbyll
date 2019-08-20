@@ -15,7 +15,7 @@ Testcontainers help us to solve above issues. It provides to run kafka inside th
     
 # Configuration  
 
-We will use the same project which explained in detail at [Spring Boot Kafka post](https://muzir.github.io/spring/docker/docker-compose/kafka/2019/05/25/Spring-Boot-Kafka.html#springBootKafkaConfiguration). Please refer previous link for all configuration details.
+We will use the same project which explained in detail at [Spring Boot Kafka post](https://muzir.github.io/spring/docker/docker-compose/kafka/2019/05/25/Spring-Boot-Kafka.html#springBootKafkaConfiguration){:target="_blank"}. Please refer previous link for all configuration details.
 
 ## Kafka configuration
 Because we need to run kafka in test mode we need to start ```KafkaContainer``` in ```IntegrationTestConfiguration.java```. Then we will use this kafka container to create our producerProps and consumerProps 
@@ -162,11 +162,11 @@ It is easy to run the project just with ```./cleanRun.sh```
 
 # Result
 
-You can find the all project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-kafka)
+You can find the all project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-kafka){:target="_blank"}
 
 # References
 
-https://www.testcontainers.org/modules/kafka/
-https://www.confluent.io/blog/apache-kafka-spring-boot-application
+[https://www.testcontainers.org/modules/kafka/](https://www.testcontainers.org/modules/kafka/){:target="_blank"}
+[https://www.confluent.io/blog/apache-kafka-spring-boot-application](https://www.confluent.io/blog/apache-kafka-spring-boot-application){:target="_blank"}
 
 Happy coding :) 

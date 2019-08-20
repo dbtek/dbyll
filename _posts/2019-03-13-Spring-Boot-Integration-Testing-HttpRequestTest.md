@@ -79,12 +79,12 @@ delay to your build pipeline, they should be configure wisely. Also it is a good
 
 So Spring starts the server and make the tests as much as close to production environment.
 
-You can find the all project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-integration-test)
+You can find the all project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-integration-test){:target="_blank"}
 
 
 ### References
 
-https://spring.io/guides/gs/testing-web/
+[https://spring.io/guides/gs/testing-web/](https://spring.io/guides/gs/testing-web/){:target="_blank"}
 
 Happy coding :) 
 
