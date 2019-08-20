@@ -223,7 +223,7 @@ You can find the all project [on Github](https://github.com/muzir/softwareLabs/t
 
 # References
 
-https://better-coding.com/building-apache-kafka-cluster-using-docker-compose-and-virtualbox
+[https://better-coding.com/building-apache-kafka-cluster-using-docker-compose-and-virtualbox](https://better-coding.com/building-apache-kafka-cluster-using-docker-compose-and-virtualbox){:target="_blank"}
 
 https://www.youtube.com/watch?v=CUic2NZKmzo
 
