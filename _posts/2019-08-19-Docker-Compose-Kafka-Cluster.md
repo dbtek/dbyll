@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  Spring Boot Kafka Cluster
-categories: [spring, docker, docker-compose, kafka]
+title:  Kafka Cluster with Docker Compose
+categories: [docker, docker-compose, kafka]
 fullview: false
 ---
 Apache Kafka is described itself as "distributed commit log" or more recently "distributing streaming platform". Kafka brokers 
@@ -9,21 +9,20 @@ can work together in a group to provide distributed environment which called as 
 
 # Introduction
 
-In this post we will run multiple kafka brokers in a cluster. We will use our local environment to test the changes 
-easily in the future. The goal of this blog post is build an cluster environment in the local and then test some distributed
+In this post we will run multiple kafka brokers in a cluster. We will use our local environment to set up a kafka cluster. 
+The goal of this blog post is build an cluster environment in the local and then test some distributed
 functionality of kafka brokers easily in the local. 
 
 # Configuration  
 
-This project contains two docker-compose files, one of them is for apache zookeeper, apache kafka and kafka-manager. Other docker compose file contains two projects as producer and consumer. 
-Also it has postgres images too which is used by consumer. Let's start with kafka configurations
-
+This project contains two docker-compose files, in this blogpost we will explain and test only the one which is for apache zookeeper, apache kafka and kafka-manager. Other docker compose file will be
+described in next blog post. Let's start with kafka configurations.
 
 ## Zookeeper configuration
 
 In below configuration first zookeeper nodes are configured. Zookeeper use port 2888 and 3888 for internal cluster communication and expose 2181 for external client communication.
-Because we are configuring all three nodes in same server I added 1, 2, 3 as a suffix to all zookeeper servers port configuration to prevent port collision.
-The #2888 ports are used for peers communication and the #3888 ports are used for leader elections. More about you can find in the [official ZooKeeper documentation](https://zookeeper.apache.org/doc/current/zookeeperStarted.html).
+Because we are configuring all three nodes in same server. I added 1, 2, 3 as a suffix to all zookeeper servers port configuration to prevent port collision.
+The 2888 ports are used for peers communication and the 3888 ports are used for leader elections. More about you can find in the [official ZooKeeper documentation](https://zookeeper.apache.org/doc/current/zookeeperStarted.html){:target="_blank"}.
 
 ```yaml
 version: '3.7'
@@ -87,7 +86,7 @@ via ```docker ps```.
 
 <br />
 
-Because docker-compose file is in kafka folder, default network name is kafka and it added all images name as a default suffix. So
+Because docker-compose file is in kafka folder, default network name is kafka. So
 our image names are kafka_zookeeper_1_1, kafka_zookeeper_2_1, kafka_zookeeper_3_1. Let's connect to kafka_zookeeper_1_1.
 ```docker exec -it docker_zookeeper-1_1 bash```. Now we should be connect to the docker container which is running zookeeper. 
 ``` zookeeper-shell 127.0.0.1:12181 ``` with  this command we can connect zookeeper server and run below commands to list root, brokers, topics, consumers.
