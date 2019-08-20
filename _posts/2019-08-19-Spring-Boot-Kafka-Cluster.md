@@ -207,7 +207,7 @@ Open another tab in the terminal and consume the message in kafka-3 broker via b
 
 You can check below diagram for all configuration which described above.
 
-![zookeeper-cluster](	../assets/media/kafka-cluster-step3.gif)
+![zookeeper-cluster](	/assets/media/kafka-cluster-step3.gif)
 
 You can find the all project [on Github](https://github.com/muzir/softwareLabs/tree/master/spring-boot-kafka-cluster)
 
