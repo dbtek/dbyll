@@ -81,14 +81,22 @@ Now you may want to test just zookeeper servers. First define the hostname in yo
 Now if you run below docker-compose.yml with ```docker-compose up``` command. After containers are up and running you can check containers name
 via ```docker ps```.
 
+<br />
+
 ![docker ps zookeeper](	/assets/media/docker_ps_zookeeper.png)
+
+<br />
 
 Because docker-compose file is in kafka folder, default network name is kafka and it added all images name as a default suffix. So
 our image names are kafka_zookeeper_1_1, kafka_zookeeper_2_1, kafka_zookeeper_3_1. Let's connect to kafka_zookeeper_1_1.
 ```docker exec -it docker_zookeeper-1_1 bash```. Now we should be connect to the docker container which is running zookeeper. 
 ``` zookeeper-shell 127.0.0.1:12181 ``` with  this command we can connect zookeeper server and run below commands to list root, brokers, topics, consumers.
 
+<br />
+
 ![zookeeper_command_line](	/assets/media/zookeeper_command_line.png)
+
+<br />
 
 ```
 ls /
@@ -96,6 +104,8 @@ ls /brokers
 ls /brokers/topics
 ls /consumers
 ``` 
+
+<br />
 
 Ok, we are sure that zookeeper is working properly.
 
@@ -213,11 +223,16 @@ You can find the all project [on Github](https://github.com/muzir/softwareLabs/t
 
 # References
 
-https://better-coding.com/building-apache-kafka-cluster-using-docker-compose-and-virtualbox/
+https://better-coding.com/building-apache-kafka-cluster-using-docker-compose-and-virtualbox
+
 https://www.youtube.com/watch?v=CUic2NZKmzo
+
 https://github.com/confluentinc/cp-docker-images
+
 https://docs.confluent.io/current/installation/docker/config-reference.html
+
 https://medium.com/rahasak/kafka-and-zookeeper-with-docker-65cff2c2c34f
+
 https://github.com/wurstmeister/kafka-docker/wiki/Connectivity
 
 Happy coding :) 
