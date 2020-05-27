@@ -6,8 +6,6 @@ description: welcome to our website, let us tell you about it here
 
 {% for post in site.posts %}
 
-<article class="home">
-
   <span class="post-date">
     {% assign d = post.date | date: "%d" | plus:'0' %}
     {{ post.date | date: "%B" }}
@@ -37,8 +35,6 @@ description: welcome to our website, let us tell you about it here
     {% endif %}
     {% endif %}
   </div>
-
-</article>
 {% endfor %}
 
 <!-- NOT CLEAR WE NEED THIS SO HIDING
