@@ -5,7 +5,6 @@ paginate_path: "page:num"
 exclude: ["README.md"] # files to exclude
 highlighter: rouge
 markdown: kramdown
-disqus: dbyll
 google_analytics: dbyll
 title: Community Owned Infrastructure
 
@@ -14,7 +13,7 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: dbyll
+      title: Community Owned Infrastructure
 
 description: Stylish Jekyll Theme
 author:
