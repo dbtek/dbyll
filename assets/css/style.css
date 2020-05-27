@@ -43,43 +43,6 @@ a.nav-link:hover { color: #777; }
 	margin-bottom: 10px;
 }
 
-#contact-list li .fa,
-article .share .btn {
-	-o-transition:color .2s ease-out, background 1s ease-in;
-  -ms-transition:color .2s ease-out, background 1s ease-in;
-  -moz-transition:color .2s ease-out, background 1s ease-in;
-  -webkit-transition:color .2s ease-out, background 1s ease-in;
-  transition:color .2s ease-out, background 1s ease-in;
-}
-#contact-list li:hover .fa-twitter,
-article .share .twitter:hover {
-	color: #00ACEE;
-	border-color: #00ACEE;
-}
-#contact-list li:hover .fa-linkedin {
-	color: #1D87BD;
-}
-#contact-list li:hover .fa-envelope {
-	color: #E93E30;
-}
-#contact-list li:hover .fa-pinterest {
-	color: #CC2127;
-}
-#contact-list li:hover .fa-rss {
-	color: #e74c3c;
-}
-article .share .facebook:hover {
-	color: #43609C;
-	border-color: #43609C;
-}
-article .share .gplus:hover {
-	color: #C13929;
-	border-color: #C13929;
-}
-
-#contact-list-secondary {
-	padding-bottom: 10px;
-}
 
 .page-header {
 	color: #e74c3c;
