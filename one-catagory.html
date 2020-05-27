@@ -11,7 +11,22 @@ permalink: /demo
 <ul>
   {% for post in site.categories.demo %}
     {% if post.url %}
-        <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+    <h2>
+      <a href="{{ site.BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
+    </h2>
+    <div>
+      {% if post.fullview %}
+      {{ post.content }}
+      {% else %}
+      {% if post.shortinfo %}
+      {{ post.shortinfo }}
+      {% elsif post.description %}
+      {{ post.description }}
+      {% else %}
+      {{ post.excerpt }}
+      {% endif %}
+      {% endif %}
+    </div>
     {% endif %}
   {% endfor %}
 </ul>
