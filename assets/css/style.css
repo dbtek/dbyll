@@ -36,7 +36,7 @@ a.nav-link i{
 }
 a.nav-link:hover { color: #777; }
 
-#bio {
+#sidebar-description {
 	font-family: "Roboto", Courier, monospace;
 	font-size: 11px;
 	margin: 0 auto;
