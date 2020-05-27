@@ -1,0 +1,34 @@
+---
+layout: page
+title: Do we agree to the terms & conditions of research
+header:
+group: navigation
+description: This is a blub
+permalink: /landscape-analysis
+---
+<article class="home">
+
+<ul>
+  {% for post in site.tag.t&cs %}
+    {% if post.url %}
+    <h2>
+      <a href="{{ site.BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
+    </h2>
+    <div>
+      {% if post.fullview %}
+      {{ post.content }}
+      {% else %}
+      {% if post.shortinfo %}
+      {{ post.shortinfo }}
+      {% elsif post.description %}
+      {{ post.description }}
+      {% else %}
+      {{ post.excerpt }}
+      {% endif %}
+      {% endif %}
+    </div>
+    {% endif %}
+  {% endfor %}
+</ul>
+
+</article>
