@@ -5,6 +5,7 @@ categories: landscape-analysis
 tags: financial-analysis
 description: The paradox of the STM publishing industry is that it has very high visibility over its revenues in the next two to three years (because of multi-year contracts) and very little beyond this time frame.
 permalink: /landscape-analysis/the-companies
+order: 5
 ---
 
 ## Elsevier
