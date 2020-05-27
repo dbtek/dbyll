@@ -24,7 +24,11 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
 	<script>
-	  anchors.add();
+	anchors.options = {
+        placement: 'left',
+        visible: 'always',
+     	 };
+     	anchors.add('h2');
 	</script>
 	
 	<!-- Le fav and touch icons -->
