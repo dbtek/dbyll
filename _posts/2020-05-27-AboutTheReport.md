@@ -1,10 +1,10 @@
 ---
 layout: post
-title: Test post
+title: About the Report
 categories:
 tags: [demo, dbyll, dbtek, sample2]
 description: Sample placeholder post.
-permalink: /mynewpost
+permalink: /AbouttheReport
 ---
 
 this is the [blog](https://alink.org)
