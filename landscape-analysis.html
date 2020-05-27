@@ -10,19 +10,6 @@ permalink: /landscape-analysis
     <h2>
       <a href="{{ site.BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
     </h2>
-    <div>
-      {% if post.fullview %}
-      {{ post.content }}
-      {% else %}
-      {% if post.shortinfo %}
-      {{ post.shortinfo }}
-      {% elsif post.description %}
-      {{ post.description }}
-      {% else %}
-      {{ post.excerpt }}
-      {% endif %}
-      {% endif %}
-    </div>
     {% endif %}
   {% endfor %}
 </ul>
