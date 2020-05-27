@@ -5,6 +5,7 @@ categories: roadmap-for-action
 tags:
 description: We talk about two types of data. The first is Research Data, which refers to the data academic institutions generate through their research activities. The second is Grey Data, which refers to the vast amount of data produced by universities outside of core research activities.
 permalink: /roadmap-for-action/what-do-we-mean-by-data-and-data-infrastructure
+date: 2019-11-01 02:00:00
 ---
 
 ## Research Data and “Grey Data”

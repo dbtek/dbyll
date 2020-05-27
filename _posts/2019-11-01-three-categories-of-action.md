@@ -5,6 +5,7 @@ categories: roadmap-for-action
 tags: terms-and-conditions market-consolidation
 description: The purpose of this document is to build on the Landscape Analysis by offering a roadmap of potential actions that stakeholders can use to chart both individual and collective responses.
 permalink: /roadmap-for-action/three-categories-of-action
+date: 2019-11-01 03:00:00
 ---
 
 Any proposed solutions must address the different challenges posed by the adoption of data analytics in research, teaching, and student life. The menu of proposed solutions is based on two complementary organizing principles. The first, already delineated in the previous section, distinguishes between metrics and algorithms. The second organizing principle distinguishes between three types of action, based on the level of control that academic institutions have. We have called the three categories respectively risk mitigation, strategic choices, and community actions. Each category is summarized below, then discussed in more detail in the remainder of the document.
