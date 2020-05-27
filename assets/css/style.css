@@ -37,7 +37,7 @@ a.nav-link i{
 a.nav-link:hover { color: #777; }
 
 #bio {
-	font-family: "Courier New", Courier, monospace;
+	font-family: "Roboto", Courier, monospace;
 	font-size: 11px;
 	margin: 0 auto;
 	margin-bottom: 10px;
@@ -130,13 +130,13 @@ article.home h1 a,
 article.home h2 a,
 article.home h3 a,
 article.home h4 a {
-	color: #f2756a;
+	color: #353535;
 }
 article.home h1 a:hover,
 article.home h2 a:hover,
 article.home h3 a:hover,
 article.home h4 a:hover {
-	color: #e74c3c;
+	color: #353535;
 }
 
 .author .author-image {
