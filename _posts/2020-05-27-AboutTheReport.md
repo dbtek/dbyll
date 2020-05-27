@@ -4,7 +4,7 @@ title: About the Report
 categories:
 tags: [demo, dbyll, dbtek, sample2]
 description: Sample placeholder post.
-permalink: /AbouttheReport
+permalink: /about_the_report
 ---
 
 SPARC (the Scholarly Publishing and Academic Resources Coalition) is a global coalition that works to enable the open sharing of research outputs and educational materials in order to democratize access to knowledge, accelerate discovery, and increase the societal and economic return on our collective investment in research and education. As a catalyst for action, SPARC focuses on promoting changes to both infrastructure and culture needed to make open the default for research and education.
