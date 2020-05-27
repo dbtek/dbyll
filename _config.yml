@@ -34,7 +34,7 @@ tags_path: tags.html
 # set it as url of an image
 # sidebar_background_image: https://www.dropbox.com/s/g9h23zrycedxtk5/sky.png?raw=1
 
-BASE_PATH: https://josephmcarthur.github.io/dbyll/
+BASE_PATH: https://josephmcarthur.github.io/dbyll
 
 plugins:
   - jekyll-paginate
