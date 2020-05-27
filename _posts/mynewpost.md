@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Sample 2
+title: Test post
 categories: [general, demo, sample]
 tags: [demo, dbyll, dbtek, sample2]
 description: Sample placeholder post.
