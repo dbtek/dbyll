@@ -1,6 +1,6 @@
 ---
 layout: post
-title: THE ACADEMIC PUBLISHING INDUSTRY IN 2018
+title: The Academic Publishing Industry In 2018
 categories: landscape-analysis
 tags:
 description: This document is designed to provide higher education leaders with an analysis of the leading commercial players’ strategies in this domain, the implications of those
