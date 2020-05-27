@@ -17,7 +17,7 @@ Aspesi produced this comprehensive analysis in close collaboration with the SPAR
 
 We are at a critical juncture where there is a pressing need for the academic community – individually and collectively – to make thoughtful and deliberate decisions about what and whom to support – and under what terms and conditions. These decisions will determine who ultimately controls the research and education process; and whether we meaningfully address inequities created by legacy players or simply recreate them in new ways. These decisions will shape libraries’ role in the scholarly enterprise, now and for the future.
 
-**Report authors**
+# Report authors
 
 Claudio Aspesi (lead author)
 
