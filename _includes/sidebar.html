@@ -4,13 +4,13 @@
 		<img src="{{ site.BASE_PATH }}/assets/media/sparc_logo.png" style="width:100%"/>
 	</a>
 	<h3 class="title">
-        <a href="{{ site.BASE_PATH }}/">{{ post.title }}</a>
+        <a href="{{ site.BASE_PATH }}/">{{ page.title }}</a>
     </h3>
 </header>
 
-{% if post.description %}
+{% if page.description %}
 <div id="bio" class="text-center">
-	{{ post.description }}
+	{{ page.description }}
 </div>
 {% endif %}
 
