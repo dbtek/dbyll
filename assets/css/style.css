@@ -1,14 +1,14 @@
-@import url(//fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext);
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 body{
-	color: #2c3e50;
+	color: #353535;
 }
 
 .sidebar {
 	position: fixed;
 	top: 0px;
 	padding-top: 10%;
-	background-color: #2c3e50;
+	background-color: #353535;
 	color: #fff;
 }
 
@@ -115,15 +115,15 @@ article.home div a, article.home pre a { color: #2c3e50; }
 article.home div a:hover, article.home pre a:hover { color: #2c3e50; text-decoration: none; }
 article img { max-width: 100%; }
 
-h1,h2,h3,h4,h5,h6 { font-family: 'Ubuntu', sans-serif; }
+h1,h2,h3,h4,h5,h6 { font-family: 'Roboto', sans-serif; }
 article.home h1,
 article.home h2,
 article.home h3,
 article.home h4,
 article.home h5,
 article.home h6 {
-	font-family: 'Ubuntu', sans-serif;
-	color: #f2756a;
+	font-family: 'Roboto', sans-serif;
+	color: #353535;
 }
 
 article.home h1 a,
@@ -146,7 +146,7 @@ article.home h4 a:hover {
 
 footer {
 	padding-top: 15px;
-	font-family: 'Ubuntu';
+	font-family: 'Roboto';
 }
 
 /* nav-vertical-tabs component */
@@ -188,4 +188,3 @@ footer {
 ul.dropdown-menu>li>a>i.fa {
     width: 1.3em;
 }
-
