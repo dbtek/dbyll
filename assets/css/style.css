@@ -107,7 +107,3 @@ article.home h4 a:hover {
   float: left;
   margin-right: 20px;
 }
-
-ul.dropdown-menu>li>a>i.fa {
-    width: 1.3em;
-}
