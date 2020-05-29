@@ -4,6 +4,10 @@ body{
 	color: #353535;
 }
 
+.container {
+	width: 100%
+}
+
 .sidebar {
 	padding-top: 1%;
 	background-color: #353535;
