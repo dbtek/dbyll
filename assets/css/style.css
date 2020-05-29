@@ -2,11 +2,15 @@ body {
 	color: #353535;
 }
 
+/* Sets site width */
+
 .container {
 	width: 100%;
 	padding: 0px;
 	margin: 0px;
 }
+
+/* Handles styles for the sidebar */
 
 .sidebar {
 	padding-top: 1%;
@@ -35,11 +39,7 @@ body {
 	margin-bottom: 10px;
 }
 
-@media only screen and (min-width: 768px) {
-    .page-header{
-        margin-right: 70px;
-    }
-}
+/* Handles styles for lits of posts */
 
 article {
 	margin-bottom: 40px;
