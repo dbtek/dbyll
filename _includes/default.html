@@ -75,12 +75,17 @@
 
 		</div>
 	</div>
-	<!-- Stick sidebar to the bottom on desktop -->
-	<script>
-		if (window.innerWidth > 790) {
-		document.getElementById("sidebar").style.height = window.innerHeight+'px';
-		}
-	</script>
 
 </body>
+
+<!-- Stick sidebar to the bottom on desktop -->
+<script>
+	if (window.innerWidth > 790) {
+		var body = document.body;
+  	var html = document.documentElement;
+		var height = Math.max( window.innerHeight, body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+		document.getElementById("sidebar").style.height = height+'px';
+	}
+</script>
+
 </html>
