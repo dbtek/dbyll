@@ -65,7 +65,7 @@
 	<div class="container">
 		<div class="row">
 
-			<div class="col-sm-3 sidebar hidden-xs" style="{% if site.sidebar_background_image %}background: url({{site.sidebar_background_image}}) no-repeat !important;{% endif %}">
+			<div class="col-sm-3 sidebar hidden-xs" style="{% if site.sidebar_background_image %}background: url({{site.sidebar_background_image}}) no-repeat !important;{% endif %}" id="sidebar">
 				{% include sidebar.html %}
 			</div>
 
@@ -79,5 +79,10 @@
 	<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>-->
 	<!--<script type="text/javascript" src="{{ site.BASE_PATH }}/assets/js/app.js"></script>-->
+	<script>
+		if (window.innerWidth > 790) {
+		document.getElementById("sidebar").style.height = window.innerHeight;
+		}
+	</script>
 </body>
 </html>
