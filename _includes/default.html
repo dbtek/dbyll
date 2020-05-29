@@ -65,7 +65,7 @@
 	<div class="container">
 		<div class="row">
 
-			<div class="col-sm-3 sidebar hidden-xs" style="{% if site.sidebar_background_image %}background: url({{site.sidebar_background_image}}) no-repeat !important;{% endif %}" id="sidebar">
+			<div class="col-sm-3 sidebar hidden-xs" {% if site.sidebar_background_image %}style="background: url({{site.sidebar_background_image}}) no-repeat !important;"{% endif %} id="sidebar">
 				{% include sidebar.html %}
 			</div>
 
