@@ -10,6 +10,21 @@ body {
 	margin: 0px;
 }
 
+/* Handles styles for lists of posts */
+
+.a {
+	color: #D92C35;
+}
+
+.btn {
+	background-color: #D92C35;
+	color: #fff;
+}
+
+.img {
+	width: 100%;
+}
+
 /* Handles styles for the sidebar */
 
 .sidebar {
@@ -33,13 +48,13 @@ body {
 }
 
 #sidebar-description {
-	font-family: "Roboto", Courier, monospace;
+	font-family: "Roboto", monospace;
 	font-size: 11px;
 	margin: 0 auto;
 	margin-bottom: 10px;
 }
 
-/* Handles styles for lits of posts */
+/* Handles styles for lists of posts */
 
 article {
 	margin-bottom: 40px;
@@ -69,15 +84,6 @@ article.home h5,
 article.home h6 {
 	font-family: 'Roboto', sans-serif;
 	color: #414748;
-}
-
-.a {
-	color: #D92C35;
-}
-
-.btn {
-	background-color: #D92C35;
-	color: #fff;
 }
 
 /* Handles styling for deep links */
