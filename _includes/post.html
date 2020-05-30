@@ -87,9 +87,9 @@
 
 <!-- From: https://david.elbe.me/jekyll/2015/06/20/how-to-link-to-next-and-previous-post-with-jekyll.html. More complex 'per catagory' is here: https://talk.jekyllrb.com/t/how-to-link-to-next-and-previous-posts-for-same-blog-category/629/2 but I don't think we need it as we control via timestamps -->
 	<hr>
-	{% if page.categories.size > 0 %}
+	{% if page.category.size > 0 %}
 			<p>
-				This is part of a broader report called the <a href="{{ site.BASE_PATH }}/{{ page.categories }}">{{ page.categories | replace: '-',' ' }}</a>.{% if page.tags.size > 0 %} and is connected to several others issues <a href="{{ site.BASE_PATH }}/{{ page.tags }}">{{ page.tags | sort | join: ", " | replace: '-',' ' }}</a>.
+				This is part of a broader report called the <a href="{{ site.BASE_PATH }}/{{ page.category }}">{{ page.categories | replace: '-',' ' }}</a>.{% if page.tags.size > 0 %} and is connected to several others issues <a href="{{ site.BASE_PATH }}/{{ page.tags }}">{{ page.tags | sort | join: ", " | replace: '-',' ' }}</a>.
 			</p>
   {% endif %}
 	{% endif %}
