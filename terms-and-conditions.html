@@ -24,7 +24,7 @@ permalink: /terms-and-conditions
          </span>
       {% if post.categories .size > 0 %}
           <span>
-               from {{ post.categories }}
+               from {{ post.categories | replace: '-',' '}}
           </span>
       {% endif %}
     </b></p>
