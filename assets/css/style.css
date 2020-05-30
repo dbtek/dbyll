@@ -13,7 +13,7 @@ body {
 /* Handles styles for lists of posts */
 
 .a {
-	color: #D92C35;
+	color: #D92C35 !important;
 }
 
 .btn {
