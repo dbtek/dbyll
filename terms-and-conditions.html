@@ -22,7 +22,7 @@ permalink: /terms-and-conditions
            {% endcase %}
            {{ post.date | date: "%Y" }}
          </span>
-      {% if post.categories %}
+      {% if post.categories .size > 0 %}
           <span>
                from {{ post.categories }}
           </span>
