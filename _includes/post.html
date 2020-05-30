@@ -89,9 +89,11 @@
 
 <div class="PageNavigation">
 	{% if page.categories.size > 0 %}
-			<span>
-				This is part of a broader report called the <a href="{{ site.BASE_PATH }}/{{ page.categories }}">{{ page.categories }}</a>.
-			</span>
+	<hl>
+			<p>
+				This is part of a broader report called the <a href="{{ site.BASE_PATH }}/{{ page.categories }}">{{ page.categories }}</a>.{% if page.tags.size > 0 %} and is connected to several others issues {{ page.tags }}
+			</p>
+  {% endif %}
 	{% endif %}
 
   {% if page.previous.url %}
