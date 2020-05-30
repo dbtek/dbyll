@@ -13,8 +13,8 @@
 </div>
 {% endif %}
 
-{% if page.action %}
+{% if page.report_download %}
 <div id="sidebar-description" class="text-center">
-	{{ page.action }}
+	<button href="{{ page.action }}">Download Full Report</button>
 </div>
 {% endif %}
