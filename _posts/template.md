@@ -5,15 +5,16 @@ categories:
 tags:
 description: The purpose of this document is to build on the Landscape Analysis by offering a roadmap of potential actions that stakeholders can use to chart both individual and collective responses.
 permalink: /template
-date: 2019-11-01 05:00:00
 ---
+
+This page is for testing and demonstrating all the different types of content we'll use.
 
 # Biggest header (H1)
 ## Large header (H2)
 ### Still big header (H3)
 #### Small header
 
-As the project unfolded, we recognized the need for a range of potential solutions for the key stakeholders to consider pursuing. *The purpose of this document is to build on the Landscape Analysis by offering a roadmap of potential actions that stakeholders can use to chart both individual and collective responses*. **Recognizing that solutions to these complex issues are not “one size fits all,” this document offers a framework with multiple, concrete solutions that individual organizations can improve and adapt to their local culture and needs**.
+As the project unfolded, we recognized the need for a range of potential solutions for the key stakeholders to [consider pursuing](https://josephmcarthur.github.io/infrastructure/template). *The purpose of this document is to build on the Landscape Analysis by offering a roadmap of potential actions that stakeholders can use to chart both individual and collective responses*. **Recognizing that solutions to these complex issues are not “one size fits all,” this document offers a framework with multiple, concrete solutions that individual organizations can improve and adapt to their local culture and needs**.
 
 > I'm a block quote that can be used to quote ourselves previously
 
