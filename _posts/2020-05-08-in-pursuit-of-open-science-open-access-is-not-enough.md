@@ -1,7 +1,6 @@
 ---
 layout: post
 title: In pursuit of open science open access is not enough
-categories:
 tags: terms-and-conditions
 description: The healthy functioning of the academic community, including fair terms and conditions from commercial partners, requires that the global marketplace for data analytics and knowledge infrastructure be kept open to real competition.
 permalink: /In-pursuit-of-open-science-open-access-is-not-enough
