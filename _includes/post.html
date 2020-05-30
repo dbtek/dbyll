@@ -84,6 +84,9 @@
 		<hr>
 	</div>
 -->
+
+<!-- From: https://david.elbe.me/jekyll/2015/06/20/how-to-link-to-next-and-previous-post-with-jekyll.html. More complex 'per catagory' is here: https://talk.jekyllrb.com/t/how-to-link-to-next-and-previous-posts-for-same-blog-category/629/2 but I don't think we need it as we control via timestamps -->
+
 <div class="PageNavigation">
   {% if page.previous.url %}
     <a class="prev" href="{{page.previous.url}}">&laquo; {{page.previous.title}}</a>
@@ -92,36 +95,6 @@
     <a class="next" href="{{page.next.url}}">{{page.next.title}} &raquo;</a>
   {% endif %}
 </div>
-
-{% assign cat = page.categories %}
-
-{% for post in site.categories[cat] %}
-  {% if post.url == page.url %}
-    {% assign post_index0 = forloop.index0 %}
-    {% assign post_index1 = forloop.index %}
-  {% endif %}
-{% endfor %}
-
-{% for post in site.categories[cat] %}
-  {% if post_index0 == forloop.index %}
-    {% assign next_post = post %}
-  {% endif %}
-  {% if post_index1 == forloop.index0 %}
-    {% assign prev_post = post %}
-  {% endif %}
-{% endfor %}
-
-{% if prev_post %}
-  <div class="article__previous">
-    <a href="{{ prev_post.url }}">{{ prev_post.title }}</a>
-  </div>
-{% endif %}
-
-{% if next_post %}
-  <div class="article__next">
-    <a href="{{ next_post.url }}">{{ next_post.title }}</a>
-  </div>
-{% endif %}
 
 </article>
 <!-- NO IDEA WHAT THIS DOES
