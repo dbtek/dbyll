@@ -5,7 +5,7 @@ categories: landscape-analysis
 tags:
 description: Elsevier, Pearson and Cengage in particular are transforming themselves into data analytics companies built atop their content, effectively adding ways to monetize it.
 permalink: /landscape-analysis/the_academic_publishing_industry_in_2018
-date: 2019-03-29 04:00:00
+date: 2019-03-29 03:00:00
 ---
 
 Twenty-plus years into online distribution, and thirty-plus years since the first digital
