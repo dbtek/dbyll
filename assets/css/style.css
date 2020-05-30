@@ -70,3 +70,14 @@ article.home h6 {
 	font-family: 'Roboto', sans-serif;
 	color: #353535;
 }
+
+/* Handles styling for deep links */
+
+.anchorjs-link {
+  transition: all .25s linear;
+	color: #2500ad;
+}
+*:hover > .anchorjs-link {
+  margin-left: -1.125em !important;
+	transition: color .25s linear;
+}
