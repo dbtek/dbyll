@@ -10,6 +10,19 @@ permalink: /terms-and-conditions
     <h2>
       <a href="{% if post.link %}{{ post.link }}{% else %}{{ site.BASE_PATH }}{{ post.url }}{% endif %}">{{ post.title }}</a>{% if post.link %}{% endif %}
     </h2>
+    <h3>
+      posted on <span class="post-date">
+           {% assign d = page.date | date: "%d" | plus:'0' %}
+           {{ page.date | date: "%B" }}
+           {% case d %}
+             {% when 1 or 21 or 31 %}{{ d }}st,
+             {% when 2 or 22 %}{{ d }}nd,
+             {% when 3 or 23 %}{{ d }}rd,
+             {% else %}{{ d }}th,
+           {% endcase %}
+           {{ page.date | date: "%Y" }}
+         </span>
+      <h3>
     <div>
       {% if post.fullview %}
       {{ post.content }}
