@@ -37,3 +37,4 @@ BASE_PATH: https://josephmcarthur.github.io/infrastructure
 
 plugins:
   - jekyll-paginate
+  - jekyll-sitemap
