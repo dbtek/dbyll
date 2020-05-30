@@ -36,6 +36,7 @@ body {
 .sidebar-header {
 	text-align: center;
 	margin-bottom: 10px;
+	margin-left: 10%;
 }
 .sidebar-header .title{
 	letter-spacing: 3px;
