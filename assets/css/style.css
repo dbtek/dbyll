@@ -1,5 +1,5 @@
 body {
-	color: #353535;
+	color: #414748;
 }
 
 /* Sets site width */
@@ -14,7 +14,7 @@ body {
 
 .sidebar {
 	padding-top: 1%;
-	background-color: #353535;
+	background-color: #414748;
 	color: #fff;
 }
 
@@ -68,7 +68,11 @@ article.home h4,
 article.home h5,
 article.home h6 {
 	font-family: 'Roboto', sans-serif;
-	color: #353535;
+	color: #414748;
+}
+
+a. {
+	color: #D92C35;
 }
 
 /* Handles styling for deep links */
