@@ -1,4 +1,13 @@
 ---
 layout: default
 ---
+<script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+<script>
+anchors.options = {
+      placement: 'right',
+      visible: 'touch',
+      icon: '# permalink',
+     };
+    anchors.add('h1, h2, h3, h4, p');
+</script>
 {% include post.html %}
