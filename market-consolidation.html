@@ -5,12 +5,15 @@ description: Probably not, we think.
 permalink: /market-consolidation
 ---
 <ul>
+  <!-- Gets post for this tag -->
   {% for post in site.tags.market-consolidation %}
     {% if post.url %}
     <h2>
+      <!-- Sets the title for the post, and gives it the correct link depending on if the post is on this site or links off -->
       <a href="{% if post.link %}{{ post.link }}{% else %}{{ site.BASE_PATH }}{{ post.url }}{% endif %}">{{ post.title }}</a>{% if post.link %}{% endif %}
     </h2>
     <div>
+      <!-- Does best attempt at getting a good excerpt -->
       {% if post.fullview %}
       {{ post.content }}
       {% else %}
