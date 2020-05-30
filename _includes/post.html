@@ -89,7 +89,7 @@
 	<hr>
 	{% if page.categories.size > 0 %}
 			<p>
-				This is part of a broader report called the <a href="{{ site.BASE_PATH }}/{{ page.categories }}">{{ page.categories }}</a>.{% if page.tags.size > 0 %} and is connected to several others issues <a href="{{ site.BASE_PATH }}/{{ page.tags }}">{{ page.tags | sort | join: ", " }}</a>.
+				This is part of a broader report called the <a href="{{ site.BASE_PATH }}/{{ page.categories }}">{{ page.categories }}</a>.{% if page.tags.size > 0 %} and is connected to several others issues <a href="{{ site.BASE_PATH }}/{{ page.tags }}">{{ page.tags | sort | join: ", " | replace "_", ""}}</a>.
 			</p>
   {% endif %}
 	{% endif %}
