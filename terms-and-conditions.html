@@ -11,7 +11,7 @@ permalink: /terms-and-conditions
       <a href="{% if post.link %}{{ post.link }}{% else %}{{ site.BASE_PATH }}{{ post.url }}{% endif %}">{{ post.title }}</a>{% if post.link %}{% endif %}
     </h2>
     <h3>
-      posted on <span class="post-date">
+      posted on <span>
            {% assign d = post.date | date: "%d" | plus:'0' %}
            {{ post.date | date: "%B" }}
            {% case d %}
@@ -22,12 +22,13 @@ permalink: /terms-and-conditions
            {% endcase %}
            {{ post.date | date: "%Y" }}
          </span>
+      {% if post.categories %}
+          <span>
+               from {{ post.categories }}{% else %}
+          </span>
+      {% endif %}
       </h3>
-        <h3>
-          from <span class="post-date">
-               {% if post.categories %}{{ post.categories }}{% else %}{% endif %}
-             </span>
-          <h3>
+
     <div>
       {% if post.fullview %}
       {{ post.content }}
