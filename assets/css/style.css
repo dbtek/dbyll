@@ -71,8 +71,13 @@ article.home h6 {
 	color: #414748;
 }
 
-a. {
+.a {
 	color: #D92C35;
+}
+
+.btn {
+	background-color: #D92C35;
+	color: #fff;
 }
 
 /* Handles styling for deep links */
