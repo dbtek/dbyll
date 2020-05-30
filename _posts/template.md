@@ -7,7 +7,7 @@ description: The purpose of this document is to build on the Landscape Analysis 
 permalink: /template
 ---
 
-This page is for testing and demonstrating all the different types of content we'll use.
+This page is for testsing and demonstrating all the different types of content we'll use.
 
 # Biggest header (H1)
 ## Large header (H2)
@@ -31,3 +31,5 @@ and another list
 2. list
 3. has
 4. numbers
+
+![logo alt text]({{ site.BASE_PATH }}/assets/media/sparc_logo.png)
