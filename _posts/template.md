@@ -1,0 +1,32 @@
+---
+layout: post
+title: Background
+categories:
+tags:
+description: The purpose of this document is to build on the Landscape Analysis by offering a roadmap of potential actions that stakeholders can use to chart both individual and collective responses.
+permalink: /template
+date: 2019-11-01 05:00:00
+---
+
+# Biggest header (H1)
+## Large header (H2)
+### Still big header (H3)
+#### Small header
+
+As the project unfolded, we recognized the need for a range of potential solutions for the key stakeholders to consider pursuing. *The purpose of this document is to build on the Landscape Analysis by offering a roadmap of potential actions that stakeholders can use to chart both individual and collective responses*. **Recognizing that solutions to these complex issues are not “one size fits all,” this document offers a framework with multiple, concrete solutions that individual organizations can improve and adapt to their local culture and needs**.
+
+> I'm a block quote that can be used to quote ourselves previously
+
+Time for a list:
+
+* this
+* is
+* an
+* unordered list
+
+and another list
+
+1. this
+2. list
+3. has
+4. numbers
