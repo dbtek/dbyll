@@ -49,6 +49,7 @@ body {
 
 #sidebar-description {
 	font-family: "Roboto", monospace;
+	text-align: left;
 	font-size: 15px;
 	margin: 10%;
 	margin-bottom: 10px;
