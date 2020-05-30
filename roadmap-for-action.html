@@ -7,7 +7,7 @@ permalink: /roadmap-for-action
   {% for post in site.categories.roadmap-for-action %}
     {% if post.url %}
     <h2>
-      <a href="{{ site.BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
+      <a href="{% if post.link %}{{ post.link }}{% else %}{{ site.BASE_PATH }}{{ post.url }}{% endif %}">{{ post.title }}</a>{% if post.link %}{% endif %}
     </h2>
     <div>
       {% if post.fullview %}
