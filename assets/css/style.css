@@ -91,3 +91,23 @@ article.home h6 {
   margin-left: -1.125em !important;
 	transition: color .25s linear;
 }
+
+/* Handle page naviation /*
+
+.PageNavigation {
+  font-size: 14px;
+  display: block;
+  width: auto;
+  overflow: hidden;
+}
+
+.PageNavigation a {
+  display: block;
+  width: 50%;
+  float: left;
+  margin: 1em 0;
+}
+
+.PageNavigation .next {
+  text-align: right;
+}
