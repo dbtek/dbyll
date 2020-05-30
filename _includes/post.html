@@ -87,7 +87,6 @@
 
 <!-- From: https://david.elbe.me/jekyll/2015/06/20/how-to-link-to-next-and-previous-post-with-jekyll.html. More complex 'per catagory' is here: https://talk.jekyllrb.com/t/how-to-link-to-next-and-previous-posts-for-same-blog-category/629/2 but I don't think we need it as we control via timestamps -->
 
-<div class="PageNavigation">
 	{% if page.categories.size > 0 %}
 	<hr>
 			<p>
@@ -95,7 +94,8 @@
 			</p>
   {% endif %}
 	{% endif %}
-
+	
+	<div class="PageNavigation">
   {% if page.previous.url %}
     <a class="prev" href="{{page.previous.url}}">&laquo; {{page.previous.title}}</a>
   {% endif %}
