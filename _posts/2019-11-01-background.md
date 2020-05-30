@@ -5,7 +5,7 @@ categories: roadmap-for-action
 tags:
 description: The purpose of this document is to build on the Landscape Analysis by offering a roadmap of potential actions that stakeholders can use to chart both individual and collective responses.
 permalink: /roadmap-for-action/background
-date: 2019-11-01 05:00:00
+date: 2019-11-01 01:00:00
 ---
 
 Earlier this year, SPARC released an in-depth Landscape Analysis of the changing academic publishing industry and the implications of the large-scale deployment of data and data analytics. The the academic community’s response was immediate and strong, and it underscored the need for coordinated and strategic action to avoid the potential consequences. As noted in the Landscape Analysis:
