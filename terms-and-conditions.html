@@ -12,17 +12,22 @@ permalink: /terms-and-conditions
     </h2>
     <h3>
       posted on <span class="post-date">
-           {% assign d = page.date | date: "%d" | plus:'0' %}
-           {{ page.date | date: "%B" }}
+           {% assign d = post.date | date: "%d" | plus:'0' %}
+           {{ post.date | date: "%B" }}
            {% case d %}
              {% when 1 or 21 or 31 %}{{ d }}st,
              {% when 2 or 22 %}{{ d }}nd,
              {% when 3 or 23 %}{{ d }}rd,
              {% else %}{{ d }}th,
            {% endcase %}
-           {{ page.date | date: "%Y" }}
+           {{ post.date | date: "%Y" }}
          </span>
-      <h3>
+      </h3>
+        <h3>
+          from <span class="post-date">
+               {% if post.categories %}{{ post.categories }}{% else %}{% endif %}
+             </span>
+          <h3>
     <div>
       {% if post.fullview %}
       {{ post.content }}
