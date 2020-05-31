@@ -38,12 +38,12 @@ body {
 	margin-bottom: 10px;
 	margin-left: 10%;
 }
-.sidebar-header .title{
+.sidebar-header .title {
 	letter-spacing: 3px;
 	text-transform: uppercase;
 }
 
-.sidebar-header .title a{
+.sidebar-header .title a {
 	text-decoration: none;
 	color: #fff;
 }
