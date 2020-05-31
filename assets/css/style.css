@@ -28,7 +28,7 @@ a {
 	padding-top: 1%;
 	background-color: #414748;
 	color: #fff;
-	position: fixed;
+	position: sticky;
 }
 
 .sidebar-header {
