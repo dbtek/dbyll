@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Conduct A Data Inventory
+title: Engage in Open Procurement Practices
 category: roadmap-for-action
 tags: risk-mitigation terms-and-conditions
 description: These actions are designed to be concrete, practical steps that any institution can begin taking immediately.
