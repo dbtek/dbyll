@@ -9,12 +9,12 @@
     </h3>
 </header>
 
+<!-- show reading time only on posts. only posts have dates, so checking for dates first makes sure this shows only in the right place -->
 {% if page.date.size > 0 %}
 <div id="sidebar-description">
 {% include read_time.html %}
 </div>
 {% endif %}
-
 
 {% if page.description %}
 <div id="sidebar-description">
@@ -22,12 +22,14 @@
 </div>
 {% endif %}
 
+<!-- This can be set on a per page basis using report_download in the yaml -->
 {% if page.report_download %}
 <div id="sidebar-description">
 	<a href="{{ page.report_download }}" class="btn">Download Full Report</a>
 </div>
 {% endif %}
 
+<!-- This can be set on a per page basis using action.link and action.title in the yaml -->
 {% if page.action.link %}
 <div id="sidebar-description">
 	<a href="{{ page.action.link }}" class="btn">{{page.action.title}}</a>
