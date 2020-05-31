@@ -5,8 +5,12 @@ description: This report was commissioned in response to the growing trend of co
 permalink: /landscape-analysis
 report_download: https://testurl.org
 ---
+
+  {% capture myposts %}
+    {{ site.posts where: 'category','landscape analysis' %}
+  {%endcapture%}
 <ul>
-  {% for post in site.posts | where: 'category','landscape analysis' reversed %}
+  {% for post in myposts %}
     {% if post.url %}
     <h2>
       <a href="{% if post.link %}{{ post.link }}{% else %}{{ site.BASE_PATH }}{{ post.url }}{% endif %}">{{ post.title }}</a>{% if post.link %}{% endif %}
