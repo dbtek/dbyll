@@ -29,6 +29,7 @@ permalink: /terms-and-conditions
              {% assign words = post.content | number_of_words %}
              {% if post.reading-time.size > 1 %}
              {{ post.reading-time }}
+             {% else %}
              {% if words < 360 %}
                1 min
              {% else %}
