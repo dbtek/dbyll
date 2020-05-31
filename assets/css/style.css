@@ -67,18 +67,6 @@ article {
 	padding: 0 5% 0;
 }
 
-h1,h2,h3,h4,h5,h6 { font-family: 'Roboto', sans-serif; }
-article.home h1,
-article.home h2,
-article.home h3,
-article.home h4,
-article.home h5,
-article.home h6 {
-	font-family: 'Roboto', sans-serif;
-	color: #414748;
-}
-
-
 article img {
 	width: 100%;
 }
