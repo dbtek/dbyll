@@ -2,8 +2,8 @@
 <span class="reading-time" title="Estimated read time">
   {% assign words = page.content | number_of_words %}
   {% if words < 360 %}
-    1 min
+    1 min reading time
   {% else %}
-    {{ words | divided_by:180 }} mins
+    {{ words | divided_by:180 }} min reading time
   {% endif %}
 </span>
