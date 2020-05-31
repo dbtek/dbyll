@@ -2,7 +2,7 @@
 layout: post
 title: Establish Campus Coordination Mechanisms
 category: roadmap-for-action
-tags:
+tags: risk-mitigation
 description: These actions are designed to be concrete, practical steps that any institution can begin taking immediately.
 permalink: /roadmap-for-action/risk-mitigation/establish-campus-coordination -mechanisms
 date: 2019-11-01 06:00:00
