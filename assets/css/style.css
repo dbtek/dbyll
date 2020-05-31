@@ -27,7 +27,7 @@ a {
 	padding-top: 1%;
 	background-color: #414748;
 	color: #fff;
-	position: fixed;
+	position: fixed; /* this makes sure the sidebar follows you down the page so you also have the menu & context on desktop */
 }
 
 .sidebar-header {
