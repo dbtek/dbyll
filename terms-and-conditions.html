@@ -10,8 +10,22 @@ permalink: /terms-and-conditions
     <h2>
       <a href="{% if post.link %}{{ post.link }}{% else %}{{ site.BASE_PATH }}{{ post.url }}{% endif %}">{{ post.title }}</a>{% if post.link %}{% endif %}
     </h2>
-    <p><b>
-      posted on <span>
+    <p><i>
+       <span class="reading-time" title="Estimated read time">
+        {% assign words = post.content | number_of_words %}
+        {% if post.reading-time.size > 1 %}
+           {{ post.reading-time }}
+          {% else %}
+            {% if words < 360 %}
+             1 min reading time
+            {% else %}
+             {{ words | divided_by:180 }} min reading time
+            {% endif %}
+        {% endif %}
+        </span>
+    </i></p>
+    <p><i>
+      Posted on <span>
            {% assign d = post.date | date: "%d" | plus:'0' %}
            {{ post.date | date: "%B" }}
            {% case d %}
@@ -22,30 +36,12 @@ permalink: /terms-and-conditions
            {% endcase %}
            {{ post.date | date: "%Y" }}
          </span>
-         <span>
-
-
-           <span class="reading-time" title="Estimated read time">
-             {% assign words = post.content | number_of_words %}
-             {% if post.reading-time.size > 1 %}
-             {{ post.reading-time }}
-             {% else %}
-             {% if words < 360 %}
-               1 min
-             {% else %}
-               {{ words | divided_by:180 }} mins
-             {% endif %}
-             {% endif %}
-           </span>
-
-
-           </span>
       {% if post.categories.size > 0 %}
           <span>
             from <a href="{{ site.BASE_PATH }}/{{ post.category }}" style="text-transform:capitalize;">{{ post.category  | replace: '-',' ' }}</a>
           </span>
       {% endif %}
-    </b></p>
+    </i></p>
 
     <div>
       {% if post.fullview %}
