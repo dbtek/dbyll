@@ -7,7 +7,7 @@ report_download: https://testurl.org
 ---
 
   {% capture myposts %}
-    {{ site.posts where: 'category','landscape analysis' %}
+    {{ site.posts where: 'category','landscape analysis' }}
   {%endcapture%}
 <ul>
   {% for post in myposts %}
