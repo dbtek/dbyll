@@ -95,10 +95,7 @@
 				{% if page.tags.size > 0 %}
 				and is connected to others issues including
 				{% for tag in page.tags %}
-				<a href="{{ site.BASE_PATH }}/{{ tag }}" style="text-transform:capitalize;">
-				{{ tag | replace: '-',' '}}</a>
-				{% if forloop.last %}{% else %}, {% endif %}
-				{% endfor %}</a>
+				<a href="{{ site.BASE_PATH }}/{{ tag }}" style="text-transform:capitalize;">{{ tag | replace: '-',' '}}</a>{% if forloop.last %}{% else %}, {% endif %}{% endfor %}</a>
 				.
 			</p>
   {% endif %}
