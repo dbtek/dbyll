@@ -48,7 +48,7 @@ a {
 #sidebar-description {
 	font-family: "Roboto", monospace;
 	text-align: left;
-	font-size: 15px;
+	font-size: 1 rem;
 	margin: 10%;
 	margin-bottom: 10px;
 }
@@ -86,7 +86,7 @@ article img {
 /* Handle page naviation */
 
 .PageNavigation {
-  font-size: 14px;
+  font-size: .8 rem;
   display: block;
   width: auto;
   overflow: hidden;
