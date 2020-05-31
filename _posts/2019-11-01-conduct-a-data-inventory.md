@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Conduct A Data Inventory
-categories: roadmap-for-action
+category: roadmap-for-action
 tags:
 description: These actions are designed to be concrete, practical steps that any institution can begin taking immediately.
 permalink: /roadmap-for-action/risk-mitigation/conduct-a-data-inventory

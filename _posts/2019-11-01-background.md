@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Background
-categories: roadmap-for-action
+category: roadmap-for-action
 tags:
 description: The purpose of this document is to build on the Landscape Analysis by offering a roadmap of potential actions that stakeholders can use to chart both individual and collective responses.
 permalink: /roadmap-for-action/background

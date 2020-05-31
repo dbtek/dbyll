@@ -1,7 +1,7 @@
 ---
 layout: post
 title: What Do We Mean By Data And Data Infrastructure
-categories: roadmap-for-action
+category: roadmap-for-action
 tags:
 description: We talk about two types of data. The first is Research Data, which refers to the data academic institutions generate through their research activities. The second is Grey Data, which refers to the vast amount of data produced by universities outside of core research activities.
 permalink: /roadmap-for-action/what-do-we-mean-by-data-and-data-infrastructure
