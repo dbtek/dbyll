@@ -85,15 +85,25 @@
 	</div>
 -->
 
-<!-- From: https://david.elbe.me/jekyll/2015/06/20/how-to-link-to-next-and-previous-post-with-jekyll.html. More complex 'per catagory' is here: https://talk.jekyllrb.com/t/how-to-link-to-next-and-previous-posts-for-same-blog-category/629/2 but I don't think we need it as we control via timestamps -->
+<!-- The below generates a statement about where this is from and what it's connected to. Comma addition from: https://vsoch.github.io/2019/jekyll-lists/. -->
+
 	<hr>
 	{% if page.category.size > 0 %}
 			<p>
-				This is part of the <a href="{{ site.BASE_PATH }}/{{ page.category }}">{{ page.category | replace: '-',' ' }}</a>{% if page.tags.size > 0 %} and is connected to others issues including {% for tag in page.tags %}<a href="{{ site.BASE_PATH }}/{{ tag }}">{{ tag | replace: '-',' '}}</a>{% if forloop.last %}{% else %}, {% endif %}{% endfor %}</a>.
-				<!-- MAKE A LOOP! -->
+				This is part of the <a href="{{ site.BASE_PATH }}/{{ page.category }}">{{ page.category | replace: '-',' ' }}</a>
+				{% if page.tags.size > 0 %}
+				and is connected to others issues including
+				{% for tag in page.tags %}
+				<a href="{{ site.BASE_PATH }}/{{ tag }}">
+				{{ tag | replace: '-',' '}}</a>
+				{% if forloop.last %}{% else %}, {% endif %}
+				{% endfor %}</a>
+				.
 			</p>
   {% endif %}
 	{% endif %}
+
+<!-- From: https://david.elbe.me/jekyll/2015/06/20/how-to-link-to-next-and-previous-post-with-jekyll.html. More complex 'per catagory' is here: https://talk.jekyllrb.com/t/how-to-link-to-next-and-previous-posts-for-same-blog-category/629/2 but I don't think we need it as we control via timestamps -->
 
 	<div class="PageNavigation">
   {% if page.previous.url %}
