@@ -12,6 +12,7 @@ report_download: https://testurl.org
     <a href="{% if post.link %}{{ post.link }}{% else %}{{ site.BASE_PATH }}{{ post.url }}{% endif %}">{{ post.title }}</a>{% if post.link %}{% endif %}
   </h2>
   <div>
+    {% include read_time.html %}
     {{ post.description }}
   </div>
   {% endif %}

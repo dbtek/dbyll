@@ -22,6 +22,9 @@ permalink: /terms-and-conditions
            {% endcase %}
            {{ post.date | date: "%Y" }}
          </span>
+         <span>
+           {% include read_time.html %}
+         </span>
       {% if post.categories.size > 0 %}
           <span>
             from <a href="{{ site.BASE_PATH }}/{{ post.category }}" style="text-transform:capitalize;">{{ post.category  | replace: '-',' ' }}</a>
