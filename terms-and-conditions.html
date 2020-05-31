@@ -23,8 +23,19 @@ permalink: /terms-and-conditions
            {{ post.date | date: "%Y" }}
          </span>
          <span>
-           {% include read_time.html %}
-         </span>
+
+
+           <span class="reading-time" title="Estimated read time">
+             {% assign words = post.content | number_of_words %}
+             {% if words < 360 %}
+               1 min
+             {% else %}
+               {{ words | divided_by:180 }} mins
+             {% endif %}
+           </span>
+
+
+           </span>
       {% if post.categories.size > 0 %}
           <span>
             from <a href="{{ site.BASE_PATH }}/{{ post.category }}" style="text-transform:capitalize;">{{ post.category  | replace: '-',' ' }}</a>
