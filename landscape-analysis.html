@@ -5,7 +5,7 @@ description: This report was commissioned in response to the growing trend of co
 permalink: /landscape-analysis
 report_download: https://testurl.org
 ---
-  <!-- set the below to whatever you want and it'll generate a list -->
-  {% for post in site.categories.landscape-analysis reversed %}
-  {% include report-contents.html %}
-  {% endfor %}
+<!-- set the below to whatever you want and it'll generate a list -->
+{% for post in site.categories.landscape-analysis reversed %}
+{% include report-contents.html %}
+{% endfor %}

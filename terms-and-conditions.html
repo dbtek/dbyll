@@ -4,8 +4,7 @@ title: Do we agree to the terms & conditions of research
 description: This is a blub
 permalink: /terms-and-conditions
 ---
-<ul>
-  {% for post in site.tags.terms-and-conditions %}
-  {% include thread-contents.html %}
-  {% endfor %}
-</ul>
+<!-- set the below to whatever you want and it'll generate a list -->
+{% for post in site.tags.{{page.permalink}} %}
+{% include thread-contents.html %}
+{% endfor %}
