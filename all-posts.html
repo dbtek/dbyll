@@ -23,7 +23,7 @@ description: welcome to our website, let us tell you about it here
          </span>
       {% if post.categories.size > 0 %}
           <span>
-               from <a href="{{ site.BASE_PATH }}/{{ post.category }}">{{ post.category  | replace: '-',' ' }}</a>
+               from <a href="{{ site.BASE_PATH }}/{{ post.category }}">{{ post.category  | replace: '-',' ' | capitalize}}</a>
           </span>
       {% endif %}
     </b></p>
