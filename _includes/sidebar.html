@@ -21,6 +21,12 @@
 </div>
 {% endif %}
 
+{% if page.action.link %}
+<div id="sidebar-description">
+	<a href="{{ page.action.link }}" class="btn">{{page.action.title}}</a>
+</div>
+{% endif %}
+
 <div id="sidebar-description">
 
 <p>
