@@ -24,7 +24,7 @@ permalink: /financial-analysis
        </span>
     {% if post.categories.size > 0 %}
         <span>
-             from <a href="{{ site.BASE_PATH }}/{{ post.categories }}">{{ post.categories }}</a>
+          from <a href="{{ site.BASE_PATH }}/{{ post.category }}" style="text-transform:capitalize;">{{ post.category  | replace: '-',' ' }}</a>
         </span>
     {% endif %}
   </b></p>
