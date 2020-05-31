@@ -21,10 +21,6 @@ a {
 	color: #fff;
 }
 
-img {
-	width: 100%;
-}
-
 /* Handles styles for the sidebar */
 
 .sidebar {
@@ -80,6 +76,11 @@ article.home h5,
 article.home h6 {
 	font-family: 'Roboto', sans-serif;
 	color: #414748;
+}
+
+
+article img {
+	width: 100%;
 }
 
 /* Handles styling for deep links */
