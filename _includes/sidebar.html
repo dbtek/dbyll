@@ -30,7 +30,7 @@
 {% endif %}
 
 <!-- This can be set on a per page basis using action.link and action.title in the yaml -->
-{% if page.action.link > 0 %}
+{% if page.action.link.size > 0 %}
 <div id="sidebar-description">
 	<a href="{{ page.action.link }}" class="btn">{{page.action.title}}</a>
 </div>
