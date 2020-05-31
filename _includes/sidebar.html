@@ -9,9 +9,12 @@
     </h3>
 </header>
 
+{% if page.date.size > 0 %}
 <div id="sidebar-description">
 {% include read_time.html %}
 </div>
+{% endif %}
+
 
 {% if page.description %}
 <div id="sidebar-description">
