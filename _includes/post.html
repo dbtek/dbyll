@@ -90,11 +90,12 @@
 	<hr>
 	{% if page.category.size > 0 %}
 			<p>
-				This is part of the <a href="{{ site.BASE_PATH }}/{{ page.category }}">{{ page.category | replace: '-',' ' }}</a>
+				This is part of the <a href="{{ site.BASE_PATH }}/{{ page.category }}" style="text-transform:capitalize;">
+				{{ page.category | replace: '-',' ' }}</a>
 				{% if page.tags.size > 0 %}
 				and is connected to others issues including
 				{% for tag in page.tags %}
-				<a href="{{ site.BASE_PATH }}/{{ tag }}">
+				<a href="{{ site.BASE_PATH }}/{{ tag }}" style="text-transform:capitalize;">
 				{{ tag | replace: '-',' '}}</a>
 				{% if forloop.last %}{% else %}, {% endif %}
 				{% endfor %}</a>
