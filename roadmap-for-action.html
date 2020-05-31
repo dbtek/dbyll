@@ -5,29 +5,7 @@ permalink: /roadmap-for-action
 description:  The need for academic institutions to act to retain control of infrastructure, data and data analytics is here to stay. The time to act is now.
 report_download: https://testurl.org
 ---
-<ul style="padding-top:10%">
-  {% for post in site.categories.roadmap-for-action reversed %}
-  {% if post.url %}
-  <h2>
-    <a href="{% if post.link %}{{ post.link }}{% else %}{{ site.BASE_PATH }}{{ post.url }}{% endif %}">{{ post.title }}</a>{% if post.link %}{% endif %}
-  </h2>
-  <p><i>
-     <span class="reading-time" title="Estimated read time">
-      {% assign words = post.content | number_of_words %}
-      {% if post.reading-time.size > 1 %}
-         {{ post.reading-time }}
-        {% else %}
-          {% if words < 360 %}
-           1 min reading time
-          {% else %}
-           {{ words | divided_by:180 }} min reading time
-          {% endif %}
-      {% endif %}
-      </span>
-  </i></p>
-  <div>
-    {{ post.description }}
-  </div>
-  {% endif %}
+<!-- set the below to whatever you want and it'll generate a list -->
+{% for post in site.categories.roadmap-for-action reversed %}
+{% include report-contents.html %}
 {% endfor %}
-</ul>

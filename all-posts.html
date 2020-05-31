@@ -3,44 +3,7 @@ layout: page
 tagline:
 description: welcome to our website, let us tell you about it here
 ---
-<ul>
-  {% for post in site.posts %}
-    {% if post.url %}
-    <h2>
-      <a href="{% if post.link %}{{ post.link }}{% else %}{{ site.BASE_PATH }}{{ post.url }}{% endif %}">{{ post.title }}</a>{% if post.link %}{% endif %}
-    </h2>
-    <p><b>
-      posted on <span>
-           {% assign d = post.date | date: "%d" | plus:'0' %}
-           {{ post.date | date: "%B" }}
-           {% case d %}
-             {% when 1 or 21 or 31 %}{{ d }}st,
-             {% when 2 or 22 %}{{ d }}nd,
-             {% when 3 or 23 %}{{ d }}rd,
-             {% else %}{{ d }}th,
-           {% endcase %}
-           {{ post.date | date: "%Y" }}
-         </span>
-      {% if post.categories.size > 0 %}
-          <span>
-               from <a href="{{ site.BASE_PATH }}/{{ post.category }}" style="text-transform:capitalize;">{{ post.category  | replace: '-',' ' }}</a>
-          </span>
-      {% endif %}
-    </b></p>
-
-    <div>
-      {% if post.fullview %}
-      {{ post.content }}
-      {% else %}
-      {% if post.shortinfo %}
-      {{ post.shortinfo }}
-      {% elsif post.description %}
-      {{ post.description }}
-      {% else %}
-      {{ post.excerpt }}
-      {% endif %}
-      {% endif %}
-    </div>
-    {% endif %}
-  {% endfor %}
-</ul>
+{% for post in site.posts %}
+{% include thread-contents.html %}
+{% endfor %}
+{% endfor %}
