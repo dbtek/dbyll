@@ -1,4 +1,3 @@
-<ul style="padding-top:10%">
   {% if post.url %}
   <h2>
     <a href="{% if post.link %}{{ post.link }}{% else %}{{ site.BASE_PATH }}{{ post.url }}{% endif %}">{{ post.title }}</a>{% if post.link %}{% endif %}
@@ -22,4 +21,3 @@
     {{ post.description }}
   </div>
   {% endif %}
-</ul>
