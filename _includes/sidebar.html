@@ -30,7 +30,7 @@
 {% endif %}
 
 <!-- This can be set on a per page basis using action.link and action.title in the yaml -->
-{% if page.action.link %}
+{% if page.action.link > 0 %}
 <div id="sidebar-description">
 	<a href="{{ page.action.link }}" class="btn">{{page.action.title}}</a>
 </div>
@@ -38,17 +38,17 @@
 
 <div id="sidebar-description">
 
-<p>
-	<a href="{{ site.BASE_PATH }}">Home</a>
-</p>
-<p>
-	<a href="">Take Action</a>
-</p>
-<p>
-	<a href="{{ site.BASE_PATH }}/authors">About the authors</a>
-</p>
-<p>
-	More from <a href="https://sparcopen.org/" target="_blank"><img src="{{ site.BASE_PATH }}/assets/media/sparc_logo.png" alt="SPARC Logo" style="height: .8em;" ></a>
-</p>
+	<p>
+		<a href="{{ site.BASE_PATH }}">Home</a>
+	</p>
+	<p>
+		<a href="">Take Action</a>
+	</p>
+	<p>
+		<a href="{{ site.BASE_PATH }}/authors">About the authors</a>
+	</p>
+	<p>
+		More from <a href="https://sparcopen.org/" target="_blank"><img src="{{ site.BASE_PATH }}/assets/media/sparc_logo.png" alt="SPARC Logo" style="height: .8em;" ></a>
+	</p>
 
 </div>
