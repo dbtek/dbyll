@@ -1,6 +1,6 @@
 ---
 layout: post
-title: The Companies Part 2
+title: The Companies Part Two
 category: landscape-analysis
 tags:
 description: 
