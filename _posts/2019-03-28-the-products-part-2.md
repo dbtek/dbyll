@@ -8,13 +8,13 @@ permalink: /landscape-analysis/the-products-part-2
 date: 2019-03-29 09:00:00
 ---
 
-**The Challenges Ahead**
+### The Challenges Ahead
 
 The decline of print textbooks is forcing every publisher to move towards digital content. Once content is digitized and delivered, however, it opens vast possibilities to collect and analyze data. While data can be used for good, there are also manifold challenges that institutions have only begun to grapple with.
 
 Digital products include not only textbooks, but also homework systems, assessment tools, adaptive content customized based on the learning profiles of students, standalone platforms, Learning Management Systems, lecture capture, etc. Anecdotal evidence suggests that these systems built and maintained by publishers capture massive amounts of data about student and faculty behavior that go beyond what is necessary for accomplishing their core objectives (i.e. improving student outcomes). Institutions, faculty and students should think about the accumulation and use of data collected and retained by schools and commercial vendors.
 
-**Student and Faculty Privacy**
+#### Student and Faculty Privacy
 
 Digital tools collect and analyze data in a wide variety of ways, including to establish what is a student’s learning profile, where and when students access content or complete homework, what resources are used to complete tasks, how long it takes to complete individual exercises, which digital library materials have they accessed, and so on. While publishers may justify collecting this information for the purposes of improving educational outcomes, there are also serious questions about the potential risks. This data, if hacked, re-sold, or surrendered to governments without judicial review, it can be used to classify students, screen them for employment or access to graduate education, infer their political views, and even map their network of friends, mentors, and followers. While there are federal and state regulations concerning student privacy, some (such as FERPA) have not been updated in decades and cannot be assumed to cover all possible uses.
 
@@ -24,13 +24,13 @@ Another area of concern is the content laid out in the Terms of Use of digital t
 
 The risks to student and faculty privacy are significant: they range from hacking to unmonitored re-sale of data to third parties. Could commercial vendors find themselves selling student data, even inadvertently, to the next Cambridge Analytica? Would commercial vendors resist government requests for data? Would universities resist requests for selective data from prospective employers, possibly dangling a greater number of hires from the institution if they could (for example) only know how students answered a specific set of questions or which students have desirable collaboration patterns? Would students read the fine print before sharing their data with an “app” offering to predict their dream job or lifetime earning potential?
 
-**Algorithms and Analytics**
+#### Algorithms and Analytics
 
 Also, the algorithms themselves used by publishers are notoriously not transparent, raising a spectrum of ethical questions. For example, how do adaptive learning algorithms conclude that an individual should be served one of several types of customized content? Are all student profiles considered and valued equally, or are systems effectively classifying students on the basis of perceived abilities and tendencies, handicapping some even before they complete a class? Numerous examples in recent news stories illustrate how algorithms can be influenced by the unconscious bias of the humans who design them, which can manifest in forms of unintended discrimination. In a higher education context where algorithms are trusted with increasingly important decisions, the lack of transparency raises not only ethical concerns, but also potential legal exposure.
 
 It is worth noting that publishers are not the only vendors of data analytics to universities. Many (if not most) colleges are using data analytics to varying degrees in the recruitment process, and there are many questions in terms of fairness raised using non-transparent algorithms. Are algorithms perpetuating, even involuntarily, biases based on ethnicity, geography, occupation, and likelihood that students or their families turn into donors, etc.?
 
-**The Future**
+### The Future
 
 It is very important to emphasize once again that this report is not intended to take an adversarial view about the deployment of data analytics in academic institutions. We acknowledge that the issues posed by data are here to stay. We would strongly recommend that academic institutions analyze separately the issues posed by metrics (“what is being measured”) from those posed by algorithms (“how is this being measured”). Of course, the two categories feed on each other. For example, it can become easy to measure performance by using what is made available by vendors and can be procured easily, instead of devoting resources to evaluate hard to quantify (or just to collect) elements of performance. But metrics and algorithms pose very different issues and should be addressed separately.
 
