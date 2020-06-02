@@ -5,7 +5,7 @@ category: landscape-analysis
 tags:
 description: 
 permalink: /landscape-analysis/the-companies-part-2
-date: 2019-03-29 09:00:00
+date: 2019-03-29 08:00:00
 ---
 
 **Pearson**
