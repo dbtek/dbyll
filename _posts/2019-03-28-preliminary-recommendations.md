@@ -5,7 +5,7 @@ category: landscape-analysis
 tags:
 description: Actively formulating and implementing solutions to these problems is complex but critically important, and something SPARC intends to work closely with the community on. However, we think it is worthwhile to conclude this document with a recap of some of the options for action currently available to the academic community.
 permalink: /landscape-analysis/preliminary-recommendations
-date: 2019-03-29 07:00:00
+date: 2019-03-29 10:00:00
 ---
 The goal of this document is to describe the current landscape of publishers moving into core activities of universities. Actively formulating and implementing solutions to these problems is complex but critically important, and something SPARC intends to work closely with the community on. However, we think it is worthwhile to conclude this document with a recap of some of the options for action currently available to the academic community.
 
