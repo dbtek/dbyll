@@ -3,11 +3,10 @@ layout: post
 title: Teaching and Student Activities
 category: landscape analysis
 tags:
-description:
+description: In 2016, the publishing industry was finally forced to acknowledge that the poor performance of higher education textbook publishing was being negatively affected by trends that are structural, rather than cyclical, in nature.
 permalink: /landscape-analysis/teaching-and-student-activities
 date: 2019-03-29 09:00:00
 ---
-
 
 **Background-The State of the Textbook Market**
 
