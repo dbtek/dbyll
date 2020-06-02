@@ -8,9 +8,9 @@ permalink: /landscape-analysis/the-companies-part-2
 date: 2019-03-29 08:00:00
 ---
 
-**Pearson**
+### Pearson
 
-**The Basics**
+#### The Basics
 
 Pearson is the remnant of what used to be a very large British conglomerate. The company started as a construction company in 1844, but by 1920 it had exited the construction business and started to diversify into finance (it owned a stake in Lazard) media and non-media assets (Chateaux Latour, the Madama Tussaud operations). Media assets included a chain of newspapers managed within the Westminster Press Group, the Financial Times and a 50% stake in The Economist, Penguin (a trade book publisher), various TV production businesses (which were later sold to RTL). All these assets have been divested totally or partially over time (like in the case of Penguin), leaving the education publishing assets at the core of what the company does.
 
@@ -26,7 +26,7 @@ North American Higher Ed revenues account for 26% of Pearson’s total revenues 
 The company does not disclose the profitability of individual business lines.
 North America recorded an operating profit margin of 13.5% in 2017. Historically, we estimate that higher education operated at an operating profit margin in the low twenties, while school courseware would operate at mid to high teens and assessment at low teens. These margins have declined in recent years as demand contracted across the board.
 
-**The Issues**
+#### The Issues
 
 Pearson has been the only publicly listed leading textbook publisher for several years. For many years, the main competitors (McGraw-Hill Educations and Cengage) struggled to perform adequately. In the aftermath of the financial crisis of 2008, at first Pearson enjoyed a grace period, as U.S. Higher Ed enrollment grew because of the weakening labor market, and K-12 textbooks budgets could still benefit from the lag between the downturn in the economy and pre-approved spending decisions. By 2011-12, however, as the labor market started to show signs of improvement, enrollment in U.S. colleges started to peak, and school districts pulled back spending. In 2012, Apollo Group (a private equity firm) acquired McGraw-Hill Education, while in 2014, Cengage reorganized after an organized bankruptcy. New management teams started to improve the competitive performance of both companies at the exact time when the market started to decelerate, aggravating the performance issues of Pearson.
 
@@ -36,7 +36,7 @@ Management has been very vocal, at least with the financial community, about the
 
 Pearson has explicitly highlighted, in some of its investor presentations, how data analytics can affect outcomes for students. Very clearly, management believes that digital tools are not just aimed at the face value benefits of streamlining learning, increasing faculty productivity, and lowering costs. A combination of student profiling through adaptive learning tools (which identify the best way to teach to different segments of students), and reporting (through the analysis of study and testing performance of students) is expected to transform schools with very large enrollment numbers, where it is less cost effective to monitor individual students. Pearson’s strategy of focusing its textbooks on institutions with large numbers of students and a lower rate of student achievement naturally leads to developing and marketing these tools.
 
-**McGraw-Hill Education**
+### McGraw-Hill Education
 
 In March 2013, McGraw-Hill closed the sale of its education business to Apollo, a private equity company for $2.4 billion in cash. In the nine months before the sale was announced, the company had achieved a 15.8% operating margin, while EBITDA in 2013 was negative (making any multiple not meaningful).
 
@@ -44,7 +44,7 @@ McGraw-Hill Education operates across higher education, K-12, and professional m
 
 Apollo has hoped for a long time to IPO the business to exit the investment. Net debt at the end of 2017 stood at $1.832 billion, implying a net debt/EBITDA ratio of 8.5x. An IPO that would raise fresh funds and pay down debt would be quite a relief to management, but so far has proven impossible to pull off. The company filed papers in 2015 and again in 2016, but market conditions have prevented Apollo from carrying out this step. The company has spent about $700 million in technology since Apollo acquired it, and this demand on its cash flow shows in the net debt, which peaked in 2016 at $1.927 billion, rising from $1.242 billion at the end of 2013 (the year of the acquisition).
 
-**Cengage**
+### Cengage
 
 Cengage is the successor company to the old Thomson Learning (Thomson education business), which was sold to APAX (a London-based private equity company) and Omers (an Ontario pension fund) in 2007. The company is largely focused on the higher education market. Its learning segment accounts for almost 65% of revenues, and Gale, the primary sources business which sells mostly to colleges and universities, accounts for another 16% (Exhibit 14).
 
@@ -54,7 +54,7 @@ Cengage struggled significantly in the years after the Apax/Omers acquisition. I
 
 The long-term exit plan for the owners of Cengage is not clear. An IPO would be subject to the same investor sentiment which has prevented McGraw-Hill Education to complete its own IPO. An industry sale could run into anti-trust concerns, since the three largest publishers hold a substantial share of the market and any consolidation among them would raise concerns.
 
-**Other Publishers**
+### Other Publishers
 
 It is worthwhile to note that there are other, smaller publishers in the Courseware business. Wiley, MacMillan, and SAGE all have higher education textbook businesses, often with one or more areas of specific focus (for example, Macmillan has an historic focus on the social sciences and humanities, and Wiley has always been very visible in business). OpenStax, a nonprofit open textbook publisher operating out of Rice University, has successfully launched a set of introductory for high enrollment courses. These textbooks are openly licensed, free online, and available in print at a low cost, and are also backed by a marketplace of optional supplemental materials.
 
