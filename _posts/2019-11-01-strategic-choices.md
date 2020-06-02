@@ -14,7 +14,7 @@ SPARC’s goal is not to provide answers in this section. Rather, we hope to tri
 
 It is vital that these debates involve all stakeholders on campus. These debates will be complex and multifaceted, with ethical, legal, economic, and technical dimensions. Many institutions will have scholars and practitioners in these fields right on campus and would be wise to leverage this expertise in structuring the debate. This is very important because there will be diverging views on what the right answers are, but decisions will be more acceptable if reached after using a well-structured approach.
 
-**Algorithms vs. Humans**
+### Algorithms vs. Humans
 
 The debate over using artificial intelligence as a substitute for human analysis is already playing out in many parts of society, including the corporate sector. As an example, Forbes recently developed a list of 15 business applications of artificial intelligence.<sup>9</sup> Out of these 15 applications, at least five apply to academic institutions as well. Should institutions deploy artificial intelligence tools in the admission process? In recruiting staff? In reviewing and grading non-quantitative exam materials? In identifying potential malicious or unsafe student behavior before it occurs? Should students be able to use accelerated reading software? Should software provide a first line of student support, substituting for teaching assistants? The answer to each of these questions is complex and will vary across and within types of institutions.
 
@@ -24,7 +24,7 @@ However, there also may be implications of not using them. Algorithms can proces
 
 Either way, it is only a matter of time before artificial intelligence further pervades campus decision-making in ways that impact equity, privacy, and allocation of resources. Academic senates, institutional governance boards, and other decision- making bodies should begin a dialogue over the pros and cons as soon as possible. Engaging in this debate in advance will help prepare institutions to be deliberate and strategic about deploying artificial intelligence in ways that are consistent with the institution’s culture, values, and risk tolerance.
 
-**Quantitative vs. Qualitative Metrics**
+### Quantitative vs. Qualitative Metrics
 
 A second critical set of debates that are necessary is around the metrics that academic institutions use for evaluation. This debate often focuses on the issue of faculty evaluation. Most universities argue that they promote their faculty at all levels through a thorough process of evaluation of each individual, looking both at their intellectual achievements and at their personal contributions to teaching and the life of the institution. Nonetheless, a recurrent complaint is the overbearing impact of publications records and journal impact factors (at least in the disciplines and institutions in which this metric is relevant).
 
@@ -35,7 +35,7 @@ More broadly, the the San Francisco Declaration on Research Assessment (DORA)<su
 
 The debate over metrics also extends to evaluation in other areas of campus life, including academic programs, grading, and return on investment for campus programs. While academic institutions may not be ready to altogether abandon the usage of quantitative metrics to evaluate their faculty, they should consider engaging in a genuine debate on the relative weight that they place on quantitative vs. qualitative assessment, and whether the quantitative metrics they use are representative of the objectives of the institution or just happen to be convenient because they are easily available and easily comparable.
 
-**IP Exploitation vs. Knowledge Sharing**
+### IP Exploitation vs. Knowledge Sharing
 
 Many academic institutions house valuable intellectual property (IP) that is generated through the research activity of its community. While U.S. institutions have been allowed to pursue ownership of inventions based on federally-funded research since passage of the Bayh-Dole Act in 1980, few research universities have successfully reaped rewards, despite the enormous potential value.<sup>13</sup>
 
