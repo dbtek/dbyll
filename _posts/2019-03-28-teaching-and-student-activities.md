@@ -1,12 +1,13 @@
 ---
 layout: post
 title: Teaching and Student Activities
-category: landscape-analysis
+category: landscape analysis
 tags:
-description: The continued decline of the higher education courseware business in the U.S. is driven by the interplay of three factors: student enrollment, pricing, and participation rates.
+description:
 permalink: /landscape-analysis/teaching-and-student-activities
-date: 2019-03-29 07:00:00
+date: 2019-03-29 09:00:00
 ---
+
 
 **Background-The State of the Textbook Market**
 
