@@ -7,7 +7,6 @@ description: The continued decline of the higher education courseware business i
 permalink: /landscape-analysis/teaching-and-student-activities
 date: 2019-03-29 07:00:00
 ---
-
 **Background-The State of the Textbook Market**
 
 In 2016, the publishing industry was finally forced to acknowledge that the poor performance of higher education textbook publishing was being negatively affected by trends that are structural, rather than cyclical, in nature.
