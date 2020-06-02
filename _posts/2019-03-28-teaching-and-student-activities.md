@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Teaching and Student Activities
-category: landscape analysis
+category: landscape-analysis
 tags:
 description: 
 permalink: /landscape-analysis/teaching-and-student-activities
