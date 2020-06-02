@@ -8,7 +8,7 @@ permalink: /landscape-analysis/teaching-and-student-activities
 date: 2019-03-29 07:00:00
 ---
 
-**Background-The State of the Textbook Market**
+### Background-The State of the Textbook Market
 
 In 2016, the publishing industry was finally forced to acknowledge that the poor performance of higher education textbook publishing was being negatively affected by trends that are structural, rather than cyclical, in nature.
 
@@ -18,11 +18,11 @@ The publishers entered 2017 with significant misgivings. Even if Pearson blamed 
 
 The continued decline of the higher education courseware business in the U.S. is driven by the interplay of three factors: student enrollment, pricing, and participation rates.
 
-**Factor 1: Student Enrollment**
+#### Factor 1: Student Enrollment
 
 The first factor of student enrollment is cyclical in nature based on the economy (even if there are longer term trends in terms of participation). Pearson estimates that every 1% change (up or down) in the U.S. unemployment rate drives a 3% change (in the opposite direction) in the U.S. college enrollment rate. The robust labor market of 2016 and 2017, therefore, could be expected to drive down enrollment rates in college, which – in fact – declined by -1.4% in 2016 and by -1.0% in 2017 (Exhibit 10). Drops were not equal across all categories of institutions; however, for-profit and community colleges continue to show above average rates of decline, while both public and private non-profit four-year colleges show below average rates of decline (or some modest growth).
 
-**Factor 2: Pricing**
+#### Factor 2: Pricing
 
 Assessing changes in average pricing is rather difficult. Contrary to trade books, college textbooks do not have uniform suggested retail prices. College and digital bookstores therefore are free to set any mark-up above the wholesale price set by the publisher. In addition, in the transition from print to digital, publishers can lower their wholesale prices to reflect lower costs, such as the savings on printing, binding, shipping, and warehousing costs (which account for an estimated 7% of publisher revenues and 9% of costs). In fact, because of the potential to sell digital materials directly to students, publishers could stand to increase their revenues despite lower prices by appropriating at least part of the estimated average 25% mark-up practiced by bookstores. Also, “inclusive access” (a model where a time-limited subscription to digital textbooks is automatically charged to students) allows publishers to also increase overall revenues by increasing their sell-through rate and potentially convincing institutions to subscribe to a broader range of content.
 
@@ -30,7 +30,7 @@ Student spending habits may show some impact on price changes. The annual studen
 
 Product mix also influences realized prices. Follett explains a fairly broad range of options and prices: for a $100 print textbook being sold new in a college bookstore, the used version will command about $75, rental should cost anywhere between $50 and $65, digital editions will retail anywhere between $40 and $60 and custom editions (which are assembled exclusively for a specific campus) will retail at $30. Custom programs are arrangements in which the publishers produce materials that are specifically customized for a course by assembling chapters and articles from multiple sources. These materials are often offered at a steep discount, in large part because of the increased sell-through rate, since students are unable to seek used or rental copies off campus. This has a similar effect as inclusive access, and though different, sometimes the two approaches are combined. As the availability of lower cost options have proliferated over the last decade, it is easy to see how average spending could appear to be in decline.
 
-**Factor 3: Participation Rates**
+#### Factor 3: Participation Rates
 
 Student participation rates (the rate at which students buy new books) are also difficult to assess. The National Association of College Stores survey indicates that 63% of college students buy new books, 56% buy used books and 25% acquire digital materials. This data does not paint the full picture, since most students apply a mixed strategy based on the available options and whether they believe they may need the textbook beyond completion of the class. Most publishers mention seeing market research pointing to about 25 to 33% of students in an average U.S. college course buying new books, about 50% buying used books and the balance resorting to other strategies (borrowing, renting, photocopying, just not using any course material, etc.)
 
@@ -38,7 +38,7 @@ This factor is perhaps the most controversial driver of structural change in the
 
 In general, there is a sense that publishers have limited knowledge of the drivers of student behavior, and that much of what determines how a student will behave is still unknown. In part, this limited knowledge is the legacy of a cultural bias among the publishers, who have always viewed college professors as their true customer, as they are the ultimate decision makers responsible for adopting textbooks. This attitude will change; for example, Pearson’s Chief Strategy Officer comes from Kantar, WPP’s market research unit and is likely to make a major effort to change the culture of the company and spend more resources to understand students and their needs and choices (in order to more effectively market to them).
 
-**The Rise of "Inclusive Access"**
+### The Rise of "Inclusive Access"
 
 In 2017, for the first time Pearson’s North American digital higher education revenues were higher than print revenues. For McGraw-Hill Education, digital learning solutions accounted for 62% of revenues in 2017. At Cengage, in the FY ended on the 31st March 2018, digital solutions accounted for 53% of learning revenues. While these numbers still leave most students in most courses using print materials once the used and physical rental markets are taken into consideration, it still means that the rising adoption of digital solutions in the years to come will generate vast amounts of data on students and the teaching performance of faculty.
 
