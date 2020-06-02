@@ -5,7 +5,7 @@ category: landscape-analysis
 tags:
 description: Anecdotal evidence suggests that these systems built and maintained by publishers capture massive amounts of data about student and faculty behavior that go beyond what is necessary for accomplishing their core objectives (i.e. improving student outcomes). Institutions, faculty and students should think about the accumulation and use of data collected and retained by schools and commercial vendors.
 permalink: /landscape-analysis/the-products-part-2
-date: 2019-03-29 10:00:00
+date: 2019-03-29 09:00:00
 ---
 
 **The Challenges Ahead**
