@@ -8,9 +8,9 @@ permalink: /landscape-analysis/the-companies
 date: 2019-03-29 05:00:00
 ---
 
-## Elsevier
+### Elsevier
 
-**The Basics**
+#### The Basics
 
 Elsevier is the name usually attributed to RELX Group’s Scientific, Technical, and Medical business. RELX Group (known until 2015 as Reed Elsevier) is a London-based provider of information, data, and analytical services for corporate, professional, and academic customers. Elsevier is RELX’s largest area of activity, accounting for 33.7% of its revenues but 40.5% of its profits. It is also the most profitable business within RELX’s portfolio, although Risk & Business Analytics is a close second.
 
@@ -34,7 +34,7 @@ With this background in mind, it is no surprise that Elsevier is thinking about 
 
 These investments have not been huge, but have been much larger than would make financial sense. Press reports indicate that Mendeley and SSRN cost between £100 and 125 million ($130 and 165 million) and Bepress may have cost between $100 million and $130 million. Mendeley and SSRN have business models which are unlikely to ever become truly profitable as standalone entities, while Bepress was profitable at the time of the acquisition (but the price paid still looks very expensive).
 
-**What is Elsevier's strategy?**
+#### What is Elsevier's strategy?
 
 Elsevier’s answer to this question has probably evolved over time. As we previously mentioned, it is not unusual for a company to enter a business or acquire assets with one strategy in mind and then broaden its scope as it learns more about the opportunities offered by the acquired business and as the industry landscape evolves. Several interviews have surfaced four themes which we believe are central to the future of Elsevier.
 1. **Protect the core journal business.** Elsevier must realize that Open Access (OA) is a significant threat to its economics, given that revenues per article today are in the region of £3,100/$4,100. Elsevier appears to have lowered its revenues/article over time (the total number of articles Elsevier publishes has grown by about 5% CAGR between 2006 and 2014, and reached about 430,000 in 2017), faster than its journal revenue growth of about 4% annually. Even so, Elsevier faces a potentially significant decline in revenues in the case that a full transition to OA takes place, since several surveys and reports indicate that the industry average APC is in the region of $2,250 to $2,400. Elsevier could cut some costs to compensate for lower revenues, but we estimate that, with current estimated costs per article in the region of $2,650, a 10-15% cut would only save about $250 to $400, well below the decline in revenues. Incidentally, research Bernstein conducted years ago with the collaboration of a scholarly journal publisher surfaced that a full transition to OA would lead to savings of 12.5% in its cost base, so a 10 to 15% cost reduction appears eminently reasonable. In this scenario, however, the operating profits of Elsevier would be wiped out almost completely, as both revenues and costs would converge around the $2,250 to $2,400 mark. The best way for Elsevier to protect its profitability to would be to gain a massive market share at the high end of the market that could and would pay for expensive APCs. This, in turn, would be easier if Elsevier could win larger and larger numbers of high quality submissions from authors. In this scenario, Elsevier might be able to publish more high impact articles thanks to early insights into the quality of research (for example, through access to the desktops of researchers through Mendeley).
@@ -72,9 +72,9 @@ We see three major threats to Elsevier’s performance going forward and have la
 
    Similarly, Elsevier could be subject to anti-trust action. A complaint was lodged in October 2018 with the European Commission, alleging that RELX practices violate two articles of the Treaty of the Functioning of the European Union. Whether the European competition authorities will pursue the case remains unclear at this stage, but the expansion of Elsevier’s activities into the provision of data analytics back to universities may raise further concerns.
 
-**Springer Nature Group**
+### Springer Nature Group
 
-**The Basics**
+#### The Basics
 
 The Springer Nature Group is the result of the 2015 merger of Springer Science+Business Media with the majority of the businesses owned by Holtzbrinck and operating as part of McMillan Science and Education. The company has two main shareholders: Holtzbrinck Group (a German family-owned publisher) which has 53% of the shares, and BC Partners (a European private equity firm) which has the balance (except for a small stake still owned by the Government of Singapore, which owned Springer before its sale to BC Partners). The Springer/Nature merger was quite expensive: BC Partners acquired Springer in 2013 for an estimated €3.1 billion and then agreed to give Holtzbrinck 53% of the equity of the combined entity. If by January 2015, when the Nature merger was announced, BC Partners valued its stake in Springer at least equally to its original investment, this means that Nature Publishing Group was valued at €3.5 billion, underlying the unique quality of its assets.
 
@@ -110,9 +110,9 @@ Elsevier is the net winner from the IPO’s failure. Had the IPO succeeded, Spri
 
 A publicly-listed Springer Nature, with less debt, could have moved towards replicating Elsevier’s strategy, offering a welcome alternative to dealing with Elsevier. This opportunity now looks more remote in time, if at all feasible, leaving Clarivate as the only likely competitor to Elsevier in data analytics going forward.
 
-**Wiley**
+### Wiley
 
-**The Basics**
+#### The Basics
 
 Wiley is the smaller of the three main journal publishers. It publishes about 2,300 journals, so – in terms of titles – it is very close in size to Elsevier. Journal revenues, however, are much lower: in the fiscal year that closed on the 30th April 2018, journal revenues totaled $901.5 million. This number is driven by the lower number of articles published: the company claims to publish only one third of the 500,000 articles submitted every year, translating into about 166,000, substantially fewer than the 430,000 articles which Elsevier publishes; in terms of revenues per article, both Wiley and Springer Nature now appear to earn more than Elsevier (Exhibit 5).
 
@@ -124,9 +124,9 @@ Wiley’s acquisition in 2016 of Atypon for $120 million, at first glance, seems
 
 We doubt that Wiley’s management is just taking unwarranted risks. Wiley could justify a very expensive valuation because of its synergies with Atypon. Our interviews suggest that Wiley never achieved a satisfactory digital distribution. Interscience was heavily overstaffed with as many as 400 FTE employees and may have cost Wiley as much as $60 million/year. If Wiley could save only two thirds of its Interscience costs and it lost all external revenues, the deal would still make sense financially. Of course, this conclusion hinges on several assumptions. The greatest sensitivity is to the actual costs savings, which in turn depend on the number of Interscience employees at the time of the deal. If that number is directionally correct, then all other sensitivities are relatively minor. If we are correct, Wiley has invested substantial resources to eradicate an operational problem. This makes a lot of sense financially and operationally, but it also means that management has had less time (and resources) to think, develop, and execute a data strategy.
 
-**Clarivate**
+### Clarivate
 
-**The Basics**
+#### The Basics
 
 Clarivate is the name the new private equity owners (Onex and Baring Asia) gave to the assets previously owned by Thomson Reuters when they acquired them in 2016 (but management had already decided to sell it by 2015). In our view, Thomson Reuters decided to sell the business for two reasons: it was small, relative to its portfolio at the time (Exhibit 6), and it was not providing the same reliable mid-single digit revenue growth it had enjoyed until a few years earlier (Exhibit 7). In addition, the management of Thomson Reuters believed that changes in the journal business and the rise of OA would add to uncertainty over the future business model, potentially putting pressure on valuations. At the same time, the business’ high profitability meant that a sale would generate substantial amounts of cash.
 
@@ -141,7 +141,7 @@ It is unclear to what extent the new owners of the business support this strateg
 
 Integration within Clarivate between scientific and academic research and the other areas of activity is less prominent. In fact, the few interviews given by Annette Thomas, the CEO of the Scientific and Academic Research Group, are focused on the core business. Nonetheless, we think that integration between core data analytics and intellectual property remains a significant opportunity, as it can lead to serving both universities when seeking deeper ties (and funding) with industry, and industry when looking at identifying, understanding, and supporting relevant research in its early stages.
 
-**Other Publishers**
+### Other Publishers
 
 In general, we view any publisher below the size of Wiley as unlikely to have the financial resources to mount a major challenge to the research data analytics businesses of Elsevier and Clarivate. There are, however, a couple of noteworthy comments:
 1. Holtzbrinck must decide what to do with Digital Science. The business was not included in the merger of Springer and Nature Publishing Group (reportedly, because its losses would saddle the performance of the combined entity). Digital Science’s original strategy was to build an open, neutral infrastructure, but that course is slightly changing. In part, the culture internal to Digital Science, with its collection of entrepreneurs pursuing their vision means that integrating the companies into a single, cohesive offering is very difficult. In part, Holtzbrinck probably does not wish to invest vast amounts of money to grow it to the point where it can mount a serious challenge to Elsevier or Clarivate. On the other hand, adding Digital Science to Springer Nature may allow them to tell a more credible story to investors, which may help selling an IPO which looks difficult to attempt again.
