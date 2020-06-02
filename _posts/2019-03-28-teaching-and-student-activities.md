@@ -5,7 +5,7 @@ category: landscape-analysis
 tags:
 description: 
 permalink: /landscape-analysis/teaching-and-student-activities
-date: 2019-03-29 08:00:00
+date: 2019-03-29 07:00:00
 ---
 
 **Background-The State of the Textbook Market**
