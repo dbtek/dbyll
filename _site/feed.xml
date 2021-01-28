@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>MyWay</title>
+		<description>Stylish Jekyll Theme</description>
+		<link>/</link>
+		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-03</title>
+				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h1 id=&quot;s3-버킷-생성&quot;&gt;&lt;center&gt;S3 버킷 생성&lt;/center&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;aws 메인 홈으로 들아가서 스크롤을 조금 내리면 스토리지 카테고리에 S3가 보이는 것을 볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\s3dashboard.PNG&quot; alt=&quot;dashboard&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;S3에 들어가면 오른 쪽 중간에 버킷 만들기 버튼을 누른다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\makeBucket.PNG&quot; alt=&quot;makeBucket&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;버킷 만들기 창에 들어가면 일반 구성을 작성한다.
+여기서 버킷 이름은 모든 유저들 사이에서 고유해야 한다.
+그래서 나와 똑같이 하면 버킷을 만들 수 없으니 알아서 버킷 이름을 구성한다.
+여기서 나는 s3-test-young으로 구성하였다. 그리고 리전은 서울로 선택한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\configuration.PNG&quot; alt=&quot;configuration&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;퍼블릭 액세스 차단을 위한 버킷 설정은 그대로 둔다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\public.PNG&quot; alt=&quot;public&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;바로 밑에 버킷 버전 관리, 태그, 기본 암호화도 그대로 둔다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\triple.PNG&quot; alt=&quot;triple&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;그렇게 버킷 만들기를 누르면 다 S3 버킷 만드는 것이 끝난다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\complete.PNG&quot; alt=&quot;complete&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;다음 게시물에서는 인텔리제이에서 프로젝트를 만들고 실질적으로 이전 게시물에서 생성한 RDS와 S3를 연동해보도록 하겠다.&lt;/p&gt;
+</description>
+				<pubDate>Fri, 22 Jan 2021 21:15:00 +0900</pubDate>
+				<link>/program/2021/01/22/program-post04.html</link>
+				<guid isPermaLink="true">/program/2021/01/22/program-post04.html</guid>
+			</item>
+		
+			<item>
+				<title>Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-02</title>
+				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h1 id=&quot;인텔리제이와-rds-연동&quot;&gt;&lt;center&gt;인텔리제이와 RDS 연동&lt;/center&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;전의 게시물에서 마지막에 데이터베이스 생성을 눌렀다면 상태 컬럼에 보면
+생성중에서 이제는 &lt;u&gt;사용 가능&lt;/u&gt;으로 바뀐 것을 볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\creation_complete.PNG&quot; alt=&quot;creation_complete&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 DB 식별자인 rdsDB를 누르면 아래 그림이 나오게 되는데
+이때 엔드포인트를 복사 해 놓는다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\endpoint.PNG&quot; alt=&quot;endpoint&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제 MySql Workbench를 켜본다.
+&lt;img src=&quot;..\..\..\..\images\Program\post-3\mysql_home.PNG&quot; alt=&quot;home&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;아래 사진과 같은 플러스로 되어 있는 부분을 누르게 되면
+&lt;img src=&quot;..\..\..\..\images\Program\post-3\plus.PNG&quot; alt=&quot;add&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 Connection Name에는 원하는 db이름을 적고
+Username에서는 이전 게시물에서 설정했던 마스터 유저 이름을 적는다
+그리고 Sore in Vault를 눌러서 마찬가지로 이전 게시물에서 설정했던 마스터 암호를 적는다. 그 다음 OK를 누른다.
+&lt;img src=&quot;..\..\..\..\images\Program\post-2\connection.PNG&quot; alt=&quot;connection&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;rds-test가 생긴 것을 볼 수 있다.
+이것을 누르면 따로 암호를 칠 필요 없이 들어가지는 것을 볼 수 있다.
+&lt;img src=&quot;..\..\..\..\images\Program\post-2\rds-test.PNG&quot; alt=&quot;rds test&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;다음 게시물에서는 AWS의 S3 버킷을 만들어 본다.&lt;/p&gt;
+</description>
+				<pubDate>Thu, 21 Jan 2021 19:40:00 +0900</pubDate>
+				<link>/program/2021/01/21/program-post03.html</link>
+				<guid isPermaLink="true">/program/2021/01/21/program-post03.html</guid>
+			</item>
+		
+			<item>
+				<title>Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-01</title>
+				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h1 id=&quot;인텔리제이와-aws의-rds-mysql-workbench-연동하기&quot;&gt;&lt;center&gt;인텔리제이와 AWS의 RDS-MySql Workbench 연동하기&lt;/center&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
+AWS에서는 AWS 클라우드에서 관계형 데이터베이스를 더 쉽게 설치, 운영 및 확장할 수 있는 웹 서비스를 제공한다. 이 서비스는 산업 표준 관계형 데이터베이스를 위한 경제적이고 크기 조절이 가능한 용량을 제공하고 공통 데이터베이스 관리 작업을 관리한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\RDS.png&quot; alt=&quot;packed&quot; width=&quot;400&quot; height=&quot;700&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;학교에서 프로젝트하면서 데이터베이스 연동할 일이 참 많았는데 팀 프로젝트 할 때 이 RDS 서비스를 이용하면 서로 DB 수정한 것이 바로 업로드되서 참 편리했던 기억이 있다. 그때는 이클립스와 MySql를 써서 했었는데 이번에는 Intellij를 써서 MySql RDS를 연동하는 방법을 익혀보겠다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;일단 기본적으로 AWS 사이트에서 회원가입을 해야 한다.(링크 참고)&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/ko/&quot;&gt;AWS 사이트&lt;/a&gt;
+그냥 가입해서 쓰면 요금이 조금 나갈 수가 있다. 
+&lt;u&gt;옛날에 가입해서 잘 기억이 안 나는데 내 기억으로는 카드를 등록해야 됐던 것 같다.&lt;/u&gt;
+그리고 다행히 대학교 학생들에게는 1년 프리티어를 제공함으로 용량이 적은 서비스들을 무료로 한정된 금액 안에서 쓸 수 있다. 
+자신이 대학교 학생이라면 학생 인증을 통해 프리티어를 제공받자!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;그렇게 로그인하고 나면 이러한 페이지가 나온다.
+바로 화면에 DashBoard가 뜨게되는데 여기서 스크롤을 조금 밑으로 내리면 
+&lt;u&gt;데이터 베이스-RDS&lt;/u&gt; 항목이 보일 것이다. 
+이것을 클릭한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\RDS_category.PNG&quot; alt=&quot;RDS_category&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;그러고 나면
+RDS 창이 뜨게 되고 데이터베이스 생성하는 버튼이 있다.
+그것을 누르자.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\rds_dashboard.PNG&quot; alt=&quot;RDS&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;누르면 이제 데이터베이스 설정하는 페이지가 나온다 차근차근 체크를 해보자
+&lt;strong&gt;여기서 잘못 체크하면 요금이 대폭 나올 수도 있으니 잘 따라해야 한다.&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;데이터베이스-생성-방식-선택에서는-표준-생성을-체크한다&quot;&gt;&lt;strong&gt;데이터베이스 생성 방식 선택에서는 표준 생성을 체크한다.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\standard.PNG&quot; alt=&quot;RDS standard&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;엔진 옵션에서는 어떤 데이터베이스 유형을 사용할 건지 선택한다.&lt;/p&gt;
+&lt;h3 id=&quot;우리는-엔진-옵션에서-mysql를-선택한다&quot;&gt;&lt;strong&gt;우리는 엔진 옵션에서 MySQL를 선택한다.&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;버전은 자신의 mysql workbench에 맞게 설정해주면 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\engine_option.PNG&quot; alt=&quot;RDS option&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;템플릿으로-우리는-프로덕션이-디폴트로-되어-있지만-개발테스트로-체크를-한다&quot;&gt;&lt;strong&gt;템플릿으로 우리는 프로덕션이 디폴트로 되어 있지만 개발/테스트로 체크를 한다.&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;만약 프리티어를 등록했다면 프리 티어로 한다!!!&lt;/strong&gt;
+여기서 나는 프리티어 등록을 했기 때문에 프리 티어로 등록하지만 프리티어가 아니라면 개발/테스트를 체크해도 무방하다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\template.PNG&quot; alt=&quot;RDS template&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;설정-정보-입력&quot;&gt;&lt;strong&gt;설정 정보 입력&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;DB 식별자로는 rdsDB로 설정하고
+마스터 사용자 이름은 admin으로 하고 마스터 암호로는 admin!!!로 설정한다. 암호확인은 마스터 암호와 동일하게 쓰면 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\configuration.PNG&quot; alt=&quot;RDS configuraton&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;db-인스턴스-크기로는-버스터블-클래스-dbt3micro로-설정한다&quot;&gt;&lt;strong&gt;DB 인스턴스 크기로는 버스터블 클래스-db.t3.micro로 설정한다!!&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;여기는 일부로 위에 글과 달리 글자를 크게한 &lt;u&gt;이유&lt;/u&gt;가 있다.
+여기서 실수로 &lt;strong&gt;micro가 아닌 xlarge로 설정한다면 요금이 크게 나올 수가 있기 때문이다!!&lt;/strong&gt; 실수하지 말고 체크하자!! 
+지금은 간단하게 연동 방법을 알려주고 있기 때문에 제일 작은 데이터베이스 인스턴스를 사용하지만 추후에 큰 프로젝트를 할 땐 더 큰 사이즈로 변경해야 한다.(물론 요금이 더 비쌈)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\instance_size.PNG&quot; alt=&quot;RDS instance size&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;범용-ssd-체크와-할당된-스토리지는-20-그리고-최대-스토리지-임계값은-30으로-한다&quot;&gt;&lt;strong&gt;범용 SSD 체크와 할당된 스토리지는 20 그리고 최대 스토리지 임계값은 30으로 한다.&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;여기서는 개별적으로 설정해줘도 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\storage.PNG&quot; alt=&quot;RDS storage&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;가용성 및 내구성은&lt;/p&gt;
+&lt;h3 id=&quot;대기-인스턴스를-생성하지-마십시오에-체크한다&quot;&gt;&lt;strong&gt;‘대기 인스턴스를 생성하지 마십시오’에 체크한다.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\availability.PNG&quot; alt=&quot;RDS availability&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;연결 부분에서는
+VPC 설정, 서브넷 그룹은 디폴트로 두고 퍼블릭 액세스 가능은 예를 체크하자. 그리고 보안 그룹 은 기존 항목 선택에 두고 기존 VPC 보안 그룹도 디폴트로 두고 가용 영역은 기본 설정 없음으로 둔다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\connection.PNG&quot; alt=&quot;RDS connection&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;데이터베이스-생성을-누른다&quot;&gt;&lt;strong&gt;데이터베이스 생성을 누른다&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;이러면 클라우드기반 데이터베이스가 생성이 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\database_creation.PNG&quot; alt=&quot;RDS database_creation&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;결과&quot;&gt;&lt;strong&gt;결과&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\result.PNG&quot; alt=&quot;RDS result&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;다음 편에서는 인텔리제이와 RDS를 연동하는 것을 해보자&lt;/p&gt;
+</description>
+				<pubDate>Thu, 21 Jan 2021 19:00:00 +0900</pubDate>
+				<link>/program/2021/01/21/program-post02.html</link>
+				<guid isPermaLink="true">/program/2021/01/21/program-post02.html</guid>
+			</item>
+		
+			<item>
+				<title>플라톤-이데아03</title>
+				<description>&lt;h1 id=&quot;참되고-선하고-아름다운-것&quot;&gt;참되고 선하고 아름다운 것&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Philosophy\Plato-Idea03\kala.jpg&quot; alt=&quot;packed&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이데아는 가장 &lt;strong&gt;참된 것에 대한 인식&lt;/strong&gt;이다. 
+현실에 존재하는 것들은 완전히 거짓된 것은 아니다. 불완전한 것일 뿐이다. 
+###가장 참된 것은 이데아다 그리고 이데아가 인식의 참된 대상이 되는 것이다. 
+이데아는 참되고 선하기 때문에 동시에 아름답다.에 선하고 좋다. 즉 이데아는 진+선+미를 통합해서 가지고 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;kalokagathia라는 그리스 단어가 있는데 이것은 복합어이다.&lt;/strong&gt;
+&lt;u&gt;kalos(아름다운)+agathos(선한)&lt;/u&gt;&lt;/p&gt;
+
+&lt;p&gt;전 근대적인 그리스 사람에게는 아름다운 것 동시에 선하고 좋은 것이기 때문에 그것을 한 단어로 표현하는 것이 가능하다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;“선하고 아름다운 거라.. 예로 뭘 들 수 있을까??..” &lt;del&gt;나?&lt;/del&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;이것은 번역이 불가능하다. 
+전근대인들인 그리스인들에게 아름다우면 곧 선하고 선한 것이 곧 참된 존재자가 있다고 믿는 이 그리스인들에게만 존재하는 단어이다. 가장 완전한 존재자가 이데아가 되는 것이다. 
+전근대적인 사고방식은 진+선+미의 가치를 통합화한 그런 사고 방식이라고 할 수 있다.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;근대 이후로 넘어오면 위의 말이 달라지게 된다.
+추악하다는 말은 즉 아름답다의 반대이고 악하다는 것은 선하다의 반대이다.
+즉 추악함이 예술 작품의 대상이 되는 것인데 미의 영역의 독립이 일어난다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;대표적으로 올리비에 드 사가장의 변형이 있다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Philosophy\Plato-Idea03\trans.jpg&quot; alt=&quot;packed&quot; width=&quot;400&quot; height=&quot;500&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;transifiguration은 transformation과는 다르다. 
+예술과 지상에서 겪은 고난을 벗어나서 아름답게 변한 모습으로 하늘로 승천하는 것을 transifiguration이라고 한다. 이 성스러운, 종교적인 색체의 단어는 예술가는 상당히 의도적으로 이 끔찍한 모습의 왜곡을 제목으로 붙힌다. 
+근대 이후에 탈 근대의 경향 속에서 나타나는 예술 작품 제작의 모습이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;“예술의 세계는 알다가도 모르겠다니까 ㄷㄷ”&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+</description>
+				<pubDate>Mon, 18 Jan 2021 10:48:00 +0900</pubDate>
+				<link>/philosophy/2021/01/18/plato-idea03-copy.html</link>
+				<guid isPermaLink="true">/philosophy/2021/01/18/plato-idea03-copy.html</guid>
+			</item>
+		
+			<item>
+				<title>플라톤-이데아02</title>
+				<description>&lt;h1 id=&quot;플라톤의-두-차원&quot;&gt;플라톤의 두 차원&lt;/h1&gt;
+&lt;p&gt;플라톤의 사상 체계 안에서는 두 차원이 나뉘어져 있다.
+이데아와 영원히 존재하고 그 이데아를 모방해서 만들어진 현실세계가 바로 그 두 차원이다. 
+이러한 이론을 &lt;strong&gt;이원론&lt;/strong&gt;이라고 한다. 
+플라톤의 사상 체계는 &lt;u&gt;완전히 성격이 다른 이데아라는 차원과 현실이라는 두 차원을&lt;/u&gt; 가지고 있다는 점에서 이원론이라고 할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;사실 이데아에 관해서 이야기하려면 빼놓을 수 없는 것이 플라톤의 동굴의 비유이다.
+&lt;img src=&quot;..\..\..\..\images\Philosophy\Plato-Idea02\cave.jpg&quot; alt=&quot;packed&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;“동굴의 비유도 참 흥미로운 이야기이지만 다음에 시간이 되면 추가 설명해보도록 하겠다”&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;이데아와-현실&quot;&gt;이데아와 현실&lt;/h3&gt;
+&lt;p&gt;이데아는 완전한 존재이지만 현실은 불완전한 존재이다.
+이데아와 현실의 관계는 모방(mimesis) 관계에 있다고 설명할 수 있다.
+이데아라는 원본이 먼저 영원히 변하지 않고 존재한다면 현실이라는 복사본이 나중에 존재하며 이는 변화하고 소멸하는 것이다.
+또 둘간의 분유(methexis) 관계에 있다고 할 수 있는데 현실은 이데아의 완전한 존재를 불완전하게 나누어 가짐으로써 존재한다는 것이다.&lt;/p&gt;
+&lt;h4 id=&quot;이데아를-모방한다는-것은-이데아를-분유한다고-말할-수도-있는-것이다&quot;&gt;이데아를 모방한다는 것은 이데아를 분유한다고 말할 수도 있는 것이다.&lt;/h4&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;이데아의-인식&quot;&gt;이데아의 인식&lt;/h2&gt;
+
+&lt;p&gt;플라톤은 인간이 그러면 현실에 사는 인간이 이데아를 어떻게 하면 이데아를 좀 더 인식할 수 있느냐 라는 문제에 관해서 간단하게 한마디로 얘기할 수 있다. 바로 우리 인간의 이성을 통해서 인식할 수 있다고 한다.
+이 대답이 사실은 서양 사상사 전체를 기본적으로 틀짓는 대답이기도 하다. 
+&lt;strong&gt;이데아는 우리가 매일매일 사용하는 오감(시각, 청각, 촉각, 미각 ,후각)을 사용해서 이데아를 인식하려고 해서는 안되고 이성을 사용해야 한다고 한다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;플라톤은 이성과 감성(감각)를 이분법 적으로 나누어서 이성을 감각 위에 놓는 사상이다. 이성이 더 가치있고 우월하고 고귀하다라고 생각했다. 
+서양 사고 방식의 상식이기도 하다.&lt;/p&gt;
+
+&lt;p&gt;그의 원천을 거슬러 올라가다 보면 가장 강력한 사상을 맨처음에 제공한 사람이 바로 플라톤이라고 할 수 있다. 
+그래서 우리 인간에 삶에서 그리고 인간의 삶을 포괄해서 현실에 존재하는 모든 것들에 관해서 중요한 것은 이데아를 얼마나 잘 모방하느냐 얼마나 잘 인식하느냐 이다 근데 그것은 감각을 통해서 인식할 수 없다. 
+이데아에 관해서는 감성 감각은 아니고 오히려 감성 감각은 이데아를 인식하는데 방해가 된다는 게 플라톤의 생각이다. 
+이데아는 &lt;u&gt;이성(reason)&lt;/u&gt;을 통해서 이데아 인식에 다가갈 수 있다.&lt;/p&gt;
+
+&lt;p&gt;플라톤은 이성을 “영혼의 눈” 이라고 말한다. 
+이데아는 순수한 영혼의 눈을 통해서만 인식할 수 있다는 게 플라톤의 생각이다.&lt;/p&gt;
+
+&lt;p&gt;그리스어 하나를 공부해보자. 
+동사인데 그리스 인다 &lt;strong&gt;보다라는 뜻의 idein&lt;/strong&gt; 이라는 것이 있다(이데인)
+&lt;strong&gt;idea(이데아)는 idein&lt;/strong&gt;이라는 &lt;strong&gt;보다&lt;/strong&gt;라는 동사에서 나온 단어이다. idea(형태, 형상, 모양, 모습을 가지고 있는 것에 썼었다) 
+하지만 플라톤은 idea를 가져와 자신의 핵심 개념으로 사용한다. 형태, 형상 모양, 모습을 가지고 있지만 우리 &lt;u&gt;육체의 눈&lt;/u&gt;으로 보이는 것이 아니라 &lt;u&gt;이성의 눈&lt;/u&gt;에만 보이는 모습 그것이 바로 이데아다 라고 의미가 변화가 된다.&lt;/p&gt;
+&lt;h4 id=&quot;idea-보이는-것-형태-모습을-가진-것-이라는-의미를-가졌었으나-플라톤이-영혼의-눈을-통해서만-보이는-것-이라는-이데아-개념을-확립했다&quot;&gt;idea: 보이는 것, 형태, 모습을 가진 것 이라는 의미를 가졌었으나 플라톤이 영혼의 눈을 통해서만 보이는 것 이라는 이데아 개념을 확립했다.&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Philosophy\Plato-Idea02\book.jpg&quot; alt=&quot;packed&quot; width=&quot;400&quot; height=&quot;700&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;플라톤의 파이돈이라는 책을 보면 
+&lt;strong&gt;“육체는 영혼의 감옥”, “철학은 죽음의 연습”&lt;/strong&gt; 이라는 말이 있다.
+이데아를 제대로 인식하려면 그 이데아를 인식하는데 다가가서 조금이라도 더 이데아를 모방하고 분유하고 하는데 성공하려면 감각, 욕구, 육체로부터 멀어지는 (&lt;strong&gt;정화&lt;/strong&gt;(실제 플라톤이 사용한 단어)되는 연습) 연습해야 한다. 
+파이돈은 소크라테스가 아테네의 법정으로부터 도시의 젊은이들을 타락시킨다. 끊임없이 질문을 퍼부어서 호도하고 타락시킨다라는 누명을 쓰고 아테네 법정에서 사형을 받고 독배를 받고 죽는다. 
+독배를 들고 죽기 직전에 소크라테스를 탈출 시키려는 제자들의 권유를 뿌리치고 죽음을 받아들인다.
+그때 자기를 감옥으로 면회온 친구들과 나눈 대화가 파이돈에 기록되어 있다. 플라톤은 육체는 “영혼의 감옥”이라는 말을 한다 그리고 “철학은 죽음의 연습”이다 라는 말을 소크라테스의 말을 통해 한다.&lt;/p&gt;
+
+&lt;p&gt;왜냐면 철학을 한다는 것은 &lt;u&gt;영혼의 눈&lt;/u&gt;을 사용해서 이데아에 대한 인식에 조금이라도 더 다가가려고 하는 활동이라고 한다면 그렇다면 철학은 육체에 속해있는 감각과 그와 결합되어 있는 욕구로부터 최대한 멀어져야 된다. 
+하지만 그것은 쉽지 않다 철학을 통해서 우리는 매일매일 육체로부터 멀어지는 연습을 해야한다 하지만 인간은 세상을 살아가는 동안 육체적인 존재로 살아갈 수 밖에 없다.
+그래서 매일매일 철학을 연습해서 이데아의 인식에 다가간 다는 것은 육체로부터 완전히 분리된다는 것은 살아있는 동안 불가능하지만 어쨌든 최대한 육체로부터 멀어지는 연습, 즉 죽음에 다가가는 연습을 하는 것을 의미하게 된다 그래서 철학은 죽음의 연습이다. 라는 언명이 나오게 되는 것이다.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;“원래 1편으로 끝내려고 했는데 이데아 3편까지는 만들어야 어느 정도 마무리를 할 수 있겠네… ㅋㅋ 전혀 예상치 못함..”&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+</description>
+				<pubDate>Mon, 18 Jan 2021 10:20:20 +0900</pubDate>
+				<link>/philosophy/2021/01/18/plato-idea02.html</link>
+				<guid isPermaLink="true">/philosophy/2021/01/18/plato-idea02.html</guid>
+			</item>
+		
+			<item>
+				<title>플라톤-이데아01</title>
+				<description>&lt;p&gt;철학에 관한 게시물로 첫 번째는 플라톤의 이데아를 다루려고 한다.
+&lt;del&gt;내가 학교에서 철학을 배울 때 첫 번째로 배운 것이기 때문ㅇ..&lt;/del&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;플라톤-이데아&quot;&gt;#플라톤-이데아&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;플라톤은 그리스 사상가&lt;/strong&gt;였는데 2500년 전에 사상가임에도 불구하고 사실 전근대 세계, 근대 시대가 시작하기 직전 중세까지도 엄청난 영향력, 사상적 영향력을 미쳤을 뿐더러 근대가 시작된 이후에도 지금까지 서구 사상에 영향을 미치는 엄청난 규정력을 행사하고 있는 사람이다.&lt;/p&gt;
+
+&lt;p&gt;그 중에 플라톤의 핵심개념인 &lt;strong&gt;이데아&lt;/strong&gt;는 일상적인 용어법 상으로 대게 친숙하다고 하는데 
+&lt;del&gt;나는 잘??..&lt;/del&gt; 
+가령 가장 완전한 결함이 없는 이어폰, 지금 삼성의 갤럭시 버즈 프로는 정말 결함이 없는 이어폰의 이데아라고 말할 수 있고 또 치킨의 이데아가 뭐냐고 한다면 누구는 굽네, 누구는 네네, 누구는 펠리칸 치킨이라고 이야기할 것이다.&lt;/p&gt;
+&lt;h3 id=&quot;이데아는-서양-고대-그리스의-플라톤의-핵심-개념으로부터-유래했다&quot;&gt;이데아는 서양 고대 그리스의 플라톤의 핵심 개념으로부터 유래했다.&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Philosophy\Plato-Idea01\academia.jpg&quot; alt=&quot;packed&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;지금 위에 보는 그림이 고대 그리스에 플라톤이 세운 아카데미아라는 주제로 그린 그림이다.
+당시 아카데미아는 플라톤이 많은 제자들을 기르기 위해 지었던 학당이다. 지금의 (academy)의 어원을 이루고 있다고 보면 될 것이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;르네상스-라파엘로가-그린-그림으로서-정중앙-에는-두-사람의-포커스가-맞춰져-있다&quot;&gt;르네상스 라파엘로가 그린 그림으로서 정중앙 에는 두 사람의 포커스가 맞춰져 있다.&lt;/h4&gt;
+
+&lt;p&gt;왼쪽이 플라톤 그리고 오른 쪽이 아리스토텔리스인데 이 사람은 플라톤의 제자 중 가장 뛰어났다고 한다.&lt;/p&gt;
+
+&lt;p&gt;재밌는 사실은 잘 보면 플라톤은 검지 손가락을 보며 위를 가리키고 있고 아리스토텔리스는 손바닥을 지면을 향해서 내려 놓고 있다. 
+여기에 재밌는 &lt;strong&gt;의미가&lt;/strong&gt; 담겨 있다.
+플라톤에게는 이데아 개념은 상당히 천상적인 개념이라고 할 수 있다.
+반면에, 아리스토텔리스는 플라톤 보다는 현실을 중시하는 이론을 만들어 낸 사람으로 평가받는다. 손짓은 그러한 것을 반영했다고 보면 된다.&lt;/p&gt;
+
+&lt;h5 id=&quot;플라톤이-옆구리에-끼고-있는-책이-천채의-관한-책이고-아리스토텔리스가-들고-있는-책은-윤리-책이다&quot;&gt;플라톤이 옆구리에 끼고 있는 책이 천채의 관한 책이고 아리스토텔리스가 들고 있는 책은 윤리 책이다.&lt;/h5&gt;
+&lt;p&gt;각각 자신들을 대표하는 책들을 가지고 있는 것을 볼 수 있다는 점에서도 흥미롭다.&lt;/p&gt;
+
+&lt;p&gt;플라톤은 많은 책을 썼는데 보다 보면 대화체로 이루어져 있는 것을 볼 수 있다. 이 때 두 사람이 대화를 나누는 형식을 보이는데 대화편의 주인공은 소크라테스이다.
+&lt;strong&gt;소크라테스는 플라톤의 스승이다.&lt;/strong&gt;
+천체에 관한 대화가 있는 이 대화에서는 &lt;strong&gt;데미우르고스&lt;/strong&gt;라는 신이 등장한다.&lt;/p&gt;
+&lt;h5 id=&quot;대화편에서는-이데아를-모방하여-이-세계를-제작한-신인-데미우르고스가-등장한다&quot;&gt;대화편에서는 이데아를 모방하여 이 세계를 제작한 신인 데미우르고스가 등장한다.&lt;/h5&gt;
+&lt;p&gt;기독교로 따지면 하느님이다.&lt;/p&gt;
+
+&lt;p&gt;데미우르고스가 세계를 만들어내기 전에 이미 세상은 이데아들로 가득 차 있었다.&lt;/p&gt;
+&lt;h3 id=&quot;이데아는-어떤-것들의-가장-완전한-모습이다&quot;&gt;이데아는 어떤 것들의 가장 완전한 모습이다.&lt;/h3&gt;
+&lt;p&gt;데미우르고스는 다만 이 완전하게 존재하고 있는 그리고 영원히 존재하고 있는 이데아를 단지 모방, 즉 본 떠서 이 세계를 만들어 낸다. 
+그래서 기독교의 신이 만들어낸 것에 대해서는 창조라는 말을 쓸 수 있겠지만
+데미우르고스가 만들어낸 세상에 대해서는 &lt;u&gt;창조&lt;/u&gt;라고 부르기 힘들다.
+왜냐면 &lt;strong&gt;무&lt;/strong&gt;로부터 만들어 낸 것이 아니라 &lt;strong&gt;이데아를 모방&lt;/strong&gt;해서 이 세계를 만들어 낸 것이기 때문이다.
+그래서 &lt;u&gt;제작&lt;/u&gt;했다고 하는 것이 더 적합하다.&lt;/p&gt;
+
+&lt;p&gt;이데아는 영원하고 완전하며 불변하는 존재라는 특징을 가지고 있다.
+즉, 이데아는 완전한 어떤 것으로써 영원히 존재한다. 생겨나지도 소멸하지도 않고 영원으로부터 영원으로 존재하는 것이 이데아이다. 
+&lt;strong&gt;완전한 어떤 것이다.&lt;/strong&gt;
+(자꾸 이데아 이데아 하니까 교실 이데아 부르고 싶다…&lt;del&gt;노래방 가ㄱ..&lt;/del&gt;)
+주의할 것은 이데아는 숫자는 많지만 각각의 종류에는 &lt;strong&gt;딱 하나&lt;/strong&gt;의 이데아밖에 없다.
+두 개가 있을 수가 없는 것이다. 왜냐하면 서로 다른데 가장 완전할 수 없기 때문이다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;“의도치 않게 글이 길어지는 것 같으니까 여기서 한 번 끊고 플라톤의 이데아 2편에서
+마저 이야기 해보자”&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+</description>
+				<pubDate>Mon, 18 Jan 2021 09:37:20 +0900</pubDate>
+				<link>/philosophy/2021/01/18/plato-idea01.html</link>
+				<guid isPermaLink="true">/philosophy/2021/01/18/plato-idea01.html</guid>
+			</item>
+		
+			<item>
+				<title>차이코프스키-꽃의 왈츠</title>
+				<description>&lt;h1 id=&quot;tchaikovsky-waltz-of-the-flowers&quot;&gt;Tchaikovsky-Waltz of the Flowers&lt;/h1&gt;
+
+&lt;p&gt;사실 이번 곡을 첫 클래식 리뷰로 할 줄은 몰랐다. 
+이 곡을 고른 이유는 내가 오랫동안 잊고 있었다가 어느 날 갑자기 듣게 되었기 때문이다.
+평소에도 클래식을 좋아하고 마음을 가다듬으려고 듣곤 하는데 이곡만큼은 많은 추억을 가지고 있었다.
+아무래도 차이코프스키의 호두까기 인형이 워낙 유명해서 많이 나오기도 하는데 신기하게도 몇 년만에 우연히 듣게 되었다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;아무래도 차이코프스키는 한국에서 제일 사랑받는 작곡가가 아닐까 싶다.
+살면서 한 번쯤은 들어봤다는 차이코프스키의 피아노 협주곡 1번 1악장의 멜로디하며
+유명한 바이올리니스트라면 한 번 쯤은 연주 해봐야 한다는 바이올린 협주곡 등
+&lt;del&gt;응 유명하지 않아도 해야 돼&lt;/del&gt;~ 
+차이코프스키는 수많은 명곡들을 남겼다.
+그 중 이 곡을 먼저 리뷰하기로 한 이유는 내가 올해 &lt;strong&gt;27살&lt;/strong&gt;이 되면서 동심이 많이 파괴됐는데 이 곡을 들으면서 다시 동심으로 돌아간 느낌을 받아서일까?&lt;/p&gt;
+&lt;h5 id=&quot;신기하게-듣는-동안-내가-유치원-때-미국에서-살면서-디즈니랜드에-간-적이-있는데-거기서-회전목마-타는-기억이-난다는&quot;&gt;신기하게 듣는 동안 내가 유치원 때 미국에서 살면서 디즈니랜드에 간 적이 있는데 거기서 회전목마 타는 기억이 난다는…&lt;/h5&gt;
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Classic\Tchaikovsky-01\carousel.jpg&quot; alt=&quot;carousel&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;del&gt;지금 타면 부서ㅈ…&lt;/del&gt;&lt;/p&gt;
+
+&lt;p&gt;사실 클래식 리뷰하면서 차이코프스키가 이 곡을 언제 작곡했고 무슨 영감으로 작곡 했는지는
+말하고 싶지 않다. 그런 건 구글에 검색하면 나보다 더 잘 아는 사람들이 알려주기 때문이지&lt;/p&gt;
+
+&lt;p&gt;그냥 나는 이곡을 들으면서 내가 실제로 느꼈던 것들 왜 이 곡이 좋은 지에 대해 좀 더 중점을 두고 싶다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Classic\Tchaikovsky-01\barenboim.jpg&quot; alt=&quot;barenboim&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;#### 이곡을 쓰면서 유투브에서 데니얼 바렌보임이 지휘하는 꽃의 왈츠를 듣고 있다
+&lt;del&gt;아니 (고)제클린 뒤 프레의 남편이 바렌보임이였다니 ㄷㄷ… 난 최근에 암… ㄹㅈㄷ&lt;/del&gt;~&lt;/p&gt;
+
+&lt;p&gt;첫 부분은 아침을 여는 느낌이랄까? 하프의 소리가 참 인상적인데 이런 느낌으로 아침에 눈을 뜨고 싶다 ㅋㅋㅋ 실상은….. 
+듣다보면 마음이 차분해지다가 저절로 고개를 흔들게 된다
+나중에 나오는 물흘러가듯 흘러가는 왈츠 분위기에 완전히 매료된다.
+사실 나는 보기와는 안 맞게 영화에서 막 남자가 신사복 입고 여자가 화려한 드레스를 입은 상태에서 왈츠에 맞추어서 춤추는 것을 동경하곤 했는데 이 곡을 들으니까 나도 이 선율에 맞춰서 춤춰보고 싶다.. 
+&lt;del&gt;여친이나 만드셈 ㅡㅡ&lt;/del&gt;&lt;/p&gt;
+
+&lt;p&gt;그나저나 어떻게 목관과 호른으로 이렇게 화려한 조화를 만들어내는지… 
+나도 음악을 짧게나마 해봤지만 이런 곡 작곡하는 작곡가들은 진짜 사람이 맞나 싶다.&lt;/p&gt;
+
+&lt;h4 id=&quot;이-곡은-역대-발레곡-중에서도-최고로-꼽힌다던데&quot;&gt;이 곡은 역대 발레곡 중에서도 최고로 꼽힌다던데&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;듣고 보면 왜 그런 지 이해 됨&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;내 국어가 딸려서 그런지 이 곡의 아름다움을 만족스럽게 한글로 표현 못해서 부족함을 느낀다..&lt;/p&gt;
+
+&lt;p&gt;모든 클래식 곡들이 거의 다 그렇지만 잠깐 바쁜 와중에 힐링이 필요하신 분들은 꼭 추천한다.
+&lt;del&gt;넌 5번 째 반복해서 듣고 있는데 언제까지 힐링 다 할래?&lt;/del&gt;&lt;/p&gt;
+
+&lt;p&gt;밑에 링크를 걸어두었다. 
+&lt;strong&gt;&lt;em&gt;번거로워도 어쩔 수 없어… 아직 유투브 영상 가져오는 문법 안 익혔어&lt;/em&gt;&lt;/strong&gt;
+&lt;strong&gt;&lt;em&gt;다음 리뷰 때는 익혀서 올게 ㅎㅎㅎ&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;#####유튜브 동영상 링크&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=XwgOWDUlDgY&quot;&gt;Daniel Barenboim-Tchaikovsky ‘Waltz of the Flowers’&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+				<pubDate>Sun, 17 Jan 2021 12:35:00 +0900</pubDate>
+				<link>/classic/2021/01/17/classic-tchaikovsky-01.html</link>
+				<guid isPermaLink="true">/classic/2021/01/17/classic-tchaikovsky-01.html</guid>
+			</item>
+		
+			<item>
+				<title>책 리뷰: 혼자 공부하는 자바 스크립트-01</title>
+				<description>&lt;h1 id=&quot;혼자-공부하는-자바-스크립트&quot;&gt;혼자 공부하는 자바 스크립트&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-1\logo.jpg&quot; alt=&quot;book&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;이-책은-내가-자바-스크립트에-대해서-공부를-하기-위해서-샀다&quot;&gt;이 책은 내가 자바 스크립트에 대해서 공부를 하기 위해서 샀다.&lt;/h4&gt;
+
+&lt;p&gt;사실 학교 다니면서 자바 스크립트 자바 스크립트 말만 많이 들어봤지 자세히 뭔지 알지 못했다. 
+하지만 저번 학기에 웹 프로그래밍 서비스라는 과목을 들으면서 조금씩 알게 됐는데&lt;/p&gt;
+
+&lt;p&gt;&lt;del&gt;무언가 동적으로 변하게 해주고 애니메이션 같은 거 추가하는 건가?? ㅋㅋㅋㅋ&lt;/del&gt;&lt;/p&gt;
+
+&lt;p&gt;일단 중요한 건 깊게 들어갈수록 어렵고 복잡하다는 것…
+사실 이게 내 첫 번재 자바 스크립트 책은 아니다. 이 책 전에&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;위키북스에서 출판한 &amp;lt;생활코딩! HTML+CSS+자바스크립트&amp;gt;&lt;/strong&gt; 라는 책도 샀었다&lt;/p&gt;
+
+&lt;p&gt;근데 이 책은 내가 보기엔 너무 &lt;del&gt;쉬워서…&lt;/del&gt; 간단한 내용 밖에 없어서 얕게는 알고 갈 수 있어도 
+깊게 파고 들어갈 수는 없는 책이였다. 하지만 자바 스크립트에 대해 처음이고 프로그래밍에 
+어떠한 지식이 없다고 가정했을 때 이 책은 강추다. 정말 아예 쌩 초보들을 위한 책이라고 할까?&lt;/p&gt;
+
+&lt;p&gt;&lt;del&gt;나같이 반복문, 함수, 변수 많이 써봤던 사람들은 그래도 쉬움 ㅎ&lt;/del&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;항상-느끼는-거지만-책을-처음-시작했을-땐-막막함이-밀려들어-온다-이거-언제-다보지&quot;&gt;항상 느끼는 거지만 책을 처음 시작했을 땐 막막함이 밀려들어 온다… 이거 언제 다보지??&lt;/h5&gt;
+
+&lt;p&gt;그래도 자바스크립트를 잘 해야지 내 미래가 편해지기 때문에 꾸준한 노력으로 한 번 시도를 해보고자 한다.&lt;/p&gt;
+
+&lt;h6 id=&quot;다행히-이-책은-아주-쉬운-책은-아니였다&quot;&gt;다행히 이 책은 아주 쉬운 책은 아니였다.&lt;/h6&gt;
+&lt;p&gt;나름 쉬운 것부터 시작해서 어려운 것으로 나아가는 그런 책인 것 같다 
+&lt;strong&gt;중요한 것은 내가 읽어보면서 느끼는 것이 중요하지만&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;다음 포스트부터는 이 책에 관해 읽어보고 공부한 다음 차근차근 리뷰를 해볼 생각이다.
+&lt;del&gt;항상 처음은 진도가 빨라서 좋은데 나중에 가면…..ㅠ&lt;/del&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;u&gt;공부 한 번 시작해 봅시다~&lt;/u&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h5 id=&quot;참고로-내-마크다운-능력이-형편없어서-잘-안-읽혀지더라도-이해해주시길&quot;&gt;참고로 내 마크다운 능력이 형편없어서 잘 안 읽혀지더라도 이해해주시길…&lt;/h5&gt;
+
+&lt;p&gt;&lt;del&gt;은 개뿔!! 내 마음대로 살거야!&lt;/del&gt;
+&lt;strong&gt;&lt;em&gt;빨리 능숙해질게요 ㅠㅠ&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+</description>
+				<pubDate>Sun, 17 Jan 2021 10:01:00 +0900</pubDate>
+				<link>/program/2021/01/17/program-post01.html</link>
+				<guid isPermaLink="true">/program/2021/01/17/program-post01.html</guid>
+			</item>
+		
+			<item>
+				<title>빠른 생일 선물</title>
+				<description>&lt;p&gt;&lt;del&gt;뜻밖의 여정&lt;/del&gt;&lt;/p&gt;
+&lt;h1 id=&quot;뜻밖의-선물&quot;&gt;뜻밖의 선물&lt;/h1&gt;
+
+&lt;p&gt;생일이 되려면 사실 딱 2개월 남은 상황에서 나랑 가장 친한 선생님으로부터 선물을 받게 되었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;전 별로 해드린 것도 없는데 이렇게 비싼 것을 주시다니 ㅠㅠ&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;다시-한-번-감사드립니다-&quot;&gt;다시 한 번 감사드립니다 ~&lt;/h3&gt;
+
+&lt;h4 id=&quot;코로나가-심함에도-불구하고-새해-인사는-한-번-드려야-할-거-같아서-학교-근처에서-만나-밥을-먹게-되었다&quot;&gt;코로나가 심함에도 불구하고 새해 인사는 한 번 드려야 할 거 같아서 학교 근처에서 만나 밥을 먹게 되었다.&lt;/h4&gt;
+&lt;p&gt;선생님께서 좋아하시는 회를 먹으로 출발~!
+(방어 회는 처음이시라 내가 겨울철엔 방어가 제맛이라면서 억지로 내가 원하는 식당으로 끌고감 ㅋㅋ)&lt;/p&gt;
+
+&lt;p&gt;&lt;del&gt;엄청 먹었는데도 배고프다…&lt;/del&gt;&lt;/p&gt;
+
+&lt;p&gt;회 사진을 못 찍은 게 사실 한이다. 
+한참 맛있게 먹다가 선생님께서 선물을 건내주셨는데 나는 사실 먹을 건지 알고 
+(야식 거리 하나 생겼네 ㅎㅎ) 하면서 좋아했는데 알고 보니 
+어제 언팩 행사를 한&lt;/p&gt;
+
+&lt;h5 id=&quot;갤럭시-버즈-프로-ㄷㄷㄷㄷㄷ&quot;&gt;갤럭시 버즈 프로 ㄷㄷㄷㄷㄷ….&lt;/h5&gt;
+
+&lt;p&gt;먹다가 갑자기 당황해서 속 뒤집혀지는 줄 알았다…..
+아니 이 비싼 걸.. 왜??.. 저에게 ㅠㅠㅠ&lt;/p&gt;
+
+&lt;p&gt;&lt;del&gt;주변에 아무도 없었으면 아마 절을 했을 수도&lt;/del&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;영균이가-얼리어댑터라는-소문을-들었다는데-ㅋㅋㅋㅋ-내가&quot;&gt;영균이가 얼리어댑터라는 소문을 들었다는데 ㅋㅋㅋㅋ 내가???&lt;/h5&gt;
+&lt;p&gt;이거 받고 빨리 열어 볼 생각에 설레서 밥이 제대로 안 들어갔다
+&lt;del&gt;그래서 내가 지금 배고픈가??…&lt;/del&gt;&lt;/p&gt;
+
+&lt;p&gt;선생님께서는 지금 당장 뜯지말고 기숙사 들어가서 뜯으라고 하셔서 더 마음이 급해졌다 ㅋㅋ&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;그렇게 맛있게 먹은 뒤에 90도 인사 드리고 기숙사로 뛰어 들어왔다&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\..\images\DailyLife\EarlyPresent\pack.jpg&quot; alt=&quot;packed&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;포장지를-뜯는-순간-이-설렘은-다들-똑같지-않을-까-싶다&quot;&gt;포장지를 뜯는 순간 이 설렘은 다들 똑같지 않을 까 싶다&lt;/h2&gt;
+
+&lt;p&gt;(상자만 바라봐도 행복한 순간이였음…)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\..\images\DailyLife\EarlyPresent\unpack.jpg&quot; alt=&quot;unpacked&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;박스를-여니까-영롱한-빛으로-날-맞이-해주었다&quot;&gt;박스를 여니까 영롱한 빛으로 날 맞이 해주었다…..&lt;/h2&gt;
+
+&lt;p&gt;진짜 어떻게 이렇게 이쁘게 만들었지?? 갤럭시 버즈 플러스하고 강낭콩 &lt;del&gt;이름 기억 안 남&lt;/del&gt;
+안 사길 너무 잘했다  ㅋㅋㅋㅋㅋ&lt;/p&gt;
+
+&lt;p&gt;이번 건 너무 이쁘고 잘 나와서 감사한 마음에 선생님한테 감사하다는 카톡 문자를 다시 보냈다&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\..\images/DailyLife/EarlyPresent/open.jpg&quot; alt=&quot;open&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;아니 반사되는 거 봐… 진짜 미쳤다….&lt;/p&gt;
+
+&lt;p&gt;몇 주일 써본 다음에 후기를 올릴 시간이 있으면 올려 볼 생각이다~&lt;/p&gt;
+
+&lt;p&gt;당장 끼고 멜론 듣는 중 ~~ ㅋㅋㅋ&lt;/p&gt;
+
+</description>
+				<pubDate>Sat, 16 Jan 2021 00:00:00 +0900</pubDate>
+				<link>/daily-life/2021/01/16/Early-Present.html</link>
+				<guid isPermaLink="true">/daily-life/2021/01/16/Early-Present.html</guid>
+			</item>
+		
+			<item>
+				<title>Hello World!</title>
+				<description>&lt;p&gt;&lt;strong&gt;dbyll&lt;/strong&gt; is minimalist, stylish theme for jekyll. Supports gravatar, account links (github, twitter, e-mail, pinterest, résume file) and a bio.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;dbyll&lt;/strong&gt; is brought to you by &lt;strong&gt;&lt;a href=&quot;http://ismaildemirbilek.com&quot;&gt;dbtek&lt;/a&gt;&lt;/strong&gt;. Open sourced under &lt;a href=&quot;http://opensource.org/licenses/MIT&quot;&gt;MIT&lt;/a&gt; license.&lt;/p&gt;
+
+&lt;h3 id=&quot;dbyll-is-on-github&quot;&gt;dbyll is on GitHub&lt;/h3&gt;
+
+&lt;p&gt;&lt;a class=&quot;btn btn-default&quot; href=&quot;https://github.com/dbtek/dbyll&quot;&gt;Grab your copy now!&lt;/a&gt;&lt;/p&gt;
+</description>
+				<pubDate>Fri, 15 Nov 2013 00:00:00 +0900</pubDate>
+				<link>/general/setup/demo/2013/11/15/hello-world.html</link>
+				<guid isPermaLink="true">/general/setup/demo/2013/11/15/hello-world.html</guid>
+			</item>
+		
+	</channel>
+</rss>
