@@ -40,13 +40,13 @@ categories: daily-life
 
 _그렇게 맛있게 먹은 뒤에 90도 인사 드리고 기숙사로 뛰어 들어왔다_
 
-![packed](..\..\..\..\images\DailyLife\EarlyPresent\pack.jpg)
+![packed](..\images\DailyLife\EarlyPresent\pack.jpg)
 
 ## 포장지를 뜯는 순간 이 설렘은 다들 똑같지 않을 까 싶다
 
 (상자만 바라봐도 행복한 순간이였음...)
 
-![unpacked](..\..\..\..\images\DailyLife\EarlyPresent\unpack.jpg)
+![unpacked](..\images\DailyLife\EarlyPresent\unpack.jpg)
 
 ## 박스를 여니까 영롱한 빛으로 날 맞이 해주었다.....
 
@@ -55,7 +55,7 @@ _그렇게 맛있게 먹은 뒤에 90도 인사 드리고 기숙사로 뛰어 �
 
 이번 건 너무 이쁘고 잘 나와서 감사한 마음에 선생님한테 감사하다는 카톡 문자를 다시 보냈다
 
-![open](../../../../images/DailyLife/EarlyPresent/open.jpg)
+![open](../images/DailyLife/EarlyPresent/open.jpg)
 
 아니 반사되는 거 봐... 진짜 미쳤다....
 

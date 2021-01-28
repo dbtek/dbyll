@@ -1,0 +1,14 @@
+I"r<p>In your config file change these settings</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">title</span><span class="pi">:</span> <span class="s">dbyll</span>
+<span class="na">author</span><span class="pi">:</span>  
+  <span class="na">name</span><span class="pi">:</span> <span class="s">yourname</span>  
+  <span class="na">email</span><span class="pi">:</span> <span class="s">youremail</span>  
+  <span class="na">github</span><span class="pi">:</span> <span class="s">asd123</span>  
+  <span class="na">twitter</span><span class="pi">:</span> <span class="s">asd123</span>  
+  <span class="na">pinterest</span><span class="pi">:</span> <span class="s">asd123</span>  
+  <span class="na">linkedin</span><span class="pi">:</span> <span class="s">asd123</span>  
+  <span class="na">resume</span><span class="pi">:</span> <span class="s">asd123</span>  
+  <span class="na">bio</span><span class="pi">:</span> <span class="s">Your stylish,  minimalist theme!</span>  
+  <span class="na">email_md5</span><span class="pi">:</span> <span class="s">md5ofemail</span>  </code></pre></figure>
+:ET
