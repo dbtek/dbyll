@@ -1,0 +1,223 @@
+I"�E<p><br /><br />
+<br /><br /></p>
+<h1 id="intellij-프로젝트-생성"><center>Intellij 프로젝트 생성</center></h1>
+<p><br /><br /><br /></p>
+
+<p>이제 인텔리제이 프로젝트를 만들어 보자.</p>
+
+<p>new Project를 눌러서 프로젝트를 만든다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProject.PNG" alt="new project" />
+<br /><br /><br /></p>
+
+<ul>
+  <li>Group -&gt; com.young.s3</li>
+  <li>Artifact -&gt; s3test.</li>
+  <li>Type -&gt; Gradle</li>
+  <li>Language -&gt; Java</li>
+  <li>Packaging -&gt; War</li>
+</ul>
+
+<p>이렇게 설정하고 Next를 누른다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProjectName.PNG" alt="new project name" />
+<br /><br /><br /></p>
+
+<h4 id="dependencies">Dependencies</h4>
+<ul>
+  <li>SpringBoot DevTools</li>
+  <li>Lombok</li>
+  <li>Spring Web</li>
+  <li>Thymeleaf</li>
+  <li>Spring Data JPA</li>
+</ul>
+
+<p>이렇게 설정하고 Next를 누른다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProjectGradle.PNG" alt="new project dependency" />
+<br /><br /><br /></p>
+
+<p>마지막으로 Finish를 누른다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProjectFinish.PNG" alt="new project dependency" />
+<br /><br /><br /></p>
+
+<hr />
+
+<h3 id="buildgradle-설정하기">build.gradle 설정하기</h3>
+
+<p>주석으로 써진 부분을 보면 mysql를 쓰기 위해 넣어준 코드와 AWS S3를 쓰기 위해서 코드를 써놓는다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">plugins</span> <span class="o">{</span>
+    <span class="n">id</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="err">'</span> <span class="n">version</span> <span class="err">'</span><span class="mf">2.4</span><span class="o">.</span><span class="mi">2</span><span class="err">'</span>
+    <span class="n">id</span> <span class="err">'</span><span class="n">io</span><span class="o">.</span><span class="na">spring</span><span class="o">.</span><span class="na">dependency</span><span class="o">-</span><span class="n">management</span><span class="err">'</span> <span class="n">version</span> <span class="err">'</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">11</span><span class="o">.</span><span class="na">RELEASE</span><span class="err">'</span>
+    <span class="n">id</span> <span class="err">'</span><span class="n">java</span><span class="err">'</span>
+<span class="o">}</span>
+
+<span class="n">group</span> <span class="o">=</span> <span class="err">'</span><span class="n">com</span><span class="o">.</span><span class="na">young</span><span class="o">.</span><span class="na">s3</span><span class="err">'</span>
+<span class="n">version</span> <span class="o">=</span> <span class="err">'</span><span class="mf">0.0</span><span class="o">.</span><span class="mi">1</span><span class="o">-</span><span class="no">SNAPSHOT</span><span class="err">'</span>
+<span class="n">sourceCompatibility</span> <span class="o">=</span> <span class="err">'</span><span class="mi">15</span><span class="err">'</span>
+
+<span class="n">configurations</span> <span class="o">{</span>
+    <span class="n">compileOnly</span> <span class="o">{</span>
+        <span class="n">extendsFrom</span> <span class="n">annotationProcessor</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">repositories</span> <span class="o">{</span>
+    <span class="n">mavenCentral</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">implementation</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">:</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">data</span><span class="o">-</span><span class="n">jpa</span><span class="err">'</span>
+    <span class="n">implementation</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">:</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">thymeleaf</span><span class="err">'</span>
+    <span class="n">implementation</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">:</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">web</span><span class="err">'</span>
+    <span class="n">runtimeOnly</span> <span class="err">'</span><span class="nl">mysql:</span><span class="n">mysql</span><span class="o">-</span><span class="n">connector</span><span class="o">-</span><span class="n">java</span><span class="err">'</span>
+    <span class="n">compileOnly</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">projectlombok</span><span class="o">:</span><span class="n">lombok</span><span class="err">'</span>
+    <span class="n">annotationProcessor</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">projectlombok</span><span class="o">:</span><span class="n">lombok</span><span class="err">'</span>
+    <span class="c1">//mysql</span>
+    <span class="n">compile</span> <span class="nl">group:</span> <span class="err">'</span><span class="n">mysql</span><span class="err">'</span><span class="o">,</span> <span class="nl">name:</span> <span class="err">'</span><span class="n">mysql</span><span class="o">-</span><span class="n">connector</span><span class="o">-</span><span class="n">java</span><span class="err">'</span><span class="o">,</span> <span class="nl">version:</span> <span class="err">'</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">22</span><span class="err">'</span>
+    <span class="n">testImplementation</span> <span class="o">(</span><span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">:</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">test</span><span class="err">'</span><span class="o">){</span>
+        <span class="n">exclude</span> <span class="nl">group:</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">vintage</span><span class="err">'</span><span class="o">,</span> <span class="nl">module:</span> <span class="err">'</span><span class="n">junit</span><span class="o">-</span><span class="n">vintage</span><span class="o">-</span><span class="n">engine</span><span class="err">'</span>
+    <span class="o">}</span>
+    <span class="c1">// AWS S3</span>
+    <span class="n">implementation</span> <span class="nl">group:</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">cloud</span><span class="err">'</span><span class="o">,</span> <span class="nl">name:</span> <span class="err">'</span><span class="n">spring</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">aws</span><span class="err">'</span><span class="o">,</span> <span class="nl">version:</span> <span class="err">'</span><span class="mf">2.2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="na">RELEASE</span><span class="err">'</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<h3 id="applicationproperties-설정">application.properties 설정</h3>
+
+<ul>
+  <li>엔드포인트: 본인의 엔드포인트</li>
+  <li>계정명: rds 인스턴스 만들었을 때 입력했던 마스터 사용자 이름</li>
+  <li>비번: rds 인스턴스 만들었을 때 입력했던 마스터 암호</li>
+  <li>디비명: 아래 그림 참고</li>
+</ul>
+
+<p>아래 3줄은 어플리케이션을 실행했을 때 실제 인텔리제이에서 실행하는 query를 표시해 준다.</p>
+
+<p>디비명은 이 그림과 같이 mysql workbench에서 SCHEMAS에서 만든 데이터베이스 명으로 한다.
+![dbName]](........\images\Program\post-5\dbName.PNG)
+<br /><br /><br /></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">driver</span><span class="o">-</span><span class="kd">class</span><span class="err">-</span><span class="nc">name</span><span class="o">=</span><span class="n">com</span><span class="o">.</span><span class="na">mysql</span><span class="o">.</span><span class="na">cj</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">Driver</span>
+<span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">url</span><span class="o">=</span><span class="nl">jdbc:mysql:</span><span class="c1">//엔드포인트:3306/디비명?serverTimezone=UTC&amp;characterEncoding=UTF-8</span>
+<span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">username</span><span class="o">=</span><span class="n">계정명</span>
+<span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">password</span><span class="o">=</span><span class="n">비번</span>
+
+<span class="n">spring</span><span class="o">.</span><span class="na">jpa</span><span class="o">.</span><span class="na">hibernate</span><span class="o">.</span><span class="na">ddl</span><span class="o">-</span><span class="n">auto</span><span class="o">=</span><span class="n">update</span>
+<span class="n">spring</span><span class="o">.</span><span class="na">jpa</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">hibernate</span><span class="o">.</span><span class="na">format_sql</span><span class="o">=</span><span class="kc">true</span>
+<span class="n">spring</span><span class="o">.</span><span class="na">jpa</span><span class="o">.</span><span class="na">show</span><span class="o">-</span><span class="n">sql</span><span class="o">=</span><span class="kc">true</span>
+</code></pre></div></div>
+<p>이전에 만든 rds에서 엔드포인트를 복사해서 붙여넣는다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\endpoint.PNG" alt="endPoint" />
+<br /><br /><br /></p>
+
+<h3 id="intellij-database-설정">Intellij Database 설정</h3>
+<p>ctrl+shift+a를 누르게 되면 search를 할 수가 있는데
+여기서 database를 입력하고 누른다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\search.png" alt="search" />
+<br /><br /><br /></p>
+
+<p>그 다음에 플러스 버튼을 datasource를 선택하고 mysql누르고 생성을 한다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\datasource.PNG" alt="datasource" />
+<br /><br /><br /></p>
+
+<p>하나의 창이 뜨게 된다.</p>
+
+<ul>
+  <li>Name: 이름</li>
+  <li>Host: 엔드포인트</li>
+  <li>User: 마스터 사용자 이름</li>
+  <li>Password: 마스터 사용자 암호</li>
+</ul>
+
+<p>이렇게 쓰고 Test Connection를 누르게 되면 저렇게 초록색 체크 표시가 나온다.
+이제 OK를 누르고 생성을 하면 된다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\create.PNG" alt="create" />
+<br /><br /><br /></p>
+
+<hr />
+
+<h3 id="프로젝트-구성">프로젝트 구성</h3>
+
+<p>프로젝트 구성은 이런 식으로 구성한다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\project.PNG" alt="project_structure" />
+<br /><br /><br /></p>
+
+<p>먼저 데이터베이스가 제대로 작동하는지 확인하기 위해 domain/entity 아래 GalleryEntity 코드를 먼저 작성한다.</p>
+
+<p><strong>여기서 @Table(name=”gallery”) 부분에서 빨간줄이 나와도 괜찮다.</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.young.s3.s3test.domain.entity</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.*</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.persistence.*</span><span class="o">;</span>
+
+<span class="nd">@AllArgsConstructor</span>
+<span class="nd">@NoArgsConstructor</span><span class="o">(</span><span class="n">access</span> <span class="o">=</span> <span class="nc">AccessLevel</span><span class="o">.</span><span class="na">PROTECTED</span><span class="o">)</span>
+<span class="nd">@Getter</span>
+<span class="nd">@ToString</span>
+<span class="nd">@Builder</span>
+<span class="nd">@Table</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"gallery"</span><span class="o">)</span>
+<span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GalleryEntity</span> <span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span><span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">length</span> <span class="o">=</span> <span class="mi">50</span><span class="o">,</span> <span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">length</span> <span class="o">=</span> <span class="mi">50</span><span class="o">,</span> <span class="n">unique</span> <span class="o">=</span> <span class="kc">true</span><span class="o">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">phoneNum</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">columnDefinition</span> <span class="o">=</span> <span class="s">"TEXT"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">filePath</span><span class="o">;</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<p>그리고 JPA 사용을 위해서 GalleryRepository 인터페이스 코드를 작성한다</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.young.s3.s3test.domain.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.young.s3.s3test.domain.entity.GalleryEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.JpaRepository</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">GalleryRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">GalleryEntity</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><strong>어플리케이션을 시작해보자</strong></p>
+
+<p>이렇게 gallery 테이블이 만들어진 것을 볼 수 있다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\schema.PNG" alt="schema" />
+<br /><br /><br /></p>
+
+<p>그리고 다시 오른쪽에 Database 창에 가서 rds-test 옆에 1of5라고 되어 있는 것을 클릭해 본다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\1of5.PNG" alt="1of5" />
+<br /><br /><br /></p>
+
+<p>그러다 보면 스키마 리스트가 나오는데 여기서 자신이 만든 데이터베이스 이름, 여기선 rds_test를 체크한다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\check.PNG" alt="check" />
+<br /><br /><br /></p>
+
+<p>체크하고 나면 방금 어플리케이션을 실행해서 만든 필드들이 나타나는 것을 볼 수 있다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\checkok.PNG" alt="checkok" />
+<br /><br /><br />
+다음 게시물에서는 인텔리제이에서 프로젝트를 만들고 실질적으로 이전 게시물에서 생성한 RDS와 S3를 연동해보도록 하겠다.</p>
+
+<hr />
+
+<h4 id="다음-게시물에서는-이제-s3를-연동하고-마무리를-해보자">다음 게시물에서는 이제 S3를 연동하고 마무리를 해보자</h4>
+:ET

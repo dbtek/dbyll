@@ -3,7 +3,7 @@ layout: post
 title: 빠른 생일 선물
 tags: [갤럭시 버즈 프로, 생일선물, 선생님]
 categories: [daily-life]
-fullview: true
+
 ---
 ~~뜻밖의 여정~~
 # 뜻밖의 선물

@@ -1,0 +1,51 @@
+I"�<p><br /><br />
+<br /><br /></p>
+<h1 id="intellij-프로젝트-생성"><center>Intellij 프로젝트 생성</center></h1>
+<p><br /><br /></p>
+
+<p>이제 인텔리제이 프로젝트를 만들어 보자.</p>
+
+<p>new Project를 눌러서 프로젝트를 만든다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProject.PNG" alt="new project" />
+<br /></p>
+
+<ul>
+  <li>Group -&gt; com.young.s3</li>
+  <li>Artifact -&gt; s3test.</li>
+  <li>Type -&gt; Gradle</li>
+  <li>Language -&gt; Java</li>
+  <li>Packaging -&gt; War</li>
+</ul>
+
+<p>이렇게 설정하고 Next를 누른다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProjectName.PNG" alt="new project name" />
+<br /></p>
+
+<h4 id="dependencies">Dependencies</h4>
+<ul>
+  <li>SpringBoot DevTools</li>
+  <li>Lombok</li>
+  <li>Spring Web</li>
+  <li>Thymeleaf</li>
+  <li>Spring Data JPA</li>
+</ul>
+
+<p>이렇게 설정하고 Next를 누른다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProjectGradle.PNG" alt="new project dependency" />
+<br /></p>
+
+<p>마지막으로 Finish를 누른다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProjectFinish.PNG" alt="new project dependency" />
+<br /></p>
+
+<h3 id="buildgradle-설정하기">build.gradle 설정하기</h3>
+<p>’’’ python</p>
+
+<h2>’’’</h2>
+
+<p>다음 게시물에서는 인텔리제이에서 프로젝트를 만들고 실질적으로 이전 게시물에서 생성한 RDS와 S3를 연동해보도록 하겠다.</p>
+:ET
