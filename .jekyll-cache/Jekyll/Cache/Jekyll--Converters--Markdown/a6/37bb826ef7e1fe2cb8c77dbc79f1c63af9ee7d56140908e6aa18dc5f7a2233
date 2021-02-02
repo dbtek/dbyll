@@ -1,0 +1,52 @@
+I"<p><br /><br /></p>
+<h1 id="페이지-처리되는-영화별-평균-점수리뷰-개수-구하기"><center>페이지 처리되는 영화별 평균 점수/리뷰 개수 구하기</center></h1>
+<p><br /><br /></p>
+
+<p><strong>MovieRepository 인터페이스</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MovieRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">Movie</span><span class="o">,</span><span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span>
+   <span class="nd">@Query</span><span class="o">(</span><span class="s">"select m, max(mi), avg(coalesce(r.grade,0)), count(distinct r) from Movie m "</span><span class="o">+</span><span class="s">"left outer join MovieImage mi on mi.movie=m "</span><span class="o">+</span>
+            <span class="s">"left outer join Review r on r.movie=m group by m"</span><span class="o">)</span>
+    <span class="nc">Page</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">[]&gt;</span> <span class="nf">getListPage</span><span class="o">(</span><span class="nc">Pageable</span> <span class="n">pageable</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<ul>
+  <li>coalece(a1, a2, a3…): a1부터 aN까지 처음으로 null이 아닌 값을 리턴한다</li>
+  <li>처음 select m은 Movie 엔티티의 모든 엔티티를 선택하게 됨, mi도 마찬가지</li>
+  <li>JPQL에서 group by를 적용하면 리뷰의 개수와 리뷰의 평균 평점을 구할 수 있음</li>
+</ul>
+
+<p><br /><br />
+MovieRepositoryTests 클래스에 테스트할 수 있는 메서드를 작성한다.</p>
+
+<p><strong>MovieRepositoryTests 클래스</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testListPage</span><span class="o">(){</span>
+        <span class="nc">PageRequest</span> <span class="n">pageRequest</span><span class="o">=</span> <span class="nc">PageRequest</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">10</span><span class="o">,</span><span class="nc">Sort</span><span class="o">.</span><span class="na">by</span><span class="o">(</span><span class="nc">Sort</span><span class="o">.</span><span class="na">Direction</span><span class="o">.</span><span class="na">DESC</span><span class="o">,</span><span class="s">"mno"</span><span class="o">));</span>
+        <span class="nc">Page</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">[]&gt;</span> <span class="n">result</span><span class="o">=</span><span class="n">movieRepository</span><span class="o">.</span><span class="na">getListPage</span><span class="o">(</span><span class="n">pageRequest</span><span class="o">);</span>
+
+        <span class="k">for</span><span class="o">(</span><span class="nc">Object</span><span class="o">[]</span> <span class="n">objects</span> <span class="o">:</span> <span class="n">result</span><span class="o">.</span><span class="na">getContent</span><span class="o">()){</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">objects</span><span class="o">));</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><u>이 코드를 실행하게 되면 예상과 달리 각 영화마다 이미지를 찾는 쿼리가 실행되면서 비효율적으로 여러 번 실행되는 것을 볼 수 있다.</u></p>
+
+<p><strong>즉 N+1 문제 발생</strong></p>
+<ul>
+  <li>max()를 사용하지 않으면 join으로 결합될 당시의 데이터 1개만 가져오게 되고 max()를 사용하면 join으로 결합될 당시의 데이터 말고 번호가 가장 큰 이미지 파일(여기서 inum)에 대한 정보를 가져와야하므로 MovieImage에 대한 select문을 1회씩 총 10회 실행됨</li>
+</ul>
+
+<p>JPQL은 별도의 처리 없이 위의 구조를 작성할 수 있다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nd">@Query</span><span class="o">(</span><span class="s">"select m, mi, avg(coalesce(r.grade,0)), count(distinct r) from Movie m "</span><span class="o">+</span><span class="s">"left outer join MovieImage mi on mi.movie=m "</span><span class="o">+</span>
+            <span class="s">"left outer join Review r on r.movie=m group by m"</span><span class="o">)</span>
+    <span class="nc">Page</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">[]&gt;</span> <span class="nf">getListPage</span><span class="o">(</span><span class="nc">Pageable</span> <span class="n">pageable</span><span class="o">);</span>
+</code></pre></div></div>
+<ul>
+  <li>max() 부분 제거</li>
+</ul>
+
+:ET

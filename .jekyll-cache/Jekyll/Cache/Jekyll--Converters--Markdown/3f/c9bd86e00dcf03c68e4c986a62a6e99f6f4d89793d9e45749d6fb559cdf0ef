@@ -1,0 +1,63 @@
+I"�<p><br /><br /></p>
+<h1 id="part-4-mn다대다-관계와-파일-업로드-처리"><center>Part 4-M:N(다대다) 관계와 파일 업로드 처리</center></h1>
+<p><br /><br />
+<strong><em>현 게시물은 ‘코드로 배우는 스프링부트 웹 프로젝트’ 라는 서적을 공부하면서 개인적으로 메모하고 공부하기 위해서 작성하는 글입니다.</em></strong></p>
+
+<hr />
+<h1 id="mn다대다-관계의-설계와-구현">M:N(다대다) 관계의 설계와 구현</h1>
+
+<ul>
+  <li>영화(Movie)와 회원(Member)이 존재하고 회원이 영화에 대한 평점과 감상을 기록하는 시나리오를 기반으로 프로젝트 구성</li>
+</ul>
+
+<blockquote>
+  <p>명제</p>
+  <blockquote>
+    <ol>
+      <li>한 편의 영화는 여러 회원의 평가가 행해질 수 있다.</li>
+      <li>한 명의 회원은 여러 영화에 대해서 평점을 줄 수 있다.
+        <blockquote>
+          <p>영화와 회원은 양쪽 모두 독립적인 엔티티로 설계 가능
+회원의 입장에서 보면 여러 편의 영화를 평가함
+영화와 회원은 다대다 관계가 형성됨</p>
+        </blockquote>
+      </li>
+    </ol>
+  </blockquote>
+</blockquote>
+
+<ul>
+  <li>M:N (다대다)을 해결하기 위해서는 실제 테이블 설계에서는 매핑(mapping) 테이블을 사용함</li>
+  <li>매핑 테이블은 흔희 ‘연결 테이블’ 이라고 부름
+    <ul>
+      <li>말 그대로 두 테이블의 중간에서 필요한 정보를 양쪽에서 끌어다 쓰는 구조</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\ERM.PNG" alt="erm" />
+<br /><br /><br /></p>
+
+<ul>
+  <li>매핑 테이블의 작성 이전에 다른 테이블들이 먼저 존재해야 함</li>
+  <li>매핑 테이블은 주로 ‘명사’가 아닌 ‘동사’나 ‘히스토리’에 대한 데이터를 보관하는 용도로 씀</li>
+  <li>매핑 테이블은 중간에서 양쪽의 PK를 참조하는 형태로 사용</li>
+</ul>
+
+<p><br /></p>
+<h3 id="양방향-참조의-위험성">양방향 참조의 위험성</h3>
+<ul>
+  <li>JPA의 실행에서 가장 중요한 것이 현재 메모리상의 엔티티 객체들의 상태와 데이터베이스의 상태를 동기화시키는 것이라는 점을 생각해 보면 하나의 객체를 수정하는 경우에 다른 객체의 상태를 매번 일치하도록 변경하는 작업이 간단치 않음</li>
+</ul>
+
+<p><strong>‘당방향 참조’를 위주로 프로젝트를 진행하는 이유는 연관된 객체들이 많은 경우에 상태를 정확히 유지하는 것이 어렵기 때문이다.</strong></p>
+
+<h3 id="프로젝트-생성">프로젝트 생성</h3>
+
+<p><img src="..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\create.PNG" alt="create" />
+<br /><br /><br /></p>
+
+<p><img src="..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\dependencies.PNG" alt="dependencies" />
+<br /><br /><br /></p>
+
+:ET
