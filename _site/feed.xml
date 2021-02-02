@@ -10,17 +10,48 @@
 				<title>코드로 배우는 스프링 부트 웹 프로젝트-Part4</title>
 				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;h1 id=&quot;part-4-mn다대다-관계와-파일-업로드-처리&quot;&gt;&lt;center&gt;Part 4-M:N(다대다) 관계와 파일 업로드 처리&lt;/center&gt;&lt;/h1&gt;
-
-&lt;p&gt;***현 게시물은 &lt;코드로 배우는=&quot;&quot; 스프링=&quot;&quot; 부트=&quot;&quot; 웹=&quot;&quot; 프로젝트=&quot;&quot;&gt;라는 서적을 공부하면서 개인적으로 메모하고 공부하기 위해서 작성하는 글입니다.***&lt;/코드로&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;em&gt;현 게시물은 ‘코드로 배우는 스프링부트 웹 프로젝트’ 라는 서적을 공부하면서 개인적으로 메모하고 공부하기 위해서 작성하는 글입니다.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
+&lt;h1 id=&quot;mn다대다-관계의-설계와-구현&quot;&gt;M:N(다대다) 관계의 설계와 구현&lt;/h1&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;영화(Movie)와 회원(Member)이 존재하고 회원이 영화에 대한 평점과 감상을 기록하는 시나리오를 기반으로 프로젝트 구성&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;명제&lt;/p&gt;
+  &lt;blockquote&gt;
+    &lt;ol&gt;
+      &lt;li&gt;한 편의 영화는 여러 회원의 평가가 행해질 수 있다.&lt;/li&gt;
+      &lt;li&gt;한 명의 회원은 여러 영화에 대해서 평점을 줄 수 있다.
+        &lt;blockquote&gt;
+          &lt;p&gt;영화와 회원은 양쪽 모두 독립적인 엔티티로 설계 가능
+회원의 입장에서 보면 여러 편의 영화를 평가함
+영화와 회원은 다대다 관계가 형성됨&lt;/p&gt;
+        &lt;/blockquote&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;M:N (다대다)을 해결하기 위해서는 실제 테이블 설계에서는 매핑(mapping) 테이블을 사용함&lt;/li&gt;
+  &lt;li&gt;매핑 테이블은 흔희 ‘연결 테이블’ 이라고 부름
+    &lt;ul&gt;
+      &lt;li&gt;말 그대로 두 테이블의 중간에서 필요한 정보를 양쪽에서 끌어다 쓰는 구조&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\ERM.PNG&quot; alt=&quot;erm&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 </description>
 				<pubDate>Tue, 02 Feb 2021 14:00:00 +0900</pubDate>
-				<link>/%EC%BD%94%EB%93%9C%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EC%8A%A4%ED%94%84%EB%A7%81%20%EB%B6%80%ED%8A%B8%20%EC%9B%B9%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/2021/02/02/learning-springboot-web-with-code-post01.html</link>
-				<guid isPermaLink="true">/%EC%BD%94%EB%93%9C%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EC%8A%A4%ED%94%84%EB%A7%81%20%EB%B6%80%ED%8A%B8%20%EC%9B%B9%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/2021/02/02/learning-springboot-web-with-code-post01.html</guid>
+				<link>/learning_springboot_with_web_project/2021/02/02/learning-springboot-web-with-code-post01.html</link>
+				<guid isPermaLink="true">/learning_springboot_with_web_project/2021/02/02/learning-springboot-web-with-code-post01.html</guid>
 			</item>
 		
 			<item>
