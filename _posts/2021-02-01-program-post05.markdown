@@ -8,7 +8,7 @@ categories: program
 ---
 <br><br>
 <br><br>
-# <center>Intellij 프로젝트 생성</center>
+# <center>Intellij 프로젝트 생성 및 RDS 연동</center>
 <br><br><br>
 
 이제 인텔리제이 프로젝트를 만들어 보자.

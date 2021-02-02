@@ -7,6 +7,8 @@ tags: [Plato, Idea]
 categories: philosophy
 ---
 # 참되고 선하고 아름다운 것
+
+
 ![packed](..\..\..\..\images\Philosophy\Plato-Idea03\kala.jpg)
 
 이데아는 가장 **참된 것에 대한 인식**이다. 
