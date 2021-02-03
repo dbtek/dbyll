@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-04</title>
+	
+	<meta name="author" content="YoungKyonYou">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/https://github.com/YoungKyonYou">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/young">
+				<i class="fa fa-twitter"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="mailto:youngkyon1324@naver.com">
+				<i class="fa fa-envelope"></i>
+			</a>
+			
+			<a class="navbar-brand" href="/">
+				<img src="//www.gravatar.com/avatar/youngkyon1324@naer.com?s=35" class="img-circle" />
+				MyWay
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="//www.gravatar.com/avatar/youngkyon1324@naer.com?s=150" class="img-circle" />
+	</a>
+	<h3 class="title">
+        <a href="/">MyWay</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	Integration of Knowledge
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/https://github.com/YoungKyonYou">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://twitter.com/young">
+				<i class="fa fa-twitter fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="mailto:youngkyon1324@naver.com">
+				<i class="fa fa-envelope fa-lg"></i>
+			</a>
+		</li>
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://pinterest.com/asd123">
+				<i class="fa fa-pinterest fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/asd123">
+				<i class="fa fa-linkedin fa-lg"></i>
+			</a>
+		</li>
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/feed.xml">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-04 </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   February 
+	   1st,
+	     
+	   2021
+	 </span>
+	  <div class="article_body">
+	  <p><br /><br />
+<br /><br /></p>
+<h1 id="intellij-프로젝트-생성-및-rds-연동"><center>Intellij 프로젝트 생성 및 RDS 연동</center></h1>
+<p><br /><br /><br /></p>
+
+<p>이제 인텔리제이 프로젝트를 만들어 보자.</p>
+
+<p>new Project를 눌러서 프로젝트를 만든다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProject.PNG" alt="new project" />
+<br /><br /><br /></p>
+
+<ul>
+  <li>Group -&gt; com.young.s3</li>
+  <li>Artifact -&gt; s3test.</li>
+  <li>Type -&gt; Gradle</li>
+  <li>Language -&gt; Java</li>
+  <li>Packaging -&gt; War</li>
+</ul>
+
+<p>이렇게 설정하고 Next를 누른다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProjectName.PNG" alt="new project name" />
+<br /><br /><br /></p>
+
+<h4 id="dependencies">Dependencies</h4>
+<ul>
+  <li>SpringBoot DevTools</li>
+  <li>Lombok</li>
+  <li>Spring Web</li>
+  <li>Thymeleaf</li>
+  <li>Spring Data JPA</li>
+</ul>
+
+<p>이렇게 설정하고 Next를 누른다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProjectGradle.PNG" alt="new project dependency" />
+<br /><br /><br /></p>
+
+<p>마지막으로 Finish를 누른다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\newProjectFinish.PNG" alt="new project dependency" />
+<br /><br /><br /></p>
+
+<hr />
+
+<h3 id="buildgradle-설정하기">build.gradle 설정하기</h3>
+
+<p>주석으로 써진 부분을 보면 mysql를 쓰기 위해 넣어준 코드와 AWS S3를 쓰기 위해서 코드를 써놓는다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">plugins</span> <span class="o">{</span>
+    <span class="n">id</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="err">'</span> <span class="n">version</span> <span class="err">'</span><span class="mf">2.4</span><span class="o">.</span><span class="mi">2</span><span class="err">'</span>
+    <span class="n">id</span> <span class="err">'</span><span class="n">io</span><span class="o">.</span><span class="na">spring</span><span class="o">.</span><span class="na">dependency</span><span class="o">-</span><span class="n">management</span><span class="err">'</span> <span class="n">version</span> <span class="err">'</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">11</span><span class="o">.</span><span class="na">RELEASE</span><span class="err">'</span>
+    <span class="n">id</span> <span class="err">'</span><span class="n">java</span><span class="err">'</span>
+<span class="o">}</span>
+
+<span class="n">group</span> <span class="o">=</span> <span class="err">'</span><span class="n">com</span><span class="o">.</span><span class="na">young</span><span class="o">.</span><span class="na">s3</span><span class="err">'</span>
+<span class="n">version</span> <span class="o">=</span> <span class="err">'</span><span class="mf">0.0</span><span class="o">.</span><span class="mi">1</span><span class="o">-</span><span class="no">SNAPSHOT</span><span class="err">'</span>
+<span class="n">sourceCompatibility</span> <span class="o">=</span> <span class="err">'</span><span class="mi">15</span><span class="err">'</span>
+
+<span class="n">configurations</span> <span class="o">{</span>
+    <span class="n">compileOnly</span> <span class="o">{</span>
+        <span class="n">extendsFrom</span> <span class="n">annotationProcessor</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">repositories</span> <span class="o">{</span>
+    <span class="n">mavenCentral</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">implementation</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">:</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">data</span><span class="o">-</span><span class="n">jpa</span><span class="err">'</span>
+    <span class="n">implementation</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">:</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">thymeleaf</span><span class="err">'</span>
+    <span class="n">implementation</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">:</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">web</span><span class="err">'</span>
+    <span class="n">runtimeOnly</span> <span class="err">'</span><span class="nl">mysql:</span><span class="n">mysql</span><span class="o">-</span><span class="n">connector</span><span class="o">-</span><span class="n">java</span><span class="err">'</span>
+    <span class="n">compileOnly</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">projectlombok</span><span class="o">:</span><span class="n">lombok</span><span class="err">'</span>
+    <span class="n">annotationProcessor</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">projectlombok</span><span class="o">:</span><span class="n">lombok</span><span class="err">'</span>
+    <span class="c1">//mysql</span>
+    <span class="n">compile</span> <span class="nl">group:</span> <span class="err">'</span><span class="n">mysql</span><span class="err">'</span><span class="o">,</span> <span class="nl">name:</span> <span class="err">'</span><span class="n">mysql</span><span class="o">-</span><span class="n">connector</span><span class="o">-</span><span class="n">java</span><span class="err">'</span><span class="o">,</span> <span class="nl">version:</span> <span class="err">'</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">22</span><span class="err">'</span>
+    <span class="n">testImplementation</span> <span class="o">(</span><span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">:</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">test</span><span class="err">'</span><span class="o">){</span>
+        <span class="n">exclude</span> <span class="nl">group:</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">vintage</span><span class="err">'</span><span class="o">,</span> <span class="nl">module:</span> <span class="err">'</span><span class="n">junit</span><span class="o">-</span><span class="n">vintage</span><span class="o">-</span><span class="n">engine</span><span class="err">'</span>
+    <span class="o">}</span>
+    <span class="c1">// AWS S3</span>
+    <span class="n">implementation</span> <span class="nl">group:</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">cloud</span><span class="err">'</span><span class="o">,</span> <span class="nl">name:</span> <span class="err">'</span><span class="n">spring</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">aws</span><span class="err">'</span><span class="o">,</span> <span class="nl">version:</span> <span class="err">'</span><span class="mf">2.2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="na">RELEASE</span><span class="err">'</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<h3 id="applicationproperties-설정">application.properties 설정</h3>
+
+<ul>
+  <li>엔드포인트: 본인의 엔드포인트</li>
+  <li>계정명: rds 인스턴스 만들었을 때 입력했던 마스터 사용자 이름</li>
+  <li>비번: rds 인스턴스 만들었을 때 입력했던 마스터 암호</li>
+  <li>디비명: 아래 그림 참고</li>
+</ul>
+
+<p>아래 3줄은 어플리케이션을 실행했을 때 실제 인텔리제이에서 실행하는 query를 표시해 준다.</p>
+
+<p>디비명은 이 그림과 같이 mysql workbench에서 SCHEMAS에서 만든 데이터베이스 명으로 한다.
+![dbName]](........\images\Program\post-5\dbName.PNG)
+<br /><br /><br /></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">driver</span><span class="o">-</span><span class="kd">class</span><span class="err">-</span><span class="nc">name</span><span class="o">=</span><span class="n">com</span><span class="o">.</span><span class="na">mysql</span><span class="o">.</span><span class="na">cj</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">Driver</span>
+<span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">url</span><span class="o">=</span><span class="nl">jdbc:mysql:</span><span class="c1">//엔드포인트:3306/디비명?serverTimezone=UTC&amp;characterEncoding=UTF-8</span>
+<span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">username</span><span class="o">=</span><span class="n">계정명</span>
+<span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">password</span><span class="o">=</span><span class="n">비번</span>
+
+<span class="n">spring</span><span class="o">.</span><span class="na">jpa</span><span class="o">.</span><span class="na">hibernate</span><span class="o">.</span><span class="na">ddl</span><span class="o">-</span><span class="n">auto</span><span class="o">=</span><span class="n">update</span>
+<span class="n">spring</span><span class="o">.</span><span class="na">jpa</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">hibernate</span><span class="o">.</span><span class="na">format_sql</span><span class="o">=</span><span class="kc">true</span>
+<span class="n">spring</span><span class="o">.</span><span class="na">jpa</span><span class="o">.</span><span class="na">show</span><span class="o">-</span><span class="n">sql</span><span class="o">=</span><span class="kc">true</span>
+</code></pre></div></div>
+<p>이전에 만든 rds에서 엔드포인트를 복사해서 붙여넣는다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\endpoint.PNG" alt="endPoint" />
+<br /><br /><br /></p>
+
+<h3 id="intellij-database-설정">Intellij Database 설정</h3>
+<p>ctrl+shift+a를 누르게 되면 search를 할 수가 있는데
+여기서 database를 입력하고 누른다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\search.png" alt="search" />
+<br /><br /><br /></p>
+
+<p>그 다음에 플러스 버튼을 datasource를 선택하고 mysql누르고 생성을 한다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\datasource.PNG" alt="datasource" />
+<br /><br /><br /></p>
+
+<p>하나의 창이 뜨게 된다.</p>
+
+<ul>
+  <li>Name: 이름</li>
+  <li>Host: 엔드포인트</li>
+  <li>User: 마스터 사용자 이름</li>
+  <li>Password: 마스터 사용자 암호</li>
+</ul>
+
+<p>이렇게 쓰고 Test Connection를 누르게 되면 저렇게 초록색 체크 표시가 나온다.
+이제 OK를 누르고 생성을 하면 된다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\create.PNG" alt="create" />
+<br /><br /><br /></p>
+
+<hr />
+
+<h3 id="프로젝트-구성">프로젝트 구성</h3>
+
+<p>프로젝트 구성은 이런 식으로 구성한다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\project.PNG" alt="project_structure" />
+<br /><br /><br /></p>
+
+<p>먼저 데이터베이스가 제대로 작동하는지 확인하기 위해 domain/entity 아래 GalleryEntity 코드를 먼저 작성한다.</p>
+
+<p><strong>여기서 @Table(name=”gallery”) 부분에서 빨간줄이 나와도 괜찮다.</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.young.s3.s3test.domain.entity</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.*</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.persistence.*</span><span class="o">;</span>
+
+<span class="nd">@AllArgsConstructor</span>
+<span class="nd">@NoArgsConstructor</span><span class="o">(</span><span class="n">access</span> <span class="o">=</span> <span class="nc">AccessLevel</span><span class="o">.</span><span class="na">PROTECTED</span><span class="o">)</span>
+<span class="nd">@Getter</span>
+<span class="nd">@ToString</span>
+<span class="nd">@Builder</span>
+<span class="nd">@Table</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"gallery"</span><span class="o">)</span>
+<span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GalleryEntity</span> <span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span><span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">length</span> <span class="o">=</span> <span class="mi">50</span><span class="o">,</span> <span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">length</span> <span class="o">=</span> <span class="mi">50</span><span class="o">,</span> <span class="n">unique</span> <span class="o">=</span> <span class="kc">true</span><span class="o">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">phoneNum</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">columnDefinition</span> <span class="o">=</span> <span class="s">"TEXT"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">filePath</span><span class="o">;</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<p>그리고 JPA 사용을 위해서 GalleryRepository 인터페이스 코드를 작성한다</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.young.s3.s3test.domain.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.young.s3.s3test.domain.entity.GalleryEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.JpaRepository</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">GalleryRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">GalleryEntity</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><strong>어플리케이션을 시작해보자</strong></p>
+
+<p>이렇게 gallery 테이블이 만들어진 것을 볼 수 있다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\schema.PNG" alt="schema" />
+<br /><br /><br /></p>
+
+<p>그리고 다시 오른쪽에 Database 창에 가서 rds-test 옆에 1of5라고 되어 있는 것을 클릭해 본다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\1of5.PNG" alt="1of5" />
+<br /><br /><br /></p>
+
+<p>그러다 보면 스키마 리스트가 나오는데 여기서 자신이 만든 데이터베이스 이름, 여기선 rds_test를 체크한다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\check.PNG" alt="check" />
+<br /><br /><br /></p>
+
+<p>체크하고 나면 방금 어플리케이션을 실행해서 만든 필드들이 나타나는 것을 볼 수 있다.</p>
+
+<p><img src="..\..\..\..\images\Program\post-5\checkok.PNG" alt="checkok" />
+<br /><br /><br />
+다음 게시물에서는 인텔리제이에서 프로젝트를 만들고 실질적으로 이전 게시물에서 생성한 RDS와 S3를 연동해보도록 하겠다.</p>
+
+<hr />
+
+<h4 id="다음-게시물에서는-이제-s3를-연동하고-마무리를-해보자">다음 게시물에서는 이제 S3를 연동하고 마무리를 해보자</h4>
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#program-ref">
+					program <span>(6)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		
+		<ul class="list-inline">
+		  <li><i class="fa fa-tags"></i></li>
+		  
+		  
+			 
+				<li>
+					<a href="/tags.html#Intellij-ref">
+					Intellij <span>(7)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#AWS-ref">
+					AWS <span>(5)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#RDS-ref">
+					RDS <span>(5)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#S3-ref">
+					S3 <span>(5)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#MySql-ref">
+					MySql <span>(5)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#MySql Workbench-ref">
+					MySql Workbench <span>(5)</span>
+					
+					</a>
+				</li>
+			
+		  
+		  
+		</ul>
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-04&via=young"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="//www.gravatar.com/avatar/youngkyon1324@naer.com" class="img-rounded author-image" />
+        <h4 class="section-title author-name">YoungKyonYou</h4>
+        <p class="author-bio">Integration of Knowledge</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/program/2021/01/22/program-post04.html" title="Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-03">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/program/2021/02/02/program-post06-copy.html" title="Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-05">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2021 YoungKyonYou with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'YoungKyonYou', 'auto');
+  ga('send', 'pageview');
+</script>
+
