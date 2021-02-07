@@ -10,8 +10,7 @@ google_analytics: YoungKyonYou
 title: MyWay
 
 defaults:
-  -
-    scope:
+  - scope:
       path: "" # empty string for all files
     values:
       title: MyWay
@@ -38,3 +37,5 @@ BASE_PATH:
 
 plugins:
   - jekyll-paginate
+  - jekyll-feed
+  - jemoji
