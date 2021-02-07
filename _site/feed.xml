@@ -9,16 +9,20 @@
 			<item>
 				<title>코드로 배우는 스프링 부트 웹 프로젝트-Part4-02</title>
 				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h1 id=&quot;페이지-처리되는-영화별-평균-점수리뷰-개수-구하기&quot;&gt;&lt;center&gt;페이지 처리되는 영화별 평균 점수/리뷰 개수 구하기&lt;/center&gt;&lt;/h1&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;MovieRepository 인터페이스&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MovieRepository&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Movie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
    &lt;span class=&quot;nd&quot;&gt;@Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;select m, max(mi), avg(coalesce(r.grade,0)), count(distinct r) from Movie m &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;left outer join MovieImage mi on mi.movie=m &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
             &lt;span class=&quot;s&quot;&gt;&quot;left outer join Review r on r.movie=m group by m&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;nc&quot;&gt;Page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getListPage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Pageable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pageable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
@@ -43,28 +47,34 @@ MovieRepositoryTests 클래스에 테스트할 수 있는 메서드를 작성한
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;u&gt;이 코드를 실행하게 되면 예상과 달리 각 영화마다 이미지를 찾는 쿼리가 실행되면서 비효율적으로 여러 번 실행되는 것을 볼 수 있다.&lt;/u&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;즉 N+1 문제 발생&lt;/strong&gt;&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;max()를 사용하지 않으면 join으로 결합될 당시의 데이터 1개만 가져오게 되고 max()를 사용하면 join으로 결합될 당시의 데이터 말고 번호가 가장 큰 이미지 파일(여기서 inum)에 대한 정보를 가져와야하므로 MovieImage에 대한 select문을 1회씩 총 10회 실행됨&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;JPQL은 별도의 처리 없이 위의 구조를 작성할 수 있다.&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nd&quot;&gt;@Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;select m, mi, avg(coalesce(r.grade,0)), count(distinct r) from Movie m &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;left outer join MovieImage mi on mi.movie=m &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
             &lt;span class=&quot;s&quot;&gt;&quot;left outer join Review r on r.movie=m group by m&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;nc&quot;&gt;Page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getListPage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Pageable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pageable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;ul&gt;
   &lt;li&gt;max() 부분 제거&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;특정-영화의-모든-이미지와-평균-평점리뷰-개수&quot;&gt;특정 영화의 모든 이미지와 평균 평점/리뷰 개수&lt;/h3&gt;
+
 &lt;ul&gt;
   &lt;li&gt;영화를 조회할 때는 영화(Movie)뿐 아니라 해당 영화의 평균 평점/리뷰 개수를 화면에서 사용할 일이 있으므로 MovieRepository에 해당 기능을 추가&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;MovieRepository 인터페이스&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.zerock.mreview.repository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.domain.Page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
@@ -85,6 +95,7 @@ MovieRepositoryTests 클래스에 테스트할 수 있는 메서드를 작성한
     &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getMovieWithAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mno&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;ul&gt;
   &lt;li&gt;getMovieWillAll의 @Query 부분에서 m.mno=:mno 의 =:는 getMovieWithAll(Long mno)에서 매개변수인 mno를 의미할 수 있게 함
     &lt;ul&gt;
@@ -94,6 +105,7 @@ MovieRepositoryTests 클래스에 테스트할 수 있는 메서드를 작성한
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;테스트 코드 작성 MovieRepositoryTests&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testGetMovieWithAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
         &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;movieRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getMovieWithAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;94L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
@@ -107,15 +119,114 @@ MovieRepositoryTests 클래스에 테스트할 수 있는 메서드를 작성한
 &lt;p&gt;리뷰(Review)와 관련된 내용 처리는 ‘left join’을 이용하면 된다. 리뷰와 조인한 후에 count(), avg() 등의 함수를 이용하게 되는데 이때 영화 이미지(MovieImage) 별로 group by를 실행해야만 한다.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;MovieRepository의 getMovieWithAll() 수정&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nd&quot;&gt;@Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;select m, mi, avg(coalesce(r.grade,0)), count(r) &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
             &lt;span class=&quot;s&quot;&gt;&quot;from Movie m left outer join MovieImage mi on mi.movie=m &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
             &lt;span class=&quot;s&quot;&gt;&quot;left outer join Review r on r.movie=m &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
             &lt;span class=&quot;s&quot;&gt;&quot;where m.mno=:mno group by mi&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getMovieWithAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mno&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;ul&gt;
-  &lt;li&gt;left outer join 추가와 마지막의 group by  부분에 영화 이미지별로 그룹을 만들어서 영화 이미지들의 개수만큼 데이터를 만들어 낼 수 있게 됨&lt;/li&gt;
+  &lt;li&gt;left outer join 추가와 마지막의 group by 부분에 영화 이미지별로 그룹을 만들어서 영화 이미지들의 개수만큼 데이터를 만들어 낼 수 있게 됨&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;특정 영화의 모든 리뷰와 회원의 닉네임&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;영화 조회 화면에서는 영화 리뷰(Review)를 조회할 수 있어야함&lt;/li&gt;
+  &lt;li&gt;자신이 영화에 대한 리뷰를 등록하거나 수정/삭제할 수 있어야함&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;특정 영화에 대한 영화 리뷰는 ReviewRepository에 다음과 같이 작성한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.zerock.mreview.repository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.EntityGraph&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.Modifying&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.zerock.mreview.entity.Member&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.zerock.mreview.entity.Movie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.zerock.mreview.entity.Review&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ReviewRepository&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Review&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Review&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findByMovie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Movie&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;movie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이제 findByMovie()에 대한 테스트 코드를 작성해서 Review에서 필요한 데이터를 추출한다.
+test repository 안에 ReviewRepositoryTests에 코드를 작성한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testGetMovieReviews&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Movie&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;movie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Movie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mno&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;92L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+        &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Review&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reviewRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findByMovie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;movie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;forEach&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;movieReview&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;{&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;movieReview&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getReviewnum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;\t&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;movieReview&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getGrade&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;\t&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;movieReview&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getText&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;\t&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;movieReview&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getMember&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getEmail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;---------------------------&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이때 findByMovie는 쿼리 메서드이다.
+Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제공한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;쿼리 메서드: 메서드의 이름 자체가 쿼리의 구문으로 처리되는 기능&lt;/li&gt;
+  &lt;li&gt;@Query: SQL과 유사하게 엔티티 클래스의 정보를 이용해서 쿼리를 작성하는 기능&lt;/li&gt;
+  &lt;li&gt;Querydsl 등의 동적 쿼리 처리 기능&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;쿼리 메서드는 말 그대로 메서드의 이름 자체가 질의(query)문이 되는 흥미로운 기능이다. 쿼리 메서드는 주로 ‘findBy나 getBy…‘로 시작하고 이후에 필요한 필드 조건이나 And, Or와 같은 키워드를 이용해서 메서드의 이름 자체로 질의 조건을 만들어 낸다.
+자세한 내용은 &lt;strong&gt;Spring Data JPA Reference&lt;/strong&gt;를 이용해서 찾는다.&lt;/p&gt;
+
+&lt;p&gt;보시다시피 findById 부분인 2번을 읽어보면
+“주어진 아이디로 해당 엔티티를 식별할 수 있다”라고 되어 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Learning_SpringBoot_with_Web_Project/Part4/Chapter7/ref.PNG&quot; alt=&quot;ref&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;다시 본론으로 돌아와서 testGetMovieReview()를 테스트해 보면 문제가 발생한다. 이것은 Review 클래스의 Member에 대한 Fetch 방식이 LAZY이기 때문이다. 즉 한 번에 Review 객체와 Member 객체를 조회할 수 없기 때문에 발생한다.&lt;/p&gt;
+
+&lt;p&gt;&amp;lt; 해결 방법 &amp;gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;@Query를 이용해서 조인 처리&lt;/li&gt;
+  &lt;li&gt;@EntityGraph를 이용해서 Review 객체를 가져올 때 Memeber 객체를 로딩하는 방법
+    &lt;ul&gt;
+      &lt;li&gt;기본적으로 JPA를 이용하는 경우에는 연관 관계의 FATCH 속성값을 LAZY로 지정하는 것이 일반적이나 @EntityGraph는 이러한 상황에서 특정 기능을 수행할 때만 EAGER 로딩을 하도록 지정할 수 있음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Review를 처리할 때 @EntityGraph를 적용해서 Member도 같이 로딩할 수 있도록 변경&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.zerock.mreview.repository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.EntityGraph&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.Modifying&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.zerock.mreview.entity.Member&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.zerock.mreview.entity.Movie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.zerock.mreview.entity.Review&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ReviewRepository&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Review&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@EntityGraph&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attributePaths&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;={&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;member&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;EntityGraph&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;EntityGraphType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;FETCH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Review&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findByMovie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Movie&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;movie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
 				<pubDate>Tue, 02 Feb 2021 14:00:00 +0900</pubDate>
 				<link>/springboot/2021/02/02/learning-springboot-web-with-code-post02.html</link>
@@ -1171,6 +1282,66 @@ VPC 설정, 서브넷 그룹은 디폴트로 두고 퍼블릭 액세스 가능�
 			</item>
 		
 			<item>
+				<title>데카르트-근대의 사상01</title>
+				<description>&lt;h1 id=&quot;전근대-사상&quot;&gt;전근대 사상&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern01/2021-02-07-23-56-46.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;
+&lt;br /&gt;
+근대로 한 번 넘어와서 데카르트에 대한 사상가를 한 번 알아보자.
+근대 철학의 아버지라고 불리는 데카르트 하면 떠오르는 &lt;strong&gt;명제&lt;/strong&gt;가 있다.
+&lt;strong&gt;“나는 생각한다 고로 나는 존재한다.”&lt;/strong&gt; 라는 말은 살면서 한 번쯤은 들어봤을 것이다.
+&lt;del&gt;무슨 스님 빗질하는 소리야!..&lt;/del&gt;
+이번 게시물에서는 이 명제를 상기해보고 플라톤 사상과 비교해서 어떤 차이점이 있는지 살펴보자 :blush:&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;나는-생각한다-고로-존재한다&quot;&gt;“나는 생각한다 고로 존재한다”&lt;/h3&gt;
+
+&lt;p&gt;이게 무슨 의미일까? 즉 생각한다는 것이 나의 정체성, 나의 존재의 근거를 규정한다. 라는 문장이다.
+&lt;del&gt;나는 누구지?..&lt;/del&gt;:sob:
+그리고 데카르트가 이 명제를 사용했을 때 생각이라는 중요한 활동을 하는, 생각하는 &lt;strong&gt;나&lt;/strong&gt;가 모든 것의 출발점이자 중심이 된다고 생각했다.&lt;/p&gt;
+
+&lt;p&gt;즉 여러 가지 생각을 가진 나, 그리고 내가 가진 각종 생각들, 그리고 똑같은 의미로 관념들이 바로 내 생각의 출발점을 이룬다는 것이다.
+그래서 근대 사상에서 가장 출발점에 오는 기본 물음이 뭐냐면&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;그자체로 뭐냐가 아니라 지금 인간인 내가 가지고 있는 관념들 중에서 어떤 것이 외부세계에 참을 보여주는 가?&lt;/li&gt;
+  &lt;li&gt;내가 가진 생각들 중 어떤 것이 실제로 존재하는 것을 그대로 반영하는가?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;사고의 방향이 바깥에서 출발하는 것이 아니라 나에서 출발한다&lt;/strong&gt;
+그것도 내 머리 속에 관념에서 출발해서 바깥에 그자체로 존재하는 것이 무엇이고 우리는 어떻게 인식할 수 있는가로 향한다. 이것이 근대적인 사고방식이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;“난 아무 생각없이 사는데.. 데카르트는 존경합니다…“&lt;/em&gt;&lt;/strong&gt;:joy:&lt;/p&gt;
+
+&lt;p&gt;데카르트에 오면 의심이 중요해진다. 우리 가지고 있는 수많은 생각, 관념들이 그자체로 존재하는 것을 그대로 다 보여주는 것이 아니라 자꾸 우리의 생각과 관념들을 의심하게 된다. 의심이라는 것이 근대의 특히 데카르트 사상에 중요한 지위를 차지하게 된다. 데카르트는 의심에서 자기 철학을 출발시키게 된다. 그렇기 때문에 위해서 말했던 두 가지 기본 물음들이 나오게 되는 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern01/2021-02-08-00-19-42.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;데카르트 의심에서 출발하는 물음은 여기서 끝나는 것이 아니다.
+&lt;strong&gt;&lt;em&gt;“ㄷㄷ”&lt;/em&gt;&lt;/strong&gt;
+이제는 우리의 관념, 생각들이 바깥에 실제하는 세계를 충실하게 보여주는 지가 문제가 아니라 관념의 세계, 생각의 세계에 대응하는 실제 세계가 있는가?
+이것들이 진짜 바깥에 있긴한가? 라는 것으로 미치게 된다. 즉 바깥에 실제 세계에 너무나도 당연하게 생각되었던 대응 관계마저도 의심하게 된다.
+&lt;del&gt;&lt;strong&gt;“병원 한 번 가봐야 되는 거 아니야??”&lt;/strong&gt;&lt;/del&gt;&lt;/p&gt;
+
+&lt;p&gt;데카르트는 이런 관념들의 원인이 되는 바깥에 실제 세계 자체가 없을 수도 있다는 생각을 하게 되는 것이다.:open_mouth:&lt;/p&gt;
+
+&lt;p&gt;이 두 가지 물음을 집요하게 파고든 결과 바깥에 실제하는 세계가 존재하지 않고 어떤 사악한 하지만 굉장히 유능한 악령이 있어서 나를 속이기 위해 이 바깥 세계를 존재하지도 않는데 나를 속이기 위해서 바깥 세계가 존재하는 것인거마냥 내 머릿속에 그에 해당하는 모든 생각들을 집어넣어주고 있을 수도 있겠다 라는 그 가능성에 도달하게 된다.
+이것이 바로 굉장히 그 유명한 데카르트의 &lt;strong&gt;악령의 가설&lt;/strong&gt;이다. :smiling_imp:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern01/2021-02-08-00-26-40.png&quot; alt=&quot;&quot; /&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;나중에 시간이 되면 악령의 가설에 대한 부분도 다뤄보겠다.&lt;/p&gt;
+</description>
+				<pubDate>Mon, 18 Jan 2021 10:48:00 +0900</pubDate>
+				<link>/philosophy/2021/01/18/Descartes-modern-01.html</link>
+				<guid isPermaLink="true">/philosophy/2021/01/18/Descartes-modern-01.html</guid>
+			</item>
+		
+			<item>
 				<title>플라톤-이데아03</title>
 				<description>&lt;h1 id=&quot;참되고-선하고-아름다운-것&quot;&gt;참되고 선하고 아름다운 것&lt;/h1&gt;
 
@@ -1210,8 +1381,8 @@ VPC 설정, 서브넷 그룹은 디폴트로 두고 퍼블릭 액세스 가능�
 &lt;hr /&gt;
 </description>
 				<pubDate>Mon, 18 Jan 2021 10:48:00 +0900</pubDate>
-				<link>/philosophy/2021/01/18/plato-idea03-copy.html</link>
-				<guid isPermaLink="true">/philosophy/2021/01/18/plato-idea03-copy.html</guid>
+				<link>/philosophy/2021/01/18/plato-idea03.html</link>
+				<guid isPermaLink="true">/philosophy/2021/01/18/plato-idea03.html</guid>
 			</item>
 		
 			<item>
@@ -1276,67 +1447,6 @@ VPC 설정, 서브넷 그룹은 디폴트로 두고 퍼블릭 액세스 가능�
 				<pubDate>Mon, 18 Jan 2021 10:20:20 +0900</pubDate>
 				<link>/philosophy/2021/01/18/plato-idea02.html</link>
 				<guid isPermaLink="true">/philosophy/2021/01/18/plato-idea02.html</guid>
-			</item>
-		
-			<item>
-				<title>플라톤-이데아01</title>
-				<description>&lt;p&gt;철학에 관한 게시물로 첫 번째는 플라톤의 이데아를 다루려고 한다.
-&lt;del&gt;내가 학교에서 철학을 배울 때 첫 번째로 배운 것이기 때문ㅇ..&lt;/del&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;플라톤-이데아&quot;&gt;#플라톤-이데아&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;플라톤은 그리스 사상가&lt;/strong&gt;였는데 2500년 전에 사상가임에도 불구하고 사실 전근대 세계, 근대 시대가 시작하기 직전 중세까지도 엄청난 영향력, 사상적 영향력을 미쳤을 뿐더러 근대가 시작된 이후에도 지금까지 서구 사상에 영향을 미치는 엄청난 규정력을 행사하고 있는 사람이다.&lt;/p&gt;
-
-&lt;p&gt;그 중에 플라톤의 핵심개념인 &lt;strong&gt;이데아&lt;/strong&gt;는 일상적인 용어법 상으로 대게 친숙하다고 하는데 
-&lt;del&gt;나는 잘??..&lt;/del&gt; 
-가령 가장 완전한 결함이 없는 이어폰, 지금 삼성의 갤럭시 버즈 프로는 정말 결함이 없는 이어폰의 이데아라고 말할 수 있고 또 치킨의 이데아가 뭐냐고 한다면 누구는 굽네, 누구는 네네, 누구는 펠리칸 치킨이라고 이야기할 것이다.&lt;/p&gt;
-&lt;h3 id=&quot;이데아는-서양-고대-그리스의-플라톤의-핵심-개념으로부터-유래했다&quot;&gt;이데아는 서양 고대 그리스의 플라톤의 핵심 개념으로부터 유래했다.&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Philosophy\Plato-Idea01\academia.jpg&quot; alt=&quot;packed&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;지금 위에 보는 그림이 고대 그리스에 플라톤이 세운 아카데미아라는 주제로 그린 그림이다.
-당시 아카데미아는 플라톤이 많은 제자들을 기르기 위해 지었던 학당이다. 지금의 (academy)의 어원을 이루고 있다고 보면 될 것이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;르네상스-라파엘로가-그린-그림으로서-정중앙-에는-두-사람의-포커스가-맞춰져-있다&quot;&gt;르네상스 라파엘로가 그린 그림으로서 정중앙 에는 두 사람의 포커스가 맞춰져 있다.&lt;/h4&gt;
-
-&lt;p&gt;왼쪽이 플라톤 그리고 오른 쪽이 아리스토텔리스인데 이 사람은 플라톤의 제자 중 가장 뛰어났다고 한다.&lt;/p&gt;
-
-&lt;p&gt;재밌는 사실은 잘 보면 플라톤은 검지 손가락을 보며 위를 가리키고 있고 아리스토텔리스는 손바닥을 지면을 향해서 내려 놓고 있다. 
-여기에 재밌는 &lt;strong&gt;의미가&lt;/strong&gt; 담겨 있다.
-플라톤에게는 이데아 개념은 상당히 천상적인 개념이라고 할 수 있다.
-반면에, 아리스토텔리스는 플라톤 보다는 현실을 중시하는 이론을 만들어 낸 사람으로 평가받는다. 손짓은 그러한 것을 반영했다고 보면 된다.&lt;/p&gt;
-
-&lt;h5 id=&quot;플라톤이-옆구리에-끼고-있는-책이-천채의-관한-책이고-아리스토텔리스가-들고-있는-책은-윤리-책이다&quot;&gt;플라톤이 옆구리에 끼고 있는 책이 천채의 관한 책이고 아리스토텔리스가 들고 있는 책은 윤리 책이다.&lt;/h5&gt;
-&lt;p&gt;각각 자신들을 대표하는 책들을 가지고 있는 것을 볼 수 있다는 점에서도 흥미롭다.&lt;/p&gt;
-
-&lt;p&gt;플라톤은 많은 책을 썼는데 보다 보면 대화체로 이루어져 있는 것을 볼 수 있다. 이 때 두 사람이 대화를 나누는 형식을 보이는데 대화편의 주인공은 소크라테스이다.
-&lt;strong&gt;소크라테스는 플라톤의 스승이다.&lt;/strong&gt;
-천체에 관한 대화가 있는 이 대화에서는 &lt;strong&gt;데미우르고스&lt;/strong&gt;라는 신이 등장한다.&lt;/p&gt;
-&lt;h5 id=&quot;대화편에서는-이데아를-모방하여-이-세계를-제작한-신인-데미우르고스가-등장한다&quot;&gt;대화편에서는 이데아를 모방하여 이 세계를 제작한 신인 데미우르고스가 등장한다.&lt;/h5&gt;
-&lt;p&gt;기독교로 따지면 하느님이다.&lt;/p&gt;
-
-&lt;p&gt;데미우르고스가 세계를 만들어내기 전에 이미 세상은 이데아들로 가득 차 있었다.&lt;/p&gt;
-&lt;h3 id=&quot;이데아는-어떤-것들의-가장-완전한-모습이다&quot;&gt;이데아는 어떤 것들의 가장 완전한 모습이다.&lt;/h3&gt;
-&lt;p&gt;데미우르고스는 다만 이 완전하게 존재하고 있는 그리고 영원히 존재하고 있는 이데아를 단지 모방, 즉 본 떠서 이 세계를 만들어 낸다. 
-그래서 기독교의 신이 만들어낸 것에 대해서는 창조라는 말을 쓸 수 있겠지만
-데미우르고스가 만들어낸 세상에 대해서는 &lt;u&gt;창조&lt;/u&gt;라고 부르기 힘들다.
-왜냐면 &lt;strong&gt;무&lt;/strong&gt;로부터 만들어 낸 것이 아니라 &lt;strong&gt;이데아를 모방&lt;/strong&gt;해서 이 세계를 만들어 낸 것이기 때문이다.
-그래서 &lt;u&gt;제작&lt;/u&gt;했다고 하는 것이 더 적합하다.&lt;/p&gt;
-
-&lt;p&gt;이데아는 영원하고 완전하며 불변하는 존재라는 특징을 가지고 있다.
-즉, 이데아는 완전한 어떤 것으로써 영원히 존재한다. 생겨나지도 소멸하지도 않고 영원으로부터 영원으로 존재하는 것이 이데아이다. 
-&lt;strong&gt;완전한 어떤 것이다.&lt;/strong&gt;
-(자꾸 이데아 이데아 하니까 교실 이데아 부르고 싶다…&lt;del&gt;노래방 가ㄱ..&lt;/del&gt;)
-주의할 것은 이데아는 숫자는 많지만 각각의 종류에는 &lt;strong&gt;딱 하나&lt;/strong&gt;의 이데아밖에 없다.
-두 개가 있을 수가 없는 것이다. 왜냐하면 서로 다른데 가장 완전할 수 없기 때문이다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;“의도치 않게 글이 길어지는 것 같으니까 여기서 한 번 끊고 플라톤의 이데아 2편에서
-마저 이야기 해보자”&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-</description>
-				<pubDate>Mon, 18 Jan 2021 09:37:20 +0900</pubDate>
-				<link>/philosophy/2021/01/18/plato-idea01.html</link>
-				<guid isPermaLink="true">/philosophy/2021/01/18/plato-idea01.html</guid>
 			</item>
 		
 	</channel>
