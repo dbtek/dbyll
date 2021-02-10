@@ -1,4 +1,4 @@
-I"�S<p><br /><br />
+I"=Y<p><br /><br />
 <br /><br /></p>
 <h1 id="intellij-rds와-s3-연동-마무리"><center>Intellij RDS와 S3 연동 마무리</center></h1>
 <p><br /><br /><br /></p>
@@ -17,7 +17,18 @@
   <li>region: S3를 서비스할 region 명을 작성, 서울일 경우 ap-northeast-2를 작성</li>
 </ul>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">cloud:</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="nl">cloud:</span>
   <span class="nl">aws:</span>
     <span class="nl">credentials:</span>
       <span class="nl">accessKey:</span> <span class="o">------------------</span>
@@ -28,13 +39,29 @@
       <span class="kd">static</span><span class="o">:</span> <span class="n">ap</span><span class="o">-</span><span class="n">northeast</span><span class="o">-</span><span class="mi">2</span>
     <span class="nl">stack:</span>
       <span class="nl">auto:</span> <span class="kc">false</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <hr />
 
 <p>이제 클래스의 코드를 추가해보자
 일단 service 패키지에서 <strong>GalleryService</strong>의 코드이다</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.young.s3.s3test.service</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">com.young.s3.s3test.service</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">com.young.s3.s3test.domain.repository.GalleryRepository</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.young.s3.s3test.dto.GalleryDto</span><span class="o">;</span>
@@ -50,10 +77,64 @@
         <span class="n">galleryRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">galleryDto</span><span class="o">.</span><span class="na">toEntity</span><span class="o">());</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 <p><br /><br />
 <strong>S3Service</strong></p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.young.s3.s3test.service</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">com.young.s3.s3test.service</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">com.amazonaws.auth.AWSCredentials</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.amazonaws.auth.AWSStaticCredentialsProvider</span><span class="o">;</span>
@@ -107,12 +188,45 @@
         <span class="k">return</span> <span class="n">s3Client</span><span class="o">.</span><span class="na">getUrl</span><span class="o">(</span><span class="n">bucket</span><span class="o">,</span> <span class="n">fileName</span><span class="o">).</span><span class="na">toString</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 <p><br /><br /></p>
 <h4 id="dto-패키지">dto 패키지</h4>
 
 <p><strong>GalleryDto</strong></p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.young.s3.s3test.dto</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">com.young.s3.s3test.dto</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">com.young.s3.s3test.domain.entity.GalleryEntity</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">lombok.*</span><span class="o">;</span>
@@ -145,13 +259,55 @@
         <span class="k">this</span><span class="o">.</span><span class="na">filePath</span> <span class="o">=</span> <span class="n">filePath</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 <p><br /><br /></p>
 <h4 id="controller-패키지">controller 패키지</h4>
 
 <p><strong>GalleryController</strong></p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.young.s3.s3test.controller</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">com.young.s3.s3test.controller</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">com.young.s3.s3test.dto.GalleryDto</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.young.s3.s3test.service.GalleryService</span><span class="o">;</span>
@@ -193,13 +349,31 @@
         <span class="k">return</span> <span class="s">"redirect:/gallery"</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 <p><br /><br /></p>
 <h3 id="html-생성">html 생성</h3>
 
 <p>resources/templates 아래 gallery.html를 생성한다</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span> <span class="na">xmlns:th=</span><span class="s">"http://www.w3.org/1999/xhtml"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;head&gt;</span>
     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
@@ -217,7 +391,7 @@
 
 <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 <hr />
 <h4 id="어플리케이션-실행">어플리케이션 실행</h4>
 

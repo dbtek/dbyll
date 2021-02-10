@@ -219,7 +219,44 @@
 
 <p>주석으로 써진 부분을 보면 mysql를 쓰기 위해 넣어준 코드와 AWS S3를 쓰기 위해서 코드를 써놓는다.</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre></td><td class="rouge-code"><pre>
 <span class="n">plugins</span> <span class="o">{</span>
     <span class="n">id</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="err">'</span> <span class="n">version</span> <span class="err">'</span><span class="mf">2.4</span><span class="o">.</span><span class="mi">2</span><span class="err">'</span>
     <span class="n">id</span> <span class="err">'</span><span class="n">io</span><span class="o">.</span><span class="na">spring</span><span class="o">.</span><span class="na">dependency</span><span class="o">-</span><span class="n">management</span><span class="err">'</span> <span class="n">version</span> <span class="err">'</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">11</span><span class="o">.</span><span class="na">RELEASE</span><span class="err">'</span>
@@ -256,7 +293,7 @@
     <span class="n">implementation</span> <span class="nl">group:</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">cloud</span><span class="err">'</span><span class="o">,</span> <span class="nl">name:</span> <span class="err">'</span><span class="n">spring</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">aws</span><span class="err">'</span><span class="o">,</span> <span class="nl">version:</span> <span class="err">'</span><span class="mf">2.2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="na">RELEASE</span><span class="err">'</span>
 <span class="o">}</span>
 
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <h3 id="applicationproperties-설정">application.properties 설정</h3>
 
@@ -272,7 +309,15 @@
 <p>디비명은 이 그림과 같이 mysql workbench에서 SCHEMAS에서 만든 데이터베이스 명으로 한다.
 ![dbName]](........\images\Program\post-5\dbName.PNG)
 <br /><br /><br /></p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">driver</span><span class="o">-</span><span class="kd">class</span><span class="err">-</span><span class="nc">name</span><span class="o">=</span><span class="n">com</span><span class="o">.</span><span class="na">mysql</span><span class="o">.</span><span class="na">cj</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">Driver</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">driver</span><span class="o">-</span><span class="kd">class</span><span class="err">-</span><span class="nc">name</span><span class="o">=</span><span class="n">com</span><span class="o">.</span><span class="na">mysql</span><span class="o">.</span><span class="na">cj</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">Driver</span>
 <span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">url</span><span class="o">=</span><span class="nl">jdbc:mysql:</span><span class="c1">//엔드포인트:3306/디비명?serverTimezone=UTC&amp;characterEncoding=UTF-8</span>
 <span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">username</span><span class="o">=</span><span class="n">계정명</span>
 <span class="n">spring</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">password</span><span class="o">=</span><span class="n">비번</span>
@@ -280,7 +325,7 @@
 <span class="n">spring</span><span class="o">.</span><span class="na">jpa</span><span class="o">.</span><span class="na">hibernate</span><span class="o">.</span><span class="na">ddl</span><span class="o">-</span><span class="n">auto</span><span class="o">=</span><span class="n">update</span>
 <span class="n">spring</span><span class="o">.</span><span class="na">jpa</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">hibernate</span><span class="o">.</span><span class="na">format_sql</span><span class="o">=</span><span class="kc">true</span>
 <span class="n">spring</span><span class="o">.</span><span class="na">jpa</span><span class="o">.</span><span class="na">show</span><span class="o">-</span><span class="n">sql</span><span class="o">=</span><span class="kc">true</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 <p>이전에 만든 rds에서 엔드포인트를 복사해서 붙여넣는다.</p>
 
 <p><img src="..\..\..\..\images\Program\post-5\endpoint.PNG" alt="endPoint" />
@@ -326,7 +371,35 @@
 
 <p><strong>여기서 @Table(name=”gallery”) 부분에서 빨간줄이 나와도 괜찮다.</strong></p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.young.s3.s3test.domain.entity</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">com.young.s3.s3test.domain.entity</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">lombok.*</span><span class="o">;</span>
 
@@ -354,17 +427,24 @@
     <span class="kd">private</span> <span class="nc">String</span> <span class="n">filePath</span><span class="o">;</span>
 
 <span class="o">}</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 <p>그리고 JPA 사용을 위해서 GalleryRepository 인터페이스 코드를 작성한다</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.young.s3.s3test.domain.repository</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">com.young.s3.s3test.domain.repository</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">com.young.s3.s3test.domain.entity.GalleryEntity</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.JpaRepository</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">GalleryRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">GalleryEntity</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span>
 <span class="o">}</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 <p><strong>어플리케이션을 시작해보자</strong></p>
 
 <p>이렇게 gallery 테이블이 만들어진 것을 볼 수 있다.</p>

@@ -1,175 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>코드로 배우는 스프링 부트 웹 프로젝트-Part4-02</title>
-	
-	<meta name="author" content="YoungKyonYou">
-
-	<!-- Enable responsive viewport -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-	<!--[if lt IE 9]>
-	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-
-	<!-- Le styles -->
-	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
-	<link href="/assets/css/style.css" rel="stylesheet">
-
-	<!-- Le fav and touch icons -->
-	<!-- Update these with your own images
-	<link rel="shortcut icon" href="images/favicon.ico">
-	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-	-->
-
-	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
-</head>
-
-<body>
-	<nav class="navbar navbar-default visible-xs" role="navigation">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			
-			<a type="button" class="navbar-toggle nav-link" href="http://github.com//YoungKyonYou">
-				<i class="fa fa-github"></i>
-			</a>
-			
-			
-			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/young">
-				<i class="fa fa-twitter"></i>
-			</a>
-			
-			
-			<a type="button" class="navbar-toggle nav-link" href="mailto:youngkyon1324@naver.com">
-				<i class="fa fa-envelope"></i>
-			</a>
-			
-			<a class="navbar-brand" href="/">
-				<img src="//www.gravatar.com/avatar/youngkyon1324@naer.com?s=35" class="img-circle" />
-				MyWay
-			</a>
-		</div>
-
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="/">Home</a></li>
-				<li><a href="/categories.html">Categories</a></li>
-				<li><a href="/tags.html">Tags</a></li>
-			</ul>
-		</div><!-- /.navbar-collapse -->
-	</nav>
-
-	<!-- nav-menu-dropdown -->
-	<div class="btn-group hidden-xs" id="nav-menu">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-			<i class="fa fa-bars"></i>
-		</button>
-		<ul class="dropdown-menu" role="menu">
-			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
-			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
-			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
-			<li class="divider"></li>
-			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
-		</ul>
-	</div>
-
-	<div class="col-sm-3 sidebar hidden-xs" style="">
-		<!-- sidebar.html -->
-<header class="sidebar-header" role="banner">
-	<a href="/">
-		<img src="//www.gravatar.com/avatar/youngkyon1324@naer.com?s=150" class="img-circle" />
-	</a>
-	<h3 class="title">
-        <a href="/">MyWay</a>
-    </h3>
-</header>
-
-
-<div id="bio" class="text-center">
-	Integration of Knowledge
-</div>
-
-
-<div id="contact-list" class="text-center">
-	<ul class="list-unstyled list-inline">
-		
-		<li>
-			<a class="btn btn-default btn-sm" href="https://github.com//YoungKyonYou">
-				<i class="fa fa-github-alt fa-lg"></i>
-			</a>
-		</li>
-		
-		
-		<li>
-			<a class="btn btn-default btn-sm" href="https://twitter.com/young">
-				<i class="fa fa-twitter fa-lg"></i>
-			</a>
-		</li>
-		
-		
-		<li>
-			<a class="btn btn-default btn-sm" href="mailto:youngkyon1324@naver.com">
-				<i class="fa fa-envelope fa-lg"></i>
-			</a>
-		</li>
-		
-	</ul>
-	<ul id="contact-list-secondary" class="list-unstyled list-inline">
-		
-		<li>
-			<a class="btn btn-default btn-sm" href="https://pinterest.com/asd123">
-				<i class="fa fa-pinterest fa-lg"></i>
-			</a>
-		</li>
-		
-		
-		<li>
-			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/asd123">
-				<i class="fa fa-linkedin fa-lg"></i>
-			</a>
-		</li>
-		
-		<li>
-			<a class="btn btn-default btn-sm" href="/feed.xml">
-				<i class="fa fa-rss fa-lg"></i>
-			</a>
-		</li>
-	</ul>
-</div>
-<!-- sidebar.html end -->
-
-	</div>
-
-	<div class="col-sm-9 col-sm-offset-3">
-		<div class="page-header">
-  <h1>코드로 배우는 스프링 부트 웹 프로젝트-Part4-02 </h1>
-</div>
-	
-<article>
-
-	<div class="col-sm-10">
-	 <span class="post-date">
-	   
-	   February 
-	   2nd,
-	     
-	   2021
-	 </span>
-	  <div class="article_body">
-	  <p><br /><br /></p>
+I"-u<p><br /><br /></p>
 
 <h1 id="페이지-처리되는-영화별-평균-점수리뷰-개수-구하기"><center>페이지 처리되는 영화별 평균 점수/리뷰 개수 구하기</center></h1>
 
@@ -273,8 +102,6 @@ MovieRepositoryTests 클래스에 테스트할 수 있는 메서드를 작성한
 17
 18
 19
-20
-21
 </pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.zerock.mreview.repository</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">org.springframework.data.domain.Page</span><span class="o">;</span>
@@ -287,10 +114,8 @@ MovieRepositoryTests 클래스에 테스트할 수 있는 메서드를 작성한
 <span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MovieRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">Movie</span><span class="o">,</span><span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="nd">@Query</span><span class="o">(</span><span class="s">"select m, mi, avg(coalesce(r.grade,0)), count(distinct r) from Movie m "</span><span class="o">+</span>
-    <span class="s">"left outer join MovieImage mi on mi.movie=m "</span><span class="o">+</span>
+    <span class="nd">@Query</span><span class="o">(</span><span class="s">"select m, mi, avg(coalesce(r.grade,0)), count(distinct r) from Movie m "</span><span class="o">+</span><span class="s">"left outer join MovieImage mi on mi.movie=m "</span><span class="o">+</span>
             <span class="s">"left outer join Review r on r.movie=m group by m"</span><span class="o">)</span>
-
     <span class="nc">Page</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">[]&gt;</span> <span class="nf">getListPage</span><span class="o">(</span><span class="nc">Pageable</span> <span class="n">pageable</span><span class="o">);</span>
 
     <span class="nd">@Query</span><span class="o">(</span><span class="s">"select m, mi "</span><span class="o">+</span><span class="s">"from Movie m left outer join MovieImage mi on mi.movie=m "</span><span class="o">+</span><span class="s">"where m.mno=:mno"</span><span class="o">)</span>
@@ -523,7 +348,9 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 17
 18
 19
-</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.zerock.mreview.repository</span><span class="o">;</span>
+20
+</pre></td><td class="rouge-code"><pre>
+<span class="kn">package</span> <span class="nn">org.zerock.mreview.repository</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.EntityGraph</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.JpaRepository</span><span class="o">;</span>
@@ -546,7 +373,7 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 
 <p>MemberRepository는 JpaRepository의 기능만으로 삭제가 가능하므로 추가할 메서드는 없다. MemberRepositoryTests에는 ReviewRepository를 추가로 주입하고 테스트 코드를 작성한다.</p>
 
-<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part4/Chapter7/2021-02-10-20-13-59.png" alt="" /></p>
+<p><img src="../images/Learning_SpringBoot_with_Web_Project/Part4/2021-02-10-20-13-59.png" alt="" /></p>
 
 <p><strong>ReviewRepositoryTests 클래스 일부</strong></p>
 
@@ -630,196 +457,5 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>여기서 중요한 것은 FK로 참조하고 있는 것을 먼저 삭제하고 PK 쪽을 삭제 해야 한다는 것이다.</p>
-
-<ul>
-  <li>@Transactional은 Update나 Delete할 때 씀
-    <ul>
-      <li>@Transactional은 기본적으로 스프링의 테스트에서 RollBack 처리를 시도하도록 되어있음
-        <ul>
-          <li>그렇기 때문에 DB에 반영이 안됨</li>
-        </ul>
-      </li>
-      <li>RollBack를 하게 하지 않기 위해서는 @Commit를 같이 써주면 됨
-        <ul>
-          <li>DB에 반영이 되게 됨</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<blockquote>
-  <p>“update나 delete를 이용하기 위해서는 @Modifying 어노테이션이 반드시 필요하다.”</p>
-</blockquote>
-
-<p>@Query를 이용해서 where 절을 지정하면 효율적으로 삭제가 가능하다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.zerock.mreview.repository</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.EntityGraph</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.JpaRepository</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.Modifying</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.Query</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.zerock.mreview.entity.Member</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.zerock.mreview.entity.Movie</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.zerock.mreview.entity.Review</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">ReviewRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">Review</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="nd">@EntityGraph</span><span class="o">(</span><span class="n">attributePaths</span><span class="o">={</span><span class="s">"member"</span><span class="o">},</span> <span class="n">type</span><span class="o">=</span><span class="nc">EntityGraph</span><span class="o">.</span><span class="na">EntityGraphType</span><span class="o">.</span><span class="na">FETCH</span><span class="o">)</span>
-    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Review</span><span class="o">&gt;</span> <span class="nf">findByMovie</span><span class="o">(</span><span class="nc">Movie</span> <span class="n">movie</span><span class="o">);</span>
-
-    <span class="nd">@Modifying</span>
-    <span class="nd">@Query</span><span class="o">(</span><span class="s">"delete from Review mr where mr.member=:member"</span><span class="o">)</span>
-    <span class="kt">void</span> <span class="nf">deleteByMember</span><span class="o">(</span><span class="nc">Member</span> <span class="n">member</span><span class="o">);</span>
-<span class="o">}</span>
-
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>@Query를 적용한 후에는 한 번에 review 테이블에서 삭제가 된다.</p>
-
-	  </div>
-
-		
-		<ul class="tag_box list-unstyled list-inline">
-		  <li><i class="fa fa-folder-open"></i></li>
-		  
-		  
-			 
-				<li><a href="/categories.html#SpringBoot-ref">
-					SpringBoot <span>(2)</span>
-					
-				</a></li>
-			
-		  
-		</ul>
-		  
-
-		
-		<ul class="list-inline">
-		  <li><i class="fa fa-tags"></i></li>
-		  
-		  
-			 
-				<li>
-					<a href="/tags.html#Intellij-ref">
-					Intellij <span>(7)</span>
-					,
-					</a>
-				</li>
-			 
-				<li>
-					<a href="/tags.html#SpringBoot-ref">
-					SpringBoot <span>(2)</span>
-					
-					</a>
-				</li>
-			
-		  
-		  
-		</ul>
-		  
-
-		<hr>
-
-		<div>
-      <section class="share col-sm-6">
-        <h4 class="section-title">Share Post</h4>
-        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=코드로 배우는 스프링 부트 웹 프로젝트-Part4-02&via=young"
-           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-          <i class="fa fa-twitter fa-lg"></i>
-          Twitter
-        </a>
-        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
-           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-          <i class="fa fa-facebook fa-lg"></i>
-          Facebook
-        </a>
-        <a class="btn btn-default btn-sm gplus"
-           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
-          <i class="fa fa-google-plus fa-lg"></i>
-          Google+
-        </a>
-      </section>
-
-      <section class="col-sm-6 author">
-        <img src="//www.gravatar.com/avatar/youngkyon1324@naer.com" class="img-rounded author-image" />
-        <h4 class="section-title author-name">YoungKyonYou</h4>
-        <p class="author-bio">Integration of Knowledge</p>
-      </section>
-    </div>
-
-    <div class="clearfix"></div>
-
-		<ul class="pager">
-		  
-		  <li class="previous"><a href="/springboot/2021/02/02/learning-springboot-web-with-code-post01.html" title="코드로 배우는 스프링 부트 웹 프로젝트-Part4-01">&larr; Previous</a></li>
-		  
-		  
-			<li class="next disabled"><a>Next &rarr;</a>
-		  
-		</ul>
-
-		<hr>
-	</div>
-	
-	<div class="col-sm-2 sidebar-2">
-	
-	</div>
-</article>
-<div class="clearfix"></div>
-
-
-
-
-
-		<footer>
-			<hr/>
-			<p>
-				&copy; 2021 YoungKyonYou with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
-			</p>
-		</footer>
-	</div>
-
-	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/assets/js/app.js"></script>
-</body>
-</html>
-
-
-
-<!-- Asynchronous Google Analytics snippet -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'YoungKyonYou', 'auto');
-  ga('send', 'pageview');
-</script>
-
+<p>여기서 중요한</p>
+:ET

@@ -81,8 +81,10 @@ import org.zerock.mreview.entity.MovieImage;
 import java.util.List;
 
 public interface MovieRepository extends JpaRepository<Movie,Long> {
-    @Query("select m, mi, avg(coalesce(r.grade,0)), count(distinct r) from Movie m "+"left outer join MovieImage mi on mi.movie=m "+
+    @Query("select m, mi, avg(coalesce(r.grade,0)), count(distinct r) from Movie m "+
+    "left outer join MovieImage mi on mi.movie=m "+
             "left outer join Review r on r.movie=m group by m")
+
     Page<Object[]> getListPage(Pageable pageable);
 
     @Query("select m, mi "+"from Movie m left outer join MovieImage mi on mi.movie=m "+"where m.mno=:mno")
@@ -237,11 +239,12 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     void deleteByMember(Member member);
 }
 
+
 ```
 
 MemberRepository는 JpaRepository의 기능만으로 삭제가 가능하므로 추가할 메서드는 없다. MemberRepositoryTests에는 ReviewRepository를 추가로 주입하고 테스트 코드를 작성한다.
 
-![](../images/Learning_SpringBoot_with_Web_Project/Part4/2021-02-10-20-13-59.png)
+![](/images/Learning_SpringBoot_with_Web_Project/Part4/Chapter7/2021-02-10-20-13-59.png)
 
 **ReviewRepositoryTests 클래스 일부**
 
@@ -287,4 +290,40 @@ public class ReviewRepositoryTests {
 
 ```
 
-여기서 중요한
+여기서 중요한 것은 FK로 참조하고 있는 것을 먼저 삭제하고 PK 쪽을 삭제 해야 한다는 것이다.
+
+- @Transactional은 Update나 Delete할 때 씀
+  - @Transactional은 기본적으로 스프링의 테스트에서 RollBack 처리를 시도하도록 되어있음
+    - 그렇기 때문에 DB에 반영이 안됨
+  - RollBack를 하게 하지 않기 위해서는 @Commit를 같이 써주면 됨
+    - DB에 반영이 되게 됨
+
+> "update나 delete를 이용하기 위해서는 @Modifying 어노테이션이 반드시 필요하다."
+
+@Query를 이용해서 where 절을 지정하면 효율적으로 삭제가 가능하다.
+
+```java
+package org.zerock.mreview.repository;
+
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.zerock.mreview.entity.Member;
+import org.zerock.mreview.entity.Movie;
+import org.zerock.mreview.entity.Review;
+
+import java.util.List;
+
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    @EntityGraph(attributePaths={"member"}, type=EntityGraph.EntityGraphType.FETCH)
+    List<Review> findByMovie(Movie movie);
+
+    @Modifying
+    @Query("delete from Review mr where mr.member=:member")
+    void deleteByMember(Member member);
+}
+
+```
+
+@Query를 적용한 후에는 한 번에 review 테이블에서 삭제가 된다.
