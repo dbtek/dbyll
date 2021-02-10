@@ -210,3 +210,81 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 }
 
 ```
+
+- M:N (다대다)의 관계를 현재와 같이 별도의 매핑 테이블을 구성하고 이를 엔티티로 처리하는 경우 주의 해야 함
+  - '명사'에 해당하는 데이터를 삭제하는 경우 중간에 매핑 테이블에서도 삭제를 해야 하기 때문
+  - 특정 회원(Member)을 삭제하는 경우 해당 회원이 등록한 모든 영화 리뷰(Review) 역시 삭제되어야 함
+    - 특정 회원을 삭제하려면 review 테이블에서 먼저 삭제후 m_member 테이블에서 삭제해야 함
+
+**ReviewRepositroy에는 회원(Member)을 이용해서 삭제하는 메서드를 추가**
+
+```java
+package org.zerock.mreview.repository;
+
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.zerock.mreview.entity.Member;
+import org.zerock.mreview.entity.Movie;
+import org.zerock.mreview.entity.Review;
+
+import java.util.List;
+
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    @EntityGraph(attributePaths={"member"}, type=EntityGraph.EntityGraphType.FETCH)
+    List<Review> findByMovie(Movie movie);
+    void deleteByMember(Member member);
+}
+
+```
+
+MemberRepository는 JpaRepository의 기능만으로 삭제가 가능하므로 추가할 메서드는 없다. MemberRepositoryTests에는 ReviewRepository를 추가로 주입하고 테스트 코드를 작성한다.
+
+![](../images/Learning_SpringBoot_with_Web_Project/Part4/2021-02-10-20-13-59.png)
+
+**ReviewRepositoryTests 클래스 일부**
+
+```java
+package org.zerock.mreview.repository;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
+import org.zerock.mreview.entity.Member;
+import org.zerock.mreview.entity.Movie;
+import org.zerock.mreview.entity.Review;
+
+import java.util.List;
+import java.util.stream.IntStream;
+
+@SpringBootTest
+public class ReviewRepositoryTests {
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Commit
+    @Transactional
+    @Test
+    public void testDeleteMember(){
+        Long mid=1L;
+        Member member=Member.builder().mid(mid).build();
+       // memberRepository.deleteById(mid);
+       // reviewRepository.deleteByMember(member);
+
+        reviewRepository.deleteByMember(member);
+        memberRepository.deleteById(mid);
+    }
+
+
+}
+
+```
+
+여기서 중요한
