@@ -3,9 +3,9 @@ layout: post
 title: "차이코프스키-꽃의 왈츠"
 date: 2021-01-17 12:35:00 0000
 image: /Classic/Tchaikovsky-01/main.jpg
-tags: classic, nutcracker, waltz, tchaikovsky
+tags: classic, nutcracker, waltz, tchaikovsky, orchestra
 categories: classic
-description: Waltz of the Flowers
+description: Tchaikovsky-Waltz of the Flowers
 ---
 
 # Tchaikovsky-Waltz of the Flowers
