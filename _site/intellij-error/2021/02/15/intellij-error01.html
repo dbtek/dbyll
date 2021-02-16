@@ -2,7 +2,9 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Configuration</title>
+	<title>Intellij(인텔리제이) cannot resolve symbol 에러</title>
+	
+	<meta name="description" content="sudden cannot resolove symbol error solution">
 	
 	<meta name="author" content="YoungKyonYou">
 
@@ -57,7 +59,7 @@
 			</a>
 			
 			<a class="navbar-brand" href="/">
-				<img src="//www.gravatar.com/avatar/youngkyon1324@naer.com?s=35" class="img-circle" />
+				<img src="/images/MainImage/karajan.jpg" class="img-circle">
 				MyWay
 			</a>
 		</div>
@@ -69,7 +71,8 @@
 				<li><a href="/categories.html">Categories</a></li>
 				<li><a href="/tags.html">Tags</a></li>
 			</ul>
-		</div><!-- /.navbar-collapse -->
+		</div>
+<!-- /.navbar-collapse -->
 	</nav>
 
 	<!-- nav-menu-dropdown -->
@@ -81,7 +84,7 @@
 			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
 			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
 			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
-			<li class="divider"></li>
+			<li class="divider">
 			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
 		</ul>
 	</div>
@@ -90,7 +93,7 @@
 		<!-- sidebar.html -->
 <header class="sidebar-header" role="banner">
 	<a href="/">
-		<img src="//www.gravatar.com/avatar/youngkyon1324@naer.com?s=150" class="img-circle" />
+		<img src="//www.gravatar.com/avatar/youngkyon1324@naer.com?s=150" class="img-circle">
 	</a>
 	<h3 class="title">
         <a href="/">MyWay</a>
@@ -155,7 +158,7 @@
 
 	<div class="col-sm-9 col-sm-offset-3">
 		<div class="page-header">
-  <h1>Configuration </h1>
+  <h1>Intellij(인텔리제이) cannot resolve symbol 에러 </h1>
 </div>
 	
 <article>
@@ -163,25 +166,34 @@
 	<div class="col-sm-10">
 	 <span class="post-date">
 	   
-	   November 
+	   February 
 	   15th,
 	   
-	   2013
+	   2021
 	 </span>
 	  <div class="article_body">
-	  <p>In your config file change these settings</p>
+	  <p><br></p>
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">title</span><span class="pi">:</span> <span class="s">dbyll</span>
-<span class="na">author</span><span class="pi">:</span>  
-  <span class="na">name</span><span class="pi">:</span> <span class="s">yourname</span>  
-  <span class="na">email</span><span class="pi">:</span> <span class="s">youremail</span>  
-  <span class="na">github</span><span class="pi">:</span> <span class="s">asd123</span>  
-  <span class="na">twitter</span><span class="pi">:</span> <span class="s">asd123</span>  
-  <span class="na">pinterest</span><span class="pi">:</span> <span class="s">asd123</span>  
-  <span class="na">linkedin</span><span class="pi">:</span> <span class="s">asd123</span>  
-  <span class="na">resume</span><span class="pi">:</span> <span class="s">asd123</span>  
-  <span class="na">bio</span><span class="pi">:</span> <span class="s">Your stylish,  minimalist theme!</span>  
-  <span class="na">email_md5</span><span class="pi">:</span> <span class="s">md5ofemail</span>  </code></pre></figure>
+<h1 id="cannot-resolve-symbol-에러-해결">Cannot resolve symbol 에러 해결</h1>
+
+<p><br></p>
+
+<p>이전에 인텔리제이로 만들었던 파일에서 확인할 것이 좀 있어서 열어봤더니 갑자기 <strong>빨간줄</strong> 쳐지고 난리도 아니였다. <img class="emoji" title=":scream:" alt=":scream:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f631.png" height="20" width="20"></p>
+
+<p>뭐지뭐지… 하다가 gradle 멀쩡하고 import도 제대로 되어 있고 어노테이션도 확인했지만 이상이 없었다. 그래서 역시 갓Google덕분에 해결할 수 있었다.</p>
+
+<p>찾아보니 이것저것 해봐야되는데 다행히 <strong>Simple</strong>하게 해결했다.<img class="emoji" title=":laughing:" alt=":laughing:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f606.png" height="20" width="20"></p>
+
+<blockquote>
+   File-&gt;Invalidate Caches / Restart...
+상단&gt;
+</blockquote>
+
+<p>이것을 클릭하면 저절로 Intellij가 재시작되는데 이제 빨간줄이 사라졌다!!!..</p>
+
+<p>역시 무슨 일이 일어났을 땐 Google or StackOverflow가 진리다…</p>
+
+<hr>
 
 	  </div>
 
@@ -191,18 +203,8 @@
 		  
 		  
 			 
-				<li><a href="/categories.html#general-ref">
-					general <span>(4)</span>
-					,
-				</a></li>
-			 
-				<li><a href="/categories.html#setup-ref">
-					setup <span>(2)</span>
-					,
-				</a></li>
-			 
-				<li><a href="/categories.html#demo-ref">
-					demo <span>(4)</span>
+				<li><a href="/categories.html#Intellij-Error-ref">
+					Intellij-Error <span>(1)</span>
 					
 				</a></li>
 			
@@ -217,29 +219,8 @@
 		  
 			 
 				<li>
-					<a href="/tags.html#demo-ref">
-					demo <span>(4)</span>
-					,
-					</a>
-				</li>
-			 
-				<li>
-					<a href="/tags.html#dbyll-ref">
-					dbyll <span>(4)</span>
-					,
-					</a>
-				</li>
-			 
-				<li>
-					<a href="/tags.html#dbtek-ref">
-					dbtek <span>(4)</span>
-					,
-					</a>
-				</li>
-			 
-				<li>
-					<a href="/tags.html#setup-ref">
-					setup <span>(2)</span>
+					<a href="/tags.html#Intellij-ref">
+					Intellij <span>(9)</span>
 					
 					</a>
 				</li>
@@ -254,25 +235,22 @@
 		<div>
       <section class="share col-sm-6">
         <h4 class="section-title">Share Post</h4>
-        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Configuration&via=young"
-           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Intellij(%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%9C%EC%9D%B4)%20cannot%20resolve%20symbol%20%EC%97%90%EB%9F%AC&amp;via=young" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
           <i class="fa fa-twitter fa-lg"></i>
           Twitter
         </a>
-        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
-           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
           <i class="fa fa-facebook fa-lg"></i>
           Facebook
         </a>
-        <a class="btn btn-default btn-sm gplus"
-           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <a class="btn btn-default btn-sm gplus" onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
           <i class="fa fa-google-plus fa-lg"></i>
           Google+
         </a>
       </section>
 
       <section class="col-sm-6 author">
-        <img src="//www.gravatar.com/avatar/youngkyon1324@naer.com" class="img-rounded author-image" />
+        <img src="//www.gravatar.com/avatar/youngkyon1324@naer.com" class="img-rounded author-image">
         <h4 class="section-title author-name">YoungKyonYou</h4>
         <p class="author-bio">Integration of Knowledge</p>
       </section>
@@ -282,10 +260,10 @@
 
 		<ul class="pager">
 		  
-		  <li class="previous"><a href="/general/demo/2013/11/14/sample.html" title="Sample">&larr; Previous</a></li>
+		  <li class="previous"><a href="/springboot/2021/02/02/learning-springboot-web-with-code-post02.html" title="코드로 배우는 스프링 부트 웹 프로젝트-Part4-02">← Previous</a></li>
 		  
 		  
-		  <li class="next"><a href="/general/setup/demo/2013/11/15/hello-world.html" title="Hello World!">Next &rarr;</a></li>
+		  <li class="next"><a href="/springboot/2021/02/15/learning-springboot-web-with-code-chapter05-post01.html" title="코드로 배우는 스프링 부트 웹 프로젝트-Part3-01">Next →</a></li>
 		  
 		</ul>
 
@@ -303,9 +281,9 @@
 
 
 		<footer>
-			<hr/>
+			<hr>
 			<p>
-				&copy; 2021 YoungKyonYou with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+				© 2021 YoungKyonYou with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
 			</p>
 		</footer>
 	</div>

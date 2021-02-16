@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>데카르트-근대의 사상01</title>
+	<title>코드로 배우는 스프링 부트 웹 프로젝트-Part3-01</title>
 	
 	<meta name="author" content="YoungKyonYou">
 
@@ -156,7 +156,7 @@
 
 	<div class="col-sm-9 col-sm-offset-3">
 		<div class="page-header">
-  <h1>데카르트-근대의 사상01 </h1>
+  <h1>코드로 배우는 스프링 부트 웹 프로젝트-Part3-01 </h1>
 </div>
 	
 <article>
@@ -164,64 +164,100 @@
 	<div class="col-sm-10">
 	 <span class="post-date">
 	   
-	   January 
-	   18th,
+	   February 
+	   15th,
 	   
 	   2021
 	 </span>
 	  <div class="article_body">
-	  <h1 id="전근대-사상">전근대 사상</h1>
+	  <p><br><br></p>
 
-<p><img src="/images/Philosophy/Decartes-modern01/2021-02-07-23-56-46.png" alt="" width="50%" height="50%">
-<br>
-근대로 한 번 넘어와서 데카르트에 대한 사상가를 한 번 알아보자.
-근대 철학의 아버지라고 불리는 데카르트 하면 떠오르는 <strong>명제</strong>가 있다.
-<strong>“나는 생각한다 고로 나는 존재한다.”</strong> 라는 말은 살면서 한 번쯤은 들어봤을 것이다.
-<del>무슨 스님 빗질하는 소리야!..</del>
-이번 게시물에서는 이 명제를 상기해보고 플라톤 사상과 비교해서 어떤 차이점이 있는지 살펴보자 <img class="emoji" title=":blush:" alt=":blush:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f60a.png" height="20" width="20"></p>
+<h1 id="n1다대일-연관관계-board-만들기">&lt;N:1(다대일) 연관관계&gt; Board 만들기</h1>
 
 <hr>
 
-<h3 id="나는-생각한다-고로-존재한다">“나는 생각한다 고로 존재한다”</h3>
+<p>여기서는 ‘회원’과 ‘게시글’ 그리고 ‘댓글’이라는 주제로 JPA에서 연관관계를 가장 쉽게 적용할 수 있는 방법을 알아본다.
+먼저 연관관계와 관계형 데이터베이스 설계를 해야 한다. <img class="emoji" title=":disappointed:" alt=":disappointed:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f61e.png" height="20" width="20"></p>
 
-<p>이게 무슨 의미일까? 즉 생각한다는 것이 나의 정체성, 나의 존재의 근거를 규정한다. 라는 문장이다.
-<del>나는 누구지?..</del><img class="emoji" title=":sob:" alt=":sob:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f62d.png" height="20" width="20">
-그리고 데카르트가 이 명제를 사용했을 때 생각이라는 중요한 활동을 하는, 생각하는 <strong>나</strong>가 모든 것의 출발점이자 중심이 된다고 생각했다.</p>
+<p><br></p>
 
-<p>즉 여러 가지 생각을 가진 나, 그리고 내가 가진 각종 생각들, 그리고 똑같은 의미로 관념들이 바로 내 생각의 출발점을 이룬다는 것이다.
-그래서 근대 사상에서 가장 출발점에 오는 기본 물음이 뭐냐면</p>
+<p>‘회원’과 ‘게시글’의 관계를 다음과 같은 명제로 나타내본다.</p>
 
 <ul>
-  <li>그자체로 뭐냐가 아니라 지금 인간인 내가 가지고 있는 관념들 중에서 어떤 것이 외부세계에 참을 보여주는 가?</li>
-  <li>내가 가진 생각들 중 어떤 것이 실제로 존재하는 것을 그대로 반영하는가?</li>
+  <li>한 명의 회원은 여러 게시글을 작성할 수 있다.</li>
+  <li>하나의 게시글은 한 명의 회원에 의해서 작성된다.</li>
 </ul>
 
-<p><strong>사고의 방향이 바깥에서 출발하는 것이 아니라 나에서 출발한다</strong>
-그것도 내 머리 속에 관념에서 출발해서 바깥에 그자체로 존재하는 것이 무엇이고 우리는 어떻게 인식할 수 있는가로 향한다. 이것이 근대적인 사고방식이다.</p>
+<p><br></p>
 
-<p><strong><em>“난 아무 생각없이 사는데.. 데카르트는 존경합니다…“</em></strong><img class="emoji" title=":joy:" alt=":joy:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f602.png" height="20" width="20"></p>
+<p>아래 사진을 보면 회원 데이터의 아이디는 PK에 해당한다. 아이디는 회원을 구분할 수 있는 고유한 값을 가지게 되는 것이다.
+게시글 데이터를 보면 작성자 칼럼 값으로 동일한 회원 아이디가 여러 번 나오는 것을 볼 수 있다. 회원 데이터의 입장에서는 하나(One)의 PK(아이디)가 여러(Many) 게시글에서 참조(FK)되고 있는 관계가 된다.</p>
 
-<p>데카르트에 오면 의심이 중요해진다. 우리 가지고 있는 수많은 생각, 관념들이 그자체로 존재하는 것을 그대로 다 보여주는 것이 아니라 자꾸 우리의 생각과 관념들을 의심하게 된다. 의심이라는 것이 근대의 특히 데카르트 사상에 중요한 지위를 차지하게 된다. 데카르트는 의심에서 자기 철학을 출발시키게 된다. 그렇기 때문에 위해서 말했던 두 가지 기본 물음들이 나오게 되는 것이다.</p>
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-00-46.png" alt=""></p>
 
-<p><img src="/images/Philosophy/Decartes-modern01/2021-02-08-00-19-42.png" alt=""></p>
+<p>회원 데이터 쪽이 ‘일(one)’이고, 게시글 데이터는 동일한 회원 아이디가 여러 번 나오고 있으므로 ‘다(many)’로 판단하고 다음과 같이 ERD를 작성한다.</p>
 
-<p>데카르트 의심에서 출발하는 물음은 여기서 끝나는 것이 아니다.
-<strong><em>“ㄷㄷ”</em></strong>
-이제는 우리의 관념, 생각들이 바깥에 실제하는 세계를 충실하게 보여주는 지가 문제가 아니라 관념의 세계, 생각의 세계에 대응하는 실제 세계가 있는가?
-이것들이 진짜 바깥에 있긴한가? 라는 것으로 미치게 된다. 즉 바깥에 실제 세계에 너무나도 당연하게 생각되었던 대응 관계마저도 의심하게 된다.
-<del><strong>“병원 한 번 가봐야 되는 거 아니야??”</strong></del></p>
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-05-42.png" alt=""></p>
 
-<p>데카르트는 이런 관념들의 원인이 되는 바깥에 실제 세계 자체가 없을 수도 있다는 생각을 하게 되는 것이다.<img class="emoji" title=":open_mouth:" alt=":open_mouth:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f62e.png" height="20" width="20"></p>
+<p><strong>데이터베이스에서 관계를 해석할 때는 항상 PK 쪽에서 해석하고, 이를 반영해야 혼란을 줄일 수 있다</strong> <img class="emoji" title=":open_mouth:" alt=":open_mouth:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f62e.png" height="20" width="20"></p>
 
-<p>이 두 가지 물음을 집요하게 파고든 결과 바깥에 실제하는 세계가 존재하지 않고 어떤 사악한 하지만 굉장히 유능한 악령이 있어서 나를 속이기 위해 이 바깥 세계를 존재하지도 않는데 나를 속이기 위해서 바깥 세계가 존재하는 것인거마냥 내 머릿속에 그에 해당하는 모든 생각들을 집어넣어주고 있을 수도 있겠다 라는 그 가능성에 도달하게 된다.
-이것이 바로 굉장히 그 유명한 데카르트의 <strong>악령의 가설</strong>이다. <img class="emoji" title=":smiling_imp:" alt=":smiling_imp:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f608.png" height="20" width="20"></p>
+<p><br></p>
 
-<p><img src="/images/Philosophy/Decartes-modern01/2021-02-08-00-26-40.png" alt="">
-<br><br></p>
+<p>즉, 앞에서 이야기했던 두 명제는 다음과 같이 해석되어야 한다.</p>
+
+<ul>
+  <li>한 명의 회원은 여러 개의 게시글을 작성할 수 있다(PK에서 해석)</li>
+  <li>하나의 게시글은 한 명의 작성자만을 표시할 수 있다.</li>
+</ul>
+
+<p><br></p>
+
+<p>이제 ‘회원, 게시글, 댓글’의 관계를 PK를 기준으로 설계해보면 다음과 같은 구조가 된다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-17-05.png" alt=""></p>
+
+<p>회원이 있어야 게시글을 작성할 수 있으므로 회원 테이블을 먼저 설계하고 게시글을 작성할 때는 특정 회원과의 관계를 설정해 주어야 한다. 댓글은 게시글이 있어야만 작성할 수 있으므로 게시글을 우선 설계하고, 댓글 테이블이 게시글을 FK로 작성한다.</p>
+
+<p><br></p>
+
+<p>JPA는 객체지향의 입장에서 관계를 보는데 간단한 시작은 객체지향보다는 관계형 데이터베이스 모델링을 위주로 해서 구성하는 것이 편리하다.
+<img class="emoji" title=":thumbsup:" alt=":thumbsup:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" height="20" width="20"></p>
 
 <hr>
 
-<p>나중에 시간이 되면 악령의 가설에 대한 부분도 다뤄보겠다.</p>
+<p><br></p>
+
+<h2 id="예제-프로젝트의-생성"><strong>예제 프로젝트의 생성</strong></h2>
+
+<p><br><br></p>
+
+<p>프로젝트의 생성은 ‘board’라는 이름의 프로젝트로 생성하고 Gradle, War 항목을 선택한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-23-58.png" alt=""></p>
+
+<p><br></p>
+
+<p>추가할 라이브러리는 ‘Spring Boot DevTools, Lombok, Spring Web, Thymeleaf, Spring Data JPA 등을 추가한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-24-30.png" alt=""></p>
+
+<p><br></p>
+
+<p>MariaDB JDBC 드라이버와 Thymeleaf의 시간 처리 관련 라이브러리를 추가한다.</p>
+
+<p><em>“나는 mysql를 선호해서 mysql connector로 대신했다”</em> <img class="emoji" title=":satisfied:" alt=":satisfied:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f606.png" height="20" width="20"></p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-26-35.png" alt=""></p>
+
+<p><br></p>
+
+<p>application.properties 파일에는 JPA 관련 설정을 추가한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-29-06.png" alt=""></p>
+
+<p><br></p>
+
+<p>프로젝트 내에 entity 패키지를 생성하고, 이전 예제에서 사용했던 BaseEntity 클래스를 추가한다.</p>
 
 	  </div>
 
@@ -231,8 +267,8 @@
 		  
 		  
 			 
-				<li><a href="/categories.html#philosophy-ref">
-					philosophy <span>(4)</span>
+				<li><a href="/categories.html#SpringBoot-ref">
+					SpringBoot <span>(3)</span>
 					
 				</a></li>
 			
@@ -247,8 +283,15 @@
 		  
 			 
 				<li>
-					<a href="/tags.html#Descartes-ref">
-					Descartes <span>(1)</span>
+					<a href="/tags.html#Intellij-ref">
+					Intellij <span>(9)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#SpringBoot-ref">
+					SpringBoot <span>(3)</span>
 					
 					</a>
 				</li>
@@ -263,7 +306,7 @@
 		<div>
       <section class="share col-sm-6">
         <h4 class="section-title">Share Post</h4>
-        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=%EB%8D%B0%EC%B9%B4%EB%A5%B4%ED%8A%B8-%EA%B7%BC%EB%8C%80%EC%9D%98%20%EC%82%AC%EC%83%8101&amp;via=young" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=%EC%BD%94%EB%93%9C%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EC%8A%A4%ED%94%84%EB%A7%81%20%EB%B6%80%ED%8A%B8%20%EC%9B%B9%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-Part3-01&amp;via=young" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
           <i class="fa fa-twitter fa-lg"></i>
           Twitter
         </a>
@@ -288,12 +331,14 @@
 
 		<ul class="pager">
 		  
-		  <li class="previous"><a href="/philosophy/2021/01/18/plato-idea03.html" title="플라톤-이데아03">← Previous</a></li>
+		  <li class="previous"><a href="/intellij-error/2021/02/15/intellij-error01.html" title="Intellij(인텔리제이) cannot resolve symbol 에러">← Previous</a></li>
 		  
 		  
-		  <li class="next"><a href="/program/2021/01/21/program-post02.html" title="Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-01">Next →</a></li>
+			<li class="next disabled">
+<a>Next →</a>
 		  
-		</ul>
+		</li>
+</ul>
 
 		<hr>
 	</div>
