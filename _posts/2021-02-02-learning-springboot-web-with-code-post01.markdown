@@ -32,7 +32,7 @@ description: 영화 리뷰 만들기
 - 매핑 테이블은 흔희 '연결 테이블' 이라고 부름
   - 말 그대로 두 테이블의 중간에서 필요한 정보를 양쪽에서 끌어다 쓰는 구조
 
-![erm](........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\ERM.PNG)
+![erm](\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\ERM.PNG)
 <br><br><br>
 
 - 매핑 테이블의 작성 이전에 다른 테이블들이 먼저 존재해야 함
@@ -47,10 +47,10 @@ description: 영화 리뷰 만들기
 
 ### 프로젝트 생성
 
-![create](........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\create.PNG)
+![create](\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\create.PNG)
 <br><br><br>
 
-![dependencies](........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\dependencies.PNG)
+![dependencies](\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\dependencies.PNG)
 <br><br><br>
 
 ### build.gradle
@@ -93,7 +93,7 @@ spring.thymeleaf.cache=false
 
 ### 엔티티 설계
 
-![main](........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\main.PNG)
+![main](\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\main.PNG)
 <br><br><br>
 
 **MreviewApplication 클래스 일부**
@@ -111,7 +111,7 @@ public class MreviewApplication {
 ```
 
 <Br><br>
-![Movie](........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\Movie.PNG)
+![Movie](\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\Movie.PNG)
 <br><br><br>
 
 **Movie 클래스**
@@ -186,7 +186,7 @@ public class MovieImage {
 
 - Member 클래스는 고유한 번호, 이메일, 아이디와 패스워드, 닉네임을 의미하도록 클래스 설계
 
-![member](........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\member.PNG)
+![member](\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\member.PNG)
 <br>
 
 ```java
@@ -230,7 +230,7 @@ public class Member extends BaseEntity{
   <br>
 
 **Review 클래스**
-![review](........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\review.PNG)
+![review](\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\review.PNG)
 <br>
 
 ```java
@@ -268,12 +268,12 @@ public class Review extends BaseEntity{
 
 \*\*생성된 테이블 ERD
 
-![ermcomplete](........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\ermcomplete.PNG)
+![ermcomplete](\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\ermcomplete.PNG)
 <br><br>
 
 ### Repository 생성하기
 
-![repository](........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\repository.PNG)
+![repository](\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\repository.PNG)
 <br><br>
 
 **MemberRepository 인터페이스**
@@ -329,14 +329,14 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 - 목록 화면에서는 영화(Movie)와 영화 이미지(MovieImage), 리뷰의 수, 평점 평균을 화면에 출력하고자 함
 
-![content](........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\content.PNG)
+![content](\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\content.PNG)
 <br><br>
 
 - 영화(movie)와 영화 이미지(movie_image)는 '일대다'의 관계가 됨
 
 리뷰(review)를 같이 조인하면 아래와 같은 구조가 된다.
 
-![structure](........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\structure.PNG)
+![structure](\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\structure.PNG)
 
 ---
 

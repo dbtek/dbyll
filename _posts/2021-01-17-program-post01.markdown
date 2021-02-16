@@ -10,7 +10,7 @@ description: Javascript
 
 # 혼자 공부하는 자바 스크립트
 
-![book](........\images\Program\post-1\logo.jpg)
+![book](\images\Program\post-1\logo.jpg)
 
 #### 이 책은 내가 자바 스크립트에 대해서 공부를 하기 위해서 샀다.
 

@@ -16,7 +16,7 @@ description: Idea
 플라톤의 사상 체계는 <u>완전히 성격이 다른 이데아라는 차원과 현실이라는 두 차원을</u> 가지고 있다는 점에서 이원론이라고 할 수 있다.
 
 사실 이데아에 관해서 이야기하려면 빼놓을 수 없는 것이 플라톤의 동굴의 비유이다.
-![packed](........\images\Philosophy\Plato-Idea02\cave.jpg)
+![packed](\images\Philosophy\Plato-Idea02\cave.jpg)
 
 **_"동굴의 비유도 참 흥미로운 이야기이지만 다음에 시간이 되면 추가 설명해보도록 하겠다"_**
 
@@ -55,7 +55,7 @@ description: Idea
 
 #### idea: 보이는 것, 형태, 모습을 가진 것 이라는 의미를 가졌었으나 플라톤이 영혼의 눈을 통해서만 보이는 것 이라는 이데아 개념을 확립했다.
 
-![packed](........\images\Philosophy\Plato-Idea02\book.jpg){: width="400" height="700"}
+![packed](\images\Philosophy\Plato-Idea02\book.jpg){: width="400" height="700"}
 
 플라톤의 파이돈이라는 책을 보면
 **"육체는 영혼의 감옥", "철학은 죽음의 연습"** 이라는 말이 있다.

@@ -19,7 +19,7 @@ description: Intellij와 AWS의 RDS와 S3 연동
 
 new Project를 눌러서 프로젝트를 만든다.
 
-![new project](........\images\Program\post-5\newProject.PNG)
+![new project](\images\Program\post-5\newProject.PNG)
 <br><br><br>
 
 - Group -> com.young.s3
@@ -30,7 +30,7 @@ new Project를 눌러서 프로젝트를 만든다.
 
 이렇게 설정하고 Next를 누른다.
 
-![new project name](........\images\Program\post-5\newProjectName.PNG)
+![new project name](\images\Program\post-5\newProjectName.PNG)
 <br><br><br>
 
 #### Dependencies
@@ -43,12 +43,12 @@ new Project를 눌러서 프로젝트를 만든다.
 
 이렇게 설정하고 Next를 누른다.
 
-![new project dependency](........\images\Program\post-5\newProjectGradle.PNG)
+![new project dependency](\images\Program\post-5\newProjectGradle.PNG)
 <br><br><br>
 
 마지막으로 Finish를 누른다.
 
-![new project dependency](........\images\Program\post-5\newProjectFinish.PNG)
+![new project dependency](\images\Program\post-5\newProjectFinish.PNG)
 <br><br><br>
 
 ---
@@ -123,7 +123,7 @@ spring.jpa.show-sql=true
 
 이전에 만든 rds에서 엔드포인트를 복사해서 붙여넣는다.
 
-![endPoint](........\images\Program\post-5\endpoint.PNG)
+![endPoint](\images\Program\post-5\endpoint.PNG)
 <br><br><br>
 
 ### Intellij Database 설정
@@ -131,12 +131,12 @@ spring.jpa.show-sql=true
 ctrl+shift+a를 누르게 되면 search를 할 수가 있는데
 여기서 database를 입력하고 누른다.
 
-![search](........\images\Program\post-5\search.png)
+![search](\images\Program\post-5\search.png)
 <br><br><br>
 
 그 다음에 플러스 버튼을 datasource를 선택하고 mysql누르고 생성을 한다.
 
-![datasource](........\images\Program\post-5\datasource.PNG)
+![datasource](\images\Program\post-5\datasource.PNG)
 <br><br><br>
 
 하나의 창이 뜨게 된다.
@@ -149,7 +149,7 @@ ctrl+shift+a를 누르게 되면 search를 할 수가 있는데
 이렇게 쓰고 Test Connection를 누르게 되면 저렇게 초록색 체크 표시가 나온다.
 이제 OK를 누르고 생성을 하면 된다.
 
-![create](........\images\Program\post-5\create.PNG)
+![create](\images\Program\post-5\create.PNG)
 <br><br><br>
 
 ---
@@ -158,7 +158,7 @@ ctrl+shift+a를 누르게 되면 search를 할 수가 있는데
 
 프로젝트 구성은 이런 식으로 구성한다.
 
-![project_structure](........\images\Program\post-5\project.PNG)
+![project_structure](\images\Program\post-5\project.PNG)
 <br><br><br>
 
 먼저 데이터베이스가 제대로 작동하는지 확인하기 위해 domain/entity 아래 GalleryEntity 코드를 먼저 작성한다.
@@ -212,22 +212,22 @@ public interface GalleryRepository extends JpaRepository<GalleryEntity, Long> {
 
 이렇게 gallery 테이블이 만들어진 것을 볼 수 있다.
 
-![schema](........\images\Program\post-5\schema.PNG)
+![schema](\images\Program\post-5\schema.PNG)
 <br><br><br>
 
 그리고 다시 오른쪽에 Database 창에 가서 rds-test 옆에 1of5라고 되어 있는 것을 클릭해 본다.
 
-![1of5](........\images\Program\post-5\1of5.PNG)
+![1of5](\images\Program\post-5\1of5.PNG)
 <br><br><br>
 
 그러다 보면 스키마 리스트가 나오는데 여기서 자신이 만든 데이터베이스 이름, 여기선 rds_test를 체크한다.
 
-![check](........\images\Program\post-5\check.PNG)
+![check](\images\Program\post-5\check.PNG)
 <br><br><br>
 
 체크하고 나면 방금 어플리케이션을 실행해서 만든 필드들이 나타나는 것을 볼 수 있다.
 
-![checkok](........\images\Program\post-5\checkok.PNG)
+![checkok](\images\Program\post-5\checkok.PNG)
 <br><br><br>
 다음 게시물에서는 인텔리제이에서 프로젝트를 만들고 실질적으로 이전 게시물에서 생성한 RDS와 S3를 연동해보도록 하겠다.
 

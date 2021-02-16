@@ -182,7 +182,7 @@
 
 <p>resource 폴더에서 새로운 file를 생성하기를 눌러서 이름을 application.yml이라고 치면 저절로 저렇게 추가가 된다.</p>
 
-<p><img src="........\images\Program\post-6\yml.PNG" alt="yml" />
+<p><img src="\images\Program\post-6\yml.PNG" alt="yml" />
 <br /><br /><br /></p>
 
 <p><strong>yml 파일 내용</strong></p>
@@ -491,6 +491,7 @@
 40
 41
 42
+43
 </pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">com.young.s3.s3test.controller</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">com.young.s3.s3test.dto.GalleryDto</span><span class="o">;</span>
@@ -517,15 +518,13 @@
 
         <span class="k">return</span> <span class="s">"/gallery"</span><span class="o">;</span>
     <span class="o">}</span>
-
     <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/gallery"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">execWrite</span><span class="o">(</span><span class="nc">GalleryDto</span> <span class="n">galleryDto</span><span class="o">,</span> <span class="nc">MultipartFile</span> <span class="n">file</span><span class="o">,</span> <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">"phone"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">phoneNum</span><span class="o">,</span> <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">"name"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">execWrite</span><span class="o">(</span><span class="nc">GalleryDto</span> <span class="n">galleryDto</span><span class="o">,</span> <span class="nc">MultipartFile</span> <span class="n">file</span><span class="o">,</span>
+     <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">"phone"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">phoneNum</span><span class="o">,</span> <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">"name"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
 
         <span class="nc">String</span> <span class="n">imgPath</span> <span class="o">=</span> <span class="n">s3Service</span><span class="o">.</span><span class="na">upload</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
         <span class="n">galleryDto</span><span class="o">.</span><span class="na">setFilePath</span><span class="o">(</span><span class="n">imgPath</span><span class="o">);</span>
 
-       <span class="c1">// System.out.println("이름 확인:"+galleryDto.getName());</span>
-      <span class="c1">//  System.out.println("전화번호 :"+phoneNum);</span>
         <span class="n">galleryDto</span><span class="o">.</span><span class="na">setPhoneNum</span><span class="o">(</span><span class="n">phoneNum</span><span class="o">);</span>
         <span class="n">galleryDto</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
         <span class="n">galleryService</span><span class="o">.</span><span class="na">savePost</span><span class="o">(</span><span class="n">galleryDto</span><span class="o">);</span>
@@ -533,6 +532,9 @@
         <span class="k">return</span> <span class="s">"redirect:/gallery"</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
+
+
+
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p><br /><br /></p>
@@ -585,21 +587,21 @@
 
 <p>이제 브라우저에 들어가서 localhost8080/gallery를 입력하고 들어간다.</p>
 
-<p><img src="........\images\Program\post-6\http.PNG" alt="http" />
+<p><img src="\images\Program\post-6\http.PNG" alt="http" />
 <br /><br /><br /></p>
 
 <p>간단한 이미지를 업로드하고 정보를 입력한 다음 등록하기를 누른다.</p>
 
-<p><img src="........\images\Program\post-6\upload.PNG" alt="upload" />
+<p><img src="\images\Program\post-6\upload.PNG" alt="upload" />
 <br /><br /><br /></p>
 
 <p>mysql workbench에 들어가보면 정상적으로 이미지 url과 입력했던 정보가 들어가 있고
 s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 수 있다.</p>
 
-<p><img src="........\images\Program\post-6\rds.PNG" alt="rds" />
+<p><img src="\images\Program\post-6\rds.PNG" alt="rds" />
 <br /><br /><br /></p>
 
-<p><img src="........\images\Program\post-6\bucket.PNG" alt="bucket" />
+<p><img src="\images\Program\post-6\bucket.PNG" alt="bucket" />
 <br /><br /><br /></p>
 
 <hr />

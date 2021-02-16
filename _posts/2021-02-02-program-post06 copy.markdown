@@ -19,7 +19,7 @@ description: Intellij와 AWS의 RDS와 S3 연동
 
 resource 폴더에서 새로운 file를 생성하기를 눌러서 이름을 application.yml이라고 치면 저절로 저렇게 추가가 된다.
 
-![yml](........\images\Program\post-6\yml.PNG)
+![yml](\images\Program\post-6\yml.PNG)
 <br><br><br>
 
 **yml 파일 내용**
@@ -201,15 +201,13 @@ public class GalleryController {
 
         return "/gallery";
     }
-
     @PostMapping("/gallery")
-    public String execWrite(GalleryDto galleryDto, MultipartFile file, @RequestParam("phone") String phoneNum, @RequestParam("name") String name) throws IOException {
+    public String execWrite(GalleryDto galleryDto, MultipartFile file,
+     @RequestParam("phone") String phoneNum, @RequestParam("name") String name) throws IOException {
 
         String imgPath = s3Service.upload(file);
         galleryDto.setFilePath(imgPath);
 
-       // System.out.println("이름 확인:"+galleryDto.getName());
-      //  System.out.println("전화번호 :"+phoneNum);
         galleryDto.setPhoneNum(phoneNum);
         galleryDto.setName(name);
         galleryService.savePost(galleryDto);
@@ -217,6 +215,9 @@ public class GalleryController {
         return "redirect:/gallery";
     }
 }
+
+
+
 ```
 
 <br><br>
@@ -252,21 +253,21 @@ resources/templates 아래 gallery.html를 생성한다
 
 이제 브라우저에 들어가서 localhost8080/gallery를 입력하고 들어간다.
 
-![http](........\images\Program\post-6\http.PNG)
+![http](\images\Program\post-6\http.PNG)
 <br><br><br>
 
 간단한 이미지를 업로드하고 정보를 입력한 다음 등록하기를 누른다.
 
-![upload](........\images\Program\post-6\upload.PNG)
+![upload](\images\Program\post-6\upload.PNG)
 <br><br><br>
 
 mysql workbench에 들어가보면 정상적으로 이미지 url과 입력했던 정보가 들어가 있고
 s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 수 있다.
 
-![rds](........\images\Program\post-6\rds.PNG)
+![rds](\images\Program\post-6\rds.PNG)
 <br><br><br>
 
-![bucket](........\images\Program\post-6\bucket.PNG)
+![bucket](\images\Program\post-6\bucket.PNG)
 <br><br><br>
 
 ---

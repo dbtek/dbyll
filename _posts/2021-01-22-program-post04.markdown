@@ -17,12 +17,12 @@ description: Intellij와 AWS의 RDS와 S3 연동
 
 aws 메인 홈으로 들아가서 스크롤을 조금 내리면 스토리지 카테고리에 S3가 보이는 것을 볼 수 있다.
 
-![dashboard](........\images\Program\post-4\s3dashboard.PNG)
+![dashboard](\images\Program\post-4\s3dashboard.PNG)
 <br><br><br><br>
 
 S3에 들어가면 오른 쪽 중간에 버킷 만들기 버튼을 누른다.
 
-![makeBucket](........\images\Program\post-4\makeBucket.PNG)
+![makeBucket](\images\Program\post-4\makeBucket.PNG)
 <br><br><br><br>
 
 버킷 만들기 창에 들어가면 일반 구성을 작성한다.
@@ -30,22 +30,22 @@ S3에 들어가면 오른 쪽 중간에 버킷 만들기 버튼을 누른다.
 그래서 나와 똑같이 하면 버킷을 만들 수 없으니 알아서 버킷 이름을 구성한다.
 여기서 나는 s3-test-young으로 구성하였다. 그리고 리전은 서울로 선택한다.
 
-![configuration](........\images\Program\post-4\configuration.PNG)
+![configuration](\images\Program\post-4\configuration.PNG)
 <br><br><br><br>
 
 퍼블릭 액세스 차단을 위한 버킷 설정은 그대로 둔다.
 
-![public](........\images\Program\post-4\public.PNG)
+![public](\images\Program\post-4\public.PNG)
 <br><br><br><br>
 
 바로 밑에 버킷 버전 관리, 태그, 기본 암호화도 그대로 둔다.
 
-![triple](........\images\Program\post-4\triple.PNG)
+![triple](\images\Program\post-4\triple.PNG)
 <br><br><br><br>
 
 그렇게 버킷 만들기를 누르면 다 S3 버킷 만드는 것이 끝난다.
 
-![complete](........\images\Program\post-4\complete.PNG)
+![complete](\images\Program\post-4\complete.PNG)
 
 ---
 

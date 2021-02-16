@@ -10,7 +10,7 @@ description: Idea
 
 # 참되고 선하고 아름다운 것
 
-![packed](........\images\Philosophy\Plato-Idea03\kala.jpg)
+![packed](\images\Philosophy\Plato-Idea03\kala.jpg)
 
 이데아는 가장 **참된 것에 대한 인식**이다.
 현실에 존재하는 것들은 완전히 거짓된 것은 아니다. 불완전한 것일 뿐이다. ###가장 참된 것은 이데아다 그리고 이데아가 인식의 참된 대상이 되는 것이다.
@@ -35,7 +35,7 @@ description: Idea
 
 **대표적으로 올리비에 드 사가장의 변형이 있다.**
 
-![packed](........\images\Philosophy\Plato-Idea03\trans.jpg){: width="400" height="500"}
+![packed](\images\Philosophy\Plato-Idea03\trans.jpg){: width="400" height="500"}
 
 transifiguration은 transformation과는 다르다.
 예술과 지상에서 겪은 고난을 벗어나서 아름답게 변한 모습으로 하늘로 승천하는 것을 transifiguration이라고 한다. 이 성스러운, 종교적인 색체의 단어는 예술가는 상당히 의도적으로 이 끔찍한 모습의 왜곡을 제목으로 붙힌다.
