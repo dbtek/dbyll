@@ -4,6 +4,7 @@ title: 코드로 배우는 스프링 부트 웹 프로젝트-Part4-02
 date: 2021-02-02 14:00:00 0000
 tags: [Intellij, SpringBoot]
 categories: [SpringBoot]
+description: 영화 리뷰 만들기
 ---
 
 <br><br>

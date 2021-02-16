@@ -5,6 +5,7 @@ image: /Philosophy/Plato-Idea03/main.jpg
 date: 2021-01-18 10:48:00 0000
 tags: [Plato, Idea]
 categories: philosophy
+description: Idea
 ---
 
 # 참되고 선하고 아름다운 것

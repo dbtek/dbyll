@@ -674,11 +674,14 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 			<item>
 				<title>코드로 배우는 스프링 부트 웹 프로젝트-Part4-01</title>
 				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h1 id=&quot;part-4-mn다대다-관계와-파일-업로드-처리&quot;&gt;&lt;center&gt;Part 4-M:N(다대다) 관계와 파일 업로드 처리&lt;/center&gt;&lt;/h1&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;strong&gt;&lt;em&gt;현 게시물은 ‘코드로 배우는 스프링부트 웹 프로젝트’ 라는 서적을 공부하면서 개인적으로 메모하고 공부하기 위해서 작성하는 글입니다.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
+
 &lt;h1 id=&quot;mn다대다-관계의-설계와-구현&quot;&gt;M:N(다대다) 관계의 설계와 구현&lt;/h1&gt;
 
 &lt;ul&gt;
@@ -687,6 +690,7 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 
 &lt;blockquote&gt;
   &lt;p&gt;명제&lt;/p&gt;
+
   &lt;blockquote&gt;
     &lt;ol&gt;
       &lt;li&gt;한 편의 영화는 여러 회원의 평가가 행해질 수 있다.&lt;/li&gt;
@@ -710,7 +714,7 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\ERM.PNG&quot; alt=&quot;erm&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\ERM.PNG&quot; alt=&quot;erm&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
@@ -729,13 +733,14 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 
 &lt;h3 id=&quot;프로젝트-생성&quot;&gt;프로젝트 생성&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\create.PNG&quot; alt=&quot;create&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\create.PNG&quot; alt=&quot;create&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\dependencies.PNG&quot; alt=&quot;dependencies&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\dependencies.PNG&quot; alt=&quot;dependencies&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;buildgradle&quot;&gt;build.gradle&lt;/h3&gt;
+
 &lt;p&gt;책에서는 mariaDB를 썼지만 나는 mysql workbench를 쓸 것임으로 mysql connector를 사용한다.&lt;/p&gt;
 
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
@@ -763,6 +768,7 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
     &lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;group:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;thymeleaf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;extras&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thymeleaf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;extras&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;java8time&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;applicationproperties&quot;&gt;application.properties&lt;/h3&gt;
@@ -788,14 +794,16 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 
 &lt;span class=&quot;n&quot;&gt;spring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;thymeleaf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;엔티티-설계&quot;&gt;엔티티 설계&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\main.PNG&quot; alt=&quot;main&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\main.PNG&quot; alt=&quot;main&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;MreviewApplication 클래스 일부&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
@@ -815,11 +823,13 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;
-&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\Movie.PNG&quot; alt=&quot;Movie&quot; /&gt;
+&lt;img src=&quot;........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\Movie.PNG&quot; alt=&quot;Movie&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Movie 클래스&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
@@ -865,6 +875,7 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;movieimage-클래스&quot;&gt;MovieImage 클래스&lt;/h3&gt;
@@ -878,6 +889,7 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;MovieImage 클래스&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
@@ -927,6 +939,7 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;ul&gt;
   &lt;li&gt;MovieImage 클래스에는 나중에 사용할 이미젱 대한 정보를 기록&lt;/li&gt;
   &lt;li&gt;java.util.UUID를 이용하여 고유한 번호 생성&lt;/li&gt;
@@ -935,11 +948,12 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;Member 클래스&lt;/strong&gt;&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;Member 클래스는 고유한 번호, 이메일, 아이디와 패스워드, 닉네임을 의미하도록 클래스 설계&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\member.PNG&quot; alt=&quot;member&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\member.PNG&quot; alt=&quot;member&quot; /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
@@ -991,32 +1005,26 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;이때-table-부분에서-intellij-화면에-에러-메시지처럼-보이기는-하지만-실제로-에러는-아님&quot;&gt;이때 @Table 부분에서 Intellij 화면에 에러 메시지처럼 보이기는 하지만 실제로 에러는 아님&lt;/h5&gt;
 
 &lt;p&gt;&lt;u&gt;해결방법&lt;/u&gt;&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;File -&amp;gt; Settings -&amp;gt; Editor -&amp;gt; Inspections -&amp;gt; JPA -&amp;gt; Unresolved database references in annotations 항목을 해제하고 ‘Apply’ 한다&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;매핑-테이블을-위한-review-클래스-설계&quot;&gt;매핑 테이블을 위한 Review 클래스 설계&lt;/h3&gt;
+
 &lt;ul&gt;
-  &lt;li&gt;매핑 테이블은 주로 ‘동사’나 ‘히스토리’를 의미하는 테이블을 의미
-    &lt;ul&gt;
-      &lt;li&gt;예제에서 ‘회원이 영화에 대해서 평점을 준다’를 구성할 때 ‘평점을 준다’는 행위가 바로 매핑 테이블이 필요한 부분&lt;/li&gt;
-      &lt;li&gt;‘회원’이라는 주어와 ‘영화’라는 목적어가 있지만 이에 대한 ‘평점을 준다’는 부분이 중간에서 주어와 목적어를 연결하는 매핑 테이블이 담당하게 됨
-        &lt;ul&gt;
-          &lt;li&gt;@ManyToMany의 경우 관꼐를 설정할 수는 있지만 두 엔티티 간의 추가적인 데이터를 기록할 수는 없음
+  &lt;li&gt;매핑 테이블은 주로 ‘동사’나 ‘히스토리’를 의미하는 테이블을 의미 - 예제에서 ‘회원이 영화에 대해서 평점을 준다’를 구성할 때 ‘평점을 준다’는 행위가 바로 매핑 테이블이 필요한 부분 - ‘회원’이라는 주어와 ‘영화’라는 목적어가 있지만 이에 대한 ‘평점을 준다’는 부분이 중간에서 주어와 목적어를 연결하는 매핑 테이블이 담당하게 됨 - @ManyToMany의 경우 관꼐를 설정할 수는 있지만 두 엔티티 간의 추가적인 데이터를 기록할 수는 없음
 &lt;br /&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;Review 클래스&lt;/strong&gt;
-&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\review.PNG&quot; alt=&quot;review&quot; /&gt;
+&lt;img src=&quot;........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\review.PNG&quot; alt=&quot;review&quot; /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
@@ -1074,6 +1082,7 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
     &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;ul&gt;
   &lt;li&gt;Fetch 모드는 모두 LAZY 설정을 이용&lt;/li&gt;
   &lt;li&gt;toString() 호출 시에 다른 엔티티를 사용하지 않도록 @ToString에 exclude 속성을 지정&lt;/li&gt;
@@ -1081,14 +1090,16 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 
 &lt;p&gt;**생성된 테이블 ERD&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\ermcomplete.PNG&quot; alt=&quot;ermcomplete&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\ermcomplete.PNG&quot; alt=&quot;ermcomplete&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;repository-생성하기&quot;&gt;Repository 생성하기&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\repository.PNG&quot; alt=&quot;repository&quot; /&gt;
+
+&lt;p&gt;&lt;img src=&quot;........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\repository.PNG&quot; alt=&quot;repository&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;MemberRepository 인터페이스&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
@@ -1104,9 +1115,11 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberRepository&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Member&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;MovieImageRepository&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
@@ -1128,6 +1141,7 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;ReviewRepository&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
@@ -1149,7 +1163,9 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;이 데이터를 이용해서 화면에서 필요한 데이터를 생각해보기&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;목록 화면에서 영화의 제목과 이미지 하나, 영화 리뷰의 평점/리뷰 개수를 출력&lt;/li&gt;
   &lt;li&gt;영화 조회 화면에서 영화와 영화의 이미지들, 리뷰의 평균점수/리뷰 개수를 같이 출력&lt;/li&gt;
@@ -1157,11 +1173,12 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;페이지 처리되는 영화별 평균 점수/리뷰 개수 구하기&lt;/strong&gt;&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;목록 화면에서는 영화(Movie)와 영화 이미지(MovieImage), 리뷰의 수, 평점 평균을 화면에 출력하고자 함&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\content.PNG&quot; alt=&quot;content&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\content.PNG&quot; alt=&quot;content&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
@@ -1170,11 +1187,11 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 
 &lt;p&gt;리뷰(review)를 같이 조인하면 아래와 같은 구조가 된다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\structure.PNG&quot; alt=&quot;structure&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Learning_SpringBoot_with_Web_Project\Part4\Chapter7\structure.PNG&quot; alt=&quot;structure&quot; /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
-&lt;h4 id=&quot;다음-게시물에서는-spring-data-jpa-query를-이용해-본다&quot;&gt;다음 게시물에서는 Spring Data JPA Query를 이용해 본다&lt;/h4&gt;
 
+&lt;h4 id=&quot;다음-게시물에서는-spring-data-jpa-query를-이용해-본다&quot;&gt;다음 게시물에서는 Spring Data JPA Query를 이용해 본다&lt;/h4&gt;
 </description>
 				<pubDate>Tue, 02 Feb 2021 14:00:00 +0900</pubDate>
 				<link>/springboot/2021/02/02/learning-springboot-web-with-code-post01.html</link>
@@ -1185,17 +1202,20 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 				<title>Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-05</title>
 				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h1 id=&quot;intellij-rds와-s3-연동-마무리&quot;&gt;&lt;center&gt;Intellij RDS와 S3 연동 마무리&lt;/center&gt;&lt;/h1&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;이제 마무리를 해보자&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;resource 폴더에서 새로운 file를 생성하기를 눌러서 이름을 application.yml이라고 치면 저절로 저렇게 추가가 된다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-6\yml.PNG&quot; alt=&quot;yml&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-6\yml.PNG&quot; alt=&quot;yml&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;yml 파일 내용&lt;/strong&gt;&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;accessKey, secretKey: AWS 계정에 부여된 key 값을 입력&lt;/li&gt;
   &lt;li&gt;bucket: S3 서비스에서 생성한 버킷 이름을 작성&lt;/li&gt;
@@ -1230,6 +1250,7 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 
 &lt;p&gt;이제 클래스의 코드를 추가해보자
 일단 service 패키지에서 &lt;strong&gt;GalleryService&lt;/strong&gt;의 코드이다&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
@@ -1263,8 +1284,10 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;strong&gt;S3Service&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
@@ -1374,10 +1397,13 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h4 id=&quot;dto-패키지&quot;&gt;dto 패키지&lt;/h4&gt;
 
 &lt;p&gt;&lt;strong&gt;GalleryDto&lt;/strong&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
@@ -1445,7 +1471,9 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h4 id=&quot;controller-패키지&quot;&gt;controller 패키지&lt;/h4&gt;
 
 &lt;p&gt;&lt;strong&gt;GalleryController&lt;/strong&gt;&lt;/p&gt;
@@ -1535,7 +1563,9 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h3 id=&quot;html-생성&quot;&gt;html 생성&lt;/h3&gt;
 
 &lt;p&gt;resources/templates 아래 gallery.html를 생성한다&lt;/p&gt;
@@ -1560,43 +1590,45 @@ Spring Data JPA의 경우 여러 처리를 위해 다음과 같은 방법을 제
 18
 &lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:th=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.w3.org/1999/xhtml&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;S3 파일 업로드 테스트&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;파일 업로드&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;hr&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;파일 업로드&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;hr&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
 
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;@{/gallery}&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;enctype=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;multipart/form-data&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    이름 : &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;br&amp;gt;&lt;/span&gt;
-    전화번호 : &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;phone&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;br&amp;gt;&lt;/span&gt;
-    파일 : &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;file&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;file&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;br&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&amp;gt;&lt;/span&gt;등록하기&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;@{/gallery}&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;enctype=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;multipart/form-data&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      이름 : &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;br&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+      전화번호 : &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;phone&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;br&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+      파일 : &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;file&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;file&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;br&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&amp;gt;&lt;/span&gt;등록하기&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;hr /&gt;
+
 &lt;h4 id=&quot;어플리케이션-실행&quot;&gt;어플리케이션 실행&lt;/h4&gt;
 
 &lt;p&gt;이제 브라우저에 들어가서 localhost8080/gallery를 입력하고 들어간다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-6\http.PNG&quot; alt=&quot;http&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-6\http.PNG&quot; alt=&quot;http&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;간단한 이미지를 업로드하고 정보를 입력한 다음 등록하기를 누른다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-6\upload.PNG&quot; alt=&quot;upload&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-6\upload.PNG&quot; alt=&quot;upload&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;mysql workbench에 들어가보면 정상적으로 이미지 url과 입력했던 정보가 들어가 있고
 s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 수 있다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-6\rds.PNG&quot; alt=&quot;rds&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-6\rds.PNG&quot; alt=&quot;rds&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-6\bucket.PNG&quot; alt=&quot;bucket&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-6\bucket.PNG&quot; alt=&quot;bucket&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
@@ -1612,14 +1644,16 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 				<title>Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-04</title>
 				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h1 id=&quot;intellij-프로젝트-생성-및-rds-연동&quot;&gt;&lt;center&gt;Intellij 프로젝트 생성 및 RDS 연동&lt;/center&gt;&lt;/h1&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;이제 인텔리제이 프로젝트를 만들어 보자.&lt;/p&gt;
 
 &lt;p&gt;new Project를 눌러서 프로젝트를 만든다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\newProject.PNG&quot; alt=&quot;new project&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\newProject.PNG&quot; alt=&quot;new project&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
@@ -1632,10 +1666,11 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 
 &lt;p&gt;이렇게 설정하고 Next를 누른다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\newProjectName.PNG&quot; alt=&quot;new project name&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\newProjectName.PNG&quot; alt=&quot;new project name&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;dependencies&quot;&gt;Dependencies&lt;/h4&gt;
+
 &lt;ul&gt;
   &lt;li&gt;SpringBoot DevTools&lt;/li&gt;
   &lt;li&gt;Lombok&lt;/li&gt;
@@ -1646,12 +1681,12 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 
 &lt;p&gt;이렇게 설정하고 Next를 누른다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\newProjectGradle.PNG&quot; alt=&quot;new project dependency&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\newProjectGradle.PNG&quot; alt=&quot;new project dependency&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;마지막으로 Finish를 누른다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\newProjectFinish.PNG&quot; alt=&quot;new project dependency&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\newProjectFinish.PNG&quot; alt=&quot;new project dependency&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
@@ -1750,6 +1785,7 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 &lt;p&gt;디비명은 이 그림과 같이 mysql workbench에서 SCHEMAS에서 만든 데이터베이스 명으로 한다.
 ![dbName]](........\images\Program\post-5\dbName.PNG)
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
@@ -1767,21 +1803,23 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 &lt;span class=&quot;n&quot;&gt;spring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;jpa&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hibernate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;format_sql&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;spring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;jpa&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sql&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;이전에 만든 rds에서 엔드포인트를 복사해서 붙여넣는다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\endpoint.PNG&quot; alt=&quot;endPoint&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\endpoint.PNG&quot; alt=&quot;endPoint&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;intellij-database-설정&quot;&gt;Intellij Database 설정&lt;/h3&gt;
+
 &lt;p&gt;ctrl+shift+a를 누르게 되면 search를 할 수가 있는데
 여기서 database를 입력하고 누른다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\search.png&quot; alt=&quot;search&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\search.png&quot; alt=&quot;search&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;그 다음에 플러스 버튼을 datasource를 선택하고 mysql누르고 생성을 한다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\datasource.PNG&quot; alt=&quot;datasource&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\datasource.PNG&quot; alt=&quot;datasource&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;하나의 창이 뜨게 된다.&lt;/p&gt;
@@ -1796,7 +1834,7 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 &lt;p&gt;이렇게 쓰고 Test Connection를 누르게 되면 저렇게 초록색 체크 표시가 나온다.
 이제 OK를 누르고 생성을 하면 된다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\create.PNG&quot; alt=&quot;create&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\create.PNG&quot; alt=&quot;create&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
@@ -1805,7 +1843,7 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 
 &lt;p&gt;프로젝트 구성은 이런 식으로 구성한다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\project.PNG&quot; alt=&quot;project_structure&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\project.PNG&quot; alt=&quot;project_structure&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;먼저 데이터베이스가 제대로 작동하는지 확인하기 위해 domain/entity 아래 GalleryEntity 코드를 먼저 작성한다.&lt;/p&gt;
@@ -1869,6 +1907,7 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;그리고 JPA 사용을 위해서 GalleryRepository 인터페이스 코드를 작성한다&lt;/p&gt;
 
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
@@ -1886,26 +1925,27 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;GalleryRepository&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;GalleryEntity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;strong&gt;어플리케이션을 시작해보자&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;이렇게 gallery 테이블이 만들어진 것을 볼 수 있다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\schema.PNG&quot; alt=&quot;schema&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\schema.PNG&quot; alt=&quot;schema&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;그리고 다시 오른쪽에 Database 창에 가서 rds-test 옆에 1of5라고 되어 있는 것을 클릭해 본다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\1of5.PNG&quot; alt=&quot;1of5&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\1of5.PNG&quot; alt=&quot;1of5&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;그러다 보면 스키마 리스트가 나오는데 여기서 자신이 만든 데이터베이스 이름, 여기선 rds_test를 체크한다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\check.PNG&quot; alt=&quot;check&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\check.PNG&quot; alt=&quot;check&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;체크하고 나면 방금 어플리케이션을 실행해서 만든 필드들이 나타나는 것을 볼 수 있다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-5\checkok.PNG&quot; alt=&quot;checkok&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-5\checkok.PNG&quot; alt=&quot;checkok&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
 다음 게시물에서는 인텔리제이에서 프로젝트를 만들고 실질적으로 이전 게시물에서 생성한 RDS와 S3를 연동해보도록 하겠다.&lt;/p&gt;
 
@@ -1922,17 +1962,19 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 				<title>Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-03</title>
 				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h1 id=&quot;s3-버킷-생성&quot;&gt;&lt;center&gt;S3 버킷 생성&lt;/center&gt;&lt;/h1&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;aws 메인 홈으로 들아가서 스크롤을 조금 내리면 스토리지 카테고리에 S3가 보이는 것을 볼 수 있다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\s3dashboard.PNG&quot; alt=&quot;dashboard&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-4\s3dashboard.PNG&quot; alt=&quot;dashboard&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;S3에 들어가면 오른 쪽 중간에 버킷 만들기 버튼을 누른다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\makeBucket.PNG&quot; alt=&quot;makeBucket&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-4\makeBucket.PNG&quot; alt=&quot;makeBucket&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;버킷 만들기 창에 들어가면 일반 구성을 작성한다.
@@ -1940,22 +1982,22 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 그래서 나와 똑같이 하면 버킷을 만들 수 없으니 알아서 버킷 이름을 구성한다.
 여기서 나는 s3-test-young으로 구성하였다. 그리고 리전은 서울로 선택한다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\configuration.PNG&quot; alt=&quot;configuration&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-4\configuration.PNG&quot; alt=&quot;configuration&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;퍼블릭 액세스 차단을 위한 버킷 설정은 그대로 둔다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\public.PNG&quot; alt=&quot;public&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-4\public.PNG&quot; alt=&quot;public&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;바로 밑에 버킷 버전 관리, 태그, 기본 암호화도 그대로 둔다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\triple.PNG&quot; alt=&quot;triple&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-4\triple.PNG&quot; alt=&quot;triple&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;그렇게 버킷 만들기를 누르면 다 S3 버킷 만드는 것이 끝난다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-4\complete.PNG&quot; alt=&quot;complete&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-4\complete.PNG&quot; alt=&quot;complete&quot; /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -1970,38 +2012,40 @@ s3 버킷에 들어가면 마찬가지로 이미지가 들어가 있는 게 볼 
 				<title>Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-02</title>
 				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h1 id=&quot;인텔리제이와-rds-연동&quot;&gt;&lt;center&gt;인텔리제이와 RDS 연동&lt;/center&gt;&lt;/h1&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;전의 게시물에서 마지막에 데이터베이스 생성을 눌렀다면 상태 컬럼에 보면
 생성중에서 이제는 &lt;u&gt;사용 가능&lt;/u&gt;으로 바뀐 것을 볼 수 있다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\creation_complete.PNG&quot; alt=&quot;creation_complete&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\creation_complete.PNG&quot; alt=&quot;creation_complete&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;여기서 DB 식별자인 rdsDB를 누르면 아래 그림이 나오게 되는데
 이때 엔드포인트를 복사 해 놓는다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\endpoint.PNG&quot; alt=&quot;endpoint&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\endpoint.PNG&quot; alt=&quot;endpoint&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;이제 MySql Workbench를 켜본다.
-&lt;img src=&quot;..\..\..\..\images\Program\post-3\mysql_home.PNG&quot; alt=&quot;home&quot; /&gt;
+&lt;img src=&quot;........\images\Program\post-3\mysql_home.PNG&quot; alt=&quot;home&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;아래 사진과 같은 플러스로 되어 있는 부분을 누르게 되면
-&lt;img src=&quot;..\..\..\..\images\Program\post-3\plus.PNG&quot; alt=&quot;add&quot; /&gt;
+&lt;img src=&quot;........\images\Program\post-3\plus.PNG&quot; alt=&quot;add&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;여기서 Connection Name에는 원하는 db이름을 적고
 Username에서는 이전 게시물에서 설정했던 마스터 유저 이름을 적는다
 그리고 Sore in Vault를 눌러서 마찬가지로 이전 게시물에서 설정했던 마스터 암호를 적는다. 그 다음 OK를 누른다.
-&lt;img src=&quot;..\..\..\..\images\Program\post-2\connection.PNG&quot; alt=&quot;connection&quot; /&gt;
+&lt;img src=&quot;........\images\Program\post-2\connection.PNG&quot; alt=&quot;connection&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;rds-test가 생긴 것을 볼 수 있다.
 이것을 누르면 따로 암호를 칠 필요 없이 들어가지는 것을 볼 수 있다.
-&lt;img src=&quot;..\..\..\..\images\Program\post-2\rds-test.PNG&quot; alt=&quot;rds test&quot; /&gt;
+&lt;img src=&quot;........\images\Program\post-2\rds-test.PNG&quot; alt=&quot;rds test&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
@@ -2017,109 +2061,123 @@ Username에서는 이전 게시물에서 설정했던 마스터 유저 이름을
 				<title>Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-01</title>
 				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;h1 id=&quot;인텔리제이와-aws의-rds-mysql-workbench-연동하기&quot;&gt;&lt;center&gt;인텔리제이와 AWS의 RDS-MySql Workbench 연동하기&lt;/center&gt;&lt;/h1&gt;
+
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;
 AWS에서는 AWS 클라우드에서 관계형 데이터베이스를 더 쉽게 설치, 운영 및 확장할 수 있는 웹 서비스를 제공한다. 이 서비스는 산업 표준 관계형 데이터베이스를 위한 경제적이고 크기 조절이 가능한 용량을 제공하고 공통 데이터베이스 관리 작업을 관리한다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\RDS.png&quot; alt=&quot;packed&quot; width=&quot;400&quot; height=&quot;700&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\RDS.png&quot; alt=&quot;packed&quot; width=&quot;400&quot; height=&quot;700&quot; /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
+
 &lt;p&gt;학교에서 프로젝트하면서 데이터베이스 연동할 일이 참 많았는데 팀 프로젝트 할 때 이 RDS 서비스를 이용하면 서로 DB 수정한 것이 바로 업로드되서 참 편리했던 기억이 있다. 그때는 이클립스와 MySql를 써서 했었는데 이번에는 Intellij를 써서 MySql RDS를 연동하는 방법을 익혀보겠다.&lt;/p&gt;
 
 &lt;hr /&gt;
 
 &lt;p&gt;일단 기본적으로 AWS 사이트에서 회원가입을 해야 한다.(링크 참고)&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/ko/&quot;&gt;AWS 사이트&lt;/a&gt;
-그냥 가입해서 쓰면 요금이 조금 나갈 수가 있다. 
+그냥 가입해서 쓰면 요금이 조금 나갈 수가 있다.
 &lt;u&gt;옛날에 가입해서 잘 기억이 안 나는데 내 기억으로는 카드를 등록해야 됐던 것 같다.&lt;/u&gt;
-그리고 다행히 대학교 학생들에게는 1년 프리티어를 제공함으로 용량이 적은 서비스들을 무료로 한정된 금액 안에서 쓸 수 있다. 
+그리고 다행히 대학교 학생들에게는 1년 프리티어를 제공함으로 용량이 적은 서비스들을 무료로 한정된 금액 안에서 쓸 수 있다.
 자신이 대학교 학생이라면 학생 인증을 통해 프리티어를 제공받자!&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;hr /&gt;
 
 &lt;p&gt;그렇게 로그인하고 나면 이러한 페이지가 나온다.
-바로 화면에 DashBoard가 뜨게되는데 여기서 스크롤을 조금 밑으로 내리면 
-&lt;u&gt;데이터 베이스-RDS&lt;/u&gt; 항목이 보일 것이다. 
+바로 화면에 DashBoard가 뜨게되는데 여기서 스크롤을 조금 밑으로 내리면
+&lt;u&gt;데이터 베이스-RDS&lt;/u&gt; 항목이 보일 것이다.
 이것을 클릭한다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\RDS_category.PNG&quot; alt=&quot;RDS_category&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\RDS_category.PNG&quot; alt=&quot;RDS_category&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;그러고 나면
 RDS 창이 뜨게 되고 데이터베이스 생성하는 버튼이 있다.
 그것을 누르자.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\rds_dashboard.PNG&quot; alt=&quot;RDS&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\rds_dashboard.PNG&quot; alt=&quot;RDS&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;누르면 이제 데이터베이스 설정하는 페이지가 나온다 차근차근 체크를 해보자
 &lt;strong&gt;여기서 잘못 체크하면 요금이 대폭 나올 수도 있으니 잘 따라해야 한다.&lt;/strong&gt;&lt;/p&gt;
+
 &lt;h3 id=&quot;데이터베이스-생성-방식-선택에서는-표준-생성을-체크한다&quot;&gt;&lt;strong&gt;데이터베이스 생성 방식 선택에서는 표준 생성을 체크한다.&lt;/strong&gt;&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\standard.PNG&quot; alt=&quot;RDS standard&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\standard.PNG&quot; alt=&quot;RDS standard&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;엔진 옵션에서는 어떤 데이터베이스 유형을 사용할 건지 선택한다.&lt;/p&gt;
+
 &lt;h3 id=&quot;우리는-엔진-옵션에서-mysql를-선택한다&quot;&gt;&lt;strong&gt;우리는 엔진 옵션에서 MySQL를 선택한다.&lt;/strong&gt;&lt;/h3&gt;
+
 &lt;p&gt;버전은 자신의 mysql workbench에 맞게 설정해주면 된다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\engine_option.PNG&quot; alt=&quot;RDS option&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\engine_option.PNG&quot; alt=&quot;RDS option&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;템플릿으로-우리는-프로덕션이-디폴트로-되어-있지만-개발테스트로-체크를-한다&quot;&gt;&lt;strong&gt;템플릿으로 우리는 프로덕션이 디폴트로 되어 있지만 개발/테스트로 체크를 한다.&lt;/strong&gt;&lt;/h3&gt;
+
 &lt;p&gt;&lt;strong&gt;만약 프리티어를 등록했다면 프리 티어로 한다!!!&lt;/strong&gt;
 여기서 나는 프리티어 등록을 했기 때문에 프리 티어로 등록하지만 프리티어가 아니라면 개발/테스트를 체크해도 무방하다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\template.PNG&quot; alt=&quot;RDS template&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\template.PNG&quot; alt=&quot;RDS template&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;설정-정보-입력&quot;&gt;&lt;strong&gt;설정 정보 입력&lt;/strong&gt;&lt;/h3&gt;
+
 &lt;p&gt;DB 식별자로는 rdsDB로 설정하고
 마스터 사용자 이름은 admin으로 하고 마스터 암호로는 admin!!!로 설정한다. 암호확인은 마스터 암호와 동일하게 쓰면 된다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\configuration.PNG&quot; alt=&quot;RDS configuraton&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\configuration.PNG&quot; alt=&quot;RDS configuraton&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;db-인스턴스-크기로는-버스터블-클래스-dbt3micro로-설정한다&quot;&gt;&lt;strong&gt;DB 인스턴스 크기로는 버스터블 클래스-db.t3.micro로 설정한다!!&lt;/strong&gt;&lt;/h1&gt;
+
 &lt;p&gt;여기는 일부로 위에 글과 달리 글자를 크게한 &lt;u&gt;이유&lt;/u&gt;가 있다.
-여기서 실수로 &lt;strong&gt;micro가 아닌 xlarge로 설정한다면 요금이 크게 나올 수가 있기 때문이다!!&lt;/strong&gt; 실수하지 말고 체크하자!! 
+여기서 실수로 &lt;strong&gt;micro가 아닌 xlarge로 설정한다면 요금이 크게 나올 수가 있기 때문이다!!&lt;/strong&gt; 실수하지 말고 체크하자!!
 지금은 간단하게 연동 방법을 알려주고 있기 때문에 제일 작은 데이터베이스 인스턴스를 사용하지만 추후에 큰 프로젝트를 할 땐 더 큰 사이즈로 변경해야 한다.(물론 요금이 더 비쌈)&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\instance_size.PNG&quot; alt=&quot;RDS instance size&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\instance_size.PNG&quot; alt=&quot;RDS instance size&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;범용-ssd-체크와-할당된-스토리지는-20-그리고-최대-스토리지-임계값은-30으로-한다&quot;&gt;&lt;strong&gt;범용 SSD 체크와 할당된 스토리지는 20 그리고 최대 스토리지 임계값은 30으로 한다.&lt;/strong&gt;&lt;/h3&gt;
+
 &lt;p&gt;여기서는 개별적으로 설정해줘도 된다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\storage.PNG&quot; alt=&quot;RDS storage&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\storage.PNG&quot; alt=&quot;RDS storage&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;가용성 및 내구성은&lt;/p&gt;
+
 &lt;h3 id=&quot;대기-인스턴스를-생성하지-마십시오에-체크한다&quot;&gt;&lt;strong&gt;‘대기 인스턴스를 생성하지 마십시오’에 체크한다.&lt;/strong&gt;&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\availability.PNG&quot; alt=&quot;RDS availability&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\availability.PNG&quot; alt=&quot;RDS availability&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;연결 부분에서는
 VPC 설정, 서브넷 그룹은 디폴트로 두고 퍼블릭 액세스 가능은 예를 체크하자. 그리고 보안 그룹 은 기존 항목 선택에 두고 기존 VPC 보안 그룹도 디폴트로 두고 가용 영역은 기본 설정 없음으로 둔다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\connection.PNG&quot; alt=&quot;RDS connection&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\connection.PNG&quot; alt=&quot;RDS connection&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;데이터베이스-생성을-누른다&quot;&gt;&lt;strong&gt;데이터베이스 생성을 누른다&lt;/strong&gt;&lt;/h3&gt;
+
 &lt;p&gt;이러면 클라우드기반 데이터베이스가 생성이 된다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\database_creation.PNG&quot; alt=&quot;RDS database_creation&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\database_creation.PNG&quot; alt=&quot;RDS database_creation&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;결과&quot;&gt;&lt;strong&gt;결과&lt;/strong&gt;&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;..\..\..\..\images\Program\post-2\result.PNG&quot; alt=&quot;RDS result&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;........\images\Program\post-2\result.PNG&quot; alt=&quot;RDS result&quot; /&gt;
 &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
+
 &lt;p&gt;다음 편에서는 인텔리제이와 RDS를 연동하는 것을 해보자&lt;/p&gt;
 </description>
 				<pubDate>Thu, 21 Jan 2021 19:00:00 +0900</pubDate>

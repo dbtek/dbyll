@@ -4,6 +4,7 @@ title: 코드로 배우는 스프링 부트 웹 프로젝트-Part3-01
 date: 2021-02-15 19:00:00 0000
 tags: [Intellij, SpringBoot]
 categories: [SpringBoot]
+description: 게시판 만들기
 ---
 
 <br><br>

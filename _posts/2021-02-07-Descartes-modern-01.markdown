@@ -5,6 +5,7 @@ image: /Philosophy/Plato-Idea03/main.jpg
 date: 2021-01-18 10:48:00 0000
 tags: [Descartes]
 categories: philosophy
+description: 전근대 사상
 ---
 
 # 전근대 사상

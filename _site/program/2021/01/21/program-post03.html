@@ -4,6 +4,8 @@
 	<meta charset="utf-8">
 	<title>Intellij(인텔리제이)와 AWS의 RDS(MySql)와 S3 연동-02</title>
 	
+	<meta name="description" content="Intellij와 AWS의 RDS와 S3 연동">
+	
 	<meta name="author" content="YoungKyonYou">
 
 	<!-- Enable responsive viewport -->
@@ -90,7 +92,7 @@
 		<!-- sidebar.html -->
 <header class="sidebar-header" role="banner">
 	<a href="/">
-		<img src="//www.gravatar.com/avatar/youngkyon1324@naer.com?s=150" class="img-circle" />
+		<img src="/images/MainImage/karajan.jpg" class="img-circle" />
 	</a>
 	<h3 class="title">
         <a href="/">MyWay</a>
@@ -171,38 +173,40 @@
 	  <div class="article_body">
 	  <p><br /><br />
 <br /><br /></p>
+
 <h1 id="인텔리제이와-rds-연동"><center>인텔리제이와 RDS 연동</center></h1>
+
 <p><br /><br /></p>
 
 <p>전의 게시물에서 마지막에 데이터베이스 생성을 눌렀다면 상태 컬럼에 보면
 생성중에서 이제는 <u>사용 가능</u>으로 바뀐 것을 볼 수 있다.</p>
 
-<p><img src="..\..\..\..\images\Program\post-2\creation_complete.PNG" alt="creation_complete" />
+<p><img src="........\images\Program\post-2\creation_complete.PNG" alt="creation_complete" />
 <br /><br /><br /><br /></p>
 
 <p>여기서 DB 식별자인 rdsDB를 누르면 아래 그림이 나오게 되는데
 이때 엔드포인트를 복사 해 놓는다.</p>
 
-<p><img src="..\..\..\..\images\Program\post-2\endpoint.PNG" alt="endpoint" />
+<p><img src="........\images\Program\post-2\endpoint.PNG" alt="endpoint" />
 <br /><br /><br /><br /></p>
 
 <p>이제 MySql Workbench를 켜본다.
-<img src="..\..\..\..\images\Program\post-3\mysql_home.PNG" alt="home" />
+<img src="........\images\Program\post-3\mysql_home.PNG" alt="home" />
 <br /><br /><br /><br /></p>
 
 <p>아래 사진과 같은 플러스로 되어 있는 부분을 누르게 되면
-<img src="..\..\..\..\images\Program\post-3\plus.PNG" alt="add" />
+<img src="........\images\Program\post-3\plus.PNG" alt="add" />
 <br /><br /><br /><br /></p>
 
 <p>여기서 Connection Name에는 원하는 db이름을 적고
 Username에서는 이전 게시물에서 설정했던 마스터 유저 이름을 적는다
 그리고 Sore in Vault를 눌러서 마찬가지로 이전 게시물에서 설정했던 마스터 암호를 적는다. 그 다음 OK를 누른다.
-<img src="..\..\..\..\images\Program\post-2\connection.PNG" alt="connection" />
+<img src="........\images\Program\post-2\connection.PNG" alt="connection" />
 <br /><br /><br /><br /></p>
 
 <p>rds-test가 생긴 것을 볼 수 있다.
 이것을 누르면 따로 암호를 칠 필요 없이 들어가지는 것을 볼 수 있다.
-<img src="..\..\..\..\images\Program\post-2\rds-test.PNG" alt="rds test" />
+<img src="........\images\Program\post-2\rds-test.PNG" alt="rds test" />
 <br /><br /><br /><br /></p>
 
 <hr />
@@ -302,7 +306,7 @@ Username에서는 이전 게시물에서 설정했던 마스터 유저 이름을
       </section>
 
       <section class="col-sm-6 author">
-        <img src="//www.gravatar.com/avatar/youngkyon1324@naer.com" class="img-rounded author-image" />
+        <img src="/images/MainImage/karajan.jpg" class="img-rounded author-image" />
         <h4 class="section-title author-name">YoungKyonYou</h4>
         <p class="author-bio">Integration of Knowledge</p>
       </section>
@@ -335,7 +339,7 @@ Username에서는 이전 게시물에서 설정했던 마스터 유저 이름을
 		<footer>
 			<hr/>
 			<p>
-				&copy; 2021 YoungKyonYou with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+				&copy; 2021 YoungKyonYou with <a href="http://jekyllrb.com/">Jekyll</a>. 
 			</p>
 		</footer>
 	</div>
