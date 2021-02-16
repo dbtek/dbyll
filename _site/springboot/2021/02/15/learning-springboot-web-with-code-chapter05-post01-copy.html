@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>코드로 배우는 스프링 부트 웹 프로젝트-Part3-01</title>
+	
+	<meta name="description" content="게시판 만들기">
+	
+	<meta name="author" content="YoungKyonYou">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com//YoungKyonYou">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/young">
+				<i class="fa fa-twitter"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="mailto:youngkyon1324@naver.com">
+				<i class="fa fa-envelope"></i>
+			</a>
+			
+			<a class="navbar-brand" href="/">
+				<img src="/images/MainImage/karajan.jpg" class="img-circle">
+				MyWay
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div>
+<!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider">
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="/images/MainImage/karajan.jpg" class="img-circle">
+	</a>
+	<h3 class="title">
+        <a href="/">MyWay</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	Integration of Knowledge
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com//YoungKyonYou">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://twitter.com/young">
+				<i class="fa fa-twitter fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="mailto:youngkyon1324@naver.com">
+				<i class="fa fa-envelope fa-lg"></i>
+			</a>
+		</li>
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://pinterest.com/asd123">
+				<i class="fa fa-pinterest fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/asd123">
+				<i class="fa fa-linkedin fa-lg"></i>
+			</a>
+		</li>
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/feed.xml">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>코드로 배우는 스프링 부트 웹 프로젝트-Part3-01 </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   February 
+	   15th,
+	   
+	   2021
+	 </span>
+	  <div class="article_body">
+	  <p><br><br></p>
+
+<h1 id="n1다대일-연관관계-board-만들기">&lt;N:1(다대일) 연관관계&gt; Board 만들기</h1>
+
+<hr>
+
+<p>여기서는 ‘회원’과 ‘게시글’ 그리고 ‘댓글’이라는 주제로 JPA에서 연관관계를 가장 쉽게 적용할 수 있는 방법을 알아본다.
+먼저 연관관계와 관계형 데이터베이스 설계를 해야 한다. <img class="emoji" title=":disappointed:" alt=":disappointed:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f61e.png" height="20" width="20"></p>
+
+<p><br></p>
+
+<p>‘회원’과 ‘게시글’의 관계를 다음과 같은 명제로 나타내본다.</p>
+
+<ul>
+  <li>한 명의 회원은 여러 게시글을 작성할 수 있다.</li>
+  <li>하나의 게시글은 한 명의 회원에 의해서 작성된다.</li>
+</ul>
+
+<p><br></p>
+
+<p>아래 사진을 보면 회원 데이터의 아이디는 PK에 해당한다. 아이디는 회원을 구분할 수 있는 고유한 값을 가지게 되는 것이다.
+게시글 데이터를 보면 작성자 칼럼 값으로 동일한 회원 아이디가 여러 번 나오는 것을 볼 수 있다. 회원 데이터의 입장에서는 하나(One)의 PK(아이디)가 여러(Many) 게시글에서 참조(FK)되고 있는 관계가 된다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-00-46.png" alt=""></p>
+
+<p>회원 데이터 쪽이 ‘일(one)’이고, 게시글 데이터는 동일한 회원 아이디가 여러 번 나오고 있으므로 ‘다(many)’로 판단하고 다음과 같이 ERD를 작성한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-05-42.png" alt=""></p>
+
+<p><strong>데이터베이스에서 관계를 해석할 때는 항상 PK 쪽에서 해석하고, 이를 반영해야 혼란을 줄일 수 있다</strong> <img class="emoji" title=":open_mouth:" alt=":open_mouth:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f62e.png" height="20" width="20"></p>
+
+<p><br></p>
+
+<p>즉, 앞에서 이야기했던 두 명제는 다음과 같이 해석되어야 한다.</p>
+
+<ul>
+  <li>한 명의 회원은 여러 개의 게시글을 작성할 수 있다(PK에서 해석)</li>
+  <li>하나의 게시글은 한 명의 작성자만을 표시할 수 있다.</li>
+</ul>
+
+<p><br></p>
+
+<p>이제 ‘회원, 게시글, 댓글’의 관계를 PK를 기준으로 설계해보면 다음과 같은 구조가 된다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-17-05.png" alt=""></p>
+
+<p>회원이 있어야 게시글을 작성할 수 있으므로 회원 테이블을 먼저 설계하고 게시글을 작성할 때는 특정 회원과의 관계를 설정해 주어야 한다. 댓글은 게시글이 있어야만 작성할 수 있으므로 게시글을 우선 설계하고, 댓글 테이블이 게시글을 FK로 작성한다.</p>
+
+<p><br></p>
+
+<p>JPA는 객체지향의 입장에서 관계를 보는데 간단한 시작은 객체지향보다는 관계형 데이터베이스 모델링을 위주로 해서 구성하는 것이 편리하다.
+<img class="emoji" title=":thumbsup:" alt=":thumbsup:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" height="20" width="20"></p>
+
+<hr>
+
+<p><br></p>
+
+<h2 id="예제-프로젝트의-생성"><strong>예제 프로젝트의 생성</strong></h2>
+
+<p><br><br></p>
+
+<p>프로젝트의 생성은 ‘board’라는 이름의 프로젝트로 생성하고 Gradle, War 항목을 선택한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-23-58.png" alt=""></p>
+
+<p><br></p>
+
+<p>추가할 라이브러리는 ‘Spring Boot DevTools, Lombok, Spring Web, Thymeleaf, Spring Data JPA 등을 추가한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-24-30.png" alt=""></p>
+
+<p><br></p>
+
+<p>MariaDB JDBC 드라이버와 Thymeleaf의 시간 처리 관련 라이브러리를 추가한다.</p>
+
+<p><em>“나는 mysql를 선호해서 mysql connector로 대신했다”</em> <img class="emoji" title=":satisfied:" alt=":satisfied:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f606.png" height="20" width="20"></p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-26-35.png" alt=""></p>
+
+<p><br></p>
+
+<p>application.properties 파일에는 JPA 관련 설정을 추가한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-16-21-29-06.png" alt=""></p>
+
+<p><br></p>
+
+<p>프로젝트 내에 entity 패키지를 생성하고, 이전 예제에서 사용했던 BaseEntity 클래스를 추가한다.</p>
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#SpringBoot-ref">
+					SpringBoot <span>(3)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		
+		<ul class="list-inline">
+		  <li><i class="fa fa-tags"></i></li>
+		  
+		  
+			 
+				<li>
+					<a href="/tags.html#Intellij-ref">
+					Intellij <span>(9)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#SpringBoot-ref">
+					SpringBoot <span>(3)</span>
+					
+					</a>
+				</li>
+			
+		  
+		  
+		</ul>
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=%EC%BD%94%EB%93%9C%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EC%8A%A4%ED%94%84%EB%A7%81%20%EB%B6%80%ED%8A%B8%20%EC%9B%B9%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-Part3-01&amp;via=young" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus" onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="/images/MainImage/karajan.jpg" class="img-rounded author-image">
+        <h4 class="section-title author-name">YoungKyonYou</h4>
+        <p class="author-bio">Integration of Knowledge</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/intellij-error/2021/02/15/intellij-error01.html" title="Intellij(인텔리제이) cannot resolve symbol 에러">← Previous</a></li>
+		  
+		  
+			<li class="next disabled">
+<a>Next →</a>
+		  
+		</li>
+</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr>
+			<p>
+				© 2021 YoungKyonYou with <a href="http://jekyllrb.com/">Jekyll</a>. 
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'YoungKyonYou', 'auto');
+  ga('send', 'pageview');
+</script>
+
