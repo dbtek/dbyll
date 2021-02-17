@@ -52,6 +52,8 @@ _지금은 유투브로 찾으려고 해도 삭제되고 없다..._
 
 어쨌든 그렇게 시작한 sister의 연주...
 
+:clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap::clap:
+
 ![](/images/Classic/Frank-01/2021-02-17-09-17-05.png)
 
 ~~프랑크 소나타는 제일 마지막..~~
