@@ -1,0 +1,473 @@
+I"ev<p><br /><br /></p>
+
+<h1 id="연관관계-테스트">연관관계 테스트</h1>
+<p><br /><br />
+<strong><em>현 게시물은 ‘코드로 배우는 스프링부트 웹 프로젝트’ 라는 서적을 공부하면서 개인적으로 메모하고 공부하기 위해서 작성하는 글입니다.</em></strong>
+—</p>
+
+<p>데이터를 추가하는 작업을 PK 쪽에서부터 시작하는 것이 좋다. 프로젝트를 다음 그림과 같이 구성한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-17-19-16-01.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>작성하는 MemberRepositoryTests에는 MemberRepository를 주입하고 예제로 사용할 Member 객체를 100개 추가하는 테스트 코드를 작성한다.</p>
+
+<p><br /></p>
+
+<p><strong>MemberRepositoryTests 클래스</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.zerock.board.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.junit.jupiter.api.Test</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.test.context.SpringBootTest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.zerock.board.entity.Member</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.stream.IntStream</span><span class="o">;</span>
+<span class="nd">@SpringBootTest</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberRepositoryTests</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">MemberRepository</span> <span class="n">memberRepository</span><span class="o">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertMembers</span><span class="o">(){</span>
+        <span class="nc">IntStream</span><span class="o">.</span><span class="na">rangeClosed</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">100</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="n">i</span><span class="o">-&gt;{</span>
+            <span class="nc">Member</span> <span class="n">member</span><span class="o">=</span><span class="nc">Member</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">email</span><span class="o">(</span><span class="s">"user"</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">"@aaa.com"</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">password</span><span class="o">(</span><span class="s">"1111"</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">name</span><span class="o">(</span><span class="s">"USER"</span><span class="o">+</span><span class="n">i</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+            <span class="n">memberRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">member</span><span class="o">);</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p><br /></p>
+
+<p>테스트의 실행 결과로 데이트베이스에 회원 데이터가 추가되었는지 확인한다.</p>
+
+<p>BoardRepositoryTests 코드 역시 동일한 패키지에 추가하고 앞에서 만들어진 회원 데이터를 이용해서 Board 객체를 생성해서 추가하도록 테스트 코드를 작성한다.</p>
+
+<p><br /></p>
+
+<p><strong>BoardRepositoryTests 클래스</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.zerock.board.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.junit.jupiter.api.Test</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.test.context.SpringBootTest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Page</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.PageRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Pageable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Sort</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.transaction.annotation.Transactional</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.zerock.board.entity.Board</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.zerock.board.entity.Member</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Optional</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.IntStream</span><span class="o">;</span>
+
+<span class="nd">@SpringBootTest</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoardRepositoryTests</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">BoardRepository</span> <span class="n">boardRepository</span><span class="o">;</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertBoard</span><span class="o">(){</span>
+        <span class="nc">IntStream</span><span class="o">.</span><span class="na">rangeClosed</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">100</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="n">i</span><span class="o">-&gt;{</span>
+            <span class="nc">Member</span> <span class="n">member</span><span class="o">=</span> <span class="nc">Member</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">email</span><span class="o">(</span><span class="s">"user"</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">"@aaa.com"</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
+            <span class="nc">Board</span> <span class="n">board</span><span class="o">=</span><span class="nc">Board</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">title</span><span class="o">(</span><span class="s">"Title..."</span><span class="o">+</span><span class="n">i</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">content</span><span class="o">(</span><span class="s">"Content...."</span><span class="o">+</span><span class="n">i</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">writer</span><span class="o">(</span><span class="n">member</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+            <span class="n">boardRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">board</span><span class="o">);</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p><br /></p>
+
+<p>testInsert()는 한 명의 사용자가 하나의 게시물을 등록하도록 작성되었다. 테스트 결과는 데이터베이스를 통해 확인한다.</p>
+
+<p>댓글은 ReplyRepositoryTest 클래스를 작성해서 특정한 임의의 게시글을 대상으로 댓글을 추가한다. 현재 게시글은 1번부터 100번까지의 임의의 번호를 이용해서 300개의 댓글을 추가한다.</p>
+
+<p><br /></p>
+
+<p><strong>ReplyRepositoryTests 클래스</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.zerock.board.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.junit.jupiter.api.Test</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.test.context.SpringBootTest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.zerock.board.entity.Board</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.zerock.board.entity.Reply</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Optional</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.IntStream</span><span class="o">;</span>
+
+<span class="nd">@SpringBootTest</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReplyRepositoryTests</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">ReplyRepository</span> <span class="n">replyRepository</span><span class="o">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertReply</span><span class="o">(){</span>
+        <span class="nc">IntStream</span><span class="o">.</span><span class="na">rangeClosed</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">300</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="n">i</span><span class="o">-&gt;{</span>
+            <span class="kt">long</span> <span class="n">bno</span><span class="o">=(</span><span class="kt">long</span><span class="o">)(</span><span class="nc">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()*</span><span class="mi">100</span><span class="o">)+</span><span class="mi">1</span><span class="o">;</span>
+            <span class="nc">Board</span> <span class="n">board</span><span class="o">=</span> <span class="nc">Board</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">bno</span><span class="o">(</span><span class="n">bno</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
+
+            <span class="nc">Reply</span> <span class="n">reply</span><span class="o">=</span><span class="nc">Reply</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">text</span><span class="o">(</span><span class="s">"Reply......"</span><span class="o">+</span><span class="n">i</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">board</span><span class="o">(</span><span class="n">board</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">replyer</span><span class="o">(</span><span class="s">"guest"</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+            <span class="n">replyRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">reply</span><span class="o">);</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>insertReply()는 300개의 댓글을 1~100 사이의 번호로 추가한다. 데이터베이스에는 1번부터 100번까지 게시물에 대해서 n개의 댓글이 추가된다.</p>
+
+<p><br /></p>
+
+<p>데이터 추가가 완료되었다면 이제 화면에 필요한 데이터를 정리해 본다.</p>
+
+<ul>
+  <li>목록 화면: 게시글의 번호, 제목, 댓글 개수, 작성자의 이름/이메일</li>
+</ul>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-17-19-36-04.png" alt="" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>조회 화면: 게시글의 번호, 제목, 내용, 댓글 개수, 작성자 이름/이메일</li>
+</ul>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-17-19-36-55.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>엔티티 클래스들은 실제 데이터베이스상에서는 두 개 혹은 두 개 이상의 테이블로 생성되기 때문에 연관관계를 맺고 있다는 것은 데이터베이스의 입장으로 보면 조인이 필요하다는 것이다. 실제로 @ManyToOne의 경우에는 <strong>FK 쪽의 엔티티를 가져올 때 PK 쪽의 엔티티도 같이 가져온다.</strong></p>
+
+<p>BoardRepositoryTests를 통해서 Member를 @ManyToOne으로 참조하고 있는 Board를 조회하는 테스트 코드를 작성해 본다.</p>
+
+<p><br /></p>
+
+<p><strong>BoardRepositoryTests 클래스 일부</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre>    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testRead1</span><span class="o">(){</span>
+        <span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">Board</span><span class="o">&gt;</span> <span class="n">result</span><span class="o">=</span><span class="n">boardRepository</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="mi">100L</span><span class="o">);</span>
+        <span class="nc">Board</span> <span class="n">board</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">board</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">board</span><span class="o">.</span><span class="na">getWriter</span><span class="o">());</span>
+    <span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>위의 코드를 실행하면 쿼리가 내부적으로 left outer join 처리가 된 것을 확인 가능하다.</p>
+
+<p>Reply와 Board 역시 @ManyToOne의 관계이므로 테스트를 하면 자동으로 조인이 처리되는 것을 볼 수 있다.</p>
+
+<p><br /></p>
+
+<p><strong>ReplyRepositoryTests 클래스</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre>    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">readReply1</span><span class="o">(){</span>
+        <span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">Reply</span><span class="o">&gt;</span> <span class="n">result</span><span class="o">=</span><span class="n">replyRepository</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="mi">1L</span><span class="o">);</span>
+        <span class="nc">Reply</span> <span class="n">reply</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">reply</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">reply</span><span class="o">.</span><span class="na">getBoard</span><span class="o">());</span>
+    <span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>위 코드를 실행하면 조인이 처리된 쿼리가 실행이 된다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-18-12-26-49.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>실행된 SQL을 보면 reply 테이블, board 테이블, member 테이블까지 모두 조인으로 처리가 되는 것을 볼 수 있는데 Reply를 가져올 때 매번 Board와 Member까지 조인해서 가져올 필요가 많지는 않으므로 위와 같은 여러 테이블이 조인으로 처리되는 상황은 그다지 효율적이지 않다.</p>
+
+<p>위와 같이 연관관계를 가진 모든 엔티티를 같이 로딩하는 것을 ‘Eagar loading’이라고 하는데 ‘즉시 로딩’이라는 용어로 표현한다. 이는 모든 엔티티를 가져오는 장점이 있지만 여러 연관관계를 맺고 있거나 연관관계가 복잡해질수록 조인으로 인한 성능 저하를 피할 수 없다. 그래서 JPA에서는 연관관계 데이터를 어떻게 가져올 것인가에 대해서 fetch라고 하는 것을 정의 한다.</p>
+
+<p>즉시 로딩이 불필요한 조인까지 처리한다면 그와 반대되는 개념이 ‘Lazy Loading’이다. 
+Board 클래스를 수정해보자.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-18-12-30-23.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>Lazy loading를 사용하는 Board 클래스</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.zerock.board.entity</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.*</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.persistence.*</span><span class="o">;</span>
+
+<span class="nd">@Entity</span>
+<span class="nd">@Builder</span>
+<span class="nd">@AllArgsConstructor</span>
+<span class="nd">@NoArgsConstructor</span>
+<span class="nd">@Getter</span>
+<span class="nd">@ToString</span><span class="o">(</span><span class="n">exclude</span> <span class="o">=</span> <span class="s">"writer"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Board</span> <span class="kd">extends</span> <span class="nc">BaseEntity</span><span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span><span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">bno</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">content</span><span class="o">;</span>
+    <span class="nd">@ManyToOne</span><span class="o">(</span><span class="n">fetch</span><span class="o">=</span><span class="nc">FetchType</span><span class="o">.</span><span class="na">LAZY</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Member</span> <span class="n">writer</span><span class="o">;</span>
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>Lazy loading를 적용했다면 다시 BoardRepositorTests의 testRead1()을 실행해보자.
+실행해보면 알겠지만 오류가 날것이다. 그 이유는 바로 board.getWriter() 때문인데 이는 member 테이블을 로딩해야 하는데 이미 데이터베이스와의 연결은 끝난 상태이기 때문이다. 그래서 오류 내용 중에 ‘no Session’이라는 내용은 그러한 내용이다.</p>
+
+<p>이러한 무제를 해결하기 위해서는 다시 한번 데이터베이스와의 연결이 필요한데 @Transactional이 바로 해결책이다. 그래서 이것을 다시 추가해준다.</p>
+
+<p><br /></p>
+
+<p><strong>BoardRepositoryTests</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre>    <span class="nd">@Transactional</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testRead1</span><span class="o">(){</span>
+        <span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">Board</span><span class="o">&gt;</span> <span class="n">result</span><span class="o">=</span><span class="n">boardRepository</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="mi">100L</span><span class="o">);</span>
+        <span class="nc">Board</span> <span class="n">board</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">board</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">board</span><span class="o">.</span><span class="na">getWriter</span><span class="o">());</span>
+    <span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>트랜잭션 어노테이션은 필요할 때 다시 데이터베이스와 연결이 생성된다. 이 코드를 실행하면 board 테이블만을 로딩해서 처리하고 있지만 getWriter()를 하기 위해서 memeber 테이블을 로딩하는 것을 볼 수 있다.</p>
+
+<p><br /></p>
+
+<p><strong>연관관계에서의 @ToString() 주의사항</strong></p>
+
+<p>내가 Board 객체의 @ToString()을 하게 되면 해당 클래스의 모든 멤버 변수를 출력하게 되는데 이는 Board의 객체와 writer 변수로 선언된 Member 객체 역시 출력하게 된다. 즉 Member를 출력하기 위해서는 Memeber 객체의 toString()이 호출되어야 하고 이때 데이터베이스 연결이 필요하게 된다.</p>
+
+<p>이런 문제로 인해 연관관계가 있는 엔티티 클래스의 경우 @ToString()을 할 때는 습관적으로 <strong>exclude 속성</strong>을 사용하는 것이 좋다.</p>
+
+<p>exclude는 해당 속성값으로 지정된 변수는 toString()에서 제외하기 때문에 지연 로딩을 할 때는 반드시 지정해 주는 것이 좋다.</p>
+
+<p><br /></p>
+
+<h2 id="jpql과-leftouter-join"><strong>JPQL과 left(outer) join</strong></h2>
+
+<p><br /></p>
+
+<p>목록 화면에서 게시글의 정보와 함께 댓글의 수를 같이 가져오기 위해서는 단순히 하나의 엔티티 타입을 이용할 수 없다. 이에 대한 해결책 중에서 가장 많이 쓰이는 방식은 JPQL의 조인(join)을 이용하는 것이다.</p>
+
+<p>Board엔티티 클래스의 내부에는 Member 엔티티 클래스를 변수로 선언하고, 연관관계를 맺고 있다. 이러한 경우에는 Board의 wrtier 변수를 이용해서 조인을 처리한다.</p>
+
+<p><br /></p>
+
+<p><strong>BoardRepository 인터페이스</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.zerock.board.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Page</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Pageable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.JpaRepository</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.Query</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.repository.query.Param</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.zerock.board.entity.Board</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.zerock.board.repository.search.SearchBoardRepository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">BoardRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">Board</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;,</span> <span class="nc">SearchBoardRepository</span> <span class="o">{</span>
+    <span class="c1">//한 개의 로우(Object) 내에 Object[]로 나옴</span>
+    <span class="nd">@Query</span><span class="o">(</span><span class="s">"select b, w from Board b left join b.writer w where b.bno=:bno"</span><span class="o">)</span>
+    <span class="nc">Object</span> <span class="nf">getBoardWithWriter</span><span class="o">(</span><span class="nd">@Param</span><span class="o">(</span><span class="s">"bno"</span><span class="o">)</span> <span class="nc">Long</span> <span class="n">bno</span><span class="o">);</span>
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>getBoardWithWriter()는 Board를 사용하고 있지만, Member를 같이 조회해야 하는 상황이다. Board 클래스에는 Member와의 연관관계를 맺고 있으므로 b.writer와 같은 형태로 사용한다. 이처럼 내부에 있는 엔티티를 이용할 때는 ‘LEFT JOIN’ 뒤에 ‘ON’을 이용하는 부분이 없다. 작성한 getBoardWithWriter()를 테스트 코드로 확인하자.</p>
+
+<p><br /></p>
+
+<p><strong>BoardRepositoryTests 테스크 코드</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre>    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testReadWithWriter</span><span class="o">(){</span>
+        <span class="nc">Object</span> <span class="n">result</span><span class="o">=</span><span class="n">boardRepository</span><span class="o">.</span><span class="na">getBoardWithWriter</span><span class="o">(</span><span class="mi">100L</span><span class="o">);</span>
+        <span class="nc">Object</span><span class="o">[]</span> <span class="n">arr</span><span class="o">=(</span><span class="nc">Object</span><span class="o">[])</span><span class="n">result</span><span class="o">;</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"-------------------------------"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">arr</span><span class="o">));</span>
+    <span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+:ET

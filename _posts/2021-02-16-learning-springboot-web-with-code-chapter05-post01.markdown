@@ -10,7 +10,8 @@ description: 게시판 만들기
 <br><br>
 
 # <N:1(다대일) 연관관계> Board 만들기
-
+<br><br>
+**_현 게시물은 '코드로 배우는 스프링부트 웹 프로젝트' 라는 서적을 공부하면서 개인적으로 메모하고 공부하기 위해서 작성하는 글입니다._**
 ---
 
 여기서는 '회원'과 '게시글' 그리고 '댓글'이라는 주제로 JPA에서 연관관계를 가장 쉽게 적용할 수 있는 방법을 알아본다.
@@ -279,7 +280,7 @@ public class Board extends BaseEntity{
     private Long bno;
     private String title;
     private String content;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     private Member writer;
 }
 ```
