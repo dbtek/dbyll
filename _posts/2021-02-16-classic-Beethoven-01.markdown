@@ -15,7 +15,8 @@ description: Beethoven-Violin Sonata No. 2 in A major, Op. 12 No. 2
 
 ![](/images/Classic/Beethoven-01/2021-02-16-23-13-19.png){: width="400" height="500"}
 
-베토벤 바이올린 소나타를 많이 들어본적이 없었다. :sweat_smile:
+베토벤 바이올린 소나타를 많이 들어본 적이 없었다. :sweat_smile:
+
 고작해야 5번 봄이랄까?...
 
 ~~이것도 노다메 칸타빌레에서 들어ㅅ..~~
@@ -121,3 +122,5 @@ _다음 연주도 기대할게요~!!!:violin:_
 이게 베토벤 소나타 전곡을 사람들이 바꿔가면서 연주하는 건데 다 감상하기엔 시간이 너무 오래 걸리니까
 5번 1악장 그 유명한 봄은 꼭 들어야겠다 싶어서 거기까지 들었다. :smirk:<br>
 ~~아니 근데 5번 1악장 마지막에 너무 큰 실수를...ㅠㅠ 아차 했을 듯.. 다시 찍고 싶겠다:disappointed_relieved:~~
+
+However, 수고하셨습니다~!

@@ -29,7 +29,7 @@ author:
 rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
-
+exclude: [vendor]
 # set it as url of an image
 # sidebar_background_image: https://www.dropbox.com/s/g9h23zrycedxtk5/sky.png?raw=1
 

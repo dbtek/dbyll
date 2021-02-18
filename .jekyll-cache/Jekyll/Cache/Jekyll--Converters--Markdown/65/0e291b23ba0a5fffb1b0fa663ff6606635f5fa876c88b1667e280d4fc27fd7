@@ -1,0 +1,10 @@
+I"]<p><br /><br /></p>
+
+<h1 id="연관관계-테스트">연관관계 테스트</h1>
+
+<hr />
+
+<p>데이터를 추가하는 작업을 PK 쪽에서부터 시작하는 것이 좋다. 프로젝트를 다음 그림과 같이 구성한다.</p>
+
+<p><img src="../images/Learning_SpringBoot_with_Web_Project/Part3/Chapter5/2021-02-17-19-16-01.png" alt="" /></p>
+:ET
