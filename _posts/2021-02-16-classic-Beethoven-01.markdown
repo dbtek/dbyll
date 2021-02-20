@@ -25,6 +25,31 @@ description: Beethoven-Violin Sonata No. 2 in A major, Op. 12 No. 2
 
 우연히 친한 누님께서 인스타 주최 유투브 실시간 스트리밍으로 주말에 베토벤 바이올린 소나타 2번을 연주하신다는 소리를 듣고 엄청 기대했다~ 드디어 새로운 곡 좀 들어보겠구먼 ㅎㅎ :laughing:
 
+Hongxury 대표 승혜 누나의 프로필을 살펴보자.
+
+![](/images/Classic/Beethoven-01/hong.PNG){: width="300" height="350"}
+
+<br>
+
+> Profile<br><br>
+> (중학교 모름 ㅎㅎ) (maybe 예원 예술 중학교?..)<br>
+> 서울예술고등학교 바이올린과 졸업<br>
+> 이화여자대학교 바이올린과 입학<br>
+> Hochschule für Musik und Theater München Violin 편입 및 학사 졸업<br>
+> 서울대학교 (Almost)석사<br>
+> 미국 줄리어드 음악 대학교 박사 (예정)<br>
+> 한국예술종합학교 Violin 학과장 (예정)<br>
+> 서울대학교 바이올린과 부교수 (예정)<br>
+> 베를린 필 하모닉 콘서트 마스터 (예정)<br>
+> 하버드 대학교 바이올린과 전임교수 (예정)<br>
+> 서울대학교 바이올린과 명예 교수 (예정)<br>
+
+~~영균아.. 너가 써놓고도 참 이래도 되나 싶지?...ㅋㅋㅋㅋ..~~
+
+~~학력 위조로 잡혀가는 거 아니야??...~~
+
+나름 사실만 명시했으니 ㅋㅋㅋㅋ ㄱㅊ을 거야:innocent:
+
 그리고 시작된 누님의 연주...
 
 ![](/images/Classic/Beethoven-01/2021-02-16-23-21-55.png)
