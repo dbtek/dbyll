@@ -32,7 +32,7 @@ Hongxury 대표 승혜 누나의 프로필을 살펴보자.
 <br>
 
 > Profile<br><br>
-> 예원예술중학교 바이올린과 졸업<br>
+> 선화예술중학교 바이올린과 졸업<br>
 > 서울예술고등학교 바이올린과 졸업<br>
 > Hochschule für Musik und Theater München Violin학사 졸업<br>
 > 이화여자대학교 석사 (과정 도중 교수님이 누나를 담을 그릇이 안되서 나옴)<br>
