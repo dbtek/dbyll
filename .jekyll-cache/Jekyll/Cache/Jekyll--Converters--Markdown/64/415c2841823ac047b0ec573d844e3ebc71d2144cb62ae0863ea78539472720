@@ -1,0 +1,13 @@
+I"�<p><br /></p>
+
+<p>c</p>
+
+<p><br /></p>
+
+<p>리액트를 공부하면서 styled-components를 쓸 일이 있어서 책에 나온대로</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>$yarn add styled-components
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+:ET

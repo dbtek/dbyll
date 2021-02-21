@@ -1,0 +1,48 @@
+I"�<p><br /></p>
+
+<h1 id="cannot-find-moudle-redux-from-cusers">Cannot find moudle ‘redux’ from ‘C:\Users…</h1>
+
+<p>리액트를 다루는 기술이라는 책을 공부하던 도중 발생한 에러다.</p>
+
+<p><del>책 진짜 두껍다… 900페이지나 되네..</del></p>
+
+<p>그 책에서 이제 절반의 진도를 나가고 그 유명하 리덕스 라이브러리를 사용하는 파트를 공부하게 되었다.</p>
+
+<p>하라는데로 하고</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>parcel xxx.html
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>를 치는 순간 에러가 발생했다.</p>
+
+<p><img src="/images/React_Error/Error03/2021-02-21-10-44-19.png" alt="" />’</p>
+
+<p><em><strong>Cannot find module ‘redux’ from ~~</strong></em></p>
+
+<p>이게 뭐람… 그래서 다시 책을 차례대로보며 빠트린건 없는지 확인했다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>yarn add redux
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>제대로 해줬는데??…</p>
+
+<p>그래서 구굴링을 한 결과 성과를 내고 있지 못하던 중…</p>
+
+<p>다행히 Stackoverflow에서 답을 찾을 수 있었다.</p>
+
+<p>해결책은 <strong>바로~~</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>npm install redux --save
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>터미널에 이것을 입력하니까 정상적으로 작동이 된다..</p>
+
+<p><img src="/images/React_Error/Error03/2021-02-21-10-48-09.png" alt="" /></p>
+
+<p><del>아니 근데 왜 책에 안 나와있냐구!!</del></p>
+
+<p>npm install
+<br /></p>
+
+:ET

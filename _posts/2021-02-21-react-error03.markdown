@@ -1,0 +1,66 @@
+---
+layout: post
+title: Cannot find module 'redux'....
+date: 2021-02-21 10:00:00 0000
+tags: [React, Visual Studio Code]
+categories: [React-Error]
+description: styled-compoents 사용 도중 에러
+---
+
+<br>
+
+# 리덕스 라이브러리 실습을 하면서 발생한 오류..
+
+리액트를 다루는 기술이라는 책을 공부하던 도중 발생한 에러다.
+
+~~책 진짜 두껍다... 900페이지나 되네..~~
+
+그 책에서 이제 절반의 진도를 나가고 그 유명하 리덕스 라이브러리를 사용하는 파트를 공부하게 되었다.
+
+하라는데로 하고
+
+```
+parcel xxx.html
+```
+
+를 치는 순간 에러가 발생했다.
+
+![](/images/React_Error/Error03/2021-02-21-10-44-19.png)'
+
+_**Cannot find module 'redux' from ~~**_
+
+이게 뭐람... 그래서 다시 책을 차례대로보며 빠트린건 없는지 확인했다.
+
+```
+yarn add redux
+```
+
+제대로 해줬는데??...
+
+그래서 구굴링을 한 결과 성과를 내고 있지 못하던 중...
+
+다행히 Stackoverflow에서 답을 찾을 수 있었다.
+
+해결책은 **바로~~**
+
+```
+npm install redux --save
+```
+
+터미널에 이것을 입력하니까 정상적으로 작동이 된다..
+
+![](/images/React_Error/Error03/2021-02-21-10-48-09.png)
+
+~~아니 근데 왜 책에 안 나와있냐구!!~~
+
+- npm install은 우리가 새로운 패키지를 설치할 것이라고 알려주는 것이다.
+- redux는 패키지의 이름을 말한다.
+- --save는 npm에게 우리 앱에서 제대로 작동하기 위해 이 패키지를 track하고 싶다는 것을 알려준다.
+
+<br>
+
+[Stackoverflow reference](https://stackoverflow.com/questions/64628525/uncaught-error-cannot-find-module-redux)
+
+~~별것도 아닌 게 찾는데 시간 좀 걸렸네...~~
+
+### 해결 완료~!
