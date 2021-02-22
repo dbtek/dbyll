@@ -388,7 +388,7 @@ iteration 카테고리 쪽을 살펴보니 쓸만한 코드가 보인다. 여기
 
 <br>
 
-부트스트랩에서 제공하는 Components 템플릿을 사용할 건데 해당 영상에서는 jumbotron를 사용하지만 부트스트랩에서 이제는 제공하지 않아서 다른 것을 사용했다. 그래서 Component 중 Alerts에 있는 것을 사용했다.
+부트스트랩에서 제공하는 Components 템플릿을 사용할 건데 해당 영상에서는 jumbotron를 사용하지만 부트스트랩에서 이제는 제공하지 않아서 다른 것을 사용했다. 그래서 Component 중 Alerts에 있는 것을 사용했다. 그리고 항목을 몇가지 더 추가했다. ${locationStat.diffFromPrevDay}는 전날과 비교해서 확진자 수가 얼마나 늘었는지 보여주는 항목이다. 그리고 ${totalReportedCases}는 국가별 전체 확진자 수를 나타내고 ${totalReportedCases}는 전세계적으로 전날과 비교해서 총 확진자 수를 나타내준다. 마지막으로 ui가 좀 더 정돈되게 나오게 하기 위해서 <div class="container">로 body 태그 내부를 감싸준다.
 
 ![](/images/Program/post-7/2021-02-22-18-17-07.png)
 
@@ -412,22 +412,23 @@ iteration 카테고리 쪽을 살펴보니 쓸만한 코드가 보인다. 여기
   </head>
 
   <body>
-    <h1>Coronavirus Tracker Application</h1>
-    <p>
-      This application lists the current number of cases reported across the
-      globe
-    </p>
-
-    <div class="alert alert-primary" role="alert">
-      <h1 class="display-4" th:text="${totalReportedCases}"></h1>
-      <p class="lead">Total cases reported as of today</p>
-      <hr class="my-4" />
+    <div class="container">
+      <h1>Coronavirus Tracker Application</h1>
       <p>
-        <span>New cases reported since previous day</span>
-        <span th:text="${totalNewCases}"></span>
+        This application lists the current number of cases reported across the
+        globe
       </p>
-    </div>
-    <div class="cotainer">
+
+      <div class="alert alert-primary" role="alert">
+        <h1 class="display-4" th:text="${totalReportedCases}"></h1>
+        <p class="lead">Total cases reported as of today</p>
+        <hr class="my-4" />
+        <p>
+          <span>New cases reported since previous day</span>
+          <span th:text="${totalNewCases}"></span>
+        </p>
+      </div>
+
       <table class="table">
         <tr>
           <th>State</th>
@@ -446,3 +447,111 @@ iteration 카테고리 쪽을 살펴보니 쓸만한 코드가 보인다. 여기
   </body>
 </html>
 ```
+
+<br>
+
+이제 추가된 항목을 자바 파일에 추가해 보자. 다시 LocationStats.java 파일로 돌아가서 변수와 getter, setter를 추가한다. 추가할 diffFromPrevDay는 국가별로 전날과 비교해서 몇명이 늘었는지 해당되는 수를 저장한다. 즉 위에 html에서 ${locationStat.diffFromPrevDay}에 대응된다.
+
+**LocationStats.java**
+
+```java
+package io.javabrains.coronavirustracker.models;
+
+public class LocationStats {
+    private String state;
+    private String country;
+    private int latestTotalCases;
+    private int diffFromPrevDay;
+
+    public int getDiffFromPrevDay() {
+        return diffFromPrevDay;
+    }
+
+    public void setDiffFromPrevDay(int diffFromPrevDay) {
+        this.diffFromPrevDay = diffFromPrevDay;
+    }
+
+   (...)
+}
+
+```
+
+<br>
+
+그리고 CoronaVirusDataService.java로 돌아가서 간단한 로직을 작성한다. 출력문은 이제 필요 없으니까 제거하고 우리가 html에서 추가한 변수에 데이터를 넣어주는 로직을 작성한다.
+
+**CoronaVirusDataService.java**
+
+```java
+(...)
+@Service
+public class CoronaVirusDataService {
+
+    (...)
+    public void fetchVirusData() throws IOException, InterruptedException{
+        (...)
+        for (CSVRecord record : records) {
+            LocationStats locationStat=new LocationStats();
+
+            locationStat.setState(record.get("Province/State"));
+            locationStat.setCountry(record.get("Country/Region"));
+
+            int latestCases=Integer.parseInt(record.get(record.size()-1));
+            int prevDayCases=Integer.parseInt(record.get(record.size()-2));
+
+            locationStat.setLatestTotalCases(latestCases);
+            locationStat.setDiffFromPrevDay(latestCases-prevDayCases);
+
+            newStats.add(locationStat);
+        }
+        this.allStats=newStats;
+    }
+}
+
+```
+
+<br>
+
+서비스를 수정했으니 이제 마지막으로 controller를 수정해 준다.
+
+**HomeController**
+
+```java
+(...)
+@Controller
+public class HomeController {
+    @Autowired
+    CoronaVirusDataService coronaVirusDataService;
+    @GetMapping("/")
+    public String home(Model model){
+        List<LocationStats> allStats=coronaVirusDataService.getAllStats();
+        int totalReportedCases=allStats.stream().mapToInt(stat->stat.getLatestTotalCases()).sum();
+
+        int totalNewCases=allStats.stream().mapToInt(stat->stat.getDiffFromPrevDay()).sum();
+        model.addAttribute("locationStats",coronaVirusDataService.getAllStats());
+        model.addAttribute("totalReportedCases",totalReportedCases);
+        model.addAttribute("totalNewCases",totalNewCases);
+
+        return "home";
+    }
+}
+
+```
+
+<br>
+
+> ##### 9, 11: allStats 리스트 배열을 스트림형으로 변환 시킨후 String 형태의 숫자를 Int로 mapping하고 하나하나 다 더한 값을 반환한다.<br><br>
+>
+> ##### 12,13,14: model.addAttribute()를 통해서 html에서 파라미터로 넘겨준 이름으로 해당 데이터를 쓸 수 있도록 설정한다.<br>
+
+우리가 하고자 하는 것이 끝났다. 이제 어플리케이션을 실행해 보자
+
+![](/images/Program/post-7/2021-02-22-20-18-26.png)
+
+<br>
+
+드디어 완성되었다!!!~~
+
+---
+
+## 수고 많으셨습니다.
