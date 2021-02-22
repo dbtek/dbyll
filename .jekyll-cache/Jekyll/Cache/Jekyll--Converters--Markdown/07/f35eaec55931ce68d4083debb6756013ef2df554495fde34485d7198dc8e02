@@ -1,0 +1,250 @@
+I"�;<p><br /><br />
+<br /><br /></p>
+
+<h1 id="스프링부트로-코로나-바이러스-트래커-만들기-03"><center>스프링부트로 코로나 바이러스 트래커 만들기-03</center></h1>
+
+<p><br /><br /></p>
+
+<p><em>이 프로젝트는 <strong>Java Brains</strong> 유투브 영상을 보며 공부한 것을 정리하기 위해서 남김을 알립니다. 영상과는 조금 다를 수 있음을 알립니다.</em></p>
+
+<p><a href="https://www.youtube.com/watch?v=8hjNG9GZGnQ">Youtube 영상</a></p>
+
+<hr />
+
+<p>이전 게시물에서 Commons-csv 라이브러리를 사용해서 헤더에 해당하는 값을 추출하는 것을 해봤다. 이번에는 그 값들을 저장할 수 있는 클래스를 만들고 리스트에 그 값들을 담아보겠다. 먼저 model 패키지와 그 안에 LocationStats.java 파일을 만든다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-16-44-56.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>LocationStats.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">io.javabrains.coronavirustracker.models</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LocationStats</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">state</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">country</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">latestTotalCases</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getState</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">state</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setState</span><span class="o">(</span><span class="nc">String</span> <span class="n">state</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getCountry</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">country</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCountry</span><span class="o">(</span><span class="nc">String</span> <span class="n">country</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">country</span> <span class="o">=</span> <span class="n">country</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getLatestTotalCases</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">latestTotalCases</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLatestTotalCases</span><span class="o">(</span><span class="kt">int</span> <span class="n">latestTotalCases</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">latestTotalCases</span> <span class="o">=</span> <span class="n">latestTotalCases</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>다 만들었으면 이제 이 클래스 객체를 이용해서 헤더 값들을 담을 수 있는 리스트를 만들어보자.</p>
+
+<p><strong>CoronaVirusDataService.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CoronaVirusDataService</span> <span class="o">{</span>
+
+   <span class="o">(...)</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">LocationStats</span><span class="o">&gt;</span> <span class="n">allStats</span><span class="o">=</span><span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+    <span class="nd">@PostConstruct</span>
+    <span class="nd">@Scheduled</span><span class="o">(</span><span class="n">cron</span><span class="o">=</span><span class="s">"* * 1 * * *"</span><span class="o">)</span>
+    <span class="o">(...)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>자 이제 우리는 LocationStats 객체를 만들 수 있다.
+LocationStats 클래스를 만들었으니 이것을 이용해서 각 데이터를 이 클래스 변수에 담고 출력해서 확인해 보자. 먼저 LocationStats에서 toString() 메서드를 정의해준다.</p>
+
+<p><strong>LocationStats.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">io.javabrains.coronavirustracker.models</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LocationStats</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">state</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">country</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">latestTotalCases</span><span class="o">;</span>
+
+    <span class="o">(...)</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"LocationStats{"</span> <span class="o">+</span>
+                <span class="s">"state='"</span> <span class="o">+</span> <span class="n">state</span> <span class="o">+</span> <span class="sc">'\''</span> <span class="o">+</span>
+                <span class="s">", country='"</span> <span class="o">+</span> <span class="n">country</span> <span class="o">+</span> <span class="sc">'\''</span> <span class="o">+</span>
+                <span class="s">", latestTotalCases="</span> <span class="o">+</span> <span class="n">latestTotalCases</span> <span class="o">+</span>
+                <span class="sc">'}'</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>서비스 자바 파일을 다시 수정한다</p>
+
+<p><strong>CoronaVirusDataService.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="rouge-code"><pre><span class="o">(...)</span>
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CoronaVirusDataService</span> <span class="o">{</span>
+
+    <span class="o">(...)</span>
+
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">LocationStats</span><span class="o">&gt;</span> <span class="n">allStats</span><span class="o">=</span><span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+    <span class="nd">@PostConstruct</span>
+    <span class="nd">@Scheduled</span><span class="o">(</span><span class="n">cron</span><span class="o">=</span><span class="s">"* * 1 * * *"</span><span class="o">)</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fetchVirusData</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span><span class="o">{</span>
+
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">LocationStats</span><span class="o">&gt;</span> <span class="n">newStats</span><span class="o">=</span><span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+        <span class="nc">HttpClient</span> <span class="n">client</span><span class="o">=</span><span class="nc">HttpClient</span><span class="o">.</span><span class="na">newHttpClient</span><span class="o">();</span>
+        <span class="o">(...)</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="nc">CSVRecord</span> <span class="n">record</span> <span class="o">:</span> <span class="n">records</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">LocationStats</span> <span class="n">locationStat</span><span class="o">=</span><span class="k">new</span> <span class="nc">LocationStats</span><span class="o">();</span>
+            <span class="n">locationStat</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="n">record</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"Province/State"</span><span class="o">));</span>
+            <span class="n">locationStat</span><span class="o">.</span><span class="na">setCountry</span><span class="o">(</span><span class="n">record</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"Country/Region"</span><span class="o">));</span>
+            <span class="n">locationStat</span><span class="o">.</span><span class="na">setLatestTotalCases</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">record</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">record</span><span class="o">.</span><span class="na">size</span><span class="o">()-</span><span class="mi">1</span><span class="o">)));</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">locationStat</span><span class="o">);</span>
+            <span class="n">newStats</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">locationStat</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">allStats</span><span class="o">=</span><span class="n">newStats</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <h5 id="7-lacationstats를-담을-수-있는-리스트-객체를-선언한다">7: LacationStats를 담을 수 있는 리스트 객체를 선언한다.<br /><br /></h5>
+
+  <h5 id="14-fetchvirusdata-메소드-안에-또-newstats-객체-배열을-만드는-이유는-동시성-문제-때문이다-많은-사람들이-서버에-접근하게-되는데-우리가-이-앱을-구성하고-있는-동안에-서버에-접근하려는-사람들이-에러-response를-갖게-하지-않기-위해서다-그래서-새로운-locationstats-객체newstats를-만들어서-앱을-구성하는-작업이-끝나면-newstats를-allstats로-덧붙이는-형식으로-한다-이-메소드가-실행되는-그-짧은-시간에-유저가-request를-해도-현재-데이터allstats를-보여줄-것이다">14: fetchVirusData() 메소드 안에 또 newStats 객체 배열을 만드는 이유는 동시성 문제 때문이다. 많은 사람들이 서버에 접근하게 되는데 우리가 이 앱을 구성하고 있는 동안에 서버에 접근하려는 사람들이 에러 response를 갖게 하지 않기 위해서다. 그래서 새로운 LocationStats 객체(newStats)를 만들어서 앱을 구성하는 작업이 끝나면 newStats를 allStats로 덧붙이는 형식으로 한다. 이 메소드가 실행되는 그 짧은 시간에 유저가 request를 해도 현재 데이터(allStats)를 보여줄 것이다.<br /><br /></h5>
+
+  <h5 id="23-csv-파일을-보면-매일-그날-날짜로-업데이트-된다-우리는-여기서-가장-마지막-날의-데이터를-뽑아내야-하는데-commons-csv의-user-guide-중-인덱스로-값을-조회하는-메서드를-제공한다-그래서-recordsize-1를-이용해서-가장-최근-날짜의-확진자-수를-가져올-수-있다-이-메서드의-반환형은-string이기-때문에-integer로-parse해서-받아온다">23: csv 파일을 보면 매일 그날 날짜로 업데이트 된다. 우리는 여기서 가장 마지막 날의 데이터를 뽑아내야 하는데 Commons-Csv의 user guide 중 인덱스로 값을 조회하는 메서드를 제공한다. 그래서 record.size()-1를 이용해서 가장 최근 날짜의 확진자 수를 가져올 수 있다. 이 메서드의 반환형은 String이기 때문에 Integer로 parse해서 받아온다.<br /><br /></h5>
+
+  <h5 id="24-tostring-메서드-호출로-각-데이터-출력">24: toString() 메서드 호출로 각 데이터 출력<br /><br /></h5>
+
+  <h5 id="25-27-동시성-문제-해결을-위한-코드-">25, 27: 동시성 문제 해결을 위한 코드 <br /></h5>
+</blockquote>
+
+<p>어플리케이션을 실행시키면 아래 사진과 같이 결과가 잘 나오는 것을 볼 수 있다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-17-19-24.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이제 할 것은 이 데이터를 ui 포맷으로 랜더링하는 것이다. url에 접근하여 이 stats를 랜더링하여 html 파일에서 사용하는 것이다. Controller를 만들어보자. 그전에 먼제 html 파일을 만들고 thymeleaf 공식 홈페이지에서 쓸만한 템플릿을 복사해서 붙여넣는다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-17-33-22.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>**<a href="https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html">Thymeleaf Document</a></p>
+:ET

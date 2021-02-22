@@ -1,0 +1,432 @@
+I"�x<p><br /><br />
+<br /><br /></p>
+
+<h1 id="스프링부트로-코로나-바이러스-트래커-만들기-02"><center>스프링부트로 코로나 바이러스 트래커 만들기-02</center></h1>
+
+<p><br /><br /></p>
+
+<p><em>이 프로젝트는 <strong>Java Brains</strong> 유투브 영상을 보며 공부한 것을 정리하기 위해서 남김을 알립니다. 영상과는 조금 다를 수 있음을 알립니다.</em></p>
+
+<p><a href="https://www.youtube.com/watch?v=8hjNG9GZGnQ">Youtube 영상</a></p>
+
+<hr />
+
+<p>자 이제 본격적으로 서비스를 만들어보자.
+아래 사진과 같이 services 패키지를 만들고 그 아래 CoronaVirusDataService 자바 클래스를 생성한다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-10-42-04.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>우리는 먼저 이전 게시물에서 보았던 Raw 데이터를 parse 해서 가져오는 것을 먼저 할 것이다.</strong></p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre></td><td class="code"><pre><span class="n">package</span> <span class="n">io</span><span class="p">.</span><span class="nf">javabrains</span><span class="p">.</span><span class="nf">coronavirustracker</span><span class="p">.</span><span class="nf">services</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="nf">springframework</span><span class="p">.</span><span class="nf">stereotype</span><span class="o">.</span><span class="no">Service</span><span class="p">;</span>
+
+<span class="n">import</span> <span class="n">javax</span><span class="p">.</span><span class="nf">annotation</span><span class="o">.</span><span class="no">PostConstruct</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">io</span><span class="o">.</span><span class="no">IOException</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">net</span><span class="o">.</span><span class="no">URI</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">net</span><span class="p">.</span><span class="nf">http</span><span class="o">.</span><span class="no">HttpClient</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">net</span><span class="p">.</span><span class="nf">http</span><span class="o">.</span><span class="no">HttpRequest</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">net</span><span class="p">.</span><span class="nf">http</span><span class="o">.</span><span class="no">HttpResponse</span><span class="p">;</span>
+
+<span class="vi">@Service</span>
+<span class="kp">public</span> <span class="k">class</span> <span class="nc">CoronaVirusDataService</span> <span class="p">{</span>
+
+    <span class="kp">private</span> <span class="n">static</span> <span class="no">String</span> <span class="no">VIRUS_DATA_URL</span><span class="o">=</span><span class="s2">"https://raw.githubusercontent.com/CSSEGISandData/"</span>
+    <span class="o">+</span><span class="s2">"COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"</span><span class="o">+</span>
+    <span class="s2">"time_series_covid19_confirmed_global.csv"</span><span class="p">;</span>
+
+    <span class="vi">@PostConstruct</span>
+    <span class="kp">public</span> <span class="n">void</span> <span class="n">fetchVirusData</span><span class="p">()</span> <span class="n">throws</span> <span class="no">IOException</span><span class="p">,</span> <span class="no">InterruptedException</span><span class="p">{</span>
+
+        <span class="no">HttpClient</span> <span class="n">client</span><span class="o">=</span><span class="no">HttpClient</span><span class="p">.</span><span class="nf">newHttpClient</span><span class="p">();</span>
+        <span class="no">HttpRequest</span> <span class="n">request</span><span class="o">=</span> <span class="no">HttpRequest</span><span class="p">.</span><span class="nf">newBuilder</span><span class="p">()</span>
+                <span class="p">.</span><span class="nf">uri</span><span class="p">(</span><span class="no">URI</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="no">VIRUS_DATA_URL</span><span class="p">))</span>
+                <span class="p">.</span><span class="nf">build</span><span class="p">();</span>
+
+        <span class="no">HttpResponse</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="n">httpResponse</span><span class="o">=</span><span class="n">client</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="no">HttpResponse</span><span class="o">.</span><span class="no">BodyHandlers</span><span class="p">.</span><span class="nf">ofString</span><span class="p">());</span>
+
+        <span class="no">System</span><span class="p">.</span><span class="nf">out</span><span class="p">.</span><span class="nf">println</span><span class="p">(</span><span class="n">httpResponse</span><span class="p">.</span><span class="nf">body</span><span class="p">());</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<blockquote>
+  <h5 id="12-서비스임을-알리는-어노테이션">12: 서비스임을 알리는 어노테이션<br /><br /></h5>
+
+  <h5 id="15-raw-데이터가-있는-url를-string-변수에-담아준다">15: Raw 데이터가 있는 URL를 String 변수에 담아준다.<br /><br /></h5>
+
+  <h5 id="19-postconstruct-어노테이션은-어플리케이션이-시작하고-스프링이-이-서비스-객체를-생성하고-나면-이-postconstruct-어노테이션이-있는-메소드를-자동으로-실행시켜-준다">19: @PostConstruct 어노테이션은 어플리케이션이 시작하고 스프링이 이 서비스 객체를 생성하고 나면 이 @PostConstruct 어노테이션이 있는 메소드를 자동으로 실행시켜 준다.<br /><br /></h5>
+
+  <h5 id="20-http-call를-할-메소드를-작성한다-throws-ioexception-interruptedexception은-밑에-clientsend-부분에서-send-함수를-쓰려면-exception를-받아야-하는데-그것을-catch하는-대신-throw를-한다">20: http call를 할 메소드를 작성한다. throws IOException, InterruptedException은 밑에 client.send 부분에서 send 함수를 쓰려면 exception를 받아야 하는데 그것을 catch하는 대신 throw를 한다.<br /><br /></h5>
+
+  <h5 id="22-우리가-http-call를-하기-위해서는-httpclient를-사용한다">22: 우리가 Http Call를 하기 위해서는 HttpClient를 사용한다.<br /><br /></h5>
+
+  <h5 id="23-빌더-패턴을-사용가능하게-해주고-위에-선언한-virus_data_url-문자열을-uri로-바꾸기-위한-작업이다">23: 빌더 패턴을 사용가능하게 해주고 위에 선언한 VIRUS_DATA_URL 문자열을 uri로 바꾸기 위한 작업이다.<br /><br /></h5>
+
+  <h5 id="27-client를-보냄으로써-response를-받는다-첫-번째-파라미터로는-request-그리고-두-번째로는-bodyhandler를-넣는데-이는-body로-할-수-있는-몇-가지-기능들을-제공한다-여기서-http-body를-문자열로-반환해주는-것이다">27: client를 보냄으로써 response를 받는다. 첫 번째 파라미터로는 request 그리고 두 번째로는 BodyHandler를 넣는데 이는 Body로 할 수 있는 몇 가지 기능들을 제공한다. 여기서 http Body를 문자열로 반환해주는 것이다.<br /><br /></h5>
+
+  <h5 id="29-반환-받은-문자열을-찍어내는-역할을-한다">29: 반환 받은 문자열을 찍어내는 역할을 한다.<br /><br /></h5>
+</blockquote>
+
+<p><br /></p>
+
+<p>자 이제 어플리케이션을 실행해서 결과가 잘 나오는지 확인해본다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-15-42-26.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>결과가 잘 나오는 것을 볼 수 있다.</p>
+
+<p>이제 할 것은 이것을 parsing 하는 것이다. 코마로 분리하거나 해야 하는데 쉬운 방법이 있다.</p>
+
+<p>구글에 common csv라고 치면 이러한 데이터를 parsing 해주는 라이브러리를 제공한다.</p>
+
+<p><strong><a href="https://commons.apache.org/proper/commons-csv/dependency-info.html">Commons Csv</a></strong></p>
+
+<p>이 라이브러리를 사용해서 우리가 가지고 있는 문자열 데이터를 parsing 해보자.</p>
+
+<p>일단 이 라이브러리를 사용하기 위해 build.gradle를 수정 해야 한다.</p>
+
+<p>build.gradle에</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>compile 'org.apache.commons:commons-csv:1.8'
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>를 추가하고 sync를 한다. 이 라이브러리를 이용해서 System.out.println()으로 찍어냈던 httpResponse.body()를 다른 객체로 parse 해서 사용할 수 있다. 출력한 것에서 나라, 위도, 확진자 수 등을 뽑아낼 수 있다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-15-46-20.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이것을 하기 위해서 Commons csv 공식 홈페이지의 user guide를 참고한다.</p>
+
+<p><strong><a href="https://commons.apache.org/proper/commons-csv/user-guide.html">Commons-Csv User Guide</a></strong></p>
+
+<p>user guide를 보다가 눈에 띄는 것이 있었다. 바로 <strong>Header auto detection</strong>이였다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-15-52-27.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>다시 Raw 데이터를 살펴보면 상단 왼쪽에 각 데이터의 컬럼이 표시되어 있는 것을 볼 수 있다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-15-53-53.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>그러므로 이 header auto detection 예제를 응용해서 사용하면 편하게 데이터를 추출할 수 있다!!<br />
+이 header auto detection에 나와있는 예제를 복사해서 CoronaVirusDataService.java에 붙여놓기 해보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">io.javabrains.coronavirustracker.services</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.commons.csv.CSVFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.commons.csv.CSVRecord</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.PostConstruct</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URI</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.http.HttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.http.HttpRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.http.HttpResponse</span><span class="o">;</span>
+
+
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CoronaVirusDataService</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">String</span> <span class="no">VIRUS_DATA_URL</span><span class="o">=</span><span class="s">"https://raw.githubusercontent.com/CSSEGISandData/"</span><span class="o">+</span>
+    <span class="s">"COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"</span>
+    <span class="o">+</span><span class="s">"time_series_covid19_confirmed_global.csv"</span><span class="o">;</span>
+    <span class="nd">@PostConstruct</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fetchVirusData</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span><span class="o">{</span>
+        <span class="nc">HttpClient</span> <span class="n">client</span><span class="o">=</span><span class="nc">HttpClient</span><span class="o">.</span><span class="na">newHttpClient</span><span class="o">();</span>
+
+        <span class="nc">HttpRequest</span> <span class="n">request</span><span class="o">=</span> <span class="nc">HttpRequest</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="no">URI</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="no">VIRUS_DATA_URL</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+        <span class="nc">HttpResponse</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">httpResponse</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="nc">HttpResponse</span><span class="o">.</span><span class="na">BodyHandlers</span><span class="o">.</span><span class="na">ofString</span><span class="o">());</span>
+
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">httpResponse</span><span class="o">.</span><span class="na">body</span><span class="o">());</span>
+
+        <span class="nc">Iterable</span><span class="o">&lt;</span><span class="nc">CSVRecord</span><span class="o">&gt;</span> <span class="n">records</span> <span class="o">=</span> <span class="nc">CSVFormat</span><span class="o">.</span><span class="na">RFC4180</span><span class="o">.</span><span class="na">withFirstRecordAsHeader</span><span class="o">().</span><span class="na">parse</span><span class="o">(</span><span class="n">in</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">CSVRecord</span> <span class="n">record</span> <span class="o">:</span> <span class="n">records</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"ID"</span><span class="o">);</span>
+            <span class="nc">String</span> <span class="n">customerNo</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"CustomerNo"</span><span class="o">);</span>
+            <span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"Name"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>RFC4180은 document에서 표준 쉼표 분리 값 포맷이고 빈줄은 무시한다고 일컫어져 있다.</li>
+</ul>
+
+<p><img src="/images/Program/post-7/2021-02-22-16-00-29.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이 RFC4180을 보기 좋게 DEFAULT라고 수정하자.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>Iterable&lt;CSVRecord&gt; records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>그리고 <strong>‘in’</strong>는 reader 객체이다. 우리는 reader 객체는 text를 읽을 수 있게 해주는 객체이다. 그래서 저 records 객체는 reader 객체를 반환 받는 것이다. 마지막으로 foreach문을 사용해 헤더 문자열을 사용해서 그 헤더에 해당하는 데이터를 문자열 변수에 담을 수 있는 것이다. 다시 코드를 수정해보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="rouge-code"><pre><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CoronaVirusDataService</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">String</span> <span class="no">VIRUS_DATA_URL</span><span class="o">=</span><span class="s">"https://raw.githubusercontent.com/CSSEGISandData/"</span><span class="o">+</span>
+    <span class="s">"COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"</span>
+    <span class="o">+</span><span class="s">"time_series_covid19_confirmed_global.csv"</span><span class="o">;</span>
+    <span class="nd">@PostConstruct</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fetchVirusData</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span><span class="o">{</span>
+        <span class="nc">HttpClient</span> <span class="n">client</span><span class="o">=</span><span class="nc">HttpClient</span><span class="o">.</span><span class="na">newHttpClient</span><span class="o">();</span>
+
+        <span class="nc">HttpRequest</span> <span class="n">request</span><span class="o">=</span> <span class="nc">HttpRequest</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="no">URI</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="no">VIRUS_DATA_URL</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+        <span class="nc">HttpResponse</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">httpResponse</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="nc">HttpResponse</span><span class="o">.</span><span class="na">BodyHandlers</span><span class="o">.</span><span class="na">ofString</span><span class="o">());</span>
+
+        <span class="nc">StringReader</span> <span class="n">csvBodyReader</span><span class="o">=</span><span class="k">new</span> <span class="nc">StringReader</span><span class="o">(</span><span class="n">httpResponse</span><span class="o">.</span><span class="na">body</span><span class="o">());</span>
+
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">httpResponse</span><span class="o">.</span><span class="na">body</span><span class="o">());</span>
+
+        <span class="nc">Iterable</span><span class="o">&lt;</span><span class="nc">CSVRecord</span><span class="o">&gt;</span> <span class="n">records</span> <span class="o">=</span> <span class="nc">CSVFormat</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">.</span><span class="na">withFirstRecordAsHeader</span><span class="o">().</span><span class="na">parse</span><span class="o">(</span><span class="n">csvBodyReader</span><span class="o">);</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="nc">CSVRecord</span> <span class="n">record</span> <span class="o">:</span> <span class="n">records</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">String</span> <span class="n">state</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"Province/State"</span><span class="o">);</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">state</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <h5 id="16-stringreader는-string을-parse하는-리더-객체이다-이-코드로-인해-string-객체로부터-reader-객체가-있는-것이다">16: StringReader는 String을 parse하는 리더 객체이다. 이 코드로 인해 String 객체로부터 reader 객체가 있는 것이다.<br /><br /></h5>
+
+  <h5 id="22-foreach-문으로-각-헤더의-값을-추출한다-여기서-먼저-provincestate-헤더에-해당되는-값들을-출력해-본다">22: foreach 문으로 각 헤더의 값을 추출한다. 여기서 먼저 Province/State 헤더에 해당되는 값들을 출력해 본다.<br /><br /></h5>
+</blockquote>
+
+<p>어플리케이션을 실행해서 제대로 출력이 되나 확인한다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-16-19-28.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>제대로 출력되고 있음을 확인할 수 있다.</p>
+
+<p>생각을 좀 해볼 것이 있다. 우리가 만들고자 하는 이 코로나 바이러스 트래커는 확진자수가 매일 변경되고 업데이트 된다. 만약에 이 데이터를 우리가 한 번만 가져와서 쓰게된다면 미래 업데이트가 안 될 것이다. 그래서 우리는 매일 이 새로 업데이트 되는 csv 데이터를 우리 어플리케이션에 최신의 데이터로 업데이트 되게 만들어야 한다. 이것을 하기 위해서는 어노테이션를 하나 추가해주면 된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="rouge-code"><pre><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CoronaVirusDataService</span> <span class="o">{</span>
+
+    <span class="o">(...)</span>
+
+    <span class="nd">@PostConstruct</span>
+    <span class="nd">@Scheduled</span><span class="o">(</span><span class="n">cron</span><span class="o">=</span><span class="s">"* * * * * *"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fetchVirusData</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span><span class="o">{</span>
+        <span class="nc">HttpClient</span> <span class="n">client</span><span class="o">=</span><span class="nc">HttpClient</span><span class="o">.</span><span class="na">newHttpClient</span><span class="o">();</span>
+
+        <span class="nc">HttpRequest</span> <span class="n">request</span><span class="o">=</span> <span class="nc">HttpRequest</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="no">URI</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="no">VIRUS_DATA_URL</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+        <span class="nc">HttpResponse</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">httpResponse</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="nc">HttpResponse</span><span class="o">.</span><span class="na">BodyHandlers</span><span class="o">.</span><span class="na">ofString</span><span class="o">());</span>
+
+        <span class="nc">StringReader</span> <span class="n">csvBodyReader</span><span class="o">=</span><span class="k">new</span> <span class="nc">StringReader</span><span class="o">(</span><span class="n">httpResponse</span><span class="o">.</span><span class="na">body</span><span class="o">());</span>
+
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">httpResponse</span><span class="o">.</span><span class="na">body</span><span class="o">());</span>
+
+        <span class="nc">Iterable</span><span class="o">&lt;</span><span class="nc">CSVRecord</span><span class="o">&gt;</span> <span class="n">records</span> <span class="o">=</span> <span class="nc">CSVFormat</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">.</span><span class="na">withFirstRecordAsHeader</span><span class="o">().</span><span class="na">parse</span><span class="o">(</span><span class="n">csvBodyReader</span><span class="o">);</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="nc">CSVRecord</span> <span class="n">record</span> <span class="o">:</span> <span class="n">records</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">String</span> <span class="n">state</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"Province/State"</span><span class="o">);</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">state</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <h5 id="7-scheduled-어노테이션은-실행하고자-하는-것을-설정해둘-수-있다------는-각각은-왼쪽부터-초-분-시간-날짜-달-년도를-의미한다-그래서-이렇게-쓰면-매초-이-메소드를-실행하라는-의미가-된다">7: @Scheduled 어노테이션은 실행하고자 하는 것을 설정해둘 수 있다. * * * * * *는 각각은 왼쪽부터 초, 분, 시간, 날짜, 달, 년도를 의미한다. 그래서 이렇게 쓰면 매초 이 메소드를 실행하라는 의미가 된다.<br /></h5>
+</blockquote>
+
+<p>그리고 우리가 해야 할 것은 CoronavirusTrackerApplication.java로 가서 스프링이 우리가 @Scheduled 어노테이션을 설정해놨다는 것을 알려야 한다. 그러기 위해서 @EnableScheduling를 추가한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">io.javabrains.coronavirustracker</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.scheduling.annotation.EnableScheduling</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableScheduling</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CoronavirusTrackerApplication</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">CoronavirusTrackerApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>실제로 이제 어플리케이션을 실행해보면 우리가 서비스에서 출력했던 출력문이 매초 업데이트되서 출력되는 것을 볼 수 있다. 우리가 만들고자하는 어플리케이션의 특성상 매초 업데이트되는 것은 비효율적일 것이다. 그러므로 우리가 설정했던 <strong>@Scheduled(cron=”* * * * * <em>”)** 부분을  **@Scheduled(cron=”</em> * 1 * * *”)</strong> 
+이렇게 수정한다. 지금 시간 부분을 1로 설정하는 것을 볼 수 있는데 이는 매일 한 번 업데이트를 한다는 뜻이다. <strong>(즉 매일 한 번 fetchVirusData() 메소드를 실행한다.)</strong></p>
+
+<p>다음 게시물에서는 이렇게 foreach문으로 각 헤더 값들을 추출</p>
+:ET

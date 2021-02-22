@@ -1,0 +1,103 @@
+I"�<p><br /><br />
+<br /><br /></p>
+
+<h1 id="스프링부트로-코로나-바이러스-트래커-만들기-03"><center>스프링부트로 코로나 바이러스 트래커 만들기-03</center></h1>
+
+<p><br /><br /></p>
+
+<p>이전 게시물에서 Commons-csv 라이브러리를 사용해서 헤더에 해당하는 값을 추출하는 것을 해봤다. 이번에는 그 값들을 저장할 수 있는 클래스를 만들고 리스트에 그 값들을 담아보겠다. 먼저 model 패키지와 그 안에 LocationStats.java 파일을 만든다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-16-44-56.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>LocationStats.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">io.javabrains.coronavirustracker.models</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LocationStats</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">state</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">country</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">latestTotalCases</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getState</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">state</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setState</span><span class="o">(</span><span class="nc">String</span> <span class="n">state</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getCountry</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">country</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCountry</span><span class="o">(</span><span class="nc">String</span> <span class="n">country</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">country</span> <span class="o">=</span> <span class="n">country</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getLatestTotalCases</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">latestTotalCases</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLatestTotalCases</span><span class="o">(</span><span class="kt">int</span> <span class="n">latestTotalCases</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">latestTotalCases</span> <span class="o">=</span> <span class="n">latestTotalCases</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p><br /></p>
+
+<p>다 만들었으면 이제 이 클래스 객체를 이용해서 헤더 값들을 담을 수 있는 리스트를 만들어보자.</p>
+
+<p><strong>CoronaVirusDataService.java</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CoronaVirusDataService</span> <span class="o">{</span>
+
+   <span class="o">(...)</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">LocationStats</span><span class="o">&gt;</span> <span class="n">allStats</span><span class="o">=</span><span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+    <span class="nd">@PostConstruct</span>
+    <span class="nd">@Scheduled</span><span class="o">(</span><span class="n">cron</span><span class="o">=</span><span class="s">"* * 1 * * *"</span><span class="o">)</span>
+    <span class="o">(...)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET
