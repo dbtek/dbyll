@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>스프링부트로 만드는 코로나 바이러스 트래커 어플리케이션-01</title>
+	
+	<meta name="description" content="Corona Virus Tracker App">
+	
+	<meta name="author" content="YoungKyonYou">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com//YoungKyonYou">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/young">
+				<i class="fa fa-twitter"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="mailto:youngkyon1324@naver.com">
+				<i class="fa fa-envelope"></i>
+			</a>
+			
+			<a class="navbar-brand" href="/">
+				<img src="/images/MainImage/karajan.jpg" class="img-circle" />
+				MyWay
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="/images/MainImage/karajan.jpg" class="img-circle" />
+	</a>
+	<h3 class="title">
+        <a href="/">MyWay</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	Integration of Knowledge
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com//YoungKyonYou">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://twitter.com/young">
+				<i class="fa fa-twitter fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="mailto:youngkyon1324@naver.com">
+				<i class="fa fa-envelope fa-lg"></i>
+			</a>
+		</li>
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://pinterest.com/asd123">
+				<i class="fa fa-pinterest fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/asd123">
+				<i class="fa fa-linkedin fa-lg"></i>
+			</a>
+		</li>
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/feed.xml">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>스프링부트로 만드는 코로나 바이러스 트래커 어플리케이션-01 </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   February 
+	   22nd,
+	     
+	   2021
+	 </span>
+	  <div class="article_body">
+	  <p><br /><br />
+<br /><br /></p>
+
+<h1 id="스프링부트로-코로나-바이러스-트래커-만들기-01"><center>스프링부트로 코로나 바이러스 트래커 만들기-01</center></h1>
+
+<p><br /><br /></p>
+
+<p><em>이 프로젝트는 <strong>Java Brains</strong> 유투브 영상을 보며 공부한 것을 정리하기 위해서 남김을 알립니다. 영상과는 조금 다를 수 있음을 알립니다.</em></p>
+
+<p><a href="https://www.youtube.com/watch?v=8hjNG9GZGnQ">Youtube 영상</a></p>
+
+<hr />
+
+<p>스프링부트로 만들만한 실습을 찾아보다가 굉장히 좋은 영상을 하나 발견했다. 바로 코로나 바이러스 트래커에 대한 실습을 담은 영상인데 위에 링크를 달아놨다. 이 앱은 코로나 바이러스 확진자 수를 실시간으로 나라별로 트래킹하고 전세계 전체 확진자 수를 보여준다.</p>
+
+<p>이번 게시물에서는 그 영상을 보면서 따라하고 그리고 공부해 가면서 스프링 부트에 좀 더 다가가는 시간을 갖도록 해본다.</p>
+
+<p>먼저 만들고자 하는 페이지를 살펴보자. 왼쪽 상단에는 전세계 전체 확진자 수가 있고 그 바로 밑에는 전날과 비교해서 몇명이 늘었는지 보여주는 수가 있다. 또 그 밑 가장 왼쪽에서부터 State, Country, Total Cases Reported 그리고 마지막으로 Changes since last day가 있다.</p>
+
+<p>해석하면 각 나라의 주, 나라, 전체 확진자, 전날과 비교라고 할 수 있겠다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-09-58-10.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>사진을 보면 State 열에 빈 공간이 좀 있는데 이는 그 나라가 주가 없기 때문에 비어있는 것이다.</p>
+
+<p>영상에서 보여주는 이 앱은 매일 최신으로 바뀌는 나라별 확진자 수를 csv로 받아와서 최신 정보로 업데이트 해줄 것이다.</p>
+
+<p><em>영상을 보면서 참 씁슬 했던 것이 저 때는 나라별 확진자 수가 지금이랑 말도 안 되게 적다.. 참 저땐 몰랐지… 이렇게 파급력이 클줄은..</em></p>
+
+<p>자 이제 시작해보자.</p>
+
+<p><em><strong>개발로는 인텔리제이를 사용한다</strong></em></p>
+
+<p>새로운 프로젝트를 만든다.</p>
+
+<ul>
+  <li>영상에서는 인텔리제이 Community 버젼으로 하지만 나는 대학생 인증을 받아서 무료로 Ultimate 버젼을 씀</li>
+  <li>동영상에서는 Maven으로 작업을 하지만 나는 Gradle로 설정을 하고 Packaing은 War로 설정</li>
+</ul>
+
+<p><img src="/images/Program/post-7/2021-02-22-10-08-06.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>dependencies 설정은 Spring Boot DevTools, Spring Web 그리고 Thymeleaf로 하고 생성한다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-10-13-09.png" alt="" /></p>
+
+<p>자 이제 프로젝트가 생성이 됐다. 이제 한 번 생각을 해보자. 우리는 데이터를 가지고 올 곳이 필요하다.</p>
+
+<p>그래야 웹에서 매일 업데이트 되는 확진자 수를 보여줄 수 있다.</p>
+
+<p>우리가 사용할 수 있는 사이트가 하나 있다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-10-19-17.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong><a href="https://github.com/CSSEGISandData/COVID-19">Github Link</a></strong></p>
+
+<p>이 깃허브 링크에 들어가면 전세계 확진자 수를 매일 업데이트한 csv 파일들이 있다.</p>
+
+<p>아래 사진과 같이 COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv의 csv 파일을 보면 이렇게 국가별로 날짜 별 확진자 수를 잘 정리한 것을 볼 수 있다. 스크롤을 오른쪽으로 쭉 밀면 현재 이 포스트를 쓰는 21년 2월 22일의 확진자 수를 보여주고 있음을 알 수 있다.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-10-22-01.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이제 위 사진에서 오른쪽 중간 쯤에 있는 Raw 버튼을 눌러보자.</p>
+
+<p><img src="/images/Program/post-7/2021-02-22-10-28-37.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>그러면 이러한 창으로 바뀌는데 우리는 이 데이터를 이용할 것이다. 그럼으로 이 url를 복사해 두자!!</p>
+
+<p>url: https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv</p>
+
+<p><br /></p>
+
+<p>우리가 하고자하는 궁국적인 목적은 이 url를 사용해서 스프링부트 어플리케이션이 로딩하면 이 csv 파일로 GET Request를 해서 이러한 데이터들을 나에게 사용가능하게 만드는 것이다. Parse해서 페이지에게 제공하고 우리가 설정한 포맷대로 랜더링할 수 있도록 하는 것이다.</p>
+
+<p>대략적인 설명은 여기까지 하고 다음 게시물에서 본격적인 프로그래밍을 시작해보자.</p>
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#Springboot-ref">
+					Springboot <span>(3)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		
+		<ul class="list-inline">
+		  <li><i class="fa fa-tags"></i></li>
+		  
+		  
+			 
+				<li>
+					<a href="/tags.html#Intellij-ref">
+					Intellij <span>(13)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#Springboot-ref">
+					Springboot <span>(3)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#Corona Virus Tracker App-ref">
+					Corona Virus Tracker App <span>(3)</span>
+					
+					</a>
+				</li>
+			
+		  
+		  
+		</ul>
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=스프링부트로 만드는 코로나 바이러스 트래커 어플리케이션-01&via=young"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="/images/MainImage/karajan.jpg" class="img-rounded author-image" />
+        <h4 class="section-title author-name">YoungKyonYou</h4>
+        <p class="author-bio">Integration of Knowledge</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/react-error/2021/02/21/react-error03.html" title="Cannot find module 'redux'....">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/springboot/2021/02/22/springboot-post07-02.html" title="스프링부트로 만드는 코로나 바이러스 트래커 어플리케이션-02">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2021 YoungKyonYou with <a href="http://jekyllrb.com/">Jekyll</a>. 
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'YoungKyonYou', 'auto');
+  ga('send', 'pageview');
+</script>
+
