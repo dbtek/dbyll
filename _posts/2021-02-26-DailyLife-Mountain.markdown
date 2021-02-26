@@ -4,7 +4,7 @@ title: 북한산 등산기 feat.다이어트
 date: 2021-02-26 13:00:00 0000
 tags: [북한산, 다이어트, 등산]
 categories: [daily-life]
-description: 시화 나래 휴게소로 일탈
+description: "뜻밖의 여정"
 ---
 
 # 어쩌다 보니 북한산
