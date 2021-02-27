@@ -71,11 +71,13 @@
 
 &lt;p&gt;이제 다시 프로젝트로 돌아가자. 아래 사진과 같이 패키지와 자바 클래스를 만든다. 그리고 gradle에 들어가서 csv 파싱을 위해 우리가 사용할 ‘Commons Csv’ 라이브러리와 opencsv를 사용하기 위한 작업을 한다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/SpringBoot/highchart/2021-02-27-21-02-56.png&quot; alt=&quot;&quot; /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/SpringBoot/highchart/2021-02-27-21-02-56.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;build.gradle&lt;/strong&gt;
-&lt;img src=&quot;/images/SpringBoot/highchart/2021-02-27-21-07-26.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;build.gradle&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/SpringBoot/highchart/2021-02-27-21-07-26.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2

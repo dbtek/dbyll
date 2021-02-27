@@ -69,9 +69,11 @@ Highchart가 뭔지 간략하게 살펴보자. 하이차트는 자바스크립�
 이제 다시 프로젝트로 돌아가자. 아래 사진과 같이 패키지와 자바 클래스를 만든다. 그리고 gradle에 들어가서 csv 파싱을 위해 우리가 사용할 'Commons Csv' 라이브러리와 opencsv를 사용하기 위한 작업을 한다.
 
 ![](/images/SpringBoot/highchart/2021-02-27-21-02-56.png)
+
 <br>
 
 **build.gradle**
+
 ![](/images/SpringBoot/highchart/2021-02-27-21-07-26.png)
 
 ```java
