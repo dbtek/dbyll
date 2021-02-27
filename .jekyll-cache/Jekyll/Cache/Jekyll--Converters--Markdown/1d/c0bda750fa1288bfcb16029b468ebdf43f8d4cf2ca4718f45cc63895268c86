@@ -1,0 +1,106 @@
+I"
+<p><br /><br /></p>
+
+<h1 id="스프링부트로-일일-확진자-그래프-만들기-01"><center>스프링부트로 일일 확진자 그래프 만들기-01</center></h1>
+
+<p><br /><br /></p>
+
+<p>이번 게시물에서는 스프링부트와 Highchart를 이용해서 일일 확진자 표를 만들어보는 작업해보겠다.</p>
+
+<p>Highchart가 뭔지 간략하게 살펴보자. 하이차트는 자바스크립트와 html로 만든 차트 솔루션이다. 비상업용으로 사용할 땐 무료이고 상업적으로 사용할 땐 비용이 든다. 사이트는 아래 링크를 통해 들어갈 수 있다.</p>
+
+<p><strong><a href="https://www.highcharts.com/demo">Highchart 공식 사이트</a></strong></p>
+
+<p><br /></p>
+
+<p><img src="/images/SpringBoot/highchart/2021-02-27-20-18-58.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>하이차트 공식 홈페이지에서 이렇게 Demos 카테고리에 들어오게 되면 각종 그래프에 대한 소스가 오픈되어 있어서 그대로 가지고 와서 쓸 수 있다. 여기서 우리는 Basic Line 그래프를 이용해서 코로나 일일 확진자 데이터를 가지고 그래프에 표시를 해볼 예정이다.</p>
+
+<p><br /></p>
+
+<p>자 이제 시작해보자.</p>
+
+<p>새로운 프로젝트를 만든다.</p>
+
+<p><img src="/images/SpringBoot/highchart/2021-02-27-20-21-34.png" alt="" /></p>
+
+<p><img src="/images/SpringBoot/highchart/2021-02-27-20-22-11.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>의존성으로는</p>
+
+<ul>
+  <li>Thymeleaf</li>
+  <li>Spring Boot DevTools</li>
+  <li>Lombok</li>
+  <li>Spring Web</li>
+</ul>
+
+<p>으로 설정한다. 추후에 또 필요한 게 있으면 gradle에 추가해주면 된다.</p>
+
+<p>이렇게 프로젝트를 생성이 완료가 되면 우리는 첫 번째 단계로 데이터를 파싱하는 작업을 할 것이다. 이전 게시물 중에 Corona Tracker App 게시물을 봤다면 익숙할 것이다.</p>
+
+<p>데이터는 이 사이트에 있는 csv 파일에서 가져올 예정이다.</p>
+
+<p><strong><a href="https://github.com/CSSEGISandData/COVID-19">Github</a></strong></p>
+
+<p><br /></p>
+
+<p>아래 그림과 같은 경로로 가다보면 time_series_covid19_confirmed_global.csv이라는 파일을 볼 수 있다. 그것을 클릭하면 사진에서 보는 것과 같이 모든 나라의 확진자 수를 날짜별로 보여주고 있다. 굳이 여기서 데이터를 가져오는 이유는 이 csv 파일은 매일매일 실시간으로 업데이트 되기 때문이다. 그럼으로 우리는 매일매일의 최신 데이터를 그대로 이 파일을 통해 가져오면 되는 것이다.</p>
+
+<p><img src="/images/SpringBoot/highchart/2021-02-27-20-25-56.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>위 사진에서 오른쪽 중간에 Raw 라고 되어 있는 버튼을 눌러보자. 그러면 아래와 같은 데이터들이 나올 것이다. 이 페이지의 링크를 저장해 놓는다.</p>
+
+<p><img src="/images/SpringBoot/highchart/2021-02-27-20-31-21.png" alt="" /></p>
+
+<p>이제 다시 프로젝트로 돌아가자. 아래 사진과 같이 패키지와 자바 클래스를 만든다. 그리고 gradle에 들어가서 csv 파싱을 위해 우리가 사용할 ‘Commons Csv’ 라이브러리와 opencsv를 사용하기 위한 작업을 한다.</p>
+
+<p><img src="/images/SpringBoot/highchart/2021-02-27-21-02-56.png" alt="" />
+<br /></p>
+
+<p><strong>build.gradle</strong>
+<img src="/images/SpringBoot/highchart/2021-02-27-21-07-26.png" alt="" /></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>  <span class="n">implementation</span> <span class="nl">group:</span> <span class="err">'</span><span class="n">com</span><span class="o">.</span><span class="na">opencsv</span><span class="err">'</span><span class="o">,</span> <span class="nl">name:</span> <span class="err">'</span><span class="n">opencsv</span><span class="err">'</span><span class="o">,</span> <span class="nl">version:</span> <span class="err">'</span><span class="mf">3.7</span><span class="err">'</span>
+  <span class="n">compile</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">commons</span><span class="o">:</span><span class="n">commons</span><span class="o">-</span><span class="nl">csv:</span><span class="mf">1.8</span><span class="err">'</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p><strong>바뀐 의존성을 적용하는 버튼</strong></p>
+
+<p><img src="/images/SpringBoot/highchart/2021-02-27-20-38-07.png" alt="" /></p>
+
+<p>이제 다시 우리가 방금 생성했던 자바 클래스 중 CoronaVirusDataService.java에 들어가서 코드를 작성해 보자.</p>
+
+<p><strong>CoronaVirusDataService.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.highchart_csv_example.models</span><span class="o">;</span>
+
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-13-날짜-별로-확진자-수-데이터를-담을-리스트-배열이다">line 13: 날짜 별로 확진자 수 데이터를 담을 리스트 배열이다.<br /><br /></h4>
+
+  <h4 id="line-14-날짜-문자열을-담을-배열이다-우리는-10일-동안의-확진자-동향을-보기-위해서-현재-날짜로부터-10일전-날짜를-저장할-것이다">line 14: 날짜 문자열을 담을 배열이다. 우리는 10일 동안의 확진자 동향을 보기 위해서 현재 날짜로부터 10일전 날짜를 저장할 것이다.<br /><br /></h4>
+
+  <h4 id="line-15-현재-총-확진자-수를-담을-변수다">line 15: 현재 총 확진자 수를 담을 변수다.<br /><br /></h4>
+</blockquote>
+
+<p><br /></p>
+:ET
