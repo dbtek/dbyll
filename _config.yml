@@ -45,3 +45,5 @@ kramdown:
     syntax_highlighter_opts:
         block:
             line_numbers: true
+
+gems: ['jekyll_video_tag']
