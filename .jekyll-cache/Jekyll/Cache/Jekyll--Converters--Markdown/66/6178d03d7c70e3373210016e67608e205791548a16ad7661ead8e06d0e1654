@@ -1,0 +1,159 @@
+I"�4<p><br /><br /></p>
+
+<h1 id="스프링부트로-일일-확진자-그래프-만들기-02"><center>스프링부트로 일일 확진자 그래프 만들기-02</center></h1>
+
+<p><br /><br /></p>
+
+<p>저번 게시물에서는 csv 파일을 파싱해서 Highchart의 line graph로 표시하는 것을 해봤다. 이번 게시물에서는 csv를 사용하지 않고 우리 나라 공공 데이터 사이트에서 제공하는 API를 사용해서 Highchart와 연동을 해보려 한다. 우선 공공데이터 포탈 사이트에 접속해서 알맞은 데이터를 찾는다.</p>
+
+<p><strong><a href="https://www.data.go.kr/">공공데이터포털</a></strong></p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-00-02.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>회원가입을 하고 로그인 후 여기서 검색창에 코로나라고 검색한다. 검색해서 스크롤을 내리다보면 <strong>오픈 API</strong>라고 항목이 보이며 그 목록 중에 <strong>보건복지부<em>코로나19 감염</em>현황</strong>이라고 되어 있는 부분이 있다. 그것을 클릭한다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-03-48.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>들어오게 되면 아래 사진에서 오른쪽에 활용신청 버튼이 있다. 그것을 누르자.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-04-42.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>눌러서 승인을 받게되면 일반 인증키를 발급해 준다. 이것이 바로 서비스 키이다. 이 키를 잘 보관해 둔다. 이 서비스키는 나중에 코드를 작성할 때 쓰게 된다. 자 이제 인텔리제이 프로젝트를 생성해 보자.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-21-57.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>의존성으로는</p>
+
+<ul>
+  <li>Thymeleaf</li>
+  <li>Spring Boot DevTools</li>
+  <li>Lombok</li>
+  <li>Spring Web</li>
+</ul>
+
+<p>을 설정한다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-22-30.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이제 아래 그림과 같이 패키지와 자바 파일을 만든다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-25-16.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>코드를 작성하기 전에 이 API를 좀 더 자세히 살펴보자. 다시 우리가 클릭했던 <strong>보건복지부<em>코로나19 감염</em>현황</strong>에 들어가서 스크롤을 제일 아래까지 내리면 각 프로그래밍 언어별로 샘플 코드를 볼 수가 있다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-26-28.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>우리가 살펴볼 언어는 Java 이므로 클릭해서 복사하고 우리가 생성한 자바 파일에 붙여넣기를 해준다. 붙여넣기 할 때는 클래스 이름을 변경해준다.</p>
+
+<p><strong>CoronaVirusDataService.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.public_api_highcahrt.service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.InputStreamReader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.HttpURLConnection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URLEncoder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CoronaVirusDataService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="nc">StringBuilder</span> <span class="n">urlBuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">(</span><span class="s">"http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson"</span><span class="o">);</span> <span class="cm">/*URL*/</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"?"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"ServiceKey"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"=서비스키"</span><span class="o">);</span> 
+                 <span class="cm">/*공공데이터포털에서 받은 인증키*/</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"ServiceKey"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"="</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"-"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span>
+
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"pageNo"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"="</span> 
+        <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"1"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*페이지번호*/</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"numOfRows"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"="</span> 
+        <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"10"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*한 페이지 결과 수*/</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"startCreateDt"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"="</span> 
+        <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"20200310"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*검색할 생성일 범위의 시작*/</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"endCreateDt"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"="</span> 
+        <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"20200315"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*검색할 생성일 범위의 종료*/</span>
+
+
+        <span class="no">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="no">URL</span><span class="o">(</span><span class="n">urlBuilder</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+        <span class="nc">HttpURLConnection</span> <span class="n">conn</span> <span class="o">=</span> <span class="o">(</span><span class="nc">HttpURLConnection</span><span class="o">)</span> <span class="n">url</span><span class="o">.</span><span class="na">openConnection</span><span class="o">();</span>
+        <span class="n">conn</span><span class="o">.</span><span class="na">setRequestMethod</span><span class="o">(</span><span class="s">"GET"</span><span class="o">);</span>
+        <span class="n">conn</span><span class="o">.</span><span class="na">setRequestProperty</span><span class="o">(</span><span class="s">"Content-type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Response code: "</span> <span class="o">+</span> <span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">());</span>
+        <span class="nc">BufferedReader</span> <span class="n">rd</span><span class="o">;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">()</span> <span class="o">&lt;=</span> <span class="mi">300</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">rd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span><span class="n">conn</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">rd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span><span class="n">conn</span><span class="o">.</span><span class="na">getErrorStream</span><span class="o">()));</span>
+        <span class="o">}</span>
+        <span class="nc">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">line</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">rd</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">rd</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="n">conn</span><span class="o">.</span><span class="na">disconnect</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET

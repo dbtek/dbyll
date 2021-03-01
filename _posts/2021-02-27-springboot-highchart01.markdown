@@ -3,7 +3,7 @@ layout: post
 title: 스프링부트에서 CSV를 파싱해서 Highchart의 Line Graph에 표시하기-01
 date: 2021-02-27 20:00:00 0000
 tags: [Intellij, Springboot, Corona Virus, Highchart]
-categories: Springboot
+categories: [SpringBoot]
 description: 스프링부트로 일일 확진자 그래프 만들기
 ---
 

@@ -4,7 +4,7 @@ title: 스프링부트로 만드는 코로나 바이러스 트래커 어플리�
 image: /Program/post-7/main.jpg
 date: 2021-02-22 09:00:00 0000
 tags: [Intellij, Springboot, Corona Virus Tracker App]
-categories: Springboot
+categories: [SpringBoot]
 description: Corona Virus Tracker App
 ---
 

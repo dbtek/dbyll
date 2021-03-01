@@ -1,0 +1,1068 @@
+I"S"<p><br /><br /></p>
+
+<h1 id="스프링부트로-일일-확진자-그래프-만들기-02"><center>스프링부트로 일일 확진자 그래프 만들기-02</center></h1>
+
+<p><br /><br /></p>
+
+<p>저번 게시물에서는 csv 파일을 파싱해서 Highchart의 line graph로 표시하는 것을 해봤다. 이번 게시물에서는 csv를 사용하지 않고 우리 나라 공공 데이터 사이트에서 제공하는 API를 사용해서 Highchart와 연동을 해보려 한다. 우선 공공데이터 포탈 사이트에 접속해서 알맞은 데이터를 찾는다.</p>
+
+<p><strong><a href="https://www.data.go.kr/">공공데이터포털</a></strong></p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-00-02.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>회원가입을 하고 로그인 후 여기서 검색창에 코로나라고 검색한다. 검색해서 스크롤을 내리다보면 <strong>오픈 API</strong>라고 항목이 보이며 그 목록 중에 <strong>보건복지부<em>코로나19 감염</em>현황</strong>이라고 되어 있는 부분이 있다. 그것을 클릭한다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-03-48.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>들어오게 되면 아래 사진에서 오른쪽에 활용신청 버튼이 있다. 그것을 누르자.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-04-42.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>눌러서 승인을 받게되면 일반 인증키를 발급해 준다. 이것이 바로 서비스 키이다. 이 키를 잘 보관해 둔다. 이 서비스키는 나중에 코드를 작성할 때 쓰게 된다. 자 이제 인텔리제이 프로젝트를 생성해 보자.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-21-57.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>의존성으로는</p>
+
+<ul>
+  <li>Thymeleaf</li>
+  <li>Spring Boot DevTools</li>
+  <li>Lombok</li>
+  <li>Spring Web</li>
+</ul>
+
+<p>을 설정한다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-22-30.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이제 아래 그림과 같이 패키지와 자바 파일을 만든다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-25-16.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>코드를 작성하기 전에 이 API를 좀 더 자세히 살펴보자. 다시 우리가 클릭했던 <strong>보건복지부<em>코로나19 감염</em>현황</strong>에 들어가서 스크롤을 제일 아래까지 내리면 각 프로그래밍 언어별로 샘플 코드를 볼 수가 있다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-26-28.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>우리가 살펴볼 언어는 Java 이므로 클릭해서 복사하고 우리가 생성한 자바 파일에 붙여넣기를 해준다. 붙여넣기 할 때는 클래스 이름을 변경해준다.</p>
+
+<p><strong>CoronaVirusDataService.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.public_api_highcahrt.service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.InputStreamReader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.HttpURLConnection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URLEncoder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CoronaVirusDataService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="nc">StringBuilder</span> <span class="n">urlBuilder</span> <span class="o">=</span>
+        <span class="k">new</span> <span class="nf">StringBuilder</span><span class="o">(</span><span class="s">"http://openapi.data.go.kr/openapi/service/"</span><span class="o">+</span>
+        <span class="s">"rest/Covid19/getCovid19InfStateJson"</span><span class="o">);</span> <span class="cm">/*URL*/</span>
+        <span class="cm">/*Service Key*/</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"?"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"ServiceKey"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span>
+        <span class="s">"=P1wWeheZvhyl1CtYk8BFcVLbUl2Z"</span><span class="o">+</span>
+        <span class="s">"JdoRsu1COpnHeAFmIaLOdBHSmEh1EDLZI~~~~~~~~"</span><span class="o">);</span>
+       <span class="cm">/*공공데이터포털에서 받은 인증키*/</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"ServiceKey"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"="</span> <span class="o">+</span>
+        <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"P1wWeheZvhyl1CtYk8BFcVLbUl2ZJ"</span><span class="o">+</span><span class="s">"
+        doRsu1COpnHeAFmIaLOdBHSmEh1EDLZI~~~~~~~~"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span>
+
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"pageNo"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"="</span>
+        <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"1"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*페이지번호*/</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"numOfRows"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"="</span>
+        <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"10"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*한 페이지 결과 수*/</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"startCreateDt"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"="</span>
+        <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"20200310"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*검색할 생성일 범위의 시작*/</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"endCreateDt"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"="</span>
+        <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"20200315"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*검색할 생성일 범위의 종료*/</span>
+
+
+        <span class="no">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="no">URL</span><span class="o">(</span><span class="n">urlBuilder</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+        <span class="nc">HttpURLConnection</span> <span class="n">conn</span> <span class="o">=</span> <span class="o">(</span><span class="nc">HttpURLConnection</span><span class="o">)</span> <span class="n">url</span><span class="o">.</span><span class="na">openConnection</span><span class="o">();</span>
+        <span class="n">conn</span><span class="o">.</span><span class="na">setRequestMethod</span><span class="o">(</span><span class="s">"GET"</span><span class="o">);</span>
+        <span class="n">conn</span><span class="o">.</span><span class="na">setRequestProperty</span><span class="o">(</span><span class="s">"Content-type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Response code: "</span> <span class="o">+</span> <span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">());</span>
+        <span class="nc">BufferedReader</span> <span class="n">rd</span><span class="o">;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">()</span> <span class="o">&lt;=</span> <span class="mi">300</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">rd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span><span class="n">conn</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">rd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span><span class="n">conn</span><span class="o">.</span><span class="na">getErrorStream</span><span class="o">()));</span>
+        <span class="o">}</span>
+        <span class="nc">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">line</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">rd</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">rd</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="n">conn</span><span class="o">.</span><span class="na">disconnect</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>여기서 중요한 것은 아까 우리가 발급받은 인증키를 넣어줘야 한다. 총 2군대를 넣어줘야 하는데 바로 line 17과 line 22 부분이다. 그런데 line 17에 넣을 땐 앞 문자열 ‘=’를 추가한체로 앞에다가 이어서 넣어준다. 지금 내가 적은 코드를 보면 쓸데없이 긴 인증키를 분해해서 “”+”” 식으로 이어 붙이고 있는데 이는 실제로는 불필요하며 내가 하는 이유는 코드의 한 줄 길이가 길어지면 이 코드 블럭에서 에러가 나기 때문에 일부로 줄 길이를 짧게 만들기 위함이다. 그렇기 때문에 나처럼 분해하지 않고 그냥 붙여넣기 하면 된다.
+코드를 정상적으로 붙여넣기 했으면 코드 바로 왼쪽의 초록색 플레이 버튼을 눌러서 실행시켜본다. (둘 중에 어느 것을 눌러도 결과는 똑같다.)</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-31-58.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>그리고 출력된 것을 보면 한줄로 길게 xml 형식으로 정보가 나오는 것을 볼 수가 있다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-41-25.png" alt="" /></p>
+
+<p>스크롤을 오른쪽으로 밀다보면 xml 형태로 2020년 3월 10일부터 2020년 3월 15일까지의 코로나 현황을 보여주는 것을 볼 수 있다. 만약 최근 코로나 현황을 보고 싶다면 어떻게 해야 할까? 바로 코드에서 날짜를 바꿔주면 된다.</p>
+
+<p><strong>CoronaVirusDataService.java의 일부</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="o">(...)</span>
+ <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"startCreateDt"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span>
+  <span class="s">"="</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"20200310"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*검색할 생성일 범위의 시작*/</span>
+ <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"endCreateDt"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span>
+ <span class="s">"="</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"20200315"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*검색할 생성일 범위의 종료*/</span>
+<span class="o">(...)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>위 코드에서 날짜 문자열을 바꾸게 되면 그 시작일부터 종료일까지의 코로나 현황이 xml 형태로 출력된다. 먼저 우리가 해야할 건 이 날짜가 시간에 흐름에 따라 유동적으로 바뀔 수 있게 해야 한다. 단순히 저런 식으로 최근 날짜 문자열을 넣어두면 데이터는 더이상의 업데이트가 없을 것이다. 우리가 Highchart에 연동할 때는 현재 날짜로부터 10일전까지만 그래프에 표시할 것임으로 우리는 내일이 지나도, 내일 모레가 지나도 계속 저절로 현재로부터 10일전 그래프가 보여지도록 해야 한다.</p>
+
+<p>그래서 찾은 해결책이 바로 LocalDateTime 라이브러리를 사용하는 것이다. 자바 파일에 메소드를 추가하자. 그리고 검색할 생성일 범위의 시작과 검색할 생성일 범위의 종료 부분에 그 메소드를 호출해 준다.</p>
+
+<p><strong>CoronaVirusDataService.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="rouge-code"><pre>    <span class="o">(...)</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">getStartCreateDt</span><span class="o">(){</span>
+        <span class="nc">DateTimeFormatter</span> <span class="n">dtf</span> <span class="o">=</span> <span class="nc">DateTimeFormatter</span><span class="o">.</span><span class="na">ofPattern</span><span class="o">(</span><span class="s">"yyyyMMdd"</span><span class="o">);</span>
+        <span class="nc">LocalDateTime</span> <span class="n">now</span> <span class="o">=</span> <span class="nc">LocalDateTime</span><span class="o">.</span><span class="na">now</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">dtf</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">now</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">getEndCreateDt</span><span class="o">(){</span>
+        <span class="nc">DateTimeFormatter</span> <span class="n">dtf</span> <span class="o">=</span> <span class="nc">DateTimeFormatter</span><span class="o">.</span><span class="na">ofPattern</span><span class="o">(</span><span class="s">"yyyyMMdd"</span><span class="o">);</span>
+        <span class="nc">LocalDateTime</span> <span class="n">now</span> <span class="o">=</span> <span class="nc">LocalDateTime</span><span class="o">.</span><span class="na">now</span><span class="o">();</span>
+        <span class="nc">LocalDateTime</span> <span class="n">then</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="na">minusDays</span><span class="o">(</span><span class="mi">11</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">dtf</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">then</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+    <span class="o">(...)</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"startCreateDt"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span>
+        <span class="s">"="</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">getStartCreateDt</span><span class="o">(),</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*검색할 생성일 범위의 시작*/</span>
+        <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"endCreateDt"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"="</span> <span class="o">+</span>
+         <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">getEndCreateDt</span><span class="o">(),</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*검색할 생성일 범위의 종료*/</span>
+        <span class="o">(...)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>getStartCreateDt 메소드는 시작일 문자열을 만들어준다. 이 메소드는 매번 호출될 때마다 현재 날짜를 나타내 줄 것이다. getEndCreateDt 메소드는 매번 호출될 때마다 현재 날짜로부터 11일 전의 날짜 문자열을 만들어 줄 것이다. 방금 전에 우리가 highchart 그래프에다가 10일 동안의 현황을 보여준다고 했는데 왜 11일 전 날짜를 얻는 지 궁금해 할 것이다.</p>
+
+<p>그전에 중요한 것 하나를 확인하는 것을 잊었는데 그것부터 살펴보자. 내가 일반 인증키를 받았던 페이지에 들어가면 아래 그림과 같이 참고문서라고 해서 보건복지부 OpenAPI 활용가이드가 있다. 이것을 클릭해서 다운받고 열어보자.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-55-12.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>word 파일이 열리면 스크롤을 아래로 쭉 내리다보면 <strong>요청/응답 메시지 에제</strong>가 나오는 것을 볼 수 있다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-14-56-19.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>위 사진의 xml은 아까 우리가 처음에 초록색 화살표를 눌러서 실행했을 때 한줄로 쭉 나오던 데이터들이다. 그런데 가만히 보니 누적되는 확진자 데이터는 표시되어 있으나 날짜별로 몇명이 걸렸는지는 데이터가 나와 있지 않다. 이 상태에서 오늘 확진자가 몇 명이 늘었나 확인하려면 오늘까지의 누적 확진자 수와 어제까지의 누적 확진자 수를 빼주면 될 것이다. 그래서 우리는 아까 getEndCreateDt 메소드에서 11일 전 날짜를 구하는 것이다. 10일 동안의 확진자 현황을 표시해야 하니까 말이다. 계속 전날이랑 누적 확진자 수를 빼줌으로써 그날 몇명의 확진자가 늘었는지 봐야 한다.</p>
+
+<p>자 이럼으로써 우리는 main 함수가 호출될 때마다 현재 날짜 기준으로 11일 전의 코로나 현황 데이터를 가져오는 것을 알 수 있다.</p>
+
+<p>우리가 워드 파일에서 요청/응답 메시지 예제에서 봤듯이 데이터는 xml형태이다. 즉 우리는 xml 형태를 파싱해서 데이터를 추출하고 그것을 적절한 리스트에 담아준 다음 그것을 컨트롤러에서 model.addAttribute() 형태로 html로 보내주게 되면 그 데이터를 하이차트의 그래프에 표시할 수 있을 것이다.</p>
+
+<p><br /></p>
+
+<p>먼저 xml를 파싱하는 코드를 작성하고 우리가 데이터를 담을 리스트 변수들을 선언하고 초기화하는 작업을 한 번에 해보자. 많은 코드 변화가 있으니 귀찮으신 분들은 복붙을 추천드립니다.
+<strong>CoronaVirusDataService.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.public_api_highcahrt.service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.Data</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.RequiredArgsConstructor</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.scheduling.annotation.Scheduled</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Service</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.w3c.dom.Document</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.w3c.dom.Element</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.w3c.dom.Node</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.w3c.dom.NodeList</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.PostConstruct</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.xml.parsers.DocumentBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.xml.parsers.DocumentBuilderFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStreamReader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.HttpURLConnection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URLEncoder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.time.LocalDateTime</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.time.format.DateTimeFormatter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="nd">@Data</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CoronaVirusDataService</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">decideList</span><span class="o">;</span><span class="c1">//날짜별 확진자 수</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">deathList</span><span class="o">;</span><span class="c1">//날짜별 사망자 수</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">clearList</span><span class="o">;</span><span class="c1">//날짜별 격리해제 수</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">dateList</span><span class="o">;</span><span class="c1">//날짜별 문자열 배열</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">totalConfirmed</span><span class="o">;</span> <span class="c1">//오늘까지 누적 총 확진자</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getStartCreateDt</span><span class="o">(){</span>
+        <span class="nc">DateTimeFormatter</span> <span class="n">dtf</span> <span class="o">=</span> <span class="nc">DateTimeFormatter</span><span class="o">.</span><span class="na">ofPattern</span><span class="o">(</span><span class="s">"yyyyMMdd"</span><span class="o">);</span>
+        <span class="nc">LocalDateTime</span> <span class="n">now</span> <span class="o">=</span> <span class="nc">LocalDateTime</span><span class="o">.</span><span class="na">now</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">dtf</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">now</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span>  <span class="nc">String</span> <span class="nf">getEndCreateDt</span><span class="o">(){</span>
+        <span class="nc">DateTimeFormatter</span> <span class="n">dtf</span> <span class="o">=</span> <span class="nc">DateTimeFormatter</span><span class="o">.</span><span class="na">ofPattern</span><span class="o">(</span><span class="s">"yyyyMMdd"</span><span class="o">);</span>
+        <span class="nc">LocalDateTime</span> <span class="n">now</span> <span class="o">=</span> <span class="nc">LocalDateTime</span><span class="o">.</span><span class="na">now</span><span class="o">();</span>
+        <span class="nc">LocalDateTime</span> <span class="n">then</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="na">minusDays</span><span class="o">(</span><span class="mi">11</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">dtf</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">then</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span>  <span class="kt">void</span> <span class="nf">initialDateList</span><span class="o">(){</span>
+        <span class="nc">DateTimeFormatter</span> <span class="n">dtf</span> <span class="o">=</span> <span class="nc">DateTimeFormatter</span><span class="o">.</span><span class="na">ofPattern</span><span class="o">(</span><span class="s">"MM/dd"</span><span class="o">);</span>
+        <span class="nc">LocalDateTime</span> <span class="n">now</span> <span class="o">=</span> <span class="nc">LocalDateTime</span><span class="o">.</span><span class="na">now</span><span class="o">();</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">9</span><span class="o">;</span><span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+            <span class="nc">LocalDateTime</span> <span class="n">date</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="na">minusDays</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+            <span class="n">dateList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">dtf</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">date</span><span class="o">));</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="nf">getTagValue</span><span class="o">(</span><span class="nc">String</span> <span class="n">tag</span><span class="o">,</span> <span class="nc">Element</span> <span class="n">ele</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="nc">NodeList</span> <span class="n">nodeList</span> <span class="o">=</span> <span class="n">ele</span><span class="o">.</span><span class="na">getElementsByTagName</span><span class="o">(</span><span class="n">tag</span><span class="o">).</span><span class="na">item</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getChildNodes</span><span class="o">();</span>
+
+
+        <span class="nc">Node</span> <span class="n">nValue</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Node</span><span class="o">)</span> <span class="n">nodeList</span><span class="o">.</span><span class="na">item</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+
+
+        <span class="k">if</span><span class="o">(</span><span class="n">nValue</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">nValue</span><span class="o">.</span><span class="na">getNodeValue</span><span class="o">();</span>
+
+    <span class="o">}</span><span class="c1">// getTagValue</span>
+
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">xmlApiTest</span><span class="o">(</span><span class="nc">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">decideList</span><span class="o">=</span><span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">deathList</span><span class="o">=</span><span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">clearList</span><span class="o">=</span><span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">dateList</span><span class="o">=</span><span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+        <span class="k">try</span><span class="o">{</span>
+            <span class="nc">DocumentBuilderFactory</span> <span class="n">dbFactory</span> <span class="o">=</span> <span class="nc">DocumentBuilderFactory</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+            <span class="nc">DocumentBuilder</span> <span class="n">dBuilder</span>  <span class="o">=</span> <span class="n">dbFactory</span><span class="o">.</span><span class="na">newDocumentBuilder</span><span class="o">();</span>
+            <span class="nc">Document</span> <span class="n">doc</span> <span class="o">=</span> <span class="n">dBuilder</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+
+
+            <span class="n">doc</span><span class="o">.</span><span class="na">getDocumentElement</span><span class="o">().</span><span class="na">normalize</span><span class="o">();</span>
+
+
+            <span class="nc">NodeList</span> <span class="n">nodeList</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">getElementsByTagName</span><span class="o">(</span><span class="s">"item"</span><span class="o">);</span>
+
+
+            <span class="kt">boolean</span> <span class="n">flag</span><span class="o">=</span><span class="kc">true</span><span class="o">;</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">temp</span><span class="o">&lt;</span><span class="n">nodeList</span><span class="o">.</span><span class="na">getLength</span><span class="o">()-</span><span class="mi">2</span><span class="o">;</span> <span class="n">temp</span><span class="o">++)</span> <span class="o">{</span>
+
+                <span class="nc">Node</span> <span class="n">nNode</span> <span class="o">=</span> <span class="n">nodeList</span><span class="o">.</span><span class="na">item</span><span class="o">(</span><span class="n">temp</span><span class="o">);</span>
+
+                <span class="nc">Node</span> <span class="n">nNodeTest</span><span class="o">=</span><span class="n">nodeList</span><span class="o">.</span><span class="na">item</span><span class="o">(</span><span class="n">temp</span><span class="o">+</span><span class="mi">1</span><span class="o">);</span>
+
+                <span class="k">if</span><span class="o">(</span><span class="n">nNode</span><span class="o">.</span><span class="na">getNodeType</span><span class="o">()==</span><span class="nc">Node</span><span class="o">.</span><span class="na">ELEMENT_NODE</span><span class="o">)</span> <span class="o">{</span>
+
+                    <span class="nc">Element</span> <span class="n">element</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Element</span><span class="o">)</span><span class="n">nNode</span><span class="o">;</span>
+
+                    <span class="nc">Element</span> <span class="n">elementTest</span><span class="o">=(</span><span class="nc">Element</span><span class="o">)</span><span class="n">nNodeTest</span><span class="o">;</span>
+
+
+                    <span class="n">decideList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">getTagValue</span><span class="o">(</span><span class="s">"decideCnt"</span><span class="o">,</span><span class="n">element</span><span class="o">))-</span>
+                            <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">getTagValue</span><span class="o">(</span><span class="s">"decideCnt"</span><span class="o">,</span><span class="n">elementTest</span><span class="o">)));</span>
+                    <span class="n">deathList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">getTagValue</span><span class="o">(</span><span class="s">"deathCnt"</span><span class="o">,</span><span class="n">element</span><span class="o">))-</span>
+                            <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">getTagValue</span><span class="o">(</span><span class="s">"deathCnt"</span><span class="o">,</span><span class="n">elementTest</span><span class="o">)));</span>
+                    <span class="n">clearList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">getTagValue</span><span class="o">(</span><span class="s">"clearCnt"</span><span class="o">,</span><span class="n">element</span><span class="o">))-</span>
+                            <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">getTagValue</span><span class="o">(</span><span class="s">"clearCnt"</span><span class="o">,</span><span class="n">elementTest</span><span class="o">)));</span>
+
+                    <span class="k">if</span><span class="o">(</span><span class="n">flag</span><span class="o">){</span>
+                        <span class="n">totalConfirmed</span><span class="o">=</span><span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">getTagValue</span><span class="o">(</span><span class="s">"decideCnt"</span><span class="o">,</span><span class="n">element</span><span class="o">));</span>
+                        <span class="n">flag</span><span class="o">=</span><span class="kc">false</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span><span class="c1">//if</span>
+
+            <span class="o">}</span><span class="c1">//for</span>
+
+
+            <span class="n">initialDateList</span><span class="o">();</span>
+
+        <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nc">Collections</span><span class="o">.</span><span class="na">reverse</span><span class="o">(</span><span class="n">decideList</span><span class="o">);</span>
+        <span class="nc">Collections</span><span class="o">.</span><span class="na">reverse</span><span class="o">(</span><span class="n">deathList</span><span class="o">);</span>
+        <span class="nc">Collections</span><span class="o">.</span><span class="na">reverse</span><span class="o">(</span><span class="n">clearList</span><span class="o">);</span>
+
+
+    <span class="o">}</span>
+    <span class="nd">@PostConstruct</span>
+    <span class="nd">@Scheduled</span><span class="o">(</span><span class="n">cron</span><span class="o">=</span><span class="s">"* * 1 * * *"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initialData</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span><span class="o">{</span>
+            <span class="nc">StringBuilder</span> <span class="n">urlBuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">(</span><span class="s">"http://openapi.data.go.kr/"</span><span class="o">+</span>
+                    <span class="s">"openapi/service/rest/Covid19/getCovid19InfStateJson"</span><span class="o">);</span> <span class="cm">/*URL*/</span>
+            <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"?"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"ServiceKey"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span>
+                    <span class="s">"=P1wWeheZvhyl1CtYk8BFcVLbUl2ZJd!!!!~~~~"</span><span class="o">);</span> <span class="cm">/*Service Key*/</span>
+            <span class="cm">/*공공데이터포털에서 받은 인증키*/</span>
+            <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"ServiceKey"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span>
+                    <span class="s">"="</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"P1wWeheZvhyl1CtYk8BFcVLbUl2ZJ!!!!~~~~"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span>
+            <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"pageNo"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span>
+                    <span class="s">"="</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"1"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*페이지번호*/</span>
+            <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"numOfRows"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span>
+                    <span class="s">"="</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"10"</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">));</span> <span class="cm">/*한 페이지 결과 수*/</span>
+            <span class="cm">/*검색할 생성일 범위의 시작*/</span>
+            <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"startCreateDt"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span>
+                    <span class="s">"="</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">getEndCreateDt</span><span class="o">(),</span> <span class="s">"UTF-8"</span><span class="o">));</span>
+            <span class="cm">/*검색할 생성일 범위의 종료*/</span>
+            <span class="n">urlBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"&amp;"</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="s">"endCreateDt"</span><span class="o">,</span><span class="s">"UTF-8"</span><span class="o">)</span> <span class="o">+</span>
+                    <span class="s">"="</span> <span class="o">+</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">getStartCreateDt</span><span class="o">(),</span> <span class="s">"UTF-8"</span><span class="o">));</span>
+            <span class="no">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="no">URL</span><span class="o">(</span><span class="n">urlBuilder</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+            <span class="n">xmlApiTest</span><span class="o">(</span><span class="n">url</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+            <span class="nc">HttpURLConnection</span> <span class="n">conn</span> <span class="o">=</span> <span class="o">(</span><span class="nc">HttpURLConnection</span><span class="o">)</span> <span class="n">url</span><span class="o">.</span><span class="na">openConnection</span><span class="o">();</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">setRequestMethod</span><span class="o">(</span><span class="s">"GET"</span><span class="o">);</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">setRequestProperty</span><span class="o">(</span><span class="s">"Content-type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">);</span>
+
+            <span class="nc">BufferedReader</span> <span class="n">rd</span><span class="o">;</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">()</span> <span class="o">&lt;=</span> <span class="mi">300</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">rd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span><span class="n">conn</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">rd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span><span class="n">conn</span><span class="o">.</span><span class="na">getErrorStream</span><span class="o">()));</span>
+            <span class="o">}</span>
+            <span class="nc">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">();</span>
+            <span class="nc">String</span> <span class="n">line</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">rd</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">rd</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">disconnect</span><span class="o">();</span>
+
+        <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+
+
+    <span class="o">}</span>
+
+
+
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <p><strong>line 49</strong>: 이 메소드에서는 dateList 리스트 배열을 초기화한다. 이 dateList 문자열 배열에는 추후에 그래프에서 X 축에 찔힐 문자열을 나타내준다. 포맷은 월/일 형식으로 나타내기 위해 DateTimeFormatter.ofPattern를 설정하고 for 문으로 나머지 날짜 문자열을 저장한다.<br /></p>
+</blockquote>
+
+<blockquote>
+  <p><strong>line 57</strong>: getTagValue 메소드 우리가 원하는 태그의 데이터를 추출할 수 있게 해준다. 파라미터로는 태그 이름과 엘리먼트를 넣어주면 해당하는 데이터 문자열을 반환한다.<br /></p>
+</blockquote>
+
+<blockquote>
+  <p><strong>line 76</strong>: xmlApiTest 메소드에서 각 리스트 변수들을 초기화 해주게 되는데 for 문으로 태그들을 순회하면서 각 문자열 데이터를 얻고 그 데이터를 Int로 파싱한다음 아까 이야기 했던 것처럼 전날과의 차를 이용해서 증가량을 하나씩 넣어주고 있다. 그리고 마지막에 리스트를 reverse하는 것을 볼 수 있는데 이는 그래프에 보여질때 과거부터 현재까지 순서대로 보여주기 위함이다.<br /></p>
+</blockquote>
+
+<blockquote>
+  <p><strong>line 138</strong>: initialData 에서는 샘플 코드를 사용하고 앞에서 만든 xmlApiTest 메소드에 url 파라미터를 넘겨주고 호출한다. 이 메소드는 @Scheduled 어노테이션을 사용함으로써 매일 한 번식 자동으로 호출이 된다. PostConstruct 어노테이션은 어플리케이션이 시작되면 스프링이 이 서비스 객체를 만들게 되고 객체를 다 생성하고 나면 이 @PostConstruct 어노테이션이
+있는 메소드를 자동으로 실행시켜준다. <strong>@Scheduled</strong> 어노테이션이 동작하게 하려면 아래 그림과 같이 @EnableScheduling를 꼭 추가해야 한다.</p>
+</blockquote>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-15-41-42.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이제 아래 그림과 같이 컨트롤러 클래스를 만든다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-15-46-06.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>HomeController.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.public_api_highcahrt.controller</span><span class="o">;</span>
+
+
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.ui.Model</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.techlead.public_api_highcahrt.service.CoronaVirusDataService</span><span class="o">;</span>
+
+
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HomeController</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="nc">CoronaVirusDataService</span> <span class="n">coronaVirusDataService</span><span class="o">;</span>
+
+
+
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getData</span><span class="o">(</span><span class="nc">Model</span> <span class="n">model</span><span class="o">){</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"dates"</span><span class="o">,</span><span class="n">coronaVirusDataService</span><span class="o">.</span><span class="na">getDateList</span><span class="o">());</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"totalConfirmed"</span><span class="o">,</span><span class="n">coronaVirusDataService</span><span class="o">.</span><span class="na">getTotalConfirmed</span><span class="o">());</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"increaseFromYesterday"</span><span class="o">,</span><span class="n">coronaVirusDataService</span><span class="o">.</span><span class="na">getDecideList</span><span class="o">());</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"dailyCure"</span><span class="o">,</span><span class="n">coronaVirusDataService</span><span class="o">.</span><span class="na">getClearList</span><span class="o">());</span>
+        <span class="k">return</span> <span class="s">"index"</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>자 이제 css와 html를 구성해 보자. 아래 그림과 같이 디렉토리와 파일을 만든다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-15-48-48.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>index.css</strong></p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+</pre></td><td class="rouge-code"><pre><span class="nc">.highcharts-figure</span><span class="o">,</span> <span class="nc">.highcharts-data-table</span> <span class="nt">table</span> <span class="p">{</span>
+    <span class="nl">min-width</span><span class="p">:</span> <span class="m">360px</span><span class="p">;</span>
+    <span class="nl">max-width</span><span class="p">:</span> <span class="m">800px</span><span class="p">;</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">1em</span> <span class="nb">auto</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.highcharts-data-table</span> <span class="nt">table</span> <span class="p">{</span>
+    <span class="nl">font-family</span><span class="p">:</span> <span class="n">Verdana</span><span class="p">,</span> <span class="nb">sans-serif</span><span class="p">;</span>
+    <span class="nl">border-collapse</span><span class="p">:</span> <span class="nb">collapse</span><span class="p">;</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="m">#EBEBEB</span><span class="p">;</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">10px</span> <span class="nb">auto</span><span class="p">;</span>
+    <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="nl">max-width</span><span class="p">:</span> <span class="m">500px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.highcharts-data-table</span> <span class="nt">caption</span> <span class="p">{</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">1em</span> <span class="m">0</span><span class="p">;</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">1.2em</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="m">#555</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.highcharts-data-table</span> <span class="nt">th</span> <span class="p">{</span>
+    <span class="nl">font-weight</span><span class="p">:</span> <span class="m">600</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">0.5em</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.highcharts-data-table</span> <span class="nt">td</span><span class="o">,</span> <span class="nc">.highcharts-data-table</span> <span class="nt">th</span><span class="o">,</span> <span class="nc">.highcharts-data-table</span> <span class="nt">caption</span> <span class="p">{</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">0.5em</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.highcharts-data-table</span> <span class="nt">thead</span> <span class="nt">tr</span><span class="o">,</span> <span class="nc">.highcharts-data-table</span> <span class="nt">tr</span><span class="nd">:nth-child</span><span class="o">(</span><span class="nt">even</span><span class="o">)</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="m">#f8f8f8</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.highcharts-data-table</span> <span class="nt">tr</span><span class="nd">:hover</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="m">#f1f7ff</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">font-family</span><span class="p">:</span> <span class="nb">sans-serif</span><span class="p">;</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">1.5em</span><span class="p">;</span>
+    <span class="nl">text-transform</span><span class="p">:</span> <span class="nb">uppercase</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">strong</span> <span class="p">{</span>
+    <span class="nl">font-weight</span><span class="p">:</span> <span class="m">700</span><span class="p">;</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="no">yellow</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">font-family</span><span class="p">:</span> <span class="nb">sans-serif</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p><strong>index.html</strong></p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+</pre></td><td class="rouge-code"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+
+    <span class="nt">&lt;link</span> <span class="na">th:href=</span><span class="s">"@{/css/index.css}"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://code.highcharts.com/highcharts.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://code.highcharts.com/modules/series-label.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://code.highcharts.com/modules/exporting.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://code.highcharts.com/modules/export-data.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://code.highcharts.com/modules/accessibility.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"container"</span>
+         <span class="na">style=</span><span class="s">"width: 550px; height: 400px; margin: 0 auto"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;script </span><span class="na">th:inline=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+
+    <span class="kd">var</span> <span class="nx">listDates</span><span class="o">=</span><span class="p">[[</span><span class="nx">$</span><span class="p">{</span><span class="nx">dates</span><span class="p">}]];</span>
+    <span class="kd">var</span> <span class="nx">totalConfirmed</span><span class="o">=</span><span class="p">[[</span><span class="nx">$</span><span class="p">{</span><span class="nx">totalConfirmed</span><span class="p">}]];</span>
+    <span class="kd">var</span> <span class="nx">listIncreaseFromYesterday</span><span class="o">=</span><span class="p">[[</span><span class="nx">$</span><span class="p">{</span><span class="nx">increaseFromYesterday</span><span class="p">}]];</span>
+    <span class="kd">var</span> <span class="nx">listDailyCure</span><span class="o">=</span><span class="p">[[</span><span class="nx">$</span><span class="p">{</span><span class="nx">dailyCure</span><span class="p">}]];</span>
+    <span class="kd">var</span> <span class="nx">listDailyDeath</span><span class="o">=</span><span class="p">[[</span><span class="nx">$</span><span class="p">{</span><span class="nx">dailyDeath</span><span class="p">}]];</span>
+    <span class="nx">Highcharts</span><span class="p">.</span><span class="nx">chart</span><span class="p">(</span><span class="dl">'</span><span class="s1">container</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+
+        <span class="na">title</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">text</span><span class="p">:</span> <span class="dl">'</span><span class="s1">일일 확진자 수</span><span class="dl">'</span>
+        <span class="p">},</span>
+        <span class="na">subtitle</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">text</span><span class="p">:</span> <span class="dl">'</span><span class="s1">전체 확진자 수: </span><span class="dl">'</span><span class="o">+</span><span class="nx">totalConfirmed</span>
+        <span class="p">},</span>
+
+        <span class="na">xAxis</span><span class="p">:</span> <span class="p">{</span>
+            <span class="c1">// categories: category</span>
+            <span class="na">categories</span><span class="p">:</span> <span class="nx">listDates</span><span class="p">,</span>
+
+            <span class="na">title</span><span class="p">:</span> <span class="p">{</span>
+                <span class="na">text</span><span class="p">:</span> <span class="dl">'</span><span class="s1">날짜</span><span class="dl">'</span>
+            <span class="p">}</span>
+
+        <span class="p">},</span>
+        <span class="na">yAxis</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">title</span><span class="p">:</span> <span class="p">{</span>
+                <span class="na">text</span><span class="p">:</span> <span class="dl">'</span><span class="s1">전체 확진자 수</span><span class="dl">'</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+
+        <span class="na">legend</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">layout</span><span class="p">:</span> <span class="dl">'</span><span class="s1">vertical</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">align</span><span class="p">:</span> <span class="dl">'</span><span class="s1">right</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">verticalAlign</span><span class="p">:</span> <span class="dl">'</span><span class="s1">middle</span><span class="dl">'</span>
+        <span class="p">},</span>
+
+        <span class="na">plotOptions</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">series</span><span class="p">:</span> <span class="p">{</span>
+                <span class="na">label</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">connectorAllowed</span><span class="p">:</span> <span class="kc">false</span>
+                <span class="p">},</span>
+            <span class="p">},</span>
+            <span class="na">line</span><span class="p">:</span> <span class="p">{</span>
+                <span class="na">dataLabels</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">enabled</span><span class="p">:</span> <span class="kc">true</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+
+        <span class="na">series</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">전날 비교 확진자 수</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">data</span><span class="p">:</span> <span class="nx">listIncreaseFromYesterday</span>
+        <span class="p">},</span> <span class="p">{</span>
+            <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">격리 해제</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">data</span><span class="p">:</span> <span class="nx">listDailyCure</span>
+        <span class="p">},{</span>
+            <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">사망자 수</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">data</span><span class="p">:</span> <span class="nx">listDailyDeath</span>
+        <span class="p">},],</span>
+
+        <span class="na">responsive</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">rules</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="na">condition</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">maxWidth</span><span class="p">:</span> <span class="mi">500</span>
+                <span class="p">},</span>
+                <span class="na">chartOptions</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">legend</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="na">layout</span><span class="p">:</span> <span class="dl">'</span><span class="s1">horizontal</span><span class="dl">'</span><span class="p">,</span>
+                        <span class="na">align</span><span class="p">:</span> <span class="dl">'</span><span class="s1">center</span><span class="dl">'</span><span class="p">,</span>
+                        <span class="na">verticalAlign</span><span class="p">:</span> <span class="dl">'</span><span class="s1">bottom</span><span class="dl">'</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}]</span>
+        <span class="p">}</span>
+
+    <span class="p">});</span>
+
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>이로써 모든 작업이 끝났다~! 이제 앱을 실행시키고 local:8080에 접속해 본다.</p>
+
+<p><img src="/images/SpringBoot/highchart-public-API/2021-03-01-15-57-29.png" alt="" /></p>
+:ET
