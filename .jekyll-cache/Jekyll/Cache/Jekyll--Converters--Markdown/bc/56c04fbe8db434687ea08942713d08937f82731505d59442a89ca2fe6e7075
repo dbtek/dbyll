@@ -1,0 +1,745 @@
+I"ɤ<p><br /><br /></p>
+
+<h1 id="페이지-처리되는-영화별-평균-점수리뷰-개수-구하기"><center>페이지 처리되는 영화별 평균 점수/리뷰 개수 구하기</center></h1>
+
+<p><br /></p>
+
+<p><em>해당 내용은 책 ‘코드로 배우는 스프링부트 웹 프로젝트’의 내용이며 이 게시물은 그 책을 개인적으로 공부하며 메모해 두기 위해서 쓰는 것임을 알려드립니다</em></p>
+
+<p><br /><br /></p>
+
+<p>이번 방명록 만들기 프로젝트를 통해서 다음과 같은 내용을 학습한다.</p>
+
+<ul>
+  <li>프로젝트의 계층별 구조와 객체들의 구성</li>
+  <li>Querydsl을 이용해서 동적으로 검색 조건을 처리하는 방법</li>
+  <li>Entity 객체와 DTO의 구분</li>
+  <li>화면에서의 페이징 처리</li>
+</ul>
+
+<p><br /></p>
+
+<p>웹 프로젝트를 구성할 때는 가장 먼저 와이어프레임(화면 설계서)을 제작하고 진행하는 것이 좋다. 와이어프레임을 제작하면 화면의 URI와 전달되는 파라미터 등을 미리 결정할 수 있고 데이터베이스 설계에 필요한 칼럼들을 미리 파악하는데도 도움이 된다.</p>
+
+<p><strong>화면 개발의 목표</strong></p>
+
+<ul>
+  <li>목록 화면 (번호 1) - 전체 목록을 페이징 처리해서 조회할 수 있고, 제목/내용/작성자 항목으로 검색과 페이징 처리를 가능하게 한다.</li>
+  <li>등록 화면(번호 2) - 새로운 글을 등록할 수 있고, 등록 처리 후 다시 목록 화면으로 이동하게 된다.</li>
+  <li>조회 화면(번호 3) - 목록 화면에서 특정한 글을 선택하면 자동으로 조회 화면으로 이동한다. 조회 화면에서는 수정/삭제가 가능한 화면(번호 4)으로 버튼을 클릭해서 이동할 수 있다.</li>
+  <li>수정/삭제 화면(번호 4) - 수정 화면에서 삭제가 가능하고 삭제 후에는 목록 페이지로 이동한다. 글을 수정하는 경우에는 다시 조회 화면(번호 2)으로 이동해서 수정된 내용을 확인할 수 있다.</li>
+</ul>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-06-40.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-16-17.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>프로젝트의 기본 구조는 아래 사진과 같다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-16-47.png" alt="" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>브라우저에서 들어오는 Request는 GuestbookController라는 객체로 처리한다.</li>
+  <li>GuestbookController는 GuestbookService 타입을 주입받는 구조로 만들고, 이를 이용해서 원하는 작업을 처리한다.</li>
+  <li>GuestbookRepository는 Spring Data JPA를 이용해서 구성하고, GuestbookServiceImpl 클래스에 주입해서 사용한다.</li>
+  <li>마지막 결과는 Thymeleaf를 이용해서 레이아웃 템플릿을 활용해서 처리한다.</li>
+</ul>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-21-10.png" alt="" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>브라우저에서 전달되는 Reqeust는 GuestbookController에서 DTO의 형태로 처리된다.</li>
+  <li>GuestbookRepository는 엔티티 타입을 이용하므로 중간에 Service 계층에서는 DTO와 엔티티의 변환을 처리한다.</li>
+</ul>
+
+<p>자 이제 프로젝트를 생성해 보자.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-23-19.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>의존성으로는</p>
+
+<ul>
+  <li>Spring Boot DevTools</li>
+  <li>Lombok</li>
+  <li>Spring Web</li>
+  <li>Thymeleaf</li>
+  <li>Spring Data JPA</li>
+</ul>
+
+<p>를 체크한다.</p>
+
+<p><img src="../images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-23-58.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이제 데이터베이스 관련 드라이버 추가를 할 차례이다. 책에서는 MariaDB관련 JDBC 드라이버를 추가했지만 나는 MySql 관련 JDBC 드라이버를 추가한다. 그리고 Thymeleaf에서 사용하게 될 java8 날짜 관련 라이브러리도 추가한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-30-27.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>build.gradle</strong></p>
+
+<div class="language-gradle highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>    <span class="n">compile</span> <span class="nl">group:</span> <span class="s1">'org.thymeleaf.extras'</span><span class="o">,</span> <span class="nl">name:</span> <span class="s1">'thymeleaf-extras-java8time'</span>
+    <span class="n">compile</span> <span class="nl">group:</span> <span class="s1">'mysql'</span><span class="o">,</span> <span class="nl">name:</span> <span class="s1">'mysql-connector-java'</span><span class="o">,</span> <span class="nl">version:</span> <span class="s1">'8.0.22'</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>그리고 데이터베이스 관련 설정도 추가한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-30-49.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>application.properties</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre>spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/bootex?serverTimezone=UTC&amp;characterEncoding=UTF-8
+spring.datasource.username=bootex
+spring.datasource.password=bootex
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.show-sql=true
+
+spring.thymeleaf.cache=false
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>컨트롤러/화면 관련 준비는 이전 장에서 작성해 둔 layout 폴더를 그대로 사용한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-32-56.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-33-03.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>GuestbookController.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.guestbook.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.extern.log4j.Log4j2</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>
+
+
+<span class="nd">@Controller</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/guestbook"</span><span class="o">)</span>
+<span class="nd">@Log4j2</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GuestbookController</span> <span class="o">{</span>
+    <span class="nd">@GetMapping</span><span class="o">({</span><span class="s">"/"</span><span class="o">,</span><span class="s">"/list"</span><span class="o">})</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">index</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"list......"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="s">"/guestbook/list"</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-16-리턴으로-html의-경로를-반환하고-있다-즉-templateguestbook-아래에-있는-listhtml를-보여줄-것이다-만약-문자열을-반환하지-않는다면-getmapping-어노테이션의-디폴트-기능으로서-그-어노테이션-안에-문자열에-해당하는-html이-있는지-찾고-있으면-저절로-매핑해줄-것이다"><strong>line 16:</strong> 리턴으로 html의 경로를 반환하고 있다 즉 template/guestbook 아래에 있는 list.html를 보여줄 것이다. 만약 문자열을 반환하지 않는다면 @GetMapping 어노테이션의 디폴트 기능으로서 그 어노테이션 안에 문자열에 해당하는 html이 있는지 찾고 있으면 저절로 매핑해줄 것이다.<br /></h4>
+</blockquote>
+
+<p>컨트롤러가 제대로 작동하는지 보기 위해 일단 list.html은 layout 폴더의 basic.html을 이용하는 구조로 작성하고 간단한 텍스트를 출력하는 내용으로 작성한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-38-23.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>list.html</strong></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;th:block</span> <span class="na">th:replace=</span><span class="s">"~{/layout/basic :: setContent(~{this::content} )}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;th:block</span> <span class="na">th:fragment=</span><span class="s">"content"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>Guestbook List Page<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/th:block&gt;</span>
+  <span class="nt">&lt;/th:block&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-4-layout아래-basichtml에-fragment로-선언되어-있는-것-중-이름이-setcontent인-부분으로-replace한다-그리고-thiscontent를-파라미터로-넘겨주고-있다-즉-listhtml-안에-fragment-이름이-content인-부분을-넘겨준다-basichtml은-어떤-틀마냥-템플릿처럼-작용하고-그-틀-안의-내용을-listhtml의-content부분으로-채운다고-생각하면-쉽다"><strong>line 4:</strong> /layout아래 basic.html에 fragment로 선언되어 있는 것 중 이름이 “setContent()”인 부분으로 replace한다. 그리고 this::content를 파라미터로 넘겨주고 있다. 즉 list.html 안에 fragment 이름이 “content”인 부분을 넘겨준다. basic.html은 어떤 틀마냥 템플릿처럼 작용하고 그 틀 안의 내용을 list.html의 content부분으로 채운다고 생각하면 쉽다.<br /></h4>
+</blockquote>
+
+<p>자 이제 앱을 실행해 보자. http://localhost:8080/guestbook/으로 접속하거나 http://localhost:8080/guestbook/list 로 접속해도 똑같은 뷰가 보인다. 이유는 앞에 Controller에서 @GetMapping 어노테이션 안에 “/” 이것과 “list” 두 개를 넣어줬기 때문이다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-49-01.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>데이터를 등록과 수정 시간이 자동으로 추가되고 변경되어야 하는 컬럼들이 있는데 이를 일일이 처리하면 번거롭기 때문에 자동으로 처리할 수 있도록 어노테이션을 이용해서 설정하면 편하다. 프로젝트 내에 entity 패키지를 생성하고 엔티티 객체의 등록 시간과 최종 수정 시간을 담당하게 될 BaseEntity 클래스를 추상 클래스로 작성한다.</p>
+
+<p><strong>BaseEntity.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.guestbook.entity</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.Getter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.annotation.CreatedDate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.annotation.LastModifiedDate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.domain.support.AuditingEntityListener</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.persistence.Column</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.EntityListeners</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.MappedSuperclass</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.time.LocalDateTime</span><span class="o">;</span>
+
+<span class="nd">@MappedSuperclass</span>
+<span class="nd">@EntityListeners</span><span class="o">(</span><span class="n">value</span><span class="o">={</span><span class="nc">AuditingEntityListener</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
+<span class="nd">@Getter</span>
+<span class="kd">abstract</span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BaseEntity</span> <span class="o">{</span>
+    <span class="nd">@CreatedDate</span>
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"regdate"</span><span class="o">,</span> <span class="n">updatable</span><span class="o">=</span><span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">regDate</span><span class="o">;</span>
+
+    <span class="nd">@LastModifiedDate</span>
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"moddate"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">modDate</span><span class="o">;</span>
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-13-mappedsuperclass라는-특별한-어노테이션은-적용된-클래스는-테이블로-생성되지-않는다-실제-테이블은-baseentity-클래스를-상속한-엔티티의-클래스로-데이터베이스-테이블이-생성된다"><strong>line 13:</strong> @MappedSuperclass라는 특별한 어노테이션은 적용된 클래스는 테이블로 생성되지 않는다. 실제 테이블은 BaseEntity 클래스를 상속한 엔티티의 클래스로 데이터베이스 테이블이 생성된다.<br /></h4>
+
+  <h4 id="line-17-createddate는-jpa에서-엔티티의-생성-시간을-처리한다"><strong>line 17:</strong> @CreatedDate는 JPA에서 엔티티의 생성 시간을 처리한다.<br /></h4>
+
+  <h4 id="line-21-lastmodifieddate는-최종-수정-시간을-자동으로-처리하는-용도로-사용한다"><strong>line 21:</strong> @LastModifiedDate는 최종 수정 시간을 자동으로 처리하는 용도로 사용한다.<br /></h4>
+
+  <h4 id="line-18-updatablefalse를-통해서-해당-엔티티-객체를-데이터베이스에-반영할-때-regdate-칼럼값은-변경되지-않는다"><strong>line 18:</strong> updatable=false를 통해서 해당 엔티티 객체를 데이터베이스에 반영할 때 regdate 칼럼값은 변경되지 않는다.<br /></h4>
+</blockquote>
+
+<p>추가적으로 JPA를 이용하면서 AuditionEntityListener를 활성화시키기 위해서는 프로젝트에 @EnableJpaAuditing 설정을 추가 해야 한다.</p>
+
+<p>**GuestbookApplication.java</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.guestbook</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.config.EnableJpaAuditing</span><span class="o">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableJpaAuditing</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GuestbookApplication</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">GuestbookApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>이제 새로운 엔티티 클래스인 Guestbook를 추가한다. 그리고 코드를 추가하자.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-03-12-49-08.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>Guestbook.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.guestbook.entity</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.*</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.persistence.*</span><span class="o">;</span>
+
+<span class="nd">@Entity</span>
+<span class="nd">@Getter</span>
+<span class="nd">@Builder</span>
+<span class="nd">@AllArgsConstructor</span>
+<span class="nd">@NoArgsConstructor</span>
+<span class="nd">@ToString</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Guestbook</span> <span class="kd">extends</span> <span class="nc">BaseEntity</span><span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span><span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">gno</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">length</span><span class="o">=</span><span class="mi">1500</span><span class="o">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">content</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="o">,</span><span class="n">nullable</span><span class="o">=</span><span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">writer</span><span class="o">;</span>
+
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>위 코드를 보면 BaseEntity를 상속하고 있는 것을 볼 수 있다. 이렇게 BaseEntity를 상속하게 되면 Guestbook 테이블에 우리가 선언 했던 moddate와 regdate 필드가 생기게 된다. 그리고 리스너로 인해서 자동으로 생성 날짜와 수정 날짜가 설정된다.</p>
+
+<p>엔티티 클래스를 만들었으니 이제 새로운 패키지를 추가하고 GuestbookRepository 인터페이스를 작성한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-03-12-52-37.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>GuestbookRepository 인터페이스</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.guestbook.repository</span><span class="o">;</span>
+
+
+<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.JpaRepository</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.techlead.guestbook.entity.Guestbook</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">GuestbookRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">Guestbook</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;{</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>JPA의 쿼리 메서드의 기능과 @Query를 통해서 많은 기능을 구현할 수 있지만 선언할 때 고정된 형태의 값을 가진다는 단점이 있다. 그래서 복잡한 조합을 이용하는 경우의 수가 많은 상황에서는 동적으로 쿼리를 생성해서 처리할 수 있는 기능이 필요하다. Querydsl은 이러한 상황을 처리할 수 있다. 이것을 이용하면 조인, 서브 쿼리 등의 기능도 구현이 가능하다.</p>
+
+<p>Querydsl은 엔티티 클래스를 그대로 이용하는 것이 아닌 ‘Q도메인’이라는 것을 이용해야 한다.</p>
+
+<p>build.gradle 파일에 다음과 같은 내용을 처리한다</p>
+
+<ul>
+  <li>plugins 항목에 querydsl 관련 부분 추가</li>
+  <li>dependencies 항목에 필요한 라이브러리를 추가</li>
+  <li>Gradle에서 사용할 추가적인 task를 추가</li>
+</ul>
+
+<p><br /></p>
+
+<p><strong>build.gradle plugin 추가</strong>
+<img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-03-13-01-51.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>build.gradle dependencies 추가</strong>
+<img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-03-13-02-23.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>build.gralde task 생성</strong>
+<img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-03-13-03-28.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이렇게 추가가 다 끝나고 build.gradle 파일이 갱신되면 아래 사진과 같이 compileQuerydsl이라는 실행 가능한 task가 추가된 것을 확인할 수 있다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-03-13-05-32.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이것을 실행하면 프로젝트 내 build 폴더 안에 다음과 같은 구조가 생성된다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-03-13-06-26.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>Querydsl을 이용하게 되면 GuestbookRepository 인터페이스 역시 QuerydslPredicateExecutor라는 인터페이스를 추가로 상속한다.</p>
+
+<p>이제 Querydsl 위주의 예제로 다른 개발 전에 테스트를 진행해 보자. test 폴더 내에 repository 패키지를 생성하고 GuestbookRepositoryTests 클래스를 추가한다.</p>
+
+<p><strong>GuestbookRepositoryTests.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.guestbook.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.junit.jupiter.api.Test</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.test.context.SpringBootTest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.techlead.guestbook.entity.Guestbook</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.IntStream</span><span class="o">;</span>
+
+<span class="nd">@SpringBootTest</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GuestbookRepositoryTests</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">GuestbookRepository</span> <span class="n">guestbookRepository</span><span class="o">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertDummies</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="nc">IntStream</span><span class="o">.</span><span class="na">rangeClosed</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">300</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="o">{</span>
+
+            <span class="nc">Guestbook</span> <span class="n">guestbook</span> <span class="o">=</span> <span class="nc">Guestbook</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">title</span><span class="o">(</span><span class="s">"Title...."</span> <span class="o">+</span> <span class="n">i</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">content</span><span class="o">(</span><span class="s">"Content..."</span> <span class="o">+</span> <span class="n">i</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">writer</span><span class="o">(</span><span class="s">"user"</span> <span class="o">+</span> <span class="o">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">10</span><span class="o">))</span>
+                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">guestbookRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">guestbook</span><span class="o">));</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>그리고 테스트를 실행하면 mysql에 데이터가 정상적으로 들어가는 것을 볼 수 있다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-03-13-17-12.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>엔티티 클래스는 가능하면 setter 관련 기능을 만들지 않는 것이 권장 사항이다. 필요에 따라 수정 기능을 만들기도 하지만 엔티티 객체가 애플리케이션 내부에서 변경되면 JPA를 관리하는 쪽이 복잡해질 우려가 있기 때무넹 가능하면 최소한의 수정이 가능하도록 하는 것을 권장한다.</p>
+
+<p>예제로 작성 중인 방명록은 현실적으로는 수정 기능이 없어도 무방하지만 예제에서는 제목(title)과 내용(content)을 수정할 수 있도록 changeTitle(), changeContent()와 같은 메서드를 추가하도록 Guestbook 클래스를 수정한다.</p>
+
+<p><strong>Guestbook.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre></td><td class="rouge-code"><pre><span class="o">(...)</span>
+<span class="nd">@Entity</span>
+<span class="nd">@Getter</span>
+<span class="nd">@Builder</span>
+<span class="nd">@AllArgsConstructor</span>
+<span class="nd">@NoArgsConstructor</span>
+<span class="nd">@ToString</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Guestbook</span> <span class="kd">extends</span> <span class="nc">BaseEntity</span><span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span><span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">gno</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">length</span><span class="o">=</span><span class="mi">1500</span><span class="o">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">content</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="o">,</span><span class="n">nullable</span><span class="o">=</span><span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">writer</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">changeTitle</span><span class="o">(</span><span class="nc">String</span> <span class="n">title</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">title</span><span class="o">=</span><span class="n">title</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">changeContent</span><span class="o">(</span><span class="nc">String</span> <span class="n">content</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">content</span><span class="o">=</span><span class="n">content</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>본격적으로 Querydsl 실습을 해보자.</p>
+
+<ul>
+  <li>‘제목/내용/작성자’와 같이 단 하나의 항목으로 검색하는 경우</li>
+  <li>‘제목+내용’/’내용+작성자’/’제목+작성자’와 같이 2개의 항목으로 검색하는 경우</li>
+  <li>‘제목+내용+작성자’와 같이 3개의 항목으로 검색하는 경우</li>
+</ul>
+
+<p><br /></p>
+
+<p>만일 Guestbook 엔티티 클래스에 많은 멤버 변수들이 선언되어 있었다면 이러한 조합의 수는 엄청 많아지게 된다. 이런 상황을 대비해서 상황에 맞게 쿼리를 처리할 수 있는 Querydsl이 필요하다.</p>
+
+<p>Querydsl의 사용법은 다음과 같다.</p>
+
+<ul>
+  <li>BooleanBuilder를 생성한다.</li>
+  <li>조건에 맞는 구문은 Querydsl에서 사용하는 Predicate 타입의 함수를 생성한다.</li>
+  <li>BooleanBuilder에 작성된 Predicate를 추가하고 실행한다.</li>
+</ul>
+
+<p><br /></p>
+
+<p>예제로 ‘제목(title)’에 ‘1’이라는 글자가 있는 엔티티들을 검색해보면 다음과 같이 작성할 수 있다.</p>
+
+<p><strong>GuestRepositoryTests.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+</pre></td><td class="rouge-code"><pre><span class="o">(...)</span>
+  <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">GuestbookRepository</span> <span class="n">guestbookRepository</span><span class="o">;</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertDummies</span><span class="o">(){</span>
+
+        <span class="nc">IntStream</span><span class="o">.</span><span class="na">rangeClosed</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">300</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="o">{</span>
+
+            <span class="nc">Guestbook</span> <span class="n">guestbook</span> <span class="o">=</span> <span class="nc">Guestbook</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">title</span><span class="o">(</span><span class="s">"Title...."</span> <span class="o">+</span> <span class="n">i</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">content</span><span class="o">(</span><span class="s">"Content..."</span> <span class="o">+</span><span class="n">i</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">writer</span><span class="o">(</span><span class="s">"user"</span> <span class="o">+</span> <span class="o">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">10</span><span class="o">))</span>
+                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">guestbookRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">guestbook</span><span class="o">));</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testQuery1</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="nc">Pageable</span> <span class="n">pageable</span> <span class="o">=</span> <span class="nc">PageRequest</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="nc">Sort</span><span class="o">.</span><span class="na">by</span><span class="o">(</span><span class="s">"gno"</span><span class="o">).</span><span class="na">descending</span><span class="o">());</span>
+
+        <span class="nc">QGuestbook</span> <span class="n">qGuestbook</span> <span class="o">=</span> <span class="nc">QGuestbook</span><span class="o">.</span><span class="na">guestbook</span><span class="o">;</span> <span class="c1">//1</span>
+
+        <span class="nc">String</span> <span class="n">keyword</span> <span class="o">=</span> <span class="s">"1"</span><span class="o">;</span>
+
+        <span class="nc">BooleanBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BooleanBuilder</span><span class="o">();</span>  <span class="c1">//2</span>
+
+        <span class="nc">BooleanExpression</span> <span class="n">expression</span> <span class="o">=</span> <span class="n">qGuestbook</span><span class="o">.</span><span class="na">title</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">keyword</span><span class="o">);</span> <span class="c1">//3</span>
+
+        <span class="n">builder</span><span class="o">.</span><span class="na">and</span><span class="o">(</span><span class="n">expression</span><span class="o">);</span> <span class="c1">//4</span>
+
+        <span class="nc">Page</span><span class="o">&lt;</span><span class="nc">Guestbook</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">guestbookRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">(</span><span class="n">builder</span><span class="o">,</span> <span class="n">pageable</span><span class="o">);</span> <span class="c1">//5</span>
+
+        <span class="n">result</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">forEach</span><span class="o">(</span><span class="n">guestbook</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">guestbook</span><span class="o">);</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-23-가장-먼저-동적으로-처리하기-위해서-q도메인-클래스를-얻어온다-q도메인-클래스를-이용하면-엔티티-클래스에-선언된-title-content-같은-필드들을-변수로-활용할-수-있다"><strong>line 23:</strong> 가장 먼저 동적으로 처리하기 위해서 Q도메인 클래스를 얻어온다. Q도메인 클래스를 이용하면 엔티티 클래스에 선언된 title, content 같은 필드들을 변수로 활용할 수 있다.<br /></h4>
+  <h4 id="line-27-booleanbuilder는-where문에-들어가는-조건들을-넣어주는-컨테이너라고-간주한다"><strong>line 27:</strong> BooleanBuilder는 where문에 들어가는 조건들을 넣어주는 컨테이너라고 간주한다.<br /></h4>
+  <h4 id="line-29-원하는-조건은-필드-값과-같이-결합해서-생성한다-booleanbuilder-안에-들어가는-값은-comquerydslcoretypespredicate-타입이어야-한다java에-있는-predicate-타입이-아니므로-주의한다"><strong>line 29:</strong> 원하는 조건은 필드 값과 같이 결합해서 생성한다. BooleanBuilder 안에 들어가는 값은 com.querydsl.core.types.Predicate 타입이어야 한다(Java에 있는 Predicate 타입이 아니므로 주의한다)<br /></h4>
+  <h4 id="line-31-만들어진-조건은-where문제-and나-or같은-키워드와-결합시킵니다"><strong>line 31:</strong> 만들어진 조건은 where문제 and나 or같은 키워드와 결합시킵니다.<br /></h4>
+  <h4 id="line-33-booleanbuilder는-guestbookrepository에-추가된-querydslpredicateexcutor-인터페이스의-findall을-사용할-수-있다"><strong>line 33:</strong> BooleanBuilder는 GuestbookRepository에 추가된 QuerydslPredicateExcutor 인터페이스의 findAll()을 사용할 수 있다.<br /></h4>
+</blockquote>
+
+<p><br /></p>
+
+<p>테스트 코드를 실행한 후 결과는 아래 사진과 같다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-03-13-58-12.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이제 다중 항목 검색 테스트를 해본다. 복합 조건은 여러 조건이 결합한 형태를 말한다. 예를 들어 ‘제목(title) 혹은 내용(content)’에 특정한 키워드(keyword)가 있고 ‘gno가 0보다 크다’와 같은 조건을 처리해 보도록 한다.</p>
+:ET

@@ -1,0 +1,229 @@
+I"�,<p><br /><br /></p>
+
+<h1 id="페이지-처리되는-영화별-평균-점수리뷰-개수-구하기"><center>페이지 처리되는 영화별 평균 점수/리뷰 개수 구하기</center></h1>
+
+<p><br /></p>
+
+<p><em>해당 내용은 책 ‘코드로 배우는 스프링부트 웹 프로젝트’의 내용이며 이 게시물은 그 책을 개인적으로 공부하며 메모해 두기 위해서 쓰는 것임을 알려드립니다</em></p>
+
+<p><br /><br /></p>
+
+<p>이번 방명록 만들기 프로젝트를 통해서 다음과 같은 내용을 학습한다.</p>
+
+<ul>
+  <li>프로젝트의 계층별 구조와 객체들의 구성</li>
+  <li>Querydsl을 이용해서 동적으로 검색 조건을 처리하는 방법</li>
+  <li>Entity 객체와 DTO의 구분</li>
+  <li>화면에서의 페이징 처리</li>
+</ul>
+
+<p><br /></p>
+
+<p>웹 프로젝트를 구성할 때는 가장 먼저 와이어프레임(화면 설계서)을 제작하고 진행하는 것이 좋다. 와이어프레임을 제작하면 화면의 URI와 전달되는 파라미터 등을 미리 결정할 수 있고 데이터베이스 설계에 필요한 칼럼들을 미리 파악하는데도 도움이 된다.</p>
+
+<p><strong>화면 개발의 목표</strong></p>
+
+<ul>
+  <li>목록 화면 (번호 1) - 전체 목록을 페이징 처리해서 조회할 수 있고, 제목/내용/작성자 항목으로 검색과 페이징 처리를 가능하게 한다.</li>
+  <li>등록 화면(번호 2) - 새로운 글을 등록할 수 있고, 등록 처리 후 다시 목록 화면으로 이동하게 된다.</li>
+  <li>조회 화면(번호 3) - 목록 화면에서 특정한 글을 선택하면 자동으로 조회 화면으로 이동한다. 조회 화면에서는 수정/삭제가 가능한 화면(번호 4)으로 버튼을 클릭해서 이동할 수 있다.</li>
+  <li>수정/삭제 화면(번호 4) - 수정 화면에서 삭제가 가능하고 삭제 후에는 목록 페이지로 이동한다. 글을 수정하는 경우에는 다시 조회 화면(번호 2)으로 이동해서 수정된 내용을 확인할 수 있다.</li>
+</ul>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-06-40.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-16-17.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>프로젝트의 기본 구조는 아래 사진과 같다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-16-47.png" alt="" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>브라우저에서 들어오는 Request는 GuestbookController라는 객체로 처리한다.</li>
+  <li>GuestbookController는 GuestbookService 타입을 주입받는 구조로 만들고, 이를 이용해서 원하는 작업을 처리한다.</li>
+  <li>GuestbookRepository는 Spring Data JPA를 이용해서 구성하고, GuestbookServiceImpl 클래스에 주입해서 사용한다.</li>
+  <li>마지막 결과는 Thymeleaf를 이용해서 레이아웃 템플릿을 활용해서 처리한다.</li>
+</ul>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-21-10.png" alt="" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>브라우저에서 전달되는 Reqeust는 GuestbookController에서 DTO의 형태로 처리된다.</li>
+  <li>GuestbookRepository는 엔티티 타입을 이용하므로 중간에 Service 계층에서는 DTO와 엔티티의 변환을 처리한다.</li>
+</ul>
+
+<p>자 이제 프로젝트를 생성해 보자.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-23-19.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>의존성으로는</p>
+
+<ul>
+  <li>Spring Boot DevTools</li>
+  <li>Lombok</li>
+  <li>Spring Web</li>
+  <li>Thymeleaf</li>
+  <li>Spring Data JPA</li>
+</ul>
+
+<p>를 체크한다.</p>
+
+<p><img src="../images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-23-58.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이제 데이터베이스 관련 드라이버 추가를 할 차례이다. 책에서는 MariaDB관련 JDBC 드라이버를 추가했지만 나는 MySql 관련 JDBC 드라이버를 추가한다. 그리고 Thymeleaf에서 사용하게 될 java8 날짜 관련 라이브러리도 추가한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-30-27.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>build.gradle</strong></p>
+<div class="language-gradle highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>    <span class="n">compile</span> <span class="nl">group:</span> <span class="s1">'org.thymeleaf.extras'</span><span class="o">,</span> <span class="nl">name:</span> <span class="s1">'thymeleaf-extras-java8time'</span>
+    <span class="n">compile</span> <span class="nl">group:</span> <span class="s1">'mysql'</span><span class="o">,</span> <span class="nl">name:</span> <span class="s1">'mysql-connector-java'</span><span class="o">,</span> <span class="nl">version:</span> <span class="s1">'8.0.22'</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>그리고 데이터베이스 관련 설정도 추가한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-30-49.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>application.properties</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre>spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/bootex?serverTimezone=UTC&amp;characterEncoding=UTF-8
+spring.datasource.username=bootex
+spring.datasource.password=bootex
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.show-sql=true
+
+spring.thymeleaf.cache=false
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>컨트롤러/화면 관련 준비는 이전 장에서 작성해 둔 layout 폴더를 그대로 사용한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-32-56.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-33-03.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>GuestbookController.java</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.guestbook.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.extern.log4j.Log4j2</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>
+
+
+<span class="nd">@Controller</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/guestbook"</span><span class="o">)</span>
+<span class="nd">@Log4j2</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GuestbookController</span> <span class="o">{</span>
+    <span class="nd">@GetMapping</span><span class="o">({</span><span class="s">"/"</span><span class="o">,</span><span class="s">"/list"</span><span class="o">})</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">index</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"list......"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="s">"/guestbook/list"</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-16-리턴으로-html의-경로를-반환하고-있다-즉-templateguestbook-아래에-있는-listhtml를-보여줄-것이다-만약-문자열을-반환하지-않는다면-getmapping-어노테이션의-디폴트-기능으로서-안에"><strong>line 16:</strong> 리턴으로 html의 경로를 반환하고 있다 즉 template/guestbook 아래에 있는 list.html를 보여줄 것이다. 만약 문자열을 반환하지 않는다면 @GetMapping 어노테이션의 디폴트 기능으로서 안에</h4>
+</blockquote>
+
+<p>컨트롤러가 제대로 작동하는지 보기 위해 일단 list.html은 layout 폴더의 basic.html을 이용하는 구조로 작성하고 간단한 텍스트를 출력하는 내용으로 작성한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-02-17-38-23.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>list.html</strong></p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;th:block</span> <span class="na">th:replace=</span><span class="s">"~{/layout/basic :: setContent(~{this::content} )}"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;th:block</span> <span class="na">th:fragment=</span><span class="s">"content"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>Guestbook List Page<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/th:block&gt;</span>
+
+<span class="nt">&lt;/th:block&gt;</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-4-layout아래-basichtml에-fragment로-선언되어-있는-것-중-이름이-setcontent인-부분으로-replace한다-그리고-thiscontent를-파라미터로-넘겨주고-있다-즉-listhtml-안에-fragment-이름이-content인-부분을-넘겨준다-basichtml은-어떤-틀마냥-템플릿처럼-작용하고-그-틀-안의-내용을-listhtml의-content부분으로-채운다고-생각하면-쉽다"><strong>line 4:</strong> /layout아래 basic.html에 fragment로 선언되어 있는 것 중 이름이 “setContent()”인 부분으로 replace한다. 그리고 this::content를 파라미터로 넘겨주고 있다. 즉 list.html 안에 fragment 이름이 “content”인 부분을 넘겨준다. basic.html은 어떤 틀마냥 템플릿처럼 작용하고 그 틀 안의 내용을 list.html의 content부분으로 채운다고 생각하면 쉽다.<br /></h4>
+</blockquote>
+
+:ET
