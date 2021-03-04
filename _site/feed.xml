@@ -7,6 +7,539 @@
 		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>코드로 배우는 스프링 부트 웹 프로젝트-Part2-03</title>
+				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;목록-데이터-페이지-처리하기&quot;&gt;&lt;center&gt;목록 데이터 페이지 처리하기&lt;/center&gt;&lt;/h1&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이전 게시물에서 이야기 나눴던 내용을 코드로 옮겨본다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;PageResultDTO.java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.techlead.guestbook.dto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;lombok.Data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.domain.Page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.domain.Pageable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.function.Function&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.stream.Collectors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.stream.IntStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@Data&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;PageResultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;EN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dtoList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalPage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pageList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;PageResultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Function&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;dtoList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;collect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Collectors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;makePageList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Pageable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pageable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pageable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getPageNumber&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pageable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getPageSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tempEnd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ceil&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;10.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tempEnd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;prev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;totalPage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tempEnd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;tempEnd:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;totalPage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;totalPage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pageList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;IntStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;rangeClosed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;boxed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;collect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Collectors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;h4 id=&quot;line-16-총-페이지-번호&quot;&gt;&lt;strong&gt;line 16:&lt;/strong&gt; 총 페이지 번호&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-17-현재-페이지-번호&quot;&gt;&lt;strong&gt;line 17:&lt;/strong&gt; 현재 페이지 번호&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-18-목록-사이즈&quot;&gt;&lt;strong&gt;line 18:&lt;/strong&gt; 목록 사이즈&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-19-시작-페이지-번호-끝-페이지-번호&quot;&gt;&lt;strong&gt;line 19:&lt;/strong&gt; 시작 페이지 번호, 끝 페이지 번호&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-20-이전-다음&quot;&gt;&lt;strong&gt;line 20:&lt;/strong&gt; 이전, 다음&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-21-페이지-번호-목록&quot;&gt;&lt;strong&gt;line 21:&lt;/strong&gt; 페이지 번호 목록&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-28-0부터-시작하므로-1를-더해준다&quot;&gt;&lt;strong&gt;line 28:&lt;/strong&gt; 0부터 시작하므로 1를 더해준다&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-29-페이지-사이즈를-가져온다&quot;&gt;&lt;strong&gt;line 29:&lt;/strong&gt; 페이지 사이즈를 가져온다.&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-34-페이지의-start는-그-페이지의-끝-번호의-9를-빼면-된다&quot;&gt;&lt;strong&gt;line 34:&lt;/strong&gt; 페이지의 start는 그 페이지의 끝 번호의 9를 빼면 된다&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-36-start가-존재하면-prev도-존재한다&quot;&gt;&lt;strong&gt;line 36:&lt;/strong&gt; start가 존재하면 prev도 존재한다&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-38-totalpage가-더-많으면-해당-페이지는-10개씩-다-보여준다&quot;&gt;&lt;strong&gt;line 38:&lt;/strong&gt; totalPage가 더 많으면 해당 페이지는 10개씩 다 보여준다.&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-40-next-버튼은-totalpage가-끝-번호-보다-많을-때-보여주게-한다&quot;&gt;&lt;strong&gt;line 40:&lt;/strong&gt; next 버튼은 totalPage가 끝 번호 보다 많을 때 보여주게 한다.&lt;br /&gt;&lt;/h4&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;앞에서 만든 테스트 코드를 수정해서 위와 같은 정보들이 제대로 구성되었는지 확인 해 본다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;GuestbookServiceTests.java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;PageRequestDTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pageRequestDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;PageRequestDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;PageResultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;GuestbookDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Guestbook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pageRequestDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;PREV: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isPrev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;NEXT: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isNext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TOTAL: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getTotalPage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;start: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getStart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tempEnd: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getEnd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getPage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;-----------------------------------------&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;GuestbookDTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;guestbookDTO&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDtoList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()){&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;guestbookDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;========================================&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;resultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getPageList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;forEach&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;결과는 아래와 같다. 처리된 결과를 보면 현재 페이지가 1인 경우 PREV는 false, NEXT는 true 등의 처리 결과를 확인할 수 있고, 마지막의 번호는 화면상에서 출력되어야 하는 페이지의 번호이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-14-59-51.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제 서비스 계층까지 등록 작업과 목록 처리가 완료되었으니 컨트롤러를 작성하고 실제 화면이 이를 반영해본다. GuestbookController에는 우선은 목록을 처리하기 위해서 ‘/guesbook/list’로 처리되는 부분을 다음과 같이 처리한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;GuestbookController.java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;o&quot;&gt;(...)&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Controller&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//guestbook으로부터 시작해서 guestbook/register, guestbook/list 이런식으로 사용&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@RequestMapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/guestbook&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Log4j2&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@RequiredArgsConstructor&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//자동 주입을 위한 Annotation&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;GuestbookController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;GuestbookService&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//final로 선언&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@GetMapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;redirect:/guestbook/list&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+
+    &lt;span class=&quot;nd&quot;&gt;@GetMapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/list&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;PageRequestDTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pageRequestDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Model&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;list.............&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pageRequestDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addAttribute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;result&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pageRequestDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;GuestbookController에서 list()에는 파라미터로 PageRequestDTO를 이용한다. 스프링 MVC는 파라미터를 자동으로 수집해 주는 기능이 있으므로, 화면에서 page와 size라는 파라미터를 전달하면 PageRequestDTO 객체로 자동으로 수집된다. Model은 결과 데이터를 화면에 전달하기 위해서 사용하고 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;list()에는 Model을 이용해서 GuestbookServiceImpl에서 반환하는 PageResultDTO를 ‘result’라는 이름으로 전달한다. 실제 내용을 출력하는 list.html에서는 부트스트랩의 테이블 구조를 이용해서 출력한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-15-12-20.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;list.html&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:th=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.thymeleaf.org&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;th:block&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:replace=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;~{/layout/basic :: setContent(~{this::content} )}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;th:block&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:fragment=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;content&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;mt-4&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;GuestBook List Page&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;table&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;table table-striped&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;thead&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;th&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;col&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;#&lt;span class=&quot;nt&quot;&gt;&amp;lt;/th&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;th&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;col&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Title&lt;span class=&quot;nt&quot;&gt;&amp;lt;/th&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;th&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;col&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Writer&lt;span class=&quot;nt&quot;&gt;&amp;lt;/th&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;th&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;col&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Regdate&lt;span class=&quot;nt&quot;&gt;&amp;lt;/th&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/thead&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;tbody&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;tr&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:each=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;dto : ${result.dtoList}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;th&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;row&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/th&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;[[${dto.title}]]&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;[[${dto.writer}]]&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tbody&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/table&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/th:block&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/th:block&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;앱을 실행해서 해당 뷰를 확인해 본다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-15-26-34.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;브라우저에 정상적으로 데이터가 출력되는 것을 확인 했다면 다음 작업은 정상적으로 페이지 이동이 동작하는지 확인하고 화면 아래쪽에 페이지 처리와 클릭 시 페이지의 이동을 처리하는 것이다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;/guestbook/list 혹은 /guestbook/list?page=1의 경우 아래와 같이 1페이지가 출력된다.&lt;/li&gt;
+  &lt;li&gt;/guestbook/list?page=2와 같이 페이지 번호를 변경하면 해당 페이지가 나온다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-15-30-50.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;list.html에는 아래와 같은 코드를 이용해서 화면에 페이지가 출력되도록 조정합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;list.html 일부&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/tbody&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/table&amp;gt;&lt;/span&gt;
+
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pagination h-100 justify-content-center align-items-center&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-item &quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:if=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${result.prev}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-link&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;tabindex=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;-1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Previous&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; 'page-item ' + ${result.page == page?'active':''} &quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:each=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page: ${result.pageList}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-link&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;[[${page}]]&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-item&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:if=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${result.next}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-link&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Next&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/th:block&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/th:block&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;h4 id=&quot;line-6-prev-값이-true이기-때문에-표시된다-&quot;&gt;&lt;strong&gt;line 6:&lt;/strong&gt; prev 값이 true이기 때문에 표시된다. &lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-10-resultpage는-현재-페이지를-의미한다-즉-pageresultdto-클래스의-page-변수이며--page의-page는-url에서-넘겨준-page-파라미터이다-지금-each로-각각-페이지를-순회하고-있는데-url에서-넘겨준-page파라미터와-pagelist를-순회했을-때-그것과-같으면-해당-페이지를-line-11에서-보여준다&quot;&gt;&lt;strong&gt;line 10:&lt;/strong&gt; result.page는 현재 페이지를 의미한다. 즉 PageResultDTO 클래스의 page 변수이며 == page의 page는 url에서 넘겨준 page 파라미터이다. 지금 each로 각각 페이지를 순회하고 있는데 url에서 넘겨준 page파라미터와 pageList를 순회했을 때 그것과 같으면 해당 페이지를 line 11에서 보여준다&lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-11-page는-theachpage--의-page이고--는-인라인-표시이다-&quot;&gt;&lt;strong&gt;line 11:&lt;/strong&gt; [[${page}]]는 th:each=”page : 의 page이고 [[]] 는 인라인 표시이다. &lt;br /&gt;&lt;/h4&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;페이지의 ‘이전(previous)’과 ‘다음(next)’ 부분은 Thymeleaf의 if를 이용해서 처리하고, 페이지 중간에 현재 페이지 여부를 체크해서 ‘active’라는 이름의 클래스가 출력되도록 작성한다. 브라우저로 확인하면 아래와 같은 페이지 번호들이 출력되는 것을 확인할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-16-09-19.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;아직 링크나 이벤트 처리가 없는 상태이므로 페이지 번호를 이동하기 위해서는 브라우저의 주소창에서 page 파라미터 값을 변경해야만 가능하다. 예를 들어 ‘/guestbook/list?page=13’과 같이 주소창을 수정하면 다음과 같이 페이지 처리가 되는 결과를 볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-16-10-38.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Thymeleaf를 이용하는 경우에는 링크 처리가 좀 더 수월한 편이므로 위의 코드에서 직접 링크를 th:href를 이용해서 아래와 같이 작성한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;list.html의 일부&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/tbody&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/table&amp;gt;&lt;/span&gt;
+
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pagination h-100 justify-content-center align-items-center&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-item &quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:if=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${result.prev}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-link&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;@{/guestbook/list(page= ${result.start -1})}&quot;&lt;/span&gt;
+                 &lt;span class=&quot;na&quot;&gt;tabindex=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;-1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Previous&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; 'page-item ' + ${result.page == page?'active':''} &quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;th:each=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page: ${result.pageList}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-link&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;@{/guestbook/list(page = ${page})}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+                    [[${page}]]
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-item&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;th:if=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${result.next}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-link&quot;&lt;/span&gt;
+                &lt;span class=&quot;na&quot;&gt;th:href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;@{/guestbook/list(page= ${result.end + 1})}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Next&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/th:block&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/th:block&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;h4 id=&quot;line-7-thymeleaf의-thhref은-파라미터를-추가하기-위해서-를-추가하고-파라미터의-이름과-값을-적어준다-즉-page의-page는-url에-page-파라미터를-의미한다-&quot;&gt;&lt;strong&gt;line 7:&lt;/strong&gt; Thymeleaf의 th:href은 파라미터를 추가하기 위해서 ()를 추가하고 파라미터의 이름과 값을 적어준다. 즉 (page=$~)의 page는 url에 page 파라미터를 의미한다. &lt;br /&gt;&lt;/h4&gt;
+
+  &lt;h4 id=&quot;line-13-theach에서-페이지를-하나씩-순회하면서-출력하는데-페이지-링크-중-하나를-클릭하면-해당-페이지가-page-파라미터-값으로-설정된다-아래-사진을-참고한다-&quot;&gt;&lt;strong&gt;line 13:&lt;/strong&gt; th:each에서 페이지를 하나씩 순회하면서 출력하는데 페이지 링크 중 하나를 클릭하면 해당 페이지가 page 파라미터 값으로 설정된다. 아래 사진을 참고한다. &lt;br /&gt;&lt;/h4&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;옆에 &amp;lt;li class=&quot;~&quot;&amp;gt; 가 th:each로 인해 생기는 것을 볼 수 있다. 해당 링크를 클릭하면 url의 page 파라미터에 값이 설정되서 해당 페이지로 이동되는 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-16-34-20.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;만일 링크 처리 시에 (page={page}, size=${result.size})와 같은 내용을 추가한다면 10개가 아닌 원하는 수만큼의 목록을 조회할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;179페이지&lt;/p&gt;
+</description>
+				<pubDate>Thu, 04 Mar 2021 14:00:00 +0900</pubDate>
+				<link>/springboot/2021/03/04/learning-springboot-web-with-code-chapter04-post3.html</link>
+				<guid isPermaLink="true">/springboot/2021/03/04/learning-springboot-web-with-code-chapter04-post3.html</guid>
+			</item>
+		
+			<item>
+				<title>Intellij와 Git Bash 연동하기</title>
+				<description>&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;intellij-터미널&quot;&gt;Intellij 터미널&lt;/h1&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;인텔리제이로 프로젝트를 하다가 깃허브에 push할 일이 생기면 매번 Git bash를 켜서 커밋하고 push를 했었는데 프로젝트 팀원 중 한 명이 꿀팁 하나를 알려주었다.
+굳이 Git bash를 켜서 할 필요 없이 인텔리제이 터미널에서 바로 설정하는 것이다.&lt;/p&gt;
+
+&lt;p&gt;일단 Git Bash와 연동하려면 당연히 Git Bash가 미리 깔려져 있어야 한다. 그럼 시작해 보자.
+아래 그림과 같이 File-&amp;gt;Setting에 들어간다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Intellij_Setting/Post01/2021-03-04-10-36-24.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;들어가면 이렇게 Settings 창이 나온다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Intellij_Setting/Post01/2021-03-04-10-36-53.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;검색창에 terminal이라고 치면 아래 그림과 같이 나오고 우리가 설정해야 할 것은 바로 &lt;strong&gt;Shell path&lt;/strong&gt; 부분이다. 그 행에 오른쪽에 폴더 모양으로 되어 있는 것을 누른다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Intellij_Setting/Post01/2021-03-04-10-37-23.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Shell path 부분 오른쪽에 폴더를 누르고 아래 그림과 같이 경로를 설정한다. Git bash가 깔려져 있는 경로로 들어가서 bin으로 들어가고 마지막으로 bash.exe로 설정해주고 ok를 누른다. 그리고 다시 Settings 창에서 ok를 눌러주면 끝난다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Intellij_Setting/Post01/2021-03-04-10-38-23.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제 인텔리제이 하단 왼쪽에 있는 terminal를 눌러주면 아래 그림과 같이 Git bash를 사용할 수 있는 것을 알 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Intellij_Setting/Post01/2021-03-04-10-40-31.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+</description>
+				<pubDate>Thu, 04 Mar 2021 10:00:00 +0900</pubDate>
+				<link>/intellij-setting/2021/03/04/Intellij-setting-01.html</link>
+				<guid isPermaLink="true">/intellij-setting/2021/03/04/Intellij-setting-01.html</guid>
+			</item>
+		
+			<item>
 				<title>코드로 배우는 스프링 부트 웹 프로젝트-Part2-02</title>
 				<description>&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -682,7 +1215,113 @@
 
 &lt;p&gt;getList()에서 눈여겨 볼 부분은 entityToDTO()를 이용해서 java.util.Function을 생성하고 이를 PageResultDTO로 구성하는 부분이다. PageResultDTO에는 JPA의 처리 결과인 Page&lt;Entity&gt;와 Function을 전달해서 엔티티 객체들을 DTO의 리스트로 변환하고 화면에 페이지 처리와 필요한 값들을 생성한다.&lt;/Entity&gt;&lt;/p&gt;
 
-&lt;p&gt;165페이지&lt;/p&gt;
+&lt;p&gt;이제 목록 처리 테스트를 통해 엔티티 객체들이 DTO 객체들로 변환되었는지를 살펴본다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;GuestbookServiceTest.java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;PageRequestDTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pageRequestDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;PageRequestDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;PageResultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;GuestbookDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Guestbook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pageRequestDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;-----------------------------------------&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;GuestbookDTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;guestbookDTO&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resultDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDtoList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()){&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;guestbookDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;결과는 아래와 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-13-18-31.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;PageRequestDTO를 이용하기 때문에 생성할 때는 1페이지부터 처리할 수 있고 정렬은 상황에 맞게 Sort 객체를 생성해서 전달하는 형태로 사용한다. 테스트 코드의 결과를 보면 Page&lt;Guestbook&gt;이 List&lt;GuestBookDTO&gt;로 정상적으로 변환되어서 출력 결과에 GuestbookDTO 타입으로 출력되는 것을 볼 수 있다.&lt;/GuestBookDTO&gt;&lt;/Guestbook&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;화면까지 던달되는 데이터는 PageResultDTO이고 이를 이용해서 화면에서는 페이지 처리를 진행하게 된다. PageResultDTO 타입으로 처리된 결과에는 시작 페이지, 끝 페이지 등 필요한 모든 정보를 담아서 화면에서는 필요한 내용들만 찾아서 구성이 가능하도록 작성한다. 화면에서 필요한 구성은 다음과 같다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;화면에서 시작 페이지 번호(start)&lt;/li&gt;
+  &lt;li&gt;화면에서 끝 페이지 번호(end)&lt;/li&gt;
+  &lt;li&gt;이전/다음 이동 링크 여부(prev, next)&lt;/li&gt;
+  &lt;li&gt;현재 페이지 번호(page)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;페이징 처리를 하기 위해서 가장 필요한 정보는 현재 사용자가 보고 있는 페이지(page)의 정보이다. 예를 들어 사용자가 5페이지를 본다면 화면의 페이지 번호는 1부터 시작하지만 사용자가 19페이지를 본다면 11부터 시작해야 하기 때문이다.(화면에 10개씩 페이지 번호를 출력한다고 가정한다).&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;페이지를 계산할 때는 시작 번호 먼저 하기보다는 끝 번호를 먼저 계산하는 것이 수월하다. 끝 번호는 다음과 같은 공식으로 구한다&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;tempEnd=(int)(Math.ceil(페이지번호/10.0))*10;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Math.ceil()은 소수점을 올림으로 처리하기 때문에 다음과 같은 상황이 가능하다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1 페이지의 경우: Math.ceil(0.1)*10=10&lt;/li&gt;
+  &lt;li&gt;10 페이지의 경우: Math.ceil(1)*10=10&lt;/li&gt;
+  &lt;li&gt;11 페이지의 경우: Math.ceil(1.1)*10=20&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;끝 번호(end)는 아직 개선의 여지가 있다.(때문에 변수명을 tempEnd로 설정한다) 만일 전체 데이터 수가 적다면 10페이지로 끝나면 안 되는 상황이 생길 수도 있기 때문이다. 그럼에도 끝 번호(end)를 먼저 계산하는 이유는 시작 번호(start)를 계산하기 수월하기 때문이다. 만일 화면에 10개씩 보여준다면 시작 번호(start)는 무조건 끝 번호(tempEnd)에서 9라는 값을 뺀 값이 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;start=tempEnd-9;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;끝 번호(end)는 실제 마지막 페이지와 다시 비교할 필요가 있다. 예를 들어 Page&lt;Guestbook&gt;의 마지막 페이지가 33이라면 위의 계산이라면 40이 되기 때문에 이를 반영해야 한다. 이를 위해서는 Page&lt;Guestbook&gt;의 getTotalPages()를 이용할 수 있다.&lt;/Guestbook&gt;&lt;/Guestbook&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;totalPage=result.getTotalPages(); //result는 Page&amp;lt;Guestbook&amp;gt;
+end=totalPage &amp;gt; tempEnd ? tempEnd : totalPage;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이전(prev)과 다음은 아주 간단히 구할 수 있다. 이전(prev)의 경우는 시작 번호(start)가 1보다 큰 경우라면 존재하게 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;prev = start &amp;gt; 1;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음(next)으로 가는 링크는 위의 totalPage가 끝 번호(end)보다 큰 경우에만 존재하게 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;next = totalPage &amp;gt; end;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;다음 게시물에서 실질적인 코드를 작성해보도록 하자.&lt;/p&gt;
+
 </description>
 				<pubDate>Wed, 03 Mar 2021 14:00:00 +0900</pubDate>
 				<link>/springboot/2021/03/03/learning-springboot-web-with-code-chapter04-post2.html</link>
@@ -3960,121 +4599,6 @@ spring.thymeleaf.cache=false
 				<pubDate>Fri, 26 Feb 2021 13:00:00 +0900</pubDate>
 				<link>/daily-life/2021/02/26/DailyLife-Mountain.html</link>
 				<guid isPermaLink="true">/daily-life/2021/02/26/DailyLife-Mountain.html</guid>
-			</item>
-		
-			<item>
-				<title>데카르트-근대의 사상03</title>
-				<description>&lt;h1 id=&quot;생각하는-나의-존재&quot;&gt;&lt;center&gt;생각하는 나의 존재&lt;/center&gt;&lt;/h1&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern02/2021-02-23-18-31-25.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;생각하는 나의 존재가 데카르트가 첫 번째로 의심의 여지가 없는 참으로 도출한 명제이다. 거기서부터 나는 생각한다 나는 존재한다라는 명제가 나오게 된다. :sparkles:&lt;/p&gt;
-
-&lt;p&gt;데크르트의 문제는 내가 가지고 있는 관념과 생각들 중에서 의심의 여지 없이 확실하게 존재한다고 그에 맞게 생각에 맞게 생각대로 존재한다고 말할 수 있는 것이 무엇인가? 라는 게 데카르트의 기본 물음이 될 것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern02/2021-02-23-18-35-02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;그런데 데카르트는 악령의 가능성을 가정한다. 악령이 바깥에 물질 세계가 없는데도 불구하고 있다고 믿게끔 머릿속에 넣어주고 있을 가능성이 있다는 것을 배제하지 못한다. 심지어 이 가능성에는 이 바깥에 물질적 대상 뿐만 아니라 내가 가지고 있는 육체도 포함된다. 나의 오감, 다섯 가지 감각을 포함해서 내가 가지고 있었다고 이제까지 믿어온 것이기 때문에 육체의 존재마저도 사실 가지고 있지 않은데 가지고 있다고 믿게끔 악령이 속일수 있는 가능성이 있다고 데카르트는 생각하고 있다.&lt;/p&gt;
-
-&lt;p&gt;그래서 데카르트는 육체적 존재로서 존재하는지 확실히 알 수 없다고 생각하게 된다. 근데 그럼에도 불구하고 악령이 다 속일 수 있을지라도 무언가는 틀림없이 존재할 수 있다고 결론을 내리게 되는데, 나의 육체를 포함해 실제 세계가 존재하지 않더라도 그에 대한 관념을 가지고 있는 나, (그 관념들이 거짓이더라도) 그 관념, 생각을 가지고 있고 생각하는 나만은 존재한다. 즉 생각하는 나는 악령이 아무리 속여도 존재함에 틀림없다고 결론 지을 수 있다. 이렇게 데카르트는 의심의 여지 없이 첫 번째 진리를 발견, 도출하게 된다.&lt;/p&gt;
-
-&lt;p&gt;그 이후에 한발 한발씩 확실한 참, 확실한 참을 도출해 낸다. 나는 존재함에 틀림없다 육체를 가진 존재로써가 아닌(악령이 속일 수 있는 대상이기에 해당이 안 됨) 생각하는 존재로서만 나는 확실하게 존재한다고 말 할 수 있는 것이다.
-그래서 나는 생각한다, (여러 가지 생각을 할 때만이 )고로 존재한다 라는 명제를 말할 수 있게 되는 것이다.&lt;/p&gt;
-
-&lt;p&gt;명제의 의미는 내 생각의 내용 즉, 내 생각을 가지고 있는 영혼 바깥에 실제하는 세계에 내 생각에 상응하는 여러 가지 것들이 실제로 존재하지 않는 다고 해도 거짓이라 해도 생각하는 나만은 틀림없이 존재한다라는 결론을 내리게 된다. 이 가운데에서 생각하는 나의 존재는 확실한 앎의 대상으로서 첫 번째로 발견한 것이다.&lt;/p&gt;
-
-&lt;p&gt;데카르트는 여기서 만족하고 멈출수는 없다. 이 명제가 우리에게는 유명하지만 여기서 멈춘다면은 바깥에 실제하는 세계가 있는 지 없는 지 모른 체로 남겨지는 것이다. 그 다음 데카르트의 과제는 어떻게 내가 가지고 있는 관념의 세계, 생각들의 세계와 바깥에 이제까지 존재한다고 믿었던 실제 세계의 분리를 어떻게 극복할 것인가가 데카르트의 주요 문제가 되었다. 분리를 극복한다는 것은 무슨 말이냐면 어떻게 나는 내가 가지고 있는 관념들, 실마리를 출발점으로 해서 바깥의 실제 세계를 참되게 인식하고 당도할 수 있느냐. 참되게 인식할 수 있는 방법이 무엇인가 이런 것을 의미. 데카르트는 이런 상황에서 생각하는 나에서 그 다음 참된 명제, 그 다음 참된 명제를 발견해 나가면서 체계를 이룩한다. 그 체계가 바로 이원론이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern02/2021-02-23-18-41-55.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;데카르트의 이원론은 플라톤의 이원론과는 완전히 다르다. 우선은 이 이원론은 첫 번째로 발견한 확실한 명제, 생각하는 나의 존재가 이원론의 한 축이 된다. 즉 영혼이라는 실체, 나는 영혼을 가진 하나의 실체로 자리매김하게 된다. 신의 존재의 증명을 먼저하고 그 존재를 보증해 주는 외부 물체 세계가 존재한다는 결론을 내리고 그것은 수학적으로 측정할 수 있는 실체다라고 결론을 내리게 된다. 그래서 데카르트는 이원론 체계를 만들게 되는데 우선은 생각하는 영혼이 한부분을 이루고
-다른 한 부분이 수학적으로 측정가능하다는 성질, 이것을 데카르트는 연장(extension)을 가진, 연장된 물체, 이 연장을 가진 수학적인 외부 물질 체계가 우리 인식의 주된 대상이 되는 것이다. 이런 사상 체계를 구축을 하게 된다. 이것이 바로 데카르트가 구축하는 새로운 이원론이 된다. 이 이원론을 플라톤과 비교해보자.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern02/2021-02-23-18-42-38.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;플라톤은 이데아와 현실간의 이원론이였다. 이데아가 사실 위에 있지만 현실계가 그 아래 있다. 이 안에 인간이 포함되어 있다. 이데아를 모방하거나 분유해서 현실이 존재하는 것이다. 이것이 플라톤의 이원론이였다면 데카르트의 이원론은 플라톤의 이데아의 차원은 특별히 의미를 갖지 않는다. 데카르트는 여전히 근대 철학의 아버지지만 근대 사상을 시작한 사람이기 때문에 중세적인 잔재를 가지고 있다. 그래서 신의 존재를 이 세계를 창조한 기독교적인 신의 존재를 믿은 사람인데 굳이 플라톤의 이데아에 상응하는 것을 찾자면 신의 존재인데 이것은 데카르트 사상에 중요한 부분은 아니다.&lt;/p&gt;
-
-&lt;p&gt;플라톤이 이야기하는 현실 세계가 데카르트에 와서는 새로운 이원론의 무대가 된다. 인간의 영혼이 데카르트에 와서는 바로 생각한다는 것을 본질적인 측면으로 만든 한 이원론의 한 부분이 되고 그리고 인간의 영혼 이외에 나머지 현실세계는 바로 물체 세계가 된다. 그것도 수학적으로 측정 가능한 연장을 가진 물체세계가 되는 것이다.&lt;/p&gt;
-
-&lt;p&gt;우리가 사는 현실세계는 인간의 영혼을 빼면 전부다 물체세계다 이것이 바로 근대적인 사고 방식이다. 플라톤은 이성, 데카르트는 감각 감성이 아니라(플라톤과 같다) 결국 외부 물체, 수학적인 기본 속성을 가진 외부 물체 세계를 인식하는 것 또한 데카르트에게는 이성이 된다. 이성은 플라톤이나 데카르트에게 중요한 인식의 통로가 되고 플라톤에게서나 데카르트에게나 인간의 감성, 감각은 이성보다는 아래에 있는 능력으로 치부된다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;이렇게 해서 데카르트의 사상 체계를 살펴보았다.&lt;/p&gt;
-</description>
-				<pubDate>Tue, 23 Feb 2021 18:00:00 +0900</pubDate>
-				<link>/philosophy/2021/02/23/Descartes-modern-03.html</link>
-				<guid isPermaLink="true">/philosophy/2021/02/23/Descartes-modern-03.html</guid>
-			</item>
-		
-			<item>
-				<title>데카르트-근대의 사상02</title>
-				<description>&lt;h1 id=&quot;인식론&quot;&gt;&lt;center&gt;인식론&lt;/center&gt;&lt;/h1&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern02/2021-02-23-18-13-28.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이번 데카르트 편에서는 인식론에 대해서 이야기 해보자.:grinning:&lt;/p&gt;
-
-&lt;p&gt;인식론은 근대 철학 사상의 기본 분야다. 인식의 문제가 근대 사상에서는 가장 기본적인 물음이다. 즉 내가 가지고 있는 생각들, 관념들 중에서 바깥의 실제 세계를 참되게 인식되게 해주는 것이 무엇인가, “참된 인식을 보장하는 것은 무엇인가” 이것이 근대 사상의 가장 중요한 기본 물음이다.:hushed:&lt;/p&gt;
-
-&lt;p&gt;내가 가지고 있는 생각들의 세계와 바깥의 실제 세계가 완전히 단절되 있을 수 있는 가능성을 염두해 두고 있기 때문에 인식에 문제가 아주 절실한 문제로 대두되게 된다. 지난 게시물에서 의심에서 출발한 데카르트가 제기한 바깥 세상의 인식과 존재에 관해서 제기한 두 가지 종류의 물음을 다뤄봤었다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;내가 가지고 있는 생각이 바깥에 실제하는 대상들을 충실하게 반영하는가?&lt;/strong&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;내가 가지고 있는 생각들에 실제로 대응하는 실제 대상이 있는가?&lt;/strong&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;내 눈에 보이는 저 멀리서 다가오고 있는 친구는 내가 모르는 어떤 사람이 아니라 친구가 맞는가? 이런 물음이다. 데카르트는 한발 더 나아가서 단지 충실히 반영하는가에 문제가 아니라 데카르트는 결국 나를 속이기 위해서 사실은 내 바깥에 어떠한 것도 존재하지 않는데 이 땅과 하늘 바다 책상, 건물 나 이외에 다른 사람들이 존재하지도 않는데 나를 속이기 위해서 존재 하는 것인 것 마냥 내 머릿속에 생각을 넣어주는 악령이 있을 수 있겠다 라는 가능성을 생각하게 된다. 이것이 바로 철학사에서 유명한 지난 게시물에서 간단하게 소개한 악령의 가설이라고 한다. :imp:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern02/2021-02-23-18-16-10.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;나를 속이는 악령이 존재할 수도 있겠다라는 생각이 미쳐서 만들게 된 가설이다. 존재하는 것이 아니라 가능성을 배제할 수 없다는 것이다. 이런 식으로 내가 가지고 있는 관념세계와 바깥의 실제 세계가 실제로는 존재하지 않을 수 있는 가능성이 중요한 것이다. 실제로 존재하지 않는다거나 실제로 완전히 단절되어 있다라고 하는 게 아니라 그럴 가능성이 있다는 것에서 출발한다. 그래서 바로 인식론이라는 것이 데카르트 사상에서 중요하다고 할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern02/2021-02-23-18-21-44.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern02/2021-02-23-18-20-56.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;영화 매트릭스를 보면 인간이 이런 위 사진처럼 캡슐 속에 담겨져서 전선을 꼽고 기계는 그 새로 태어나는 인간을 이러한 인큐베이터 같은 곳에 넣어서 선을 통해서 전기를 꽂아서 에너지원으로 쓰게 된다. :scream:&lt;/p&gt;
-
-&lt;p&gt;인간은 자신이 캡슐 속에 갇혀있는 것이 아니라 분주한 일상을 살고 있다는 꿈을 기계에게 주입당해 꾸고 있다. 그러니까 인간이 꿈에 내용이 일종의 가상 현실인 것이다. 그리고 소수의 저항군들, 그리고 영화의 주인공인 네오가 인간들이 꾸는 꿈, 꿈 속에 침투해서 기계들에 저항하는 내용이다. :fearful:&lt;/p&gt;
-
-&lt;p&gt;그러니까 인간이 머리 속에 가지고 있는 생각과 바깥에 실제 세계가 완전히 단절될 수 있다는 근대적인 인식론을 기반으로 한 영화라고 할 수 있겠다. 고대에나 중세에 전근대적인 사고방식에서는 나올 수 없는 영화라고 할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Philosophy/Decartes-modern02/2021-02-23-18-25-49.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;영화에서 보는 것과 같이 인간이 실재하는 세계는 우리가 머릿속에 생각하는 것과 다른 것일 수도 있고 기만 당하고 있을 가능성도 있다. 이것이 근대적인 사고방식에 들어와서야 가능해 진다. 반면에 전근대적인 사고 방식, 플라톤 적인 사고방식은 존재 세계와 인간의 관념 세계 사이에 연속성 가지게 된다.&lt;/p&gt;
-
-&lt;p&gt;다만 인간이 자신의 욕구, 감각 때문에 이성이 흐려질 수 있고 진짜 존재하는 이데아를 인식하지 못할 순 있어도 깨끗한 이성의 눈으로 보기만 한다면 그 연속성은 의심할게 없기 때문에 이데아에 다가갈 수 있다. 하지만 근대세계로 넘어오면 매트릭스 영화에서 봤듯이 어떤 누군가가 우리를 기만할 가능성, 실제 존재하는 세계에 관해서 기만할 가능성까지도 생각하는 그런 세계가 된다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;다음 게시물에서는 데카르트의 생각하는 나에 대한 명제와 이원론에 대해서 더 살펴보도록 하자.&lt;/p&gt;
-</description>
-				<pubDate>Tue, 23 Feb 2021 18:00:00 +0900</pubDate>
-				<link>/philosophy/2021/02/23/Descartes-modern-02.html</link>
-				<guid isPermaLink="true">/philosophy/2021/02/23/Descartes-modern-02.html</guid>
 			</item>
 		
 	</channel>

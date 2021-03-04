@@ -1,0 +1,473 @@
+I"Es<p><br /><br /></p>
+
+<h1 id="목록-데이터-페이지-처리하기"><center>목록 데이터 페이지 처리하기</center></h1>
+
+<p><br /></p>
+
+<p>이전 게시물에서 이야기 나눴던 내용을 코드로 옮겨본다.</p>
+
+<p><strong>PageResultDTO.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.guestbook.dto</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.Data</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Page</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Pageable</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.function.Function</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.Collectors</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.IntStream</span><span class="o">;</span>
+
+<span class="nd">@Data</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PageResultDTO</span><span class="o">&lt;</span><span class="no">DTO</span><span class="o">,</span> <span class="no">EN</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="no">DTO</span><span class="o">&gt;</span> <span class="n">dtoList</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">totalPage</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">page</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="n">end</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">prev</span><span class="o">,</span> <span class="n">next</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">pageList</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">PageResultDTO</span><span class="o">(</span><span class="nc">Page</span><span class="o">&lt;</span><span class="no">EN</span><span class="o">&gt;</span> <span class="n">result</span><span class="o">,</span> <span class="nc">Function</span><span class="o">&lt;</span><span class="no">EN</span><span class="o">,</span><span class="no">DTO</span><span class="o">&gt;</span> <span class="n">fn</span><span class="o">){</span>
+        <span class="n">dtoList</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">fn</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">makePageList</span><span class="o">(</span><span class="nc">Pageable</span> <span class="n">pageable</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">page</span><span class="o">=</span><span class="n">pageable</span><span class="o">.</span><span class="na">getPageNumber</span><span class="o">()+</span><span class="mi">1</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">size</span><span class="o">=</span><span class="n">pageable</span><span class="o">.</span><span class="na">getPageSize</span><span class="o">();</span>
+
+
+        <span class="kt">int</span> <span class="n">tempEnd</span><span class="o">=(</span><span class="kt">int</span><span class="o">)(</span><span class="nc">Math</span><span class="o">.</span><span class="na">ceil</span><span class="o">(</span><span class="n">page</span><span class="o">/</span><span class="mf">10.0</span><span class="o">))*</span><span class="mi">10</span><span class="o">;</span>
+
+        <span class="n">start</span><span class="o">=</span><span class="n">tempEnd</span><span class="o">-</span><span class="mi">9</span><span class="o">;</span>
+
+        <span class="n">prev</span><span class="o">=</span><span class="n">start</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">;</span>
+
+        <span class="n">end</span><span class="o">=</span><span class="n">totalPage</span><span class="o">&gt;</span><span class="n">tempEnd</span><span class="o">?</span><span class="nl">tempEnd:</span><span class="n">totalPage</span><span class="o">;</span>
+
+        <span class="n">next</span><span class="o">=</span><span class="n">totalPage</span><span class="o">&gt;</span><span class="n">end</span><span class="o">;</span>
+        <span class="n">pageList</span><span class="o">=</span> <span class="nc">IntStream</span><span class="o">.</span><span class="na">rangeClosed</span><span class="o">(</span><span class="n">start</span><span class="o">,</span><span class="n">end</span><span class="o">).</span><span class="na">boxed</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-16-총-페이지-번호"><strong>line 16:</strong> 총 페이지 번호<br /></h4>
+
+  <h4 id="line-17-현재-페이지-번호"><strong>line 17:</strong> 현재 페이지 번호<br /></h4>
+
+  <h4 id="line-18-목록-사이즈"><strong>line 18:</strong> 목록 사이즈<br /></h4>
+
+  <h4 id="line-19-시작-페이지-번호-끝-페이지-번호"><strong>line 19:</strong> 시작 페이지 번호, 끝 페이지 번호<br /></h4>
+
+  <h4 id="line-20-이전-다음"><strong>line 20:</strong> 이전, 다음<br /></h4>
+
+  <h4 id="line-21-페이지-번호-목록"><strong>line 21:</strong> 페이지 번호 목록<br /></h4>
+
+  <h4 id="line-28-0부터-시작하므로-1를-더해준다"><strong>line 28:</strong> 0부터 시작하므로 1를 더해준다<br /></h4>
+
+  <h4 id="line-29-페이지-사이즈를-가져온다"><strong>line 29:</strong> 페이지 사이즈를 가져온다.<br /></h4>
+
+  <h4 id="line-34-페이지의-start는-그-페이지의-끝-번호의-9를-빼면-된다"><strong>line 34:</strong> 페이지의 start는 그 페이지의 끝 번호의 9를 빼면 된다<br /></h4>
+
+  <h4 id="line-36-start가-존재하면-prev도-존재한다"><strong>line 36:</strong> start가 존재하면 prev도 존재한다<br /></h4>
+
+  <h4 id="line-38-totalpage가-더-많으면-해당-페이지는-10개씩-다-보여준다"><strong>line 38:</strong> totalPage가 더 많으면 해당 페이지는 10개씩 다 보여준다.<br /></h4>
+
+  <h4 id="line-40-next-버튼은-totalpage가-끝-번호-보다-많을-때-보여주게-한다"><strong>line 40:</strong> next 버튼은 totalPage가 끝 번호 보다 많을 때 보여주게 한다.<br /></h4>
+</blockquote>
+
+<p><br /></p>
+
+<p>앞에서 만든 테스트 코드를 수정해서 위와 같은 정보들이 제대로 구성되었는지 확인 해 본다.</p>
+
+<p><strong>GuestbookServiceTests.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testList</span><span class="o">(){</span>
+        <span class="nc">PageRequestDTO</span> <span class="n">pageRequestDTO</span><span class="o">=</span><span class="nc">PageRequestDTO</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">page</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">size</span><span class="o">(</span><span class="mi">10</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
+        <span class="nc">PageResultDTO</span><span class="o">&lt;</span><span class="nc">GuestbookDTO</span><span class="o">,</span> <span class="nc">Guestbook</span><span class="o">&gt;</span> <span class="n">resultDTO</span><span class="o">=</span><span class="n">service</span><span class="o">.</span><span class="na">getList</span><span class="o">(</span><span class="n">pageRequestDTO</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"PREV: "</span><span class="o">+</span><span class="n">resultDTO</span><span class="o">.</span><span class="na">isPrev</span><span class="o">());</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"NEXT: "</span><span class="o">+</span><span class="n">resultDTO</span><span class="o">.</span><span class="na">isNext</span><span class="o">());</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"TOTAL: "</span><span class="o">+</span><span class="n">resultDTO</span><span class="o">.</span><span class="na">getTotalPage</span><span class="o">());</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"start: "</span><span class="o">+</span><span class="n">resultDTO</span><span class="o">.</span><span class="na">getStart</span><span class="o">());</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"tempEnd: "</span><span class="o">+</span><span class="n">resultDTO</span><span class="o">.</span><span class="na">getEnd</span><span class="o">());</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"page: "</span><span class="o">+</span><span class="n">resultDTO</span><span class="o">.</span><span class="na">getPage</span><span class="o">());</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"-----------------------------------------"</span><span class="o">);</span>
+        <span class="k">for</span><span class="o">(</span><span class="nc">GuestbookDTO</span> <span class="n">guestbookDTO</span> <span class="o">:</span> <span class="n">resultDTO</span><span class="o">.</span><span class="na">getDtoList</span><span class="o">()){</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">guestbookDTO</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"========================================"</span><span class="o">);</span>
+        <span class="n">resultDTO</span><span class="o">.</span><span class="na">getPageList</span><span class="o">().</span><span class="na">forEach</span><span class="o">(</span><span class="n">i</span><span class="o">-&gt;</span><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+    <span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>결과는 아래와 같다. 처리된 결과를 보면 현재 페이지가 1인 경우 PREV는 false, NEXT는 true 등의 처리 결과를 확인할 수 있고, 마지막의 번호는 화면상에서 출력되어야 하는 페이지의 번호이다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-14-59-51.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이제 서비스 계층까지 등록 작업과 목록 처리가 완료되었으니 컨트롤러를 작성하고 실제 화면이 이를 반영해본다. GuestbookController에는 우선은 목록을 처리하기 위해서 ‘/guesbook/list’로 처리되는 부분을 다음과 같이 처리한다.</p>
+
+<p><strong>GuestbookController.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="rouge-code"><pre><span class="o">(...)</span>
+<span class="nd">@Controller</span>
+<span class="c1">//guestbook으로부터 시작해서 guestbook/register, guestbook/list 이런식으로 사용</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/guestbook"</span><span class="o">)</span>
+<span class="nd">@Log4j2</span>
+<span class="nd">@RequiredArgsConstructor</span> <span class="c1">//자동 주입을 위한 Annotation</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GuestbookController</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">GuestbookService</span> <span class="n">service</span><span class="o">;</span> <span class="c1">//final로 선언</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">index</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="k">return</span> <span class="s">"redirect:/guestbook/list"</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/list"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">list</span><span class="o">(</span><span class="nc">PageRequestDTO</span> <span class="n">pageRequestDTO</span><span class="o">,</span> <span class="nc">Model</span> <span class="n">model</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"list............."</span> <span class="o">+</span> <span class="n">pageRequestDTO</span><span class="o">);</span>
+
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"result"</span><span class="o">,</span> <span class="n">service</span><span class="o">.</span><span class="na">getList</span><span class="o">(</span><span class="n">pageRequestDTO</span><span class="o">));</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>GuestbookController에서 list()에는 파라미터로 PageRequestDTO를 이용한다. 스프링 MVC는 파라미터를 자동으로 수집해 주는 기능이 있으므로, 화면에서 page와 size라는 파라미터를 전달하면 PageRequestDTO 객체로 자동으로 수집된다. Model은 결과 데이터를 화면에 전달하기 위해서 사용하고 있다.</p>
+
+<p><br /></p>
+
+<p>list()에는 Model을 이용해서 GuestbookServiceImpl에서 반환하는 PageResultDTO를 ‘result’라는 이름으로 전달한다. 실제 내용을 출력하는 list.html에서는 부트스트랩의 테이블 구조를 이용해서 출력한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-15-12-20.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>list.html</strong></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="rouge-code"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;th:block</span> <span class="na">th:replace=</span><span class="s">"~{/layout/basic :: setContent(~{this::content} )}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;th:block</span> <span class="na">th:fragment=</span><span class="s">"content"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">"mt-4"</span><span class="nt">&gt;</span>GuestBook List Page<span class="nt">&lt;/h1&gt;</span>
+      <span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table table-striped"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;thead&gt;</span>
+          <span class="nt">&lt;tr&gt;</span>
+            <span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>#<span class="nt">&lt;/th&gt;</span>
+            <span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>Title<span class="nt">&lt;/th&gt;</span>
+            <span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>Writer<span class="nt">&lt;/th&gt;</span>
+            <span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"col"</span><span class="nt">&gt;</span>Regdate<span class="nt">&lt;/th&gt;</span>
+          <span class="nt">&lt;/tr&gt;</span>
+        <span class="nt">&lt;/thead&gt;</span>
+        <span class="nt">&lt;tbody&gt;</span>
+          <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"dto : ${result.dtoList}"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;th</span> <span class="na">scope=</span><span class="s">"row"</span><span class="nt">&gt;&lt;/th&gt;</span>
+            <span class="nt">&lt;td&gt;</span>[[${dto.title}]]<span class="nt">&lt;/td&gt;</span>
+            <span class="nt">&lt;td&gt;</span>[[${dto.writer}]]<span class="nt">&lt;/td&gt;</span>
+            <span class="nt">&lt;td&gt;</span>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]<span class="nt">&lt;/td&gt;</span>
+          <span class="nt">&lt;/tr&gt;</span>
+        <span class="nt">&lt;/tbody&gt;</span>
+      <span class="nt">&lt;/table&gt;</span>
+    <span class="nt">&lt;/th:block&gt;</span>
+  <span class="nt">&lt;/th:block&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>앱을 실행해서 해당 뷰를 확인해 본다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-15-26-34.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>브라우저에 정상적으로 데이터가 출력되는 것을 확인 했다면 다음 작업은 정상적으로 페이지 이동이 동작하는지 확인하고 화면 아래쪽에 페이지 처리와 클릭 시 페이지의 이동을 처리하는 것이다.</p>
+
+<ul>
+  <li>/guestbook/list 혹은 /guestbook/list?page=1의 경우 아래와 같이 1페이지가 출력된다.</li>
+  <li>/guestbook/list?page=2와 같이 페이지 번호를 변경하면 해당 페이지가 나온다.</li>
+</ul>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-15-30-50.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>list.html에는 아래와 같은 코드를 이용해서 화면에 페이지가 출력되도록 조정합니다.</p>
+
+<p><strong>list.html 일부</strong></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;/tbody&gt;</span>
+        <span class="nt">&lt;/table&gt;</span>
+
+        <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"pagination h-100 justify-content-center align-items-center"</span><span class="nt">&gt;</span>
+
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"page-item "</span> <span class="na">th:if=</span><span class="s">"${result.prev}"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"page-link"</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">tabindex=</span><span class="s">"-1"</span><span class="nt">&gt;</span>Previous<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+
+            <span class="nt">&lt;li</span> <span class="na">th:class=</span><span class="s">" 'page-item ' + ${result.page == page?'active':''} "</span> <span class="na">th:each=</span><span class="s">"page: ${result.pageList}"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"page-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>[[${page}]]<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"page-item"</span> <span class="na">th:if=</span><span class="s">"${result.next}"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"page-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Next<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+
+        <span class="nt">&lt;/ul&gt;</span>
+
+
+    <span class="nt">&lt;/th:block&gt;</span>
+
+<span class="nt">&lt;/th:block&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-6-prev-값이-true이기-때문에-표시된다-"><strong>line 6:</strong> prev 값이 true이기 때문에 표시된다. <br /></h4>
+
+  <h4 id="line-10-resultpage는-현재-페이지를-의미한다-즉-pageresultdto-클래스의-page-변수이며--page의-page는-url에서-넘겨준-page-파라미터이다-지금-each로-각각-페이지를-순회하고-있는데-url에서-넘겨준-page파라미터와-pagelist를-순회했을-때-그것과-같으면-해당-페이지를-line-11에서-보여준다"><strong>line 10:</strong> result.page는 현재 페이지를 의미한다. 즉 PageResultDTO 클래스의 page 변수이며 == page의 page는 url에서 넘겨준 page 파라미터이다. 지금 each로 각각 페이지를 순회하고 있는데 url에서 넘겨준 page파라미터와 pageList를 순회했을 때 그것과 같으면 해당 페이지를 line 11에서 보여준다<br /></h4>
+
+  <h4 id="line-11-page는-theachpage--의-page이고--는-인라인-표시이다-"><strong>line 11:</strong> [[${page}]]는 th:each=”page : 의 page이고 [[]] 는 인라인 표시이다. <br /></h4>
+</blockquote>
+
+<p><br /></p>
+
+<p>페이지의 ‘이전(previous)’과 ‘다음(next)’ 부분은 Thymeleaf의 if를 이용해서 처리하고, 페이지 중간에 현재 페이지 여부를 체크해서 ‘active’라는 이름의 클래스가 출력되도록 작성한다. 브라우저로 확인하면 아래와 같은 페이지 번호들이 출력되는 것을 확인할 수 있다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-16-09-19.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>아직 링크나 이벤트 처리가 없는 상태이므로 페이지 번호를 이동하기 위해서는 브라우저의 주소창에서 page 파라미터 값을 변경해야만 가능하다. 예를 들어 ‘/guestbook/list?page=13’과 같이 주소창을 수정하면 다음과 같이 페이지 처리가 되는 결과를 볼 수 있다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-16-10-38.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>Thymeleaf를 이용하는 경우에는 링크 처리가 좀 더 수월한 편이므로 위의 코드에서 직접 링크를 th:href를 이용해서 아래와 같이 작성한다.</p>
+
+<p><strong>list.html의 일부</strong></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;/tbody&gt;</span>
+        <span class="nt">&lt;/table&gt;</span>
+
+        <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"pagination h-100 justify-content-center align-items-center"</span><span class="nt">&gt;</span>
+
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"page-item "</span> <span class="na">th:if=</span><span class="s">"${result.prev}"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"page-link"</span> <span class="na">th:href=</span><span class="s">"@{/guestbook/list(page= ${result.start -1})}"</span>
+                 <span class="na">tabindex=</span><span class="s">"-1"</span><span class="nt">&gt;</span>Previous<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+
+            <span class="nt">&lt;li</span> <span class="na">th:class=</span><span class="s">" 'page-item ' + ${result.page == page?'active':''} "</span>
+            <span class="na">th:each=</span><span class="s">"page: ${result.pageList}"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"page-link"</span> <span class="na">th:href=</span><span class="s">"@{/guestbook/list(page = ${page})}"</span><span class="nt">&gt;</span>
+                    [[${page}]]
+                <span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"page-item"</span> <span class="na">th:if=</span><span class="s">"${result.next}"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"page-link"</span>
+                <span class="na">th:href=</span><span class="s">"@{/guestbook/list(page= ${result.end + 1})}"</span><span class="nt">&gt;</span>Next<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+
+        <span class="nt">&lt;/ul&gt;</span>
+
+
+    <span class="nt">&lt;/th:block&gt;</span>
+
+<span class="nt">&lt;/th:block&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-7-thymeleaf의-thhref은-파라미터를-추가하기-위해서-를-추가하고-파라미터의-이름과-값을-적어준다-즉-page의-page는-url에-page-파라미터를-의미한다-"><strong>line 7:</strong> Thymeleaf의 th:href은 파라미터를 추가하기 위해서 ()를 추가하고 파라미터의 이름과 값을 적어준다. 즉 (page=$~)의 page는 url에 page 파라미터를 의미한다. <br /></h4>
+
+  <h4 id="line-13-theach에서-페이지를-하나씩-순회하는데-거기서-파라ㅁ-"><strong>line 13:</strong> th:each에서 페이지를 하나씩 순회하는데 거기서 파라ㅁ <br /></h4>
+
+  <h4 id="line-11-"><strong>line 11:</strong> <br /></h4>
+
+  <h4 id="line-11--1"><strong>line 11:</strong> <br /></h4>
+</blockquote>
+:ET

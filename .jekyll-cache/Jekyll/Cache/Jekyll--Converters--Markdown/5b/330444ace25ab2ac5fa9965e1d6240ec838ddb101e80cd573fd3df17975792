@@ -1,0 +1,117 @@
+I"<p><br /><br /></p>
+
+<h1 id="목록-데이터-페이지-처리하기"><center>목록 데이터 페이지 처리하기</center></h1>
+
+<p><br /></p>
+
+<p>이전 게시물에서 이야기 나눴던 내용을 코드로 옮겨본다.</p>
+
+<p><strong>PageResultDTO.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.guestbook.dto</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.Data</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Page</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Pageable</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.function.Function</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.Collectors</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.IntStream</span><span class="o">;</span>
+
+<span class="nd">@Data</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PageResultDTO</span><span class="o">&lt;</span><span class="no">DTO</span><span class="o">,</span> <span class="no">EN</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="no">DTO</span><span class="o">&gt;</span> <span class="n">dtoList</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">totalPage</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">page</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="n">end</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">prev</span><span class="o">,</span> <span class="n">next</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">pageList</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">PageResultDTO</span><span class="o">(</span><span class="nc">Page</span><span class="o">&lt;</span><span class="no">EN</span><span class="o">&gt;</span> <span class="n">result</span><span class="o">,</span> <span class="nc">Function</span><span class="o">&lt;</span><span class="no">EN</span><span class="o">,</span><span class="no">DTO</span><span class="o">&gt;</span> <span class="n">fn</span><span class="o">){</span>
+        <span class="n">dtoList</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">fn</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">makePageList</span><span class="o">(</span><span class="nc">Pageable</span> <span class="n">pageable</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">page</span><span class="o">=</span><span class="n">pageable</span><span class="o">.</span><span class="na">getPageNumber</span><span class="o">()+</span><span class="mi">1</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">size</span><span class="o">=</span><span class="n">pageable</span><span class="o">.</span><span class="na">getPageSize</span><span class="o">();</span>
+
+
+        <span class="kt">int</span> <span class="n">tempEnd</span><span class="o">=(</span><span class="kt">int</span><span class="o">)(</span><span class="nc">Math</span><span class="o">.</span><span class="na">ceil</span><span class="o">(</span><span class="n">page</span><span class="o">/</span><span class="mf">10.0</span><span class="o">))*</span><span class="mi">10</span><span class="o">;</span>
+
+        <span class="n">start</span><span class="o">=</span><span class="n">tempEnd</span><span class="o">-</span><span class="mi">9</span><span class="o">;</span>
+
+        <span class="n">prev</span><span class="o">=</span><span class="n">start</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">;</span>
+        
+        <span class="n">end</span><span class="o">=</span><span class="n">totalPage</span><span class="o">&gt;</span><span class="n">tempEnd</span><span class="o">?</span><span class="nl">tempEnd:</span><span class="n">totalPage</span><span class="o">;</span>
+        
+        <span class="n">next</span><span class="o">=</span><span class="n">totalPage</span><span class="o">&gt;</span><span class="n">end</span><span class="o">;</span>
+        <span class="n">pageList</span><span class="o">=</span> <span class="nc">IntStream</span><span class="o">.</span><span class="na">rangeClosed</span><span class="o">(</span><span class="n">start</span><span class="o">,</span><span class="n">end</span><span class="o">).</span><span class="na">boxed</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-16-총-페이지-번호"><strong>line 16:</strong> 총 페이지 번호<br /></h4>
+  <h4 id="line-17-현재-페이지-번호"><strong>line 17:</strong> 현재 페이지 번호<br /></h4>
+  <h4 id="line-18-목록-사이즈"><strong>line 18:</strong> 목록 사이즈<br /></h4>
+  <h4 id="line-19-"><strong>line 19:</strong> <br /></h4>
+  <h4 id="line-5-"><strong>line 5:</strong> <br /></h4>
+  <h4 id="line-5--1"><strong>line 5:</strong> <br /></h4>
+  <h4 id="line-5--2"><strong>line 5:</strong> <br /></h4>
+  <h4 id="line-5--3"><strong>line 5:</strong> <br /></h4>
+  <h4 id="line-5--4"><strong>line 5:</strong> <br /></h4>
+  <h4 id="line-5--5"><strong>line 5:</strong> <br /></h4>
+  <h4 id="line-5--6"><strong>line 5:</strong> <br /></h4>
+  <h4 id="line-5--7"><strong>line 5:</strong> <br /></h4>
+</blockquote>
+:ET

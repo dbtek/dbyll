@@ -452,4 +452,97 @@ Fucntion<T,R>는 T타입의 인자를 받고, R타입의 객체를 리턴한다.
 
 getList()에서 눈여겨 볼 부분은 entityToDTO()를 이용해서 java.util.Function을 생성하고 이를 PageResultDTO로 구성하는 부분이다. PageResultDTO에는 JPA의 처리 결과인 Page<Entity>와 Function을 전달해서 엔티티 객체들을 DTO의 리스트로 변환하고 화면에 페이지 처리와 필요한 값들을 생성한다.
 
-165페이지
+이제 목록 처리 테스트를 통해 엔티티 객체들이 DTO 객체들로 변환되었는지를 살펴본다.
+
+**GuestbookServiceTest.java**
+
+```java
+@Test
+    public void testList(){
+        PageRequestDTO pageRequestDTO=PageRequestDTO.builder().page(1).size(10).build();
+        PageResultDTO<GuestbookDTO, Guestbook> resultDTO=service.getList(pageRequestDTO);
+        System.out.println("-----------------------------------------");
+        for(GuestbookDTO guestbookDTO : resultDTO.getDtoList()){
+            System.out.println(guestbookDTO);
+        }
+
+    }
+```
+
+<br>
+
+결과는 아래와 같다.
+
+![](/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-04-13-18-31.png)
+
+
+<br>
+
+PageRequestDTO를 이용하기 때문에 생성할 때는 1페이지부터 처리할 수 있고 정렬은 상황에 맞게 Sort 객체를 생성해서 전달하는 형태로 사용한다. 테스트 코드의 결과를 보면 Page<Guestbook>이 List<GuestBookDTO>로 정상적으로 변환되어서 출력 결과에 GuestbookDTO 타입으로 출력되는 것을 볼 수 있다.
+
+<br>
+
+화면까지 던달되는 데이터는 PageResultDTO이고 이를 이용해서 화면에서는 페이지 처리를 진행하게 된다. PageResultDTO 타입으로 처리된 결과에는 시작 페이지, 끝 페이지 등 필요한 모든 정보를 담아서 화면에서는 필요한 내용들만 찾아서 구성이 가능하도록 작성한다. 화면에서 필요한 구성은 다음과 같다.
+
+- 화면에서 시작 페이지 번호(start)
+- 화면에서 끝 페이지 번호(end)
+- 이전/다음 이동 링크 여부(prev, next)
+- 현재 페이지 번호(page)
+
+<br>
+
+페이징 처리를 하기 위해서 가장 필요한 정보는 현재 사용자가 보고 있는 페이지(page)의 정보이다. 예를 들어 사용자가 5페이지를 본다면 화면의 페이지 번호는 1부터 시작하지만 사용자가 19페이지를 본다면 11부터 시작해야 하기 때문이다.(화면에 10개씩 페이지 번호를 출력한다고 가정한다).
+
+<br>
+
+페이지를 계산할 때는 시작 번호 먼저 하기보다는 끝 번호를 먼저 계산하는 것이 수월하다. 끝 번호는 다음과 같은 공식으로 구한다
+
+```
+tempEnd=(int)(Math.ceil(페이지번호/10.0))*10;
+```
+
+Math.ceil()은 소수점을 올림으로 처리하기 때문에 다음과 같은 상황이 가능하다.
+
+- 1 페이지의 경우: Math.ceil(0.1)*10=10
+- 10 페이지의 경우: Math.ceil(1)*10=10
+- 11 페이지의 경우: Math.ceil(1.1)*10=20
+
+<br>
+
+끝 번호(end)는 아직 개선의 여지가 있다.(때문에 변수명을 tempEnd로 설정한다) 만일 전체 데이터 수가 적다면 10페이지로 끝나면 안 되는 상황이 생길 수도 있기 때문이다. 그럼에도 끝 번호(end)를 먼저 계산하는 이유는 시작 번호(start)를 계산하기 수월하기 때문이다. 만일 화면에 10개씩 보여준다면 시작 번호(start)는 무조건 끝 번호(tempEnd)에서 9라는 값을 뺀 값이 된다. 
+
+```
+start=tempEnd-9;
+```
+
+<br>
+
+끝 번호(end)는 실제 마지막 페이지와 다시 비교할 필요가 있다. 예를 들어 Page<Guestbook>의 마지막 페이지가 33이라면 위의 계산이라면 40이 되기 때문에 이를 반영해야 한다. 이를 위해서는 Page<Guestbook>의 getTotalPages()를 이용할 수 있다.
+
+```
+totalPage=result.getTotalPages(); //result는 Page<Guestbook>
+end=totalPage > tempEnd ? tempEnd : totalPage;
+```
+
+<br>
+
+이전(prev)과 다음은 아주 간단히 구할 수 있다. 이전(prev)의 경우는 시작 번호(start)가 1보다 큰 경우라면 존재하게 된다.
+
+<br>
+
+prev = start > 1;
+
+<br>
+
+다음(next)으로 가는 링크는 위의 totalPage가 끝 번호(end)보다 큰 경우에만 존재하게 된다.
+
+<br>
+
+next = totalPage > end;
+
+<br>
+
+---
+
+다음 게시물에서 실질적인 코드를 작성해보도록 하자.
+

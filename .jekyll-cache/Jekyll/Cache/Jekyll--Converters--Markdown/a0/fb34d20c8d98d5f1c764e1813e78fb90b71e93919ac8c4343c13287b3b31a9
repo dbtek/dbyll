@@ -1,0 +1,14 @@
+I"0<p><br /><br /></p>
+
+<h1 id="목록-데이터-페이지-처리하기"><center>목록 데이터 페이지 처리하기</center></h1>
+
+<p><br /></p>
+
+<p>이전 게시물에서 이야기 나눴던 내용을 코드로 옮겨본다.</p>
+
+<p><strong>PageResultDTO.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET
