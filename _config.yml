@@ -47,3 +47,4 @@ kramdown:
             line_numbers: true
 
 gems: ['jekyll_video_tag']
+gems: ["jemoji"]
