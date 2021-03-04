@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Intellij와 Git Bash 연동하기
-date: 2021-02-21 10:00:00 0000
+date: 2021-03-04 10:00:00 0000
 tags: [Intellij, Gitbash]
 categories: [Intellij-Setting]
 description: Intellij 터미널에서 Git Bash 사용하기
