@@ -188,7 +188,7 @@ list()에는 Model을 이용해서 GuestbookServiceImpl에서 반환하는 PageR
         </thead>
         <tbody>
           <tr th:each="dto : ${result.dtoList}">
-            <th scope="row"></th>
+            <th scope="row">[[${dto.mno}]]</th>
             <td>[[${dto.title}]]</td>
             <td>[[${dto.writer}]]</td>
             <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
@@ -320,4 +320,6 @@ Thymeleaf를 이용하는 경우에는 링크 처리가 좀 더 수월한 편이
 
 만일 링크 처리 시에 (page={page}, size=${result.size})와 같은 내용을 추가한다면 10개가 아닌 원하는 수만큼의 목록을 조회할 수 있다.
 
-179페이지
+---
+
+다음 게시물에서는 등록 페이지와 등록 처리에 대해서 알아보자
