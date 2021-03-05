@@ -37,6 +37,10 @@ $() 함수의 인수로는 HTML 태그 이름뿐만 아니라, CSS 선택자를 
 
 <br>
 
+**[JQury 엘레멘트 선택자와 속성 선택자 참고 사이트](https://blog.daum.net/question0921/769)**
+
+<br>
+
 ### **Ajax 문법(JQuery 기준)**
 
 **ajax 옵션**
