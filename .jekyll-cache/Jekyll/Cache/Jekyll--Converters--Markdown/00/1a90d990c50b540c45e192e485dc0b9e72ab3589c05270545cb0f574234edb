@@ -1,0 +1,415 @@
+I"�a<p><br /><br /></p>
+
+<h1 id="등록-페이지와-등록-처리"><center>등록 페이지와 등록 처리</center></h1>
+
+<p><br /></p>
+
+<p>등록의 처리는 이미 GuestbookService까지 완성되었기 때문에 GuestbookController에 약간의 코드를 추가해서 처리가 가능하다. 우선은 GuestbookController에 @GetMapping과 @PostMapping을 이용해서 등록 작업을 처리하는 메서드를 작성한다.</p>
+
+<p><strong>GuestbookController.java</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="rouge-code"><pre><span class="o">(...)</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/list"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">list</span><span class="o">(</span><span class="nc">PageRequestDTO</span> <span class="n">pageRequestDTO</span><span class="o">,</span> <span class="nc">Model</span> <span class="n">model</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"list............."</span> <span class="o">+</span> <span class="n">pageRequestDTO</span><span class="o">);</span>
+
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"result"</span><span class="o">,</span> <span class="n">service</span><span class="o">.</span><span class="na">getList</span><span class="o">(</span><span class="n">pageRequestDTO</span><span class="o">));</span>
+
+    <span class="o">}</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/register"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">register</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"regiser get..."</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/register"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">registerPost</span><span class="o">(</span><span class="nc">GuestbookDTO</span> <span class="n">dto</span><span class="o">,</span> <span class="nc">RedirectAttributes</span> <span class="n">redirectAttributes</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"dto..."</span> <span class="o">+</span> <span class="n">dto</span><span class="o">);</span>
+
+        <span class="c1">//새로 추가된 엔티티의 번호</span>
+        <span class="nc">Long</span> <span class="n">gno</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">dto</span><span class="o">);</span>
+
+        <span class="n">redirectAttributes</span><span class="o">.</span><span class="na">addFlashAttribute</span><span class="o">(</span><span class="s">"msg"</span><span class="o">,</span> <span class="n">gno</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="s">"redirect:/guestbook/list"</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="o">(...)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>등록 작업은 GET 방식에서는 화면을 보여주고, POST 방식에서는 처리 후에 목록 페이지로 이동하도록 설계한다. 이때 RedirectAttributes를 이용해서 한 번만 화면에서 ‘msg’라는 이름의 변수를 사용할 수 있도록 처리한다. RedirectAttributes는 list.html로 내부적으로 msg라는 이름의 데이터를 심어서 전달한다. addFlashAttribute()는 단 한 번만 데이터를 전달하는 용도로 사용한다. 브라우저에 전달되는 ‘msg’를 이용해서는 화면 상에 모달 창을 보여주는 용도로 사용할 것인데, 글이 등록된 후에 자동으로 아래 그림과 같은 모달 창이 보이게 처리한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-05-10-41-56.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>등록 화면 register.html은 부트스트랩의 Form 태그를 이용하는 방식을 참고로 해서 다음과 같이 구성한다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-05-10-43-10.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><strong>register.html</strong></p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="rouge-code"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;th:block</span> <span class="na">th:replace=</span><span class="s">"~{/layout/basic :: setContent(~{this::content} )}"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;th:block</span> <span class="na">th:fragment=</span><span class="s">"content"</span><span class="nt">&gt;</span>
+
+        <span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">"mt-4"</span><span class="nt">&gt;</span>GuestBook Register Page<span class="nt">&lt;/h1&gt;</span>
+
+        <span class="nt">&lt;form</span> <span class="na">th:action=</span><span class="s">"@{/guestbook/register}"</span> <span class="na">th:method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-group"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;label</span> <span class="nt">&gt;</span>Title<span class="nt">&lt;/label&gt;</span>
+                <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span> <span class="na">name=</span><span class="s">"title"</span> <span class="na">placeholder=</span><span class="s">"Enter Title"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-group"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;label</span> <span class="nt">&gt;</span>Content<span class="nt">&lt;/label&gt;</span>
+                <span class="nt">&lt;textarea</span> <span class="na">class=</span><span class="s">"form-control"</span> <span class="na">rows=</span><span class="s">"5"</span> <span class="na">name=</span><span class="s">"content"</span><span class="nt">&gt;&lt;/textarea&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-group"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;label</span> <span class="nt">&gt;</span>Writer<span class="nt">&lt;/label&gt;</span>
+                <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span> <span class="na">name=</span><span class="s">"writer"</span> <span class="na">placeholder=</span><span class="s">"Enter Writer"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+
+            <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;</span>Submit<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;/form&gt;</span>
+
+    <span class="nt">&lt;/th:block&gt;</span>
+
+<span class="nt">&lt;/th:block&gt;</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>위 코드에서 th:action 속성은 폼 데이터(form data)를 서버로 보낼 때 해당 데이터가 도착할 URL을 명시한다. 여기서는 /guestbook/register를 명시하고 method를 post로 해놨는데 폼으로 입력되는 데이터들이 우리의 GuestbookController 클래스에</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/register"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">registerPost</span><span class="o">(</span><span class="nc">GuestbookDTO</span> <span class="n">dto</span><span class="o">,</span> <span class="nc">RedirectAttributes</span> <span class="n">redirectAttributes</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"dto..."</span> <span class="o">+</span> <span class="n">dto</span><span class="o">);</span>
+
+        <span class="c1">//새로 추가된 엔티티의 번호</span>
+        <span class="nc">Long</span> <span class="n">gno</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">dto</span><span class="o">);</span>
+
+        <span class="n">redirectAttributes</span><span class="o">.</span><span class="na">addFlashAttribute</span><span class="o">(</span><span class="s">"msg"</span><span class="o">,</span> <span class="n">gno</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="s">"redirect:/guestbook/list"</span><span class="o">;</span>
+    <span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>registerPost 메소드에게 보내져서 파라미터에 GuestbookDTO dto에게 매핑되어 데이터가 자동수집된다. 즉 각 <input /> 태그에는 적절한 name 값을 지정해야 하는데 GuestbookDTO로 수집될 데이터이므로 동일하게 맞춰주면 자동 수집이 된다. 브라우저로 입력 화면을 확인하면 아래의 왼쪽 화면이 보이고 방명록(게시물) 등록 후에 목록 화면으로 이동하는 것을 확인할 수 있다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-05-11-05-53.png" alt="" /></p>
+
+<p><br /></p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-05-11-06-07.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>등록 처리는 POST 방식으로 이루어지고 자동으로 ‘/guestbook/list’로 이동하도록 처리되어 있다. 처리된 후에 목록 화면에서는 ‘처리되었다는’ 결과를 보여줄 필요가 있으므로 부트스트랩의 모달창을 이용해서 이를 처리한다. 우선은 list.html 화면에서 JavaScript를 이용해서 등록한 후에 전달되는 msg 값을 확인한다.</p>
+
+<p><strong>list.html 일부</strong></p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;/ul&gt;</span>
+        
+        <span class="nt">&lt;script </span><span class="na">th:inline=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+            <span class="kd">var</span> <span class="nx">msg</span><span class="o">=</span><span class="p">[[</span><span class="nx">$</span><span class="p">{</span><span class="nx">msg</span><span class="p">}]];</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+        <span class="nt">&lt;/script&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>앱을 실행하고 register.html에서 폼을 입력하고 submit를 하게 되면 제대로 처리가 되지 않는 것을 볼 수 있다. 그 이유는 우리가 modelMapper를 사용할 때 제대로 설정을 해주지 않은 상태에서 mapping를 시도했기 때문이다. ModelMapper 설정을 해주기 위해서 아래와 같이 프로젝트를 만든다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-05-13-36-26.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>그리고 코드를 입력한다.</p>
+
+<p><strong>ModelMapperUtil.java</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.guestbook.config</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.modelmapper.ModelMapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.modelmapper.config.Configuration</span><span class="o">;</span>
+
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ModelMapperUtil</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">ModelMapper</span> <span class="n">modelMapper</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">ModelMapper</span> <span class="nf">getModelMapper</span><span class="o">(){</span>
+        <span class="n">modelMapper</span><span class="o">=</span><span class="k">new</span> <span class="nc">ModelMapper</span><span class="o">();</span>
+        <span class="n">modelMapper</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">setFieldMatchingEnabled</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">setFieldAccessLevel</span><span class="o">(</span><span class="nc">Configuration</span><span class="o">.</span><span class="na">AccessLevel</span><span class="o">.</span><span class="na">PRIVATE</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">modelMapper</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p>그리고 다시 GuestbookService 클래스를 수정한다.</p>
+
+<p><strong>GuestbookService.java</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre></td><td class="rouge-code"><pre><span class="kn">package</span> <span class="nn">org.techlead.guestbook.service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.Builder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.modelmapper.ModelMapper</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.techlead.guestbook.config.ModelMapperUtil</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.techlead.guestbook.dto.GuestbookDTO</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.techlead.guestbook.dto.PageRequestDTO</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.techlead.guestbook.dto.PageResultDTO</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.techlead.guestbook.entity.Guestbook</span><span class="o">;</span>
+
+
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">GuestbookService</span> <span class="o">{</span>
+    <span class="nc">Long</span> <span class="nf">register</span><span class="o">(</span><span class="nc">GuestbookDTO</span> <span class="n">dto</span><span class="o">);</span>
+    <span class="nd">@Builder</span><span class="o">.</span><span class="na">Default</span>
+    <span class="nc">ModelMapper</span> <span class="n">modelMapper</span><span class="o">=</span> <span class="nc">ModelMapperUtil</span><span class="o">.</span><span class="na">getModelMapper</span><span class="o">();</span>
+    <span class="nc">PageResultDTO</span><span class="o">&lt;</span><span class="nc">GuestbookDTO</span><span class="o">,</span> <span class="nc">Guestbook</span><span class="o">&gt;</span> <span class="nf">getList</span><span class="o">(</span><span class="nc">PageRequestDTO</span> <span class="n">requestDTO</span><span class="o">);</span>
+
+    <span class="k">default</span> <span class="nc">Guestbook</span> <span class="nf">dtoToEntity</span><span class="o">(</span><span class="nc">GuestbookDTO</span> <span class="n">dto</span><span class="o">){</span>
+        <span class="nc">Guestbook</span> <span class="n">entity</span><span class="o">=</span><span class="n">modelMapper</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">dto</span><span class="o">,</span><span class="nc">Guestbook</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">entity</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+    <span class="k">default</span> <span class="nc">GuestbookDTO</span> <span class="nf">entityToDto</span><span class="o">(</span><span class="nc">Guestbook</span> <span class="n">entity</span><span class="o">){</span>
+        <span class="nc">GuestbookDTO</span> <span class="n">dto</span><span class="o">=</span><span class="n">modelMapper</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">entity</span><span class="o">,</span><span class="nc">GuestbookDTO</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">dto</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>이제 modelMapper 관련해서 제대로 mapping이 동작할 것이다. 다시 앱을 실행해서 등록 작업을 시행해 본다. Thymeleaf의 inline 속성을 이용해서 처리하면 별도의 타입 처리가 필요하지 않기 때문에 만일 새로운 글이 등록되면 다음과 같이 번호가 출력된다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-05-13-25-10.png" alt="" /></p>
+
+<p><br /></p>
+
+<p>이제 msg 변수의 값을 이용해서 모달창을 실행해 본다.</p>
+
+<p><br /></p>
+
+<p><strong><a href="https://getbootstrap.com/docs/4.2/components/modal/">모달창 참고 Bootstrap 링크</a></strong></p>
+
+<p><br /></p>
+
+<p><strong>list.html 일부</strong></p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre></td><td class="rouge-code"><pre>(...)
+<span class="nt">&lt;/li&gt;</span>
+
+        <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"modal"</span> <span class="na">tabindex=</span><span class="s">"-1"</span> <span class="na">role=</span><span class="s">"dialog"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"modal-dialog"</span> <span class="na">role=</span><span class="s">"document"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"modal-content"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"modal-header"</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;h5</span> <span class="na">class=</span><span class="s">"modal-title"</span><span class="nt">&gt;</span>Modal title<span class="nt">&lt;/h5&gt;</span>
+                        <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"close"</span> <span class="na">data-dismiss=</span><span class="s">"modal"</span> <span class="na">aria-label=</span><span class="s">"Close"</span><span class="nt">&gt;</span>
+                            <span class="nt">&lt;span</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;</span><span class="ni">&amp;times;</span><span class="nt">&lt;/span&gt;</span>
+                        <span class="nt">&lt;/button&gt;</span>
+                    <span class="nt">&lt;/div&gt;</span>
+                    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"modal-body"</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;p&gt;</span>Modal body text goes here.<span class="nt">&lt;/p&gt;</span>
+                    <span class="nt">&lt;/div&gt;</span>
+                    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"modal-footer"</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-secondary"</span> <span class="na">data-dismiss=</span><span class="s">"modal"</span><span class="nt">&gt;</span>Close<span class="nt">&lt;/button&gt;</span>
+                        <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;</span>Save changes<span class="nt">&lt;/button&gt;</span>
+                    <span class="nt">&lt;/div&gt;</span>
+                <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        
+        <span class="nt">&lt;script </span><span class="na">th:inline=</span><span class="s">"javascript"</span><span class="nt">&gt;</span>
+            <span class="kd">var</span> <span class="nx">msg</span><span class="o">=</span><span class="p">[[</span><span class="nx">$</span><span class="p">{</span><span class="nx">msg</span><span class="p">}]];</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">msg</span><span class="p">){</span>
+                <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">.modal</span><span class="dl">"</span><span class="p">).</span><span class="nx">modal</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/script&gt;</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<blockquote>
+  <h4 id="line-26-guestbookcontroller에서-redirectattributesaddflashattributemsg-gno-으로-넘겨준-msg-값을-받는다"><strong>line 26:</strong> GuestbookController에서 redirectAttributes.addFlashAttribute(“msg”, gno) 으로 넘겨준 msg 값을 받는다.<br /></h4>
+  <h4 id="line--"><strong>line :</strong> <br /></h4>
+  <h4 id="line-13-"><strong>line 13:</strong> <br /></h4>
+</blockquote>
+
+<p><br /></p>
+
+<p>최종 실행 결과ㅑ는 다음 그림처럼 새로운 글이 등록된 후에는 모달창이 우선 보이게 된다.</p>
+
+<p><img src="/images/Learning_SpringBoot_with_Web_Project/Part2/Chapter4/2021-03-05-13-48-08.png" alt="" /></p>
+
+:ET
