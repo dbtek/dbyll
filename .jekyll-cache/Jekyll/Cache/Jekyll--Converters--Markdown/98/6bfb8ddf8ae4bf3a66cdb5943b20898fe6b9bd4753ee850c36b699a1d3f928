@@ -1,0 +1,55 @@
+I"<p><br /></p>
+
+<h1 id="yarnvirtualstyled-components-virtual--에러">/.yarn/$$virtual/styled-components-virtual-…. 에러</h1>
+
+<p><br /></p>
+
+<p>리액트를 공부하면서 styled-components를 쓸 일이 있어서 책에 나온대로</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>$yarn add styled-components
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>를 설치해주었다.
+그리고 프로젝트를 생성하고 테스트 해보려고 로컬에서 서버를 돌리려고</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>$yarn start
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>를 하는 순간 발생한 에러..</p>
+
+<p><img src="/images/React_Error/Error02/2021-02-19-13-07-54.png" alt="" /></p>
+
+<p><br /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>./.yarn/$$virtual/styled-components-virtual-c4a0488559/0/cache/styled-components-npm-5.2.1-e180c24b63-c27911be08.zip/node_modules/styled-components/dist/styled-components.browser.esm.js
+Module not found: styled-components tried to access react-is (a peer dependency) but it isn't provided by its ancestors; this makes the require call ambiguous and unsound.
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><del>무슨 개xxx..</del></p>
+
+<p>아니 무슨 소리람…</p>
+
+<p>다행히 구글링해서 찾은 해결책</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>$yarn add react-is
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>이 명령어를 치고 다시 yarn start를 하니까 컴파일이 성공했다.!!!!</p>
+
+<p>이 해결책에 대해 글 쓴 사람 말을 해석해보자.</p>
+
+<blockquote>
+  <p>“styled-components는 react-is에 peerDependency가 있는데 그것을 제공하지 않아서 발생하는 문제입니다. 이것을 고치기 위해서는 react-is를 의존성으로 제공해야 합니다.”</p>
+</blockquote>
+
+<p><img src="/images/React_Error/Error02/2021-02-19-13-12-22.png" alt="" /></p>
+
+<p>덕분에 새로운 것 알아갑니다~!</p>
+
+<h3 id="문제-해결-완료"><strong>문제 해결 완료!!</strong></h3>
+:ET

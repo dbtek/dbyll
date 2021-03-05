@@ -1,0 +1,60 @@
+---
+layout: post
+title: React에서 styled-components를 사용하면서 발생한 에러
+date: 2021-02-19 13:00:00 0000
+tags: [React, Visual Studio Code]
+categories: [React-Error]
+description: styled-compoents 사용 도중 에러
+---
+
+<br>
+
+# /.yarn/$$virtual/styled-components-virtual-.... 에러
+
+<br>
+
+리액트를 공부하면서 styled-components를 쓸 일이 있어서 책에 나온대로
+
+```
+$yarn add styled-components
+```
+
+를 설치해주었다.
+그리고 프로젝트를 생성하고 테스트 해보려고 로컬에서 서버를 돌리려고
+
+```
+$yarn start
+```
+
+를 하는 순간 발생한 에러..
+
+![](/images/React_Error/Error02/2021-02-19-13-07-54.png)
+
+<br>
+
+```
+./.yarn/$$virtual/styled-components-virtual-c4a0488559/0/cache/styled-components-npm-5.2.1-e180c24b63-c27911be08.zip/node_modules/styled-components/dist/styled-components.browser.esm.js
+Module not found: styled-components tried to access react-is (a peer dependency) but it isn't provided by its ancestors; this makes the require call ambiguous and unsound.
+```
+
+~~무슨 개xxx..~~
+
+아니 무슨 소리람...
+
+다행히 구글링해서 찾은 해결책
+
+```
+$yarn add react-is
+```
+
+이 명령어를 치고 다시 yarn start를 하니까 컴파일이 성공했다.!!!!
+
+이 해결책에 대해 글 쓴 사람 말을 해석해보자.
+
+> "styled-components는 react-is에 peerDependency가 있는데 그것을 제공하지 않아서 발생하는 문제입니다. 이것을 고치기 위해서는 react-is를 의존성으로 제공해야 합니다."
+
+![](/images/React_Error/Error02/2021-02-19-13-12-22.png)
+
+덕분에 새로운 것 알아갑니다~!
+
+### **문제 해결 완료!!**
