@@ -7,7 +7,7 @@ highlighter: rouge
 markdown: kramdown
 # disqus: dbyll
 # google_analytics: dbyll
-title: jurre's website
+title: Jurre's website
 
 defaults:
   -
