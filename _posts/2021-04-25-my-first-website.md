@@ -1,6 +1,6 @@
 ---
 layout: post
-title: intro
+title: My first website!
 categories: [game]
 tags: [game, programming]
 description: This is my new website. On this websites come al my projects.
