@@ -14,19 +14,18 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: jurre's website
+      title: Jurre's website
 
 description: My private website showcasing all my projects.
 author:
-  name: jurre
-  # email: jurre@osx.eu
+  name: Jurre
   github: erruj09
   instagram: erruj09
   spotify: swzf8q2e0tuvj3a7e6qsvrmag
   discord: erruj09#6478
-  # twitter: dbtek
-  # pinterest: asd123
-  # linkedin: asd123
+  # twitter: 
+  # pinterest: 
+  # linkedin: 
   bio: I'm learning software development!
   email_md5: 4117c229240eddd48e095bc90a0d955f
 
