@@ -2,7 +2,7 @@
 layout: post
 title: MY FIRST GAME!!
 categories: [game]
-tags: [game, programing]
+tags: [game, programming]
 description: this is a post about my first game.
 ---
 
