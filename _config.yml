@@ -19,13 +19,13 @@ defaults:
 description: My private website showcasing all my projects.
 author:
   name: jurre
-  email: jurre@osx.eu
+  # email: jurre@osx.eu
   github: erruj09
   # twitter: dbtek
   # pinterest: asd123
   # linkedin: asd123
   bio: I'm learning software development!
-  email_md5: 4117C229240EDDD48E095BC90A0D955F
+  email_md5: 4117c229240eddd48e095bc90a0d955f
 
 rss_path: feed.xml
 categories_path: categories.html
