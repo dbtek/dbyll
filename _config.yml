@@ -19,13 +19,13 @@ defaults:
 description: My private website showcasing all my projects.
 author:
   name: jurre
-  # email: dbyll@ismaildemirbilek.com
+  email: jurre@osx.eu
   github: erruj09
   # twitter: dbtek
   # pinterest: asd123
   # linkedin: asd123
-  bio: Your stylish, minimalist theme!
-  # email_md5: 726351295ec82e145928582f595aa3aa
+  bio: I'm learning software development!
+  email_md5: 4117C229240EDDD48E095BC90A0D955F
 
 rss_path: feed.xml
 categories_path: categories.html
