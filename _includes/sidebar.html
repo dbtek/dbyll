@@ -30,10 +30,17 @@
 			</a>
 		</li>
 		{% endif %}
-		{% if site.author.email %}
+		{% if site.author.discord %}
 		<li>
-			<a class="btn btn-default btn-sm" href="mailto:{{ site.author.email }}">
-				<i class="fa fa-envelope fa-lg"></i>
+			<a class="btn btn-default btn-sm" href="https://discordapp.com/users/{{ site.author.discord }}">
+				<i class="fa fa-discord fa-lg"></i>
+			</a>
+		</li>
+		{% endif %}	
+		{% if site.author.spotify %}
+		<li>
+			<a class="btn btn-default btn-sm" href="https://open.spotify.com/user/{{ site.author.spotify }}">
+				<i class="fa fa-spotify fa-lg"></i>
 			</a>
 		</li>
 		{% endif %}
@@ -43,6 +50,13 @@
 		<li>
 			<a class="btn btn-default btn-sm" href="https://pinterest.com/{{ site.author.pinterest }}">
 				<i class="fa fa-pinterest fa-lg"></i>
+			</a>
+		</li>
+		{% endif %}
+		{% if site.author.instagram %}
+		<li>
+			<a class="btn btn-default btn-sm" href="https://instagram.com/{{ site.author.instagram }}">
+				<i class="fa fa-instagram fa-lg"></i>
 			</a>
 		</li>
 		{% endif %}
