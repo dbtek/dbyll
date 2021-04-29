@@ -6,7 +6,7 @@ tags: [css, html, programming]
 fullview: true
 ---
 
-How to make a rounded img. there are several ways to do it. I'll show you the two ways i use the most. If you like this make sure you chek this sometimes, 
+How to make a rounded img. there are several ways to do it. I'll show you the two ways i use the most. If you like this make sure you chek my website sometimes, 
 because i wil show you more of html and css.
 
 #1. With this way you can make your img any shape you want by changing the %.
