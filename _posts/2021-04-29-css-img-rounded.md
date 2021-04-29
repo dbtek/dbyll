@@ -10,7 +10,7 @@ How to make a rounded img. there are several ways to do it. I'll show you the wa
 because i wil show you more of html and css.
 
 With this way you can make your img any shape you want by changing the %.
-{% highlight ruby %}
+{% highlight html %}
 <body>
  <style>
   
@@ -25,6 +25,9 @@ With this way you can make your img any shape you want by changing the %.
     <img src="css-tutorial" alt="logo website" class="circular--square" style="width:75px">
   </body>
 {% endhighlight %}
+
+
+This is the result. I hope you learned something from it.
 
 <body>
  <style>
