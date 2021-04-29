@@ -10,7 +10,7 @@ How to make a rounded img. there are several ways to do it. I'll show you the wa
 because i wil show you more of html and css.
 
 With this way you can make your img any shape you want by changing the %.
-{% highlight yaml %}
+{% highlight ruby %}
 <body>
  <style>
   
