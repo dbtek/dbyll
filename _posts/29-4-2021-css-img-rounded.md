@@ -21,7 +21,7 @@ because i wil show you more of html and css.
             }
  
   </style>
-    <img src="https://www.gravatar.com/avatar/4117c229240eddd48e095bc90a0d955f?s=150" alt="logo website" class="circular--square" style="width:75px">
+    <img src="css-tutorial" alt="logo website" class="circular--square" style="width:75px">
   </body>
 {% endhighlight %}
 
@@ -32,6 +32,6 @@ because i wil show you more of html and css.
   img.circular--square{
             border-radius: 50%;
  </style>
-    <img src="https://www.gravatar.com/avatar/4117c229240eddd48e095bc90a0d955f?s=150" alt="logo website" class="circular--square" style="width:75px">
+    <img src="css-tutorial" alt="logo website" class="circular--square" style="width:75px">
   </body>
 {% endhighlight %}
