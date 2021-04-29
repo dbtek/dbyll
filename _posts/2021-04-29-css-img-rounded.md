@@ -37,5 +37,5 @@ With this way you can make your img any shape you want by changing the %.
             }
  
   </style>
-    <img src="css-tutorial" alt="logo website" class="circular--square" style="width:75px">
+    <img src="//www.gravatar.com/avatar/4117c229240eddd48e095bc90a0d955f?s=150" alt="logo website" class="circular--square" style="width:75px">
   </body>
