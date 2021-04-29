@@ -25,3 +25,17 @@ With this way you can make your img any shape you want by changing the %.
     <img src="css-tutorial" alt="logo website" class="circular--square" style="width:75px">
   </body>
 {% endhighlight %}
+
+<body>
+ <style>
+  
+  img.circular--square{
+            border-top-left-radius: 50% 50%;
+            border-top-right-radius: 50% 50%;
+            border-bottom-right-radius: 50% 50%;
+            border-bottom-left-radius: 50% 50%;
+            }
+ 
+  </style>
+    <img src="css-tutorial" alt="logo website" class="circular--square" style="width:75px">
+  </body>
