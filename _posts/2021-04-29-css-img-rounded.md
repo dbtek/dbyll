@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Rounded img.
+title: Rounded img css tutorial.
 categories: [programming, tutorial]
 tags: [css, html]
 fullview: true
