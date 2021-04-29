@@ -6,10 +6,10 @@ tags: [css, html, programming]
 fullview: true
 ---
 
-How to make a rounded img. there are several ways to do it. I'll show you the way i use the most. If you like this make sure you chek this sometimes, 
+How to make a rounded img. there are several ways to do it. I'll show you the two ways i use the most. If you like this make sure you chek this sometimes, 
 because i wil show you more of html and css.
 
-With this way you can make your img any shape you want by changing the %.
+#1. With this way you can make your img any shape you want by changing the %.
 {% highlight html %}
 <body>
  <style>
@@ -27,7 +27,23 @@ With this way you can make your img any shape you want by changing the %.
 {% endhighlight %}
 
 
-This is the result. I hope you learned something from it.
+#2. With this way you can make the img round by using just one line.
+{% highlight html %}
+<body>
+ <style>
+  
+  img.circular--square{
+            border-radius: 50%;
+            }
+ 
+  </style>
+    <img src="css-tutorial" alt="logo website" class="circular--square" style="width:75px">
+  </body>
+{% endhighlight %}
+
+
+
+This is the result. The result is the same for both. I hope you learned something from it. And helped with your project.
 
 <body>
  <style>
