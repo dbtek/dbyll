@@ -2,7 +2,7 @@
 layout: post
 title: Rounded img css tutorial.
 categories: [programming, tutorial]
-tags: [css, html]
+tags: [css, html, programming]
 fullview: true
 ---
 
