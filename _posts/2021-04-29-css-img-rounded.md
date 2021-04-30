@@ -3,7 +3,7 @@ layout: post
 title: Rounded img css tutorial.
 categories: [programming, tutorial]
 tags: [css, html, programming]
-fullview: true
+fullview: false
 ---
 
 How to make a rounded img. there are several ways to do it. I'll show you the two ways i use the most. If you like this make sure you chek my website sometimes, 
