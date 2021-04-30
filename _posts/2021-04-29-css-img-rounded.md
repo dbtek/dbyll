@@ -12,9 +12,8 @@ because i wil show you more of html and css.
 
 #1. With this way you can make your img any shape you want by changing the %.
 {% highlight html %}
-<body>
+<head>
  <style>
-  
   img.circular--square{
             border-top-left-radius: 50% 50%;
             border-top-right-radius: 50% 50%;
@@ -23,6 +22,8 @@ because i wil show you more of html and css.
             }
  
   </style>
+  </head>
+  <body>
     <img src="css-tutorial" alt="css-img" class="circular--square" style="width:75px">
   </body>
 {% endhighlight %}
@@ -30,7 +31,7 @@ because i wil show you more of html and css.
 
 #2. With this way you can make the img round by using just one line.
 {% highlight html %}
-<body>
+<head>
  <style>
   
   img.circular--square{
@@ -38,6 +39,8 @@ because i wil show you more of html and css.
             }
  
   </style>
+  </head>
+  <body>
     <img src="css-tutorial" alt="css-img" class="circular--square" style="width:75px">
   </body>
 {% endhighlight %}
