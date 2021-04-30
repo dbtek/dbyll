@@ -3,7 +3,7 @@ layout: post
 title: Chrome dino hack.
 categories: [programming, tutorial]
 tags: [html, programming]
-description: In this tutorial i wil show you how to get infinite score.
+description: In this tutorial i wil show you how to get infinite score in the chrome dino game.
 fullview: false
 ---
 
