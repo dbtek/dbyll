@@ -23,7 +23,7 @@ because i wil show you more of html and css.
             }
  
   </style>
-    <img src="css-tutorial" alt="logo website" class="circular--square" style="width:75px">
+    <img src="css-tutorial" alt="css-img" class="circular--square" style="width:75px">
   </body>
 {% endhighlight %}
 
@@ -38,7 +38,7 @@ because i wil show you more of html and css.
             }
  
   </style>
-    <img src="css-tutorial" alt="logo website" class="circular--square" style="width:75px">
+    <img src="css-tutorial" alt="css-img" class="circular--square" style="width:75px">
   </body>
 {% endhighlight %}
 
