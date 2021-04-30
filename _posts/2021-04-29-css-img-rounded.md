@@ -33,18 +33,19 @@ img.circular {
 
 #2. With this way you can make the img round by using just one line.
 {% highlight html %}
+<html>
 <head>
- <style>
-  
-  img.circular--square{
-            border-radius: 50%;
-            }
- 
-  </style>
-  </head>
-  <body>
-    <img src="css-tutorial" alt="css-img" class="circular--square" style="width:75px">
-  </body>
+<style>
+img.circular {
+    border-radius: 50%;
+    width: 75px;
+}
+</style>
+</head>
+<body>
+    <img src="/some/image.png" alt="my rounded image" class="circular">
+</body>
+</html>
 {% endhighlight %}
 
 
