@@ -3,19 +3,7 @@ layout: post
 title: Rounded img css tutorial.
 categories: [programming, tutorial]
 tags: [css, html, programming]
-description: In this tutorial i wil show you how to make a rounded img like this -><body>
- <style>
-  
-  img.circular--square{
-            border-top-left-radius: 50% 50%;
-            border-top-right-radius: 50% 50%;
-            border-bottom-right-radius: 50% 50%;
-            border-bottom-left-radius: 50% 50%;
-            }
- 
-  </style>
-    <img src="//www.gravatar.com/avatar/4117c229240eddd48e095bc90a0d955f?s=150" alt="logo website" class="circular--square" style="width:75px">
-  </body>
+description: In this tutorial i wil show you how to make a rounded img.
 fullview: false
 ---
 
