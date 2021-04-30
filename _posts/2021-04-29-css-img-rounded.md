@@ -12,20 +12,22 @@ because i wil show you more of html and css.
 
 #1. With this way you can make your img any shape you want by changing the %.
 {% highlight html %}
+<html>
 <head>
- <style>
-  img.circular--square{
-            border-top-left-radius: 50% 50%;
-            border-top-right-radius: 50% 50%;
-            border-bottom-right-radius: 50% 50%;
-            border-bottom-left-radius: 50% 50%;
-            }
- 
-  </style>
-  </head>
-  <body>
-    <img src="css-tutorial" alt="css-img" class="circular--square" style="width:75px">
-  </body>
+<style>
+img.circular {
+    border-top-left-radius: 50% 50%;
+    border-top-right-radius: 50% 50%;
+    border-bottom-right-radius: 50% 50%;
+    border-bottom-left-radius: 50% 50%;
+    width: 75px;
+}
+</style>
+</head>
+<body>
+    <img src="/some/image.png" alt="my rounded image" class="circular">
+</body>
+</html>
 {% endhighlight %}
 
 
