@@ -39,7 +39,7 @@ This is the final result.
       p.color-tutorial {
         color: green;
       }
-      h1.color-tutorial-h1 {
+      h1.color-tutorialh1 {
         color: blue;
       }
     </style>
@@ -48,6 +48,6 @@ This is the final result.
 <body>
   <p class="color-tutorial">p colored text turorial.</p>
   
-  <h1 class="color-tutorial-h1">h1 colored text turorial</h1>
+  <h1 class="color-tutorialh1">h1 colored text turorial</h1>
 </body>
 </html>
