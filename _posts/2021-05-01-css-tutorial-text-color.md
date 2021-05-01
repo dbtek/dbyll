@@ -19,7 +19,7 @@ How to make colored text using css. You can change the color and text to every c
     </style>
   </head>
 <body>
-  <p>p colored text turorial.</p>
+  <p>p colored text tutorial.</p>
 </body>
 </html>
 {% endhighlight %}
@@ -36,6 +36,6 @@ This is the final result.
   </head>
 
 <body>
-  <p class="color-tutorial">p colored text turorial.</p>
+  <p class="color-tutorial">p colored text tutorial.</p>
 </body>
 </html>
