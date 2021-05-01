@@ -39,11 +39,9 @@ This is the final result.
       p.color-tutorial {
         color: green;
       }
-      
       h1.color-tutorial-h1 {
         color: blue;
       }
-      
     </style>
   </head>
 
