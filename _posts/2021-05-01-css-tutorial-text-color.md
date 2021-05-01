@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Colored text css tutorial.
+title: Css colored text tutorial.
 categories: [programming, tutorial]
 tags: [css, html, programming]
 description: In this tutorial i wil show you how to make colored text.
