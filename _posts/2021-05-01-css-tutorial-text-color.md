@@ -7,7 +7,7 @@ description: In this tutorial i wil show you how to make colored text.
 fullview: true
 ---
 
-How to make colored text using css. You can change the color and text to every color and text you want. 
+How to make colored text using css. You can change the color and text to every color and text you want. You also can youse it for all fonts.
 
 {% highlight html %}
 <html>
@@ -47,7 +47,6 @@ This is the final result.
 
 <body>
   <p class="color-tutorial">p colored text turorial.</p>
-  
   <h1 class="color-tutorialh1">h1 colored text turorial</h1>
 </body>
 </html>
