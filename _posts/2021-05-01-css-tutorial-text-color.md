@@ -16,16 +16,11 @@ How to make colored text using css. You can change the color and text to every c
       p {
         color: green;
       }
-      h1{
-        color: blue;
-      }
     </style>
   </head>
-
+  
 <body>
   <p>p colored text turorial.</p>
-  
-  <h1>h1 colored text turorial</h1>
 </body>
 </html>
 {% endhighlight %}
