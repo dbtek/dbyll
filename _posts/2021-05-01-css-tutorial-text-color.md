@@ -18,7 +18,6 @@ How to make colored text using css. You can change the color and text to every c
       }
     </style>
   </head>
-  
 <body>
   <p>p colored text turorial.</p>
 </body>
