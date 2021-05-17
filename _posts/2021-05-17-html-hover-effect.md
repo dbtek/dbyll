@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Css hover effect.
+title: Css text hover effect.
 categories: [programming, tutorial]
 tags: [css, html, programming]
 description: In this tutorial i wil show you how to make a cool hover effect.
@@ -18,11 +18,11 @@ This is how to do it.
   <head>
     <style>
       p.tutorial {
-      color: bleu;
+      color: green;
       }
       
       p.tutorial:hover {
-      color: green;
+      color: blue;
       }
       </style>
     </head>
