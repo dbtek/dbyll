@@ -37,11 +37,11 @@ And this is the end result.
   <head>
     <style>
       p.tutorial {
-      color: bleu;
+      color: green;
       }
       
       p.tutorial:hover {
-      color: green;
+      color: blue;
       }
       </style>
     </head>
