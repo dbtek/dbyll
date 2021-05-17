@@ -11,6 +11,7 @@ In this tutorial i wil show you how to make a cool hover effect. it gives a cool
 When you kwon the basics of css you can make reale cool this with it.
 you can also do it with img, then you can for example give them borders, or have them changed to another img.
 I showed you in an earlier tutorial how to change the color you can now do that in the same way.
+You can also give it a transition.
 This is how to do it. 
 
 {% highlight html %}
@@ -25,6 +26,7 @@ This is how to do it.
       p.tutorial:hover {
       color: blue;
       font-weight: bold;
+      transition: 0.8s;
       }
       </style>
     </head>
@@ -46,6 +48,7 @@ And this is the end result.
       p.tutorial:hover {
       color: blue;
       font-weight: bold;
+      transition: 0.8s;
       }
       </style>
     </head>
