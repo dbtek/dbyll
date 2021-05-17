@@ -19,10 +19,12 @@ This is how to do it.
     <style>
       p.tutorial {
       color: green;
+      font-weight: bold;
       }
       
       p.tutorial:hover {
       color: blue;
+      font-weight: bold;
       }
       </style>
     </head>
@@ -38,10 +40,12 @@ And this is the end result.
     <style>
       p.tutorial {
       color: green;
+      font-weight: bold;
       }
       
       p.tutorial:hover {
       color: blue;
+      font-weight: bold;
       }
       </style>
     </head>
