@@ -1,7 +1,7 @@
 ---
 layout: post
 title: MY FIRST GAME!!!
-categories: [game]
+categories: [game, programming]
 tags: [game, programming]
 description: This is a an awesome game I just created, check it out!
 ---
