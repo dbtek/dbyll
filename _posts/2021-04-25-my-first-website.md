@@ -4,6 +4,7 @@ title: My first website!
 categories: [game]
 tags: [game, programming]
 description: This is my new website. On this websites come al my projects.
+comments: true
 ---
 
 ![My First Website](/assets/media/my-first-website.jpg)
