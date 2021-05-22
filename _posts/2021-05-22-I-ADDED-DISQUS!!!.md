@@ -2,7 +2,7 @@
 layout: post
 title: I added disqus!!
 categories: [disqus]
-tags: [game, programming]
+tags: [disqus]
 description: I added disqus!! Now you can comment under my post's.
 comments: true
 ---
