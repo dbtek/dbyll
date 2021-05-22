@@ -5,6 +5,7 @@ categories: [programming, tutorial]
 tags: [html, programming]
 description: In this tutorial i wil show you how to get more speed and jump higher in the chrome dino game.
 fullview: false
+comments: true
 ---
 
 In a earlier tutorial i have learned you how to get a infinite score. Now i'm teaching you how to get more speed. 
