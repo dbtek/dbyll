@@ -5,6 +5,7 @@ categories: [programming, tutorial]
 tags: [css, html, programming]
 description: In this tutorial i wil show you how to make a cool hover effect.
 fullview: true
+comments: true
 ---
 
 In this tutorial i wil show you how to make a cool hover effect. it gives a cool effect to your website and is not that difficult to make.
