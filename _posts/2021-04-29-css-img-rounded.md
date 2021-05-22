@@ -5,6 +5,7 @@ categories: [programming, tutorial]
 tags: [css, html, programming]
 description: In this tutorial i wil show you how to make a rounded img.
 fullview: false
+comments: true
 ---
 
 How to make a rounded img. there are several ways to do it. I'll show you the two ways i use the most. If you like this make sure you chek my website sometimes, 
