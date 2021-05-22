@@ -5,6 +5,7 @@ categories: [programming, tutorial]
 tags: [css, html, programming]
 description: In this tutorial i wil show you how to make colored text.
 fullview: false
+comments: true
 ---
 
 How to make colored text using css. You can change the color and text to every color and text you want. You also can youse it for all fonts.
