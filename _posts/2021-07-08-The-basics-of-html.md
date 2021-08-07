@@ -36,10 +36,5 @@ If you combine all that, this is your result
   </body>
 </html>
 {% endhighlight %}
-
-This is the result.
-  
-    <h1>My first heading!</h1>
-    <p1>My first text!</p1>
   
 I hope you learned something from it. And now you can start with your own website. If you can't figure something out, you can check if I've already made a tutorial about it.
