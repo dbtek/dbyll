@@ -4,7 +4,7 @@ title: Html basics tutorial.
 categories: [programming, tutorial]
 tags: [html, programming]
 description: In this tutorial i wil show you the basics of html.
-fullview: true
+fullview: false
 comments: true
 ---
 
