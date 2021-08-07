@@ -16,7 +16,8 @@ Before you can do anything at all, you always have to indicate what kind of file
 at the top of your code. 
 To indicate that you are working with html type <html></html> then you cannot start yet. To do that, you first have to put <body></body> between <html></html>.
 Once you've done that, you can start.
-We start simple. We start by projecting a sentence on your website. To display a sentence you must first type this <p1><p1></p1></p1>. In between you put your text you want.
+We start simple. We start by projecting a sentence on your website. To display a sentence you must first type this {% highlight html %}<p1></p1>{% endhighlight %}.
+In between you put your text you want.
 To make a title or a heading, use h1, h2 or h3 where p1 now stands. h1 is the largest h2 and h3 are slightly smaller.
 
 
