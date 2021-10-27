@@ -14,7 +14,7 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: blog.gullbrandsson.dk
+      title: 
 
 description: Stylish Jekyll Theme
 author:
@@ -34,3 +34,4 @@ BASE_PATH:
 
 plugins:
   - jekyll-paginate
+  - jemoji
