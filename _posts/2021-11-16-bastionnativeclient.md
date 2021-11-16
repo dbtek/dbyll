@@ -64,19 +64,33 @@ $VMId = az vm list --query "[?name=='$VM'].id" -o tsv
 az network bastion rdp --name $BastionName --resource-group $BastionRG --target-resource-id $VMId
 ```
 
-### For SSH use one of the below alternatives (Just replace the last line in the script)
+### For SSH, use one of the below alternatives (Just replace the last line in the script)
+
+#### **Prerequisites for SSH**
+
+-*Enable System Assigned Identity on your Virtual Machine*
+
+-*Make sure that the AADSSHLoginForLinux-extension is installed on the VM(s)*
+
+-*If you haven't used SSH via Az CLI before, make sure to install the extension locally by running*
 
 ``` PowerShell
-az network bastion ssh --name $BastionName --resource-group $BastionRG --target-resource-id $VMId --auth-type  "AAD"
+az extension add --name ssh
 ```
 
-Or
+### SSH Alternatives
 
 ``` PowerShell
-az network bastion ssh --name $BastionName --resource-group $BastionRG --target-resource-id $VMId --auth-type "ssh-key" --username "<Username>" --ssh-key "<Filepath>"
+az network bastion ssh --name $BastionName --resource-group $BastionRG --target-resource-id $VMId --auth-type "AAD"
 ```
 
-![2021-11-16-bastionnativeclient-1](https://raw.githubusercontent.com/egullbrandsson/egullbrandsson.github.io/master/assets/media/2021-11-16-bastionnativeclient/2021-11-16-bastionnativeclient-1.png)
+``` PowerShell
+az network bastion ssh --name $BastionName --resource-group $BastionRG --target-resource-id $VMId --auth-type "ssh-key" --username "xyz" --ssh-key "C:\filepath\sshkey.pem"
+```
+
+``` PowerShell
+az network bastion ssh --name $BastionName --resource-group $BastionRG --target-resource-id $VMId --auth-type "password" --username "xyz"
+```
 
 ![2021-11-16-bastionnativeclient-2](https://raw.githubusercontent.com/egullbrandsson/egullbrandsson.github.io/master/assets/media/2021-11-16-bastionnativeclient/2021-11-16-bastionnativeclient-2.png)
 
@@ -89,3 +103,7 @@ az network bastion ssh --name $BastionName --resource-group $BastionRG --target-
 ![2021-11-16-bastionnativeclient-6](https://raw.githubusercontent.com/egullbrandsson/egullbrandsson.github.io/master/assets/media/2021-11-16-bastionnativeclient/2021-11-16-bastionnativeclient-6.png)
 
 ![2021-11-16-bastionnativeclient-7](https://raw.githubusercontent.com/egullbrandsson/egullbrandsson.github.io/master/assets/media/2021-11-16-bastionnativeclient/2021-11-16-bastionnativeclient-7.png)
+
+That's it!
+
+Thanks for reading, if you have any feedback, feel free to ping me 😄
