@@ -64,21 +64,20 @@ $VMId = az vm list --query "[?name=='$VM'].id" -o tsv
 az network bastion rdp --name $BastionName --resource-group $BastionRG --target-resource-id $VMId
 ```
 
-### For SSH, use one of the below alternatives (Just replace the last line in the script)
+### Prerequisites for SSH
 
-#### **Prerequisites for SSH**
+📌 Enable System Assigned Identity on your Virtual Machine
 
--*Enable System Assigned Identity on your Virtual Machine*
+📌 Make sure that the AADSSHLoginForLinux-extension is installed on the VM(s)
 
--*Make sure that the AADSSHLoginForLinux-extension is installed on the VM(s)*
-
--*If you haven't used SSH via Az CLI before, make sure to install the extension locally by running*
+📌 If you haven't used SSH via Az CLI before, make sure to install the extension locally by running
 
 ``` PowerShell
 az extension add --name ssh
 ```
 
-### SSH Alternatives
+
+Use one of the below alternatives (just replace the last line in the script)
 
 ``` PowerShell
 az network bastion ssh --name $BastionName --resource-group $BastionRG --target-resource-id $VMId --auth-type "AAD"
@@ -91,6 +90,8 @@ az network bastion ssh --name $BastionName --resource-group $BastionRG --target-
 ``` PowerShell
 az network bastion ssh --name $BastionName --resource-group $BastionRG --target-resource-id $VMId --auth-type "password" --username "xyz"
 ```
+
+For more information regarding SSH, [here's the link to docs]()
 
 ![2021-11-16-bastionnativeclient-2](https://raw.githubusercontent.com/egullbrandsson/egullbrandsson.github.io/master/assets/media/2021-11-16-bastionnativeclient/2021-11-16-bastionnativeclient-2.png)
 
