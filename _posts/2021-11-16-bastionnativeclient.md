@@ -4,10 +4,7 @@ title: Azure Bastion with Native Client
 tags: [azurebastion,nativeclient,pipelines]
 fullview: true
 ---
-
-Greetings, All.
-
-## News
+## Intro
 
 So, Microsoft released a neat little update to Bastion at this years event at MS Ignite (Don't know what Bastion is, [here's a link](https://docs.microsoft.com/en-us/azure/bastion/bastion-overview))
 
@@ -28,7 +25,7 @@ For me, working as a consultant, jumping betweens environments and browser tabs,
 
 📌 A Virtual Machine in the Virtual Network
 
-### Currently limitaions
+### Currently limitations
 
 📌 Custom protocol or port is not yet supported
 
@@ -38,7 +35,9 @@ For me, working as a consultant, jumping betweens environments and browser tabs,
 
 ### PowerShell script
 
-I wrote the below script as a quick and dirty solution for helping people connect to Azure, select the Virtual Machine and then make the Az-command to connect to the Virtual Machine.
+I wrote the below script as a quick solution for helping people connect to Azure, select the Virtual Machine and then make the Az-command to connect to the Virtual Machine.
+
+I'm connecting to the Virtual Machine via RDP.
 
 Please update the following variables to reflect your environment:
 
@@ -47,19 +46,34 @@ Please update the following variables to reflect your environment:
 
 ``` PowerShell
 az login
+
+cls
+
 $SubscriptionName = az account list --query "[].{Name:name}" -o tsv | Out-GridView -PassThru
 
 az account set -s $SubscriptionName
 
-Clear-Host
+cls
 
-$VM = Read-Host "VM Name?"
+$VM = az vm list --query "[].{Name:name}" -o tsv | Out-GridView -PassThru
 $BastionName = "n-bastion-01"
 $BastionRG = "n-infra-rg"
 
 $VMId = az vm list --query "[?name=='$VM'].id" -o tsv
 
 az network bastion rdp --name $BastionName --resource-group $BastionRG --target-resource-id $VMId
+```
+
+### For SSH use one of the below alternatives (Just replace the last line in the script)
+
+``` PowerShell
+az network bastion ssh --name $BastionName --resource-group $BastionRG --target-resource-id $VMId --auth-type  "AAD"
+```
+
+Or
+
+``` PowerShell
+az network bastion ssh --name $BastionName --resource-group $BastionRG --target-resource-id $VMId --auth-type "ssh-key" --username "<Username>" --ssh-key "<Filepath>"
 ```
 
 ![2021-11-16-bastionnativeclient-1](https://raw.githubusercontent.com/egullbrandsson/egullbrandsson.github.io/master/assets/media/2021-11-16-bastionnativeclient/2021-11-16-bastionnativeclient-1.png)
