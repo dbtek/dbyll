@@ -20,6 +20,8 @@ For me, working as a consultant, jumping betweens environments and browser tabs,
 
 📌 Azure Bastion in Standard-tier
 
+📌 Enable "Native client support" under Configurations
+
 📌 Az CLI 2.30
 
 📌 A Virtual Network
@@ -43,17 +45,19 @@ Please update the following variables to reflect your environment:
 * $BastionName
 * $BastionRG
 
-``` Powershell
-Connect-AzAccount
+``` PowerShell
+az login
+$SubscriptionName = az account list --query "[].{Name:name}" -o tsv | Out-GridView -PassThru
 
-$Subscription = Get-AzSubscription | Out-GridView -PassThru
-Get-AzSubscription -SubscriptionName $Subscription.Name | Select-AzSubscription
+az account set -s $SubscriptionName
+
+Clear-Host
 
 $VM = Read-Host "VM Name?"
 $BastionName = "n-bastion-01"
 $BastionRG = "n-infra-rg"
 
-$VMId = (Get-AzVm -Name $VM).Id
+$VMId = az vm list --query "[?name=='$VM'].id" -o tsv
 
 az network bastion rdp --name $BastionName --resource-group $BastionRG --target-resource-id $VMId
 ```
