@@ -91,7 +91,7 @@ az network bastion ssh --name $BastionName --resource-group $BastionRG --target-
 az network bastion ssh --name $BastionName --resource-group $BastionRG --target-resource-id $VMId --auth-type "password" --username "xyz"
 ```
 
-For more information regarding SSH, [here's the link to docs]()
+For more information about this, here's a [link to docs](https://docs.microsoft.com/en-us/azure/bastion/connect-native-client-windows)
 
 ![2021-11-16-bastionnativeclient-2](https://raw.githubusercontent.com/egullbrandsson/egullbrandsson.github.io/master/assets/media/2021-11-16-bastionnativeclient/2021-11-16-bastionnativeclient-2.png)
 
