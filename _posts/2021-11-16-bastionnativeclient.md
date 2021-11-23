@@ -53,15 +53,13 @@ $BastionName = "n-bastion-01"
 $BastionRG = "n-infra-rg"
 
 # Login to Azure
-az login
+$null = az login
 
 # Select subscription where the VM you want to access lives
 $VMSubscriptionName = az account list --query "[].{Name:name}" -o tsv | Out-GridView -PassThru -Title "Select the subscription where the VM you want to access lives"
 
 # Switch subscription to VM-subscription
-az account set -s $VMSubscriptionName
-
-Clear-Host
+$null = az account set -s $VMSubscriptionName
 
 # Select the VM you want to connect to
 $VMName = az vm list --query "[].{Name:name}" -o tsv | Out-GridView -PassThru -Title "Select the VM you want to connect to"
@@ -71,9 +69,7 @@ $VMId = az vm list --query "[?name=='$VMName'].id" -o tsv
 $SubscriptionName = az account list --query "[].{Name:name}" -o tsv | Out-GridView -PassThru -Title "Select the subscription where the Bastion host(s) lives"
 
 # Switch subscription to Bastion-subscription
-az account set -s $SubscriptionName
-
-Clear-Host
+$null = az account set -s $SubscriptionName
 
 # Make the noice!
 az network bastion rdp --name $BastionName --resource-group $BastionRG --target-resource-id $VMId
