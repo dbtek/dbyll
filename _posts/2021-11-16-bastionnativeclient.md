@@ -24,6 +24,8 @@ This post will go through a small script that you can re-use for connecting from
 
 📌 Enable "Native client support" under Configurations
 
+![2021-11-16-bastionnativeclient-8](https://raw.githubusercontent.com/egullbrandsson/egullbrandsson.github.io/master/assets/media/2021-11-16-bastionnativeclient/2021-11-16-bastionnativeclient-8.png)
+
 📌 Az CLI 2.30
 
 📌 A Virtual Network
