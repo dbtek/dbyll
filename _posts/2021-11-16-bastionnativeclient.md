@@ -56,7 +56,7 @@ $BastionRG = "n-infra-rg"
 az login
 
 # Select subscription where the VM you want to access lives
-$VMSubscriptionName = az account list --query "[].{Name:name}" -o tsv | Out-GridView -PassThru -Title "Select subscription where the VM you want to access lives"
+$VMSubscriptionName = az account list --query "[].{Name:name}" -o tsv | Out-GridView -PassThru -Title "Select the subscription where the VM you want to access lives"
 
 # Switch subscription to VM-subscription
 az account set -s $VMSubscriptionName
@@ -68,7 +68,7 @@ $VMName = az vm list --query "[].{Name:name}" -o tsv | Out-GridView -PassThru -T
 $VMId = az vm list --query "[?name=='$VMName'].id" -o tsv
 
 # Select the subscription where bastion lives
-$SubscriptionName = az account list --query "[].{Name:name}" -o tsv | Out-GridView -PassThru -Title "Select the subscription where bastion lives"
+$SubscriptionName = az account list --query "[].{Name:name}" -o tsv | Out-GridView -PassThru -Title "Select the subscription where the Bastion host(s) lives"
 
 # Switch subscription to Bastion-subscription
 az account set -s $SubscriptionName
