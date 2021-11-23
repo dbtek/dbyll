@@ -20,17 +20,19 @@ This post will go through a small script that you can re-use for connecting from
 
 ### Prerequisites
 
-📌 Azure Bastion in Standard-tier
+📌 Update your Azure Bastion Configuration (Or you my Bicep template below)
 
-📌 Enable "Native client support" under Configurations
+* Update to Standard Tier
 
-![2021-11-16-bastionnativeclient-8](https://raw.githubusercontent.com/egullbrandsson/egullbrandsson.github.io/master/assets/media/2021-11-16-bastionnativeclient/2021-11-16-bastionnativeclient-8.png)
+* Enable "Native client support" under Configurations
+
+  ![2021-11-16-bastionnativeclient-8](https://raw.githubusercontent.com/egullbrandsson/egullbrandsson.github.io/master/assets/media/2021-11-16-bastionnativeclient/2021-11-16-bastionnativeclient-8.png)
 
 📌 Az CLI 2.30
 
 📌 A Virtual Network
 
-📌 A Virtual Machine in the Virtual Network
+* A Virtual Machine in the Virtual Network
 
 ### Currently limitaions
 
@@ -89,7 +91,7 @@ az network bastion rdp --name $BastionName --resource-group $BastionRG --target-
 az extension add --name ssh
 ```
 
-Use one of the below alternatives (just replace the last line in the script)
+Use one of the alternatives below to connect to a VM (just replace the last line in the script to switch authentication method)
 
 ``` PowerShell
 # Here we are using AAD to authenticate against the VM
@@ -107,68 +109,7 @@ For more information about this, here's a [link to docs](https://docs.microsoft.
 
 If you don't have a bastion host, subnet or public ip, here's a Bicep Template do get you started. It does however require you to have a virtual network and I'll not go into any details regarding the template.
 
-``` PowerShell
-// Bastion
-param bastionName string
-param location string = resourceGroup().location
-
-// Bastion Subnet
-@description('the vnet where the bastion subnet will live')
-param vnetName string
-param subnetPrefix string
-
-// Public IP
-param publicIPName string
-
-resource publicIP 'Microsoft.Network/publicIPAddresses@2021-03-01' = {
-  name: publicIPName
-  location: location
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
-  }
-  properties: {
-    publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Static'
-    idleTimeoutInMinutes: 4
-  }
-}
-
-resource vnetResource 'Microsoft.Network/virtualNetworks@2021-03-01' existing = {
-  name: vnetName
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-03-01' = {
-  name: 'AzureBastionSubnet'
-  parent: vnetResource
-  properties: {
-    addressPrefix: subnetPrefix
-  }
-}
-
-resource bastion 'Microsoft.Network/bastionHosts@2020-11-01' = {
-  name: bastionName
-  location: location
-  properties: {
-    dnsName: bastionName
-    ipConfigurations: [
-      {
-        name: 'IpConf'
-        properties: {
-          privateIPAllocationMethod: 'Dynamic'
-          publicIPAddress: {
-            id: publicIP.id
-          }
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
-
-```
+<script src="https://gist.github.com/egullbrandsson/b5cbca14ae8a2dcf629b8da6d46bf33d.js"></script>
 
 That's it.
 
