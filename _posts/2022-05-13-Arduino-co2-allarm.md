@@ -61,6 +61,6 @@ delay(10);
 {% endhighlight %}
 
 I hope you find it interesting. And if you try it yourself, I hope you succeed.
-The end result down below. 
-<img src="![image](https://user-images.githubusercontent.com/82642042/168333785-caccb694-d729-418c-b6be-f788ad0b43fb.png)">
-<img src="![image](https://user-images.githubusercontent.com/82642042/168333860-539c851b-289b-4b91-a036-1e9bedc28395.png)">
+//The end result down below. 
+//<img src="![image](https://user-images.githubusercontent.com/82642042/168333785-caccb694-d729-418c-b6be-f788ad0b43fb.png)">
+//<img src="![image](https://user-images.githubusercontent.com/82642042/168333860-539c851b-289b-4b91-a036-1e9bedc28395.png)">
