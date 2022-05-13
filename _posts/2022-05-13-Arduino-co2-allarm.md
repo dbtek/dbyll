@@ -15,8 +15,7 @@ I took a simple script from the internet that reads the value of the co2 sensor.
 That if statement makes the buzzer and the led go off when the co2 sensor gives a value higher than 400 (400 works fine for me, if you find it too sensitive or not sensitive enough you can change the value). 
 
 
-Code |
-     v
+Code
 {% highlight c# %}
 int sensorValue;
 int digitalValue;
