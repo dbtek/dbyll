@@ -62,5 +62,5 @@ delay(10);
 
 I hope you find it interesting. And if you try it yourself, I hope you succeed.
 The end result down below. 
-![The-project](website/assets/media/0d8e4b8f-b298-434c-a7c0-807c2adfa5a6.jpg)
-![Gas-deployed](website/assets/media/09ccf866-db33-4d88-bbf9-cab470b0f059.jpg)
+[![The-project](website/assets/media/0d8e4b8f-b298-434c-a7c0-807c2adfa5a6.jpg)
+[![Gas-deployed](website/assets/media/09ccf866-db33-4d88-bbf9-cab470b0f059.jpg)
