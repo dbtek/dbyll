@@ -14,6 +14,8 @@ I used an arduino uno with a co2 sensor, rgb led and a buzzer.
 I took a simple script from the internet that reads the value of the co2 sensor. I put an if statement in between. 
 That if statement makes the buzzer and the led go off when the co2 sensor gives a value higher than 400 (400 works fine for me, if you find it too sensitive or not sensitive enough you can change the value). 
 
+The wiring.
+GND, -buzzer, -Led, -co2 sensor. 5v, vcc co2 sensor. PINA0, AO co2 sensor. PIN12, +buzzer. PIN13, +led.
 
 Code
 {% highlight c# %}
@@ -25,7 +27,7 @@ void setup()
 Serial.begin(9600); 
 pinMode(13, OUTPUT);
 pinMode(12, OUTPUT);
-pinMode( 3, INPUT);
+pinMode(3, INPUT);
 
 }
 
