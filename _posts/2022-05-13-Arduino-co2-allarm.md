@@ -62,5 +62,5 @@ delay(10);
 
 I hope you find it interesting. And if you try it yourself, I hope you succeed.
 The end result down below. 
-"![image](https://user-images.githubusercontent.com/82642042/168333785-caccb694-d729-418c-b6be-f788ad0b43fb.png)">
-"![image](https://user-images.githubusercontent.com/82642042/168333860-539c851b-289b-4b91-a036-1e9bedc28395.png)">
+"![image](https://user-images.githubusercontent.com/82642042/168333785-caccb694-d729-418c-b6be-f788ad0b43fb.png)"width="100">
+"![image](https://user-images.githubusercontent.com/82642042/168333860-539c851b-289b-4b91-a036-1e9bedc28395.png)"width="100">
