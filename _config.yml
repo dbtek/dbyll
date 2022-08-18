@@ -5,27 +5,29 @@ paginate_path: "page:num"
 exclude: ["README.md"] # files to exclude
 highlighter: rouge
 markdown: kramdown
-disqus: dbyll
-google_analytics: dbyll
-title: dbyll
+#disqus: erruj
+# google_analytics: dbyll
+title: Jurre's website
 
 defaults:
   -
     scope:
       path: "" # empty string for all files
     values:
-      title: dbyll
+      title: Jurre's website
 
-description: Stylish Jekyll Theme
+description: My private website showcasing all my projects.
 author:
-  name: dbyll
-  email: dbyll@ismaildemirbilek.com
-  github: dbtek
-  twitter: dbtek
-  pinterest: asd123
-  linkedin: asd123
-  bio: Your stylish, minimalist theme!
-  email_md5: 726351295ec82e145928582f595aa3aa
+  name: Jurre
+  github: erruj09
+  # instagram: 
+  spotify: swzf8q2e0tuvj3a7e6qsvrmag
+  discord: erruj09#6478
+  # twitter: 
+  # pinterest: 
+  # linkedin: 
+  bio: I'm learning software development! And makes small programming tutorials.
+  email_md5: 4117c229240eddd48e095bc90a0d955f
 
 rss_path: feed.xml
 categories_path: categories.html
